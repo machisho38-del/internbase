@@ -1108,3 +1108,182 @@ function renderJobCard(job, isMembersTab = false) {
     </a>
   `;
 }
+
+// ==========================================
+// 大学一覧ページ (/universities)
+// ==========================================
+async function initUniversitiesPage() {
+  const app = document.getElementById('app');
+  
+  app.innerHTML = `
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <h1 class="text-3xl font-black mb-2">大学別おすすめ求人</h1>
+        <p class="text-gray-500">あなたの大学に特化した厳選インターン</p>
+      </div>
+      <div class="glass rounded-xl p-4 mb-6">
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input id="uni-search" type="text" placeholder="大学名で検索..." onkeydown="if(event.key==='Enter') filterUniversities()"
+            class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+        </div>
+      </div>
+      <div id="universities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        ${[1,2,3,4,5].map(() => `<div class="glass rounded-xl p-5 animate-pulse h-28"></div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  try {
+    const res = await API.get('/homepage/university-tags');
+    const universities = res.data.data || [];
+    
+    window.allUniversities = universities; // グローバルに保存
+    displayUniversities(universities);
+  } catch(e) {
+    document.getElementById('universities-grid').innerHTML = '<p class="col-span-5 text-center text-gray-500 py-10">大学情報の読み込みに失敗しました</p>';
+  }
+}
+
+function displayUniversities(universities) {
+  const grid = document.getElementById('universities-grid');
+  if (!grid) return;
+  
+  if (universities.length === 0) {
+    grid.innerHTML = '<p class="col-span-5 text-center text-gray-500 py-10">該当する大学が見つかりません</p>';
+    return;
+  }
+  
+  grid.innerHTML = universities.map(uni => `
+    <a href="/universities/${uni.slug}" class="glass rounded-xl p-5 text-center hover:bg-white/10 transition-all group">
+      <div class="w-14 h-14 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/20 transition-colors">
+        <i class="fas fa-university text-primary-400 text-xl"></i>
+      </div>
+      <p class="font-medium text-sm mb-1 group-hover:text-white transition-colors">${uni.name}</p>
+      ${uni.description ? `<p class="text-xs text-gray-500 line-clamp-2">${uni.description}</p>` : ''}
+    </a>
+  `).join('');
+}
+
+function filterUniversities() {
+  const query = document.getElementById('uni-search').value.toLowerCase();
+  if (!window.allUniversities) return;
+  
+  const filtered = window.allUniversities.filter(uni => 
+    uni.name.toLowerCase().includes(query) || 
+    uni.slug.toLowerCase().includes(query) ||
+    (uni.description && uni.description.toLowerCase().includes(query))
+  );
+  
+  displayUniversities(filtered);
+}
+
+// ==========================================
+// 大学別求人一覧ページ (/universities/:slug)
+// ==========================================
+async function initUniversityJobsPage(slug) {
+  const app = document.getElementById('app');
+  const studentId = localStorage.getItem('student_id');
+  
+  app.innerHTML = `
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-8">
+        <a href="/universities" class="text-primary-400 hover:text-primary-300 text-sm mb-3 inline-block">
+          <i class="fas fa-arrow-left mr-1"></i>大学一覧に戻る
+        </a>
+        <h1 id="uni-name" class="text-3xl font-black mb-2">読み込み中...</h1>
+        <p id="uni-desc" class="text-gray-500"></p>
+      </div>
+      
+      <!-- フィルター -->
+      <div class="glass rounded-xl p-4 mb-4 flex flex-wrap gap-3 items-center">
+        <div class="flex-1 min-w-48">
+          <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+            <input id="search-q" type="text" placeholder="キーワードで検索..."
+              class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+          </div>
+        </div>
+        <select id="filter-industry" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          <option value="">全業種</option>
+          <option>HR・人材</option><option>IT・SaaS</option><option>マーケティング</option>
+          <option>コンサルティング</option><option>EC・小売</option><option>メディア</option><option>その他</option>
+        </select>
+        <select id="filter-style" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          <option value="">全勤務形態</option>
+          <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
+        </select>
+        <button onclick="searchUniversityJobs('${slug}')" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-search mr-1"></i>検索
+        </button>
+      </div>
+      
+      <div id="jobs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        ${[1,2,3].map(() => `<div class="glass rounded-xl p-5 animate-pulse h-48"></div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  try {
+    // 大学情報取得
+    const uniRes = await API.get('/homepage/university-tags');
+    const universities = uniRes.data.data || [];
+    const uni = universities.find(u => u.slug === slug);
+    
+    if (!uni) {
+      app.innerHTML = `
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <p class="text-gray-500 mb-4">該当する大学が見つかりません</p>
+          <a href="/universities" class="text-primary-400 hover:text-primary-300">大学一覧に戻る</a>
+        </div>
+      `;
+      return;
+    }
+    
+    document.getElementById('uni-name').textContent = uni.name + ' のおすすめ求人';
+    if (uni.description) {
+      document.getElementById('uni-desc').textContent = uni.description;
+    }
+    
+    // 大学別求人取得
+    const jobsRes = await API.get(`/homepage/universities/${slug}/jobs${studentId ? '?student_id='+studentId : ''}`);
+    const jobs = jobsRes.data.data || [];
+    
+    const list = document.getElementById('jobs-list');
+    if (jobs.length === 0) {
+      list.innerHTML = '<p class="col-span-3 text-center text-gray-500 py-10">まだこの大学向けの求人はありません</p>';
+    } else {
+      list.innerHTML = jobs.map(job => renderJobCard(job)).join('');
+    }
+    
+    window.currentUniversitySlug = slug;
+    window.currentUniversityJobs = jobs;
+  } catch(e) {
+    console.error(e);
+    document.getElementById('jobs-list').innerHTML = '<p class="col-span-3 text-center text-red-400 py-10">求人情報の読み込みに失敗しました</p>';
+  }
+}
+
+function searchUniversityJobs(slug) {
+  const q = document.getElementById('search-q').value.toLowerCase();
+  const industry = document.getElementById('filter-industry').value;
+  const style = document.getElementById('filter-style').value;
+  
+  if (!window.currentUniversityJobs) return;
+  
+  let filtered = window.currentUniversityJobs.filter(job => {
+    const matchQ = !q || job.title.toLowerCase().includes(q) || 
+                   (job.company_name && job.company_name.toLowerCase().includes(q)) ||
+                   (job.description && job.description.toLowerCase().includes(q));
+    const matchIndustry = !industry || job.company_industry === industry;
+    const matchStyle = !style || job.work_style === style;
+    return matchQ && matchIndustry && matchStyle;
+  });
+  
+  const list = document.getElementById('jobs-list');
+  if (filtered.length === 0) {
+    list.innerHTML = '<p class="col-span-3 text-center text-gray-500 py-10">条件に合う求人が見つかりません</p>';
+  } else {
+    list.innerHTML = filtered.map(job => renderJobCard(job)).join('');
+  }
+}

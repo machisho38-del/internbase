@@ -211,6 +211,11 @@ function getPublicHTML(page: string): string {
     if (path === '/' || path === '') initHomePage();
     else if (path === '/jobs') initJobsPage();
     else if (path.startsWith('/jobs/')) initJobDetailPage();
+    else if (path === '/universities') initUniversitiesPage();
+    else if (path.startsWith('/universities/')) {
+      const slug = path.split('/')[2];
+      initUniversityJobsPage(slug);
+    }
     else if (path === '/register') initRegisterPage();
     else if (path === '/consultation') initConsultationPage();
     else if (path === '/mypage') initMyPage();
