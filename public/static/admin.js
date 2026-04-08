@@ -1349,23 +1349,94 @@ async function saveAllSettings() {
 // ==========================================
 // LP編集ページ
 // ==========================================
+
+// LP設定グループ定義（site_settingsのgroup_nameベース）
+const LP_SETTING_GROUPS = [
+  {
+    key: 'hero',
+    label: 'ヒーローセクション',
+    icon: 'fas fa-star',
+    description: 'ページ最上部の大見出し・サブテキスト・CTAボタン',
+    fields: [
+      { key: 'hero_badge_text',  label: 'バッジテキスト（上部小バッジ）', example: '高学歴大学生向け・厳選求人のみ掲載' },
+      { key: 'hero_title_line1', label: '見出し 1行目（グラデーション）', example: '圧倒的な' },
+      { key: 'hero_title_line2', label: '見出し 2行目', example: '実務経験を、' },
+      { key: 'hero_title_line3', label: '見出し 3行目', example: '今すぐ始めよう。' },
+      { key: 'hero_subtitle',    label: 'サブテキスト', example: 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルを。', textarea: true },
+      { key: 'hero_cta1_text',   label: 'CTAボタン1（メイン）', example: '求人を探す' },
+      { key: 'hero_cta2_text',   label: 'CTAボタン2（サブ）',  example: '招待コードで登録' },
+    ]
+  },
+  {
+    key: 'stats',
+    label: '数字・実績セクション',
+    icon: 'fas fa-chart-bar',
+    description: '掲載企業数・求人数・登録学生数・就活成功率',
+    fields: [
+      { key: 'stat_companies',    label: '掲載企業数', example: '50' },
+      { key: 'stat_jobs',         label: '求人数',     example: '200' },
+      { key: 'stat_students',     label: '登録学生数', example: '1000' },
+      { key: 'stat_success_rate', label: '就活成功率（%）', example: '95' },
+    ]
+  },
+  {
+    key: 'features',
+    label: '特徴セクション（タイトル）',
+    icon: 'fas fa-th-large',
+    description: '「選ばれる理由」セクションの見出しとカード3枚（下のカード編集と連動）',
+    fields: [
+      { key: 'feature_section_title',    label: 'セクションタイトル', example: '選ばれる理由' },
+      { key: 'feature_section_subtitle', label: 'セクションサブタイトル', example: '就活で差をつける、本質的な成長環境を提供します', textarea: true },
+    ]
+  },
+  {
+    key: 'cta',
+    label: 'CTAセクション（下部）',
+    icon: 'fas fa-bullhorn',
+    description: 'ページ下部の無料相談誘導エリア',
+    fields: [
+      { key: 'cta_title',    label: 'タイトル',     example: 'まずは無料相談から始めてみませんか？' },
+      { key: 'cta_subtitle', label: '説明文',       example: '自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。', textarea: true },
+      { key: 'cta_btn_text', label: 'ボタンテキスト', example: '無料相談を申し込む' },
+    ]
+  },
+  {
+    key: 'members',
+    label: '会員限定バナー',
+    icon: 'fas fa-lock',
+    description: '未登録ユーザーへの会員限定求人誘導バナー',
+    fields: [
+      { key: 'members_banner_enabled', label: '表示する（1=ON / 0=OFF）', example: '1' },
+      { key: 'members_banner_title',   label: 'バナータイトル', example: '🔒 登録者限定！非公開求人あり' },
+      { key: 'members_banner_text',    label: 'バナーテキスト', example: '登録するだけで見られる特別求人をチェックしよう', textarea: true },
+      { key: 'members_banner_btn',     label: 'ボタンテキスト', example: '今すぐ登録して確認する' },
+    ]
+  },
+];
+
 async function loadLpEdit() {
   const content = document.getElementById('admin-content');
   content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
 
   try {
-    const res = await API.get('/settings/lp-sections/admin');
-    const sections = res.data.data;
+    // site_settings と lp_sections を並列取得
+    const [settingsRes, lpRes] = await Promise.all([
+      API.get('/settings/admin/all'),
+      API.get('/settings/lp-sections/admin'),
+    ]);
 
-    const sectionLabels = {
-      hero: 'ヒーローセクション', stats: '数字・実績セクション',
-      features: '特徴セクション', cta: 'CTAセクション',
-      private_jobs_banner: '非公開求人バナー', footer_cta: 'フッターCTA'
-    };
+    // site_settings をキーマップに変換
+    const settingsMap = {};
+    (settingsRes.data.data || []).forEach(s => { settingsMap[s.setting_key] = s.setting_value; });
+
+    // lp_sections の features を取得
+    const featuresSection = (lpRes.data.data || []).find(s => s.section_key === 'features');
+    let featureItems = [];
+    try { featureItems = JSON.parse(featuresSection?.content || '[]'); } catch(e) {}
 
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
-        <h2 class="font-bold">LP編集</h2>
+        <h2 class="text-lg font-bold">LP編集</h2>
         <a href="/" target="_blank" class="text-xs text-gray-400 hover:text-white border border-white/10 rounded-lg px-3 py-2 transition-colors">
           <i class="fas fa-external-link-alt mr-1"></i>公開画面を確認
         </a>
@@ -1376,7 +1447,7 @@ async function loadLpEdit() {
         <div class="flex items-center gap-2 mb-3">
           <i class="fas fa-info-circle text-primary-400"></i>
           <h3 class="font-semibold text-sm text-primary-400">LP編集の使い方</h3>
-          <button onclick="this.closest('.glass').querySelector('#lp-guide-body').classList.toggle('hidden')" class="ml-auto text-xs text-gray-500 hover:text-white">
+          <button onclick="document.getElementById('lp-guide-body').classList.toggle('hidden')" class="ml-auto text-xs text-gray-500 hover:text-white">
             <i class="fas fa-chevron-down"></i> 折りたたむ
           </button>
         </div>
@@ -1384,40 +1455,40 @@ async function loadLpEdit() {
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
             <div class="bg-white/5 rounded-lg p-3">
               <p class="text-xs font-bold text-white mb-1"><i class="fas fa-edit text-blue-400 mr-1"></i>① テキストを編集</p>
-              <p class="text-xs text-gray-400 leading-relaxed">各フィールドに直接テキストを入力してください。編集後は必ず「このセクションを保存」ボタンを押してください。</p>
+              <p class="text-xs text-gray-400 leading-relaxed">各フィールドに直接テキストを入力。編集後は必ず「保存」ボタンを押してください。</p>
             </div>
             <div class="bg-white/5 rounded-lg p-3">
-              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-eye text-green-400 mr-1"></i>② 表示/非表示の切替</p>
-              <p class="text-xs text-gray-400 leading-relaxed">各セクション右上の「表示する」チェックボックスでセクション全体のON/OFFが可能です。</p>
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-save text-green-400 mr-1"></i>② セクションごとに保存</p>
+              <p class="text-xs text-gray-400 leading-relaxed">各セクション下部の「保存」ボタンで個別保存。ページ全体を一括保存する必要はありません。</p>
             </div>
             <div class="bg-white/5 rounded-lg p-3">
               <p class="text-xs font-bold text-white mb-1"><i class="fas fa-external-link-alt text-purple-400 mr-1"></i>③ 公開画面で確認</p>
-              <p class="text-xs text-gray-400 leading-relaxed">保存後、右上の「公開画面を確認」ボタンから反映結果をリアルタイムで確認できます。</p>
+              <p class="text-xs text-gray-400 leading-relaxed">保存後、右上「公開画面を確認」から反映結果をリアルタイムで確認できます。</p>
             </div>
           </div>
           <div class="border-t border-white/10 pt-3">
-            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>記載事例・推奨テキスト</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-gray-400">
+            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>推奨テキスト事例</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
               <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">ヒーロー見出し（推奨パターン）</p>
-                <p class="text-gray-500 mb-1">パターンA（インパクト重視）:</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-1">1行目: 選ばれた学生だけが<br>2行目: 手にできる、<br>3行目: 本物のキャリア。</p>
-                <p class="text-gray-500 mb-1">パターンB（行動喚起型）:</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">1行目: 3ヶ月で変わる、<br>2行目: 就活の結果が<br>3行目: 変わる。</p>
+                <p class="text-white font-medium mb-1">ヒーロー見出し</p>
+                <p class="text-gray-500 text-xs mb-1">パターンA（インパクト重視）</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">1行目: 選ばれた学生だけが<br>2行目: 手にできる、<br>3行目: 本物のキャリア。</p>
+                <p class="text-gray-500 text-xs mb-1">パターンB（行動喚起型）</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">1行目: 3ヶ月で変わる、<br>2行目: 就活の結果が<br>3行目: 変わる。</p>
               </div>
               <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">サブテキスト（推奨）</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">厳選された成長企業でのインターンで、就活で語れる本物の経験を積もう。大学1〜4年生、随時募集中。</p>
-                <p class="text-white font-medium mb-1">CTAボタンテキスト</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">求人を見る / 無料で登録 / 今すぐ応募</p>
+                <p class="text-white font-medium mb-1">サブテキスト</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">厳選された成長企業でのインターンで、就活で語れる本物の経験を積もう。大学1〜4年生、随時募集中。</p>
+                <p class="text-white font-medium mb-1 mt-2">CTAボタン</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">求人を見る / 無料で登録 / 今すぐ応募</p>
               </div>
               <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">会員限定バナー（推奨）</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">タイトル: 🔒 登録者限定！非公開求人あり<br>テキスト: 現在XX件の非公開求人を掲載中。登録するだけで全て閲覧可能！</p>
+                <p class="text-white font-medium mb-1">会員限定バナー</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">タイトル: 🔒 登録者限定！非公開求人あり<br>テキスト: 現在XX件の非公開求人を掲載中。<br>登録するだけで全て閲覧可能！</p>
               </div>
               <div class="bg-white/5 rounded-lg p-3">
                 <p class="text-white font-medium mb-1">数字セクション（目安）</p>
-                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数<br>就活成功率: 内定率・実績値</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数<br>就活成功率: 内定率・実績値</p>
               </div>
             </div>
           </div>
@@ -1427,71 +1498,152 @@ async function loadLpEdit() {
       <div id="lp-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
         <i class="fas fa-check-circle mr-1"></i>保存しました
       </div>
-      ${sections.map(sec => {
-        let contentObj = {};
-        try { contentObj = JSON.parse(sec.content || '{}'); } catch(e) {}
-        const fields = Object.entries(contentObj);
 
-        return `
-          <div class="glass rounded-xl p-5 mb-4">
-            <div class="flex items-center justify-between mb-4">
-              <h3 class="font-semibold text-sm text-primary-400">
-                <i class="fas fa-layer-group mr-2"></i>${sectionLabels[sec.section_key] || sec.section_key}
-              </h3>
-              <div class="flex items-center gap-3">
-                <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
-                  <input type="checkbox" id="lp-visible-${sec.section_key}" ${sec.is_visible?'checked':''}
-                    onchange="toggleLpSection('${sec.section_key}', this.checked)"
-                    class="rounded">
-                  表示する
-                </label>
+      <!-- site_settings ベースのセクション -->
+      ${LP_SETTING_GROUPS.map(group => `
+        <div class="glass rounded-xl p-5 mb-4" id="lp-group-${group.key}">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-semibold text-sm text-primary-400">
+              <i class="${group.icon} mr-2"></i>${group.label}
+            </h3>
+          </div>
+          <p class="text-xs text-gray-500 mb-4">${group.description}</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${group.fields.map(f => `
+              <div>
+                <label class="block text-xs text-gray-400 mb-1">${f.label}</label>
+                ${f.textarea
+                  ? `<textarea id="lpset-${f.key}" rows="3" placeholder="${f.example}"
+                       class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none focus:border-primary-500/50 outline-none">${settingsMap[f.key] || ''}</textarea>`
+                  : `<input type="text" id="lpset-${f.key}" value="${(settingsMap[f.key] || '').replace(/"/g,'&quot;')}" placeholder="${f.example}"
+                       class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500/50 outline-none">`
+                }
+              </div>
+            `).join('')}
+          </div>
+          <button onclick="saveLpGroupSettings('${group.key}')"
+            class="mt-4 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
+            <i class="fas fa-save mr-1"></i>${group.label}を保存
+          </button>
+        </div>
+      `).join('')}
+
+      <!-- 特徴カード（lp_sections features 配列） -->
+      <div class="glass rounded-xl p-5 mb-4">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-semibold text-sm text-primary-400">
+            <i class="fas fa-layer-group mr-2"></i>特徴カード（3枚）
+          </h3>
+          <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+            <input type="checkbox" id="lp-features-visible" ${featuresSection?.is_visible ? 'checked' : ''}
+              onchange="toggleLpSection('features', this.checked)" class="rounded">
+            表示する
+          </label>
+        </div>
+        <p class="text-xs text-gray-500 mb-4">ホームページの「選ばれる理由」セクションに表示されるカード。アイコンはFont Awesomeのクラス名（例: star, check, bolt）を入力。</p>
+        <div id="lp-feature-cards">
+          ${featureItems.map((item, i) => `
+            <div class="bg-white/5 rounded-lg p-4 mb-3 border border-white/5">
+              <p class="text-xs font-bold text-gray-300 mb-3">カード ${i + 1}</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">タイトル</label>
+                  <input type="text" id="feat-${i}-title" value="${(item.title||'').replace(/"/g,'&quot;')}"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">アイコン（Font Awesome、例: filter / user-tie / bolt）</label>
+                  <input type="text" id="feat-${i}-icon" value="${(item.icon||'').replace(/"/g,'&quot;')}"
+                    placeholder="filter"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">カラー（primary / purple / green / blue / yellow）</label>
+                  <input type="text" id="feat-${i}-color" value="${(item.color||'').replace(/"/g,'&quot;')}"
+                    placeholder="primary"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">説明文</label>
+                  <textarea id="feat-${i}-body" rows="2"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none outline-none">${item.body||''}</textarea>
+                </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="lp-fields-${sec.section_key}">
-              ${fields.map(([k, v]) => `
-                <div>
-                  <label class="block text-xs text-gray-400 mb-1.5">${k}</label>
-                  ${(typeof v === 'string' && v.length > 60) ?
-                    `<textarea id="lp-${sec.section_key}-${k}" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${v}</textarea>` :
-                    `<input type="text" id="lp-${sec.section_key}-${k}" value="${String(v).replace(/"/g,'&quot;')}"
-                      class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">`
-                  }
-                </div>
-              `).join('')}
-            </div>
-            <button onclick="saveLpSection('${sec.section_key}', ${JSON.stringify(Object.keys(contentObj)).replace(/"/g,'&quot;')})"
-              class="mt-4 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
-              <i class="fas fa-save mr-1"></i>このセクションを保存
-            </button>
-          </div>
-        `;
-      }).join('')}
+          `).join('')}
+        </div>
+        <p class="text-xs text-gray-500 mb-2">※ カード枚数: ${featureItems.length}枚（現在固定。増減は開発者へ依頼）</p>
+        <button onclick="saveLpFeatureCards(${featureItems.length})"
+          class="mt-2 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
+          <i class="fas fa-save mr-1"></i>特徴カードを保存
+        </button>
+      </div>
     `;
   } catch(e) {
-    content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
+    content.innerHTML = `<div class="text-red-400 p-4">取得失敗: ${e.message}</div>`;
+  }
+}
+
+// site_settings グループ一括保存
+async function saveLpGroupSettings(groupKey) {
+  const group = LP_SETTING_GROUPS.find(g => g.key === groupKey);
+  if (!group) return;
+  const updates = {};
+  group.fields.forEach(f => {
+    const el = document.getElementById(`lpset-${f.key}`);
+    if (el) updates[f.key] = el.value;
+  });
+  try {
+    await API.put('/settings/admin/bulk/update', { settings: updates });
+    const msg = document.getElementById('lp-save-msg');
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+  } catch(e) {
+    alert('保存失敗: ' + e.message);
+  }
+}
+
+// 特徴カード（配列）を保存
+async function saveLpFeatureCards(count) {
+  const items = [];
+  for (let i = 0; i < count; i++) {
+    items.push({
+      title: document.getElementById(`feat-${i}-title`)?.value || '',
+      icon:  document.getElementById(`feat-${i}-icon`)?.value  || '',
+      color: document.getElementById(`feat-${i}-color`)?.value || '',
+      body:  document.getElementById(`feat-${i}-body`)?.value  || '',
+    });
+  }
+  const isVisible = document.getElementById('lp-features-visible')?.checked ?? true;
+  try {
+    await API.put('/settings/lp-sections/admin/features', { content: items, is_visible: isVisible });
+    const msg = document.getElementById('lp-save-msg');
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+  } catch(e) {
+    alert('保存失敗: ' + e.message);
   }
 }
 
 async function saveLpSection(sectionKey, fieldKeys) {
   const keys = typeof fieldKeys === 'string' ? JSON.parse(fieldKeys) : fieldKeys;
-  const content = {};
+  const contentObj = {};
   keys.forEach(k => {
     const el = document.getElementById(`lp-${sectionKey}-${k}`);
-    if (el) content[k] = el.value;
+    if (el) contentObj[k] = el.value;
   });
   const isVisible = document.getElementById(`lp-visible-${sectionKey}`)?.checked ?? true;
   try {
-    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { content, is_visible: isVisible });
+    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { content: contentObj, is_visible: isVisible });
     const msg = document.getElementById('lp-save-msg');
-    msg.classList.remove('hidden');
-    setTimeout(() => msg.classList.add('hidden'), 3000);
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
   } catch(e) {
     alert('保存失敗: ' + e.message);
   }
 }
 
 async function toggleLpSection(sectionKey, isVisible) {
-  await API.put(`/settings/lp-sections/admin/${sectionKey}`, { is_visible: isVisible });
+  try {
+    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { is_visible: isVisible });
+  } catch(e) { console.error(e); }
 }
 
 // ==========================================
