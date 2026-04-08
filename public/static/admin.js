@@ -492,17 +492,19 @@ async function deleteCompany(id) {
 async function loadJobs() {
   const content = document.getElementById('admin-content');
   try {
-    const [jobsRes, companiesRes] = await Promise.all([
+    const [jobsRes, companiesRes, uniTagsRes] = await Promise.all([
       API.get('/jobs/admin/all'),
-      API.get('/companies/admin/all')
+      API.get('/companies/admin/all'),
+      API.get('/homepage/university-tags')
     ]);
     const jobs = jobsRes.data.data;
     const companies = companiesRes.data.data;
+    const universityTags = uniTagsRes.data.data || [];
 
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
         <h2 class="font-bold">求人一覧 <span class="text-gray-500 font-normal text-sm">(${jobs.length}件)</span></h2>
-        <button onclick="showJobModal(null, ${JSON.stringify(companies).replace(/"/g,'&quot;')})" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+        <button onclick="showJobModal(null, ${JSON.stringify(companies).replace(/"/g,'&quot;')}, ${JSON.stringify(universityTags).replace(/"/g,'&quot;')})" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
           <i class="fas fa-plus mr-1"></i>求人を追加
         </button>
       </div>
@@ -540,7 +542,7 @@ async function loadJobs() {
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex gap-2">
-                    <button onclick="showJobModal(${JSON.stringify(j).replace(/"/g,'&quot;')}, ${JSON.stringify(companies).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">編集</button>
+                    <button onclick="showJobModal(${JSON.stringify(j).replace(/"/g,'&quot;')}, ${JSON.stringify(companies).replace(/"/g,'&quot;')}, ${JSON.stringify(universityTags).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">編集</button>
                     <a href="/jobs/${j.slug}" target="_blank" class="text-xs text-gray-400 hover:text-white">表示</a>
                     <button onclick="deleteJob(${j.id})" class="text-xs text-red-400 hover:text-red-300">削除</button>
                   </div>
@@ -554,10 +556,21 @@ async function loadJobs() {
   } catch(e) { content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`; }
 }
 
-function showJobModal(job = null, companies = []) {
+async function showJobModal(job = null, companies = [], universityTags = []) {
   const isEdit = !!job;
   const modal = document.getElementById('modal');
   const mc = document.getElementById('modal-content');
+
+  // 求人の大学タグを取得
+  let selectedTagIds = [];
+  if (isEdit && job.id) {
+    try {
+      const tagsRes = await API.get(`/homepage/jobs/${job.id}/university-tags`);
+      selectedTagIds = tagsRes.data.data.map(t => t.id);
+    } catch (e) {
+      console.error('Failed to load job university tags:', e);
+    }
+  }
 
   mc.innerHTML = `
     <div class="p-6">
@@ -646,6 +659,19 @@ function showJobModal(job = null, companies = []) {
             </div>
           </div>
           <div>
+            <label class="block text-xs text-gray-400 mb-1">おすすめ大学タグ
+              <span class="text-gray-600 font-normal">（複数選択可能）</span>
+            </label>
+            <div id="university-tags-container" class="max-h-48 overflow-y-auto bg-white/5 border border-white/10 rounded-lg p-3">
+              ${universityTags.length > 0 ? universityTags.map(tag => `
+                <label class="flex items-center gap-2 py-1.5 hover:bg-white/5 rounded px-2 cursor-pointer">
+                  <input type="checkbox" name="university_tag_ids" value="${tag.id}" ${selectedTagIds.includes(tag.id) ? 'checked' : ''} class="w-4 h-4 text-primary-500 rounded border-white/20 bg-white/5 focus:ring-primary-500">
+                  <span class="text-sm text-gray-300">${tag.name}</span>
+                </label>
+              `).join('') : '<p class="text-sm text-gray-500">大学タグがありません</p>'}
+            </div>
+          </div>
+          <div>
             <label class="block text-xs text-gray-400 mb-1 flex items-center gap-1">
               公開範囲
               <span class="text-gray-600 font-normal">（誰が閲覧できるか）</span>
@@ -707,7 +733,25 @@ async function submitCreateJob(e) {
   const data = Object.fromEntries(formData);
   data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
   data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
-  try { await API.post('/jobs/admin', data); closeModal(); loadJobs(); }
+  
+  // 大学タグIDを配列として取得
+  const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
+  data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
+  
+  try { 
+    const res = await API.post('/jobs/admin', data);
+    const jobId = res.data.data.id;
+    
+    // 大学タグを関連付け
+    if (data.university_tag_ids.length > 0) {
+      await API.post(`/homepage/jobs/${jobId}/university-tags`, {
+        university_tag_ids: data.university_tag_ids
+      });
+    }
+    
+    closeModal(); 
+    loadJobs(); 
+  }
   catch(err) { alert(err.response?.data?.error || '作成に失敗しました'); }
 }
 
@@ -717,7 +761,29 @@ async function submitUpdateJob(e, id) {
   const data = Object.fromEntries(formData);
   data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
   data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
-  try { await API.put(`/jobs/admin/${id}`, data); closeModal(); loadJobs(); }
+  
+  // 大学タグIDを配列として取得
+  const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
+  data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
+  
+  try { 
+    await API.put(`/jobs/admin/${id}`, data);
+    
+    // 大学タグを更新（削除→再追加）
+    if (data.university_tag_ids.length > 0) {
+      await API.post(`/homepage/jobs/${id}/university-tags`, {
+        university_tag_ids: data.university_tag_ids
+      });
+    } else {
+      // タグが0件の場合は全削除のみ（APIのPOSTで自動削除される）
+      await API.post(`/homepage/jobs/${id}/university-tags`, {
+        university_tag_ids: []
+      });
+    }
+    
+    closeModal(); 
+    loadJobs(); 
+  }
   catch(err) { alert(err.response?.data?.error || '更新に失敗しました'); }
 }
 
