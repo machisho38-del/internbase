@@ -66,11 +66,11 @@ homepage.get('/featured-jobs', async (c) => {
     SELECT
       f.id as featured_id, f.display_order,
       j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.wage_min, j.wage_max,
-      c.name as company_name, c.logo_url as company_logo
+      comp.name as company_name, comp.logo_url as company_logo
     FROM featured_jobs f
     JOIN jobs j ON f.job_id = j.id
-    JOIN companies c ON j.company_id = c.id
-    WHERE f.is_visible = 1 AND j.status = 'published' AND c.status = 'published'
+    JOIN companies comp ON j.company_id = comp.id
+    WHERE f.is_visible = 1 AND j.status = 'published' AND comp.status = 'published'
     ORDER BY f.display_order ASC
     LIMIT 5
   `).all()
@@ -82,10 +82,10 @@ homepage.get('/featured-jobs/admin', async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT
       f.id, f.job_id, f.is_visible, f.display_order, f.created_at,
-      j.title as job_title, c.name as company_name
+      j.title as job_title, comp.name as company_name
     FROM featured_jobs f
     JOIN jobs j ON f.job_id = j.id
-    JOIN companies c ON j.company_id = c.id
+    JOIN companies comp ON j.company_id = comp.id
     ORDER BY f.display_order ASC
   `).all()
   return c.json({ success: true, data: results })
@@ -152,11 +152,11 @@ homepage.get('/universities/:slug/jobs', async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT DISTINCT
       j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.wage_min, j.wage_max,
-      c.name as company_name, c.logo_url as company_logo
+      comp.name as company_name, comp.logo_url as company_logo
     FROM jobs j
-    JOIN companies c ON j.company_id = c.id
+    JOIN companies comp ON j.company_id = comp.id
     JOIN job_university_tags jut ON j.id = jut.job_id
-    WHERE jut.university_tag_id = ? AND j.status = 'published' AND c.status = 'published'
+    WHERE jut.university_tag_id = ? AND j.status = 'published' AND comp.status = 'published'
     ORDER BY j.display_order ASC, j.created_at DESC
   `).bind(tag.id).all()
   

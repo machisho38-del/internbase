@@ -315,6 +315,16 @@ function getAdminHTML(): string {
       <a href="#" onclick="navigate('announcements')" data-page="announcements" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
         <i class="fas fa-bullhorn w-4 text-center"></i>お知らせ管理
       </a>
+      <div class="text-xs text-gray-600 px-3 py-2 mt-4">トップページ管理</div>
+      <a href="#" onclick="navigate('success-stories')" data-page="success-stories" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-trophy w-4 text-center"></i>内定者タイムライン
+      </a>
+      <a href="#" onclick="navigate('featured-jobs')" data-page="featured-jobs" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-star w-4 text-center"></i>ピックアップ求人
+      </a>
+      <a href="#" onclick="navigate('university-tags')" data-page="university-tags" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-university w-4 text-center"></i>大学タグ管理
+      </a>
     </nav>
 
     <div class="p-4 border-t border-white/10">

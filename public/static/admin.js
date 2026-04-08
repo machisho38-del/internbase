@@ -110,7 +110,8 @@ function navigate(page) {
   const titles = {
     dashboard: 'ダッシュボード', companies: '企業管理', jobs: '求人管理',
     students: '学生一覧', applications: '応募管理', invites: '招待コード', consultations: '無料相談',
-    'site-settings': 'サイト設定', 'lp-edit': 'LP編集', faqs: 'FAQ管理', announcements: 'お知らせ管理'
+    'site-settings': 'サイト設定', 'lp-edit': 'LP編集', faqs: 'FAQ管理', announcements: 'お知らせ管理',
+    'success-stories': '内定者タイムライン管理', 'featured-jobs': 'ピックアップ求人設定', 'university-tags': '大学タグ管理'
   };
   document.getElementById('page-title').textContent = titles[page] || page;
 
@@ -119,7 +120,8 @@ function navigate(page) {
     students: loadStudents, applications: loadApplications, invites: loadInvites,
     consultations: loadConsultations,
     'site-settings': loadSiteSettings, 'lp-edit': loadLpEdit,
-    faqs: loadFaqs, announcements: loadAnnouncements
+    faqs: loadFaqs, announcements: loadAnnouncements,
+    'success-stories': loadSuccessStories, 'featured-jobs': loadFeaturedJobs, 'university-tags': loadUniversityTags
   };
   if (pages[page]) pages[page]();
 }
@@ -1986,6 +1988,546 @@ function closeModal() {
 document.getElementById('modal')?.addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
+
+// ==========================================
+// 内定者タイムライン管理ページ
+// ==========================================
+async function loadSuccessStories() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/homepage/success-stories/admin');
+    const stories = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">内定者タイムライン管理</h2>
+        <button onclick="showSuccessStoryModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>新規追加
+        </button>
+      </div>
+      <div id="story-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>保存しました
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">学生名</th>
+              <th class="px-4 py-3">大学</th>
+              <th class="px-4 py-3">内定先</th>
+              <th class="px-4 py-3">所感</th>
+              <th class="px-4 py-3">表示順</th>
+              <th class="px-4 py-3">公開</th>
+              <th class="px-4 py-3 text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${stories.length ? stories.map(s => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${s.student_name}</td>
+                <td class="px-4 py-3 text-gray-400">${s.university}</td>
+                <td class="px-4 py-3 text-gray-300">${s.company_name}</td>
+                <td class="px-4 py-3 text-gray-400 text-xs max-w-xs truncate">${s.comment || '-'}</td>
+                <td class="px-4 py-3 text-gray-400">${s.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${s.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${s.is_visible ? '公開' : '非公開'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showSuccessStoryModal(${s.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> 編集
+                  </button>
+                  <button onclick="deleteSuccessStory(${s.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> 削除
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">データがありません</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">取得失敗: ${e.message}</div>`;
+  }
+}
+
+async function showSuccessStoryModal(id = null) {
+  let story = { student_name: '', university: '', company_name: '', comment: '', is_visible: 1, display_order: 0 };
+  if (id) {
+    const res = await API.get('/homepage/success-stories/admin');
+    story = res.data.data.find(s => s.id === id) || story;
+  }
+  
+  document.getElementById('modal-container').innerHTML = `
+    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
+      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+        <h3 class="text-lg font-bold mb-4">${id ? '内定者タイムライン編集' : '内定者タイムライン追加'}</h3>
+        <form onsubmit="${id ? `submitUpdateSuccessStory(event, ${id})` : 'submitCreateSuccessStory(event)'}" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">学生名（例: 山田 太郎さん）<span class="text-red-400">*</span></label>
+              <input type="text" name="student_name" value="${story.student_name.replace(/"/g,'&quot;')}" required
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
+              <input type="text" name="university" value="${story.university.replace(/"/g,'&quot;')}" required
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">内定先企業名<span class="text-red-400">*</span></label>
+            <input type="text" name="company_name" value="${story.company_name.replace(/"/g,'&quot;')}" required
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">所感（1-2行）</label>
+            <textarea name="comment" rows="2"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${story.comment||''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">表示順（昇順）</label>
+              <input type="number" name="display_order" value="${story.display_order}" min="0"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">公開設定</label>
+              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${story.is_visible?'selected':''}>公開</option>
+                <option value="0" ${!story.is_visible?'selected':''}>非公開</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              キャンセル
+            </button>
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? '更新' : '追加'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+}
+
+async function submitCreateSuccessStory(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    student_name: form.student_name.value,
+    university: form.university.value,
+    company_name: form.company_name.value,
+    comment: form.comment.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/success-stories/admin', data);
+    closeModal();
+    loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('追加失敗: ' + e.message);
+  }
+}
+
+async function submitUpdateSuccessStory(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    student_name: form.student_name.value,
+    university: form.university.value,
+    company_name: form.company_name.value,
+    comment: form.comment.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/success-stories/admin/${id}`, data);
+    closeModal();
+    loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('更新失敗: ' + e.message);
+  }
+}
+
+async function deleteSuccessStory(id) {
+  if (!confirm('この内定者タイムラインを削除しますか？')) return;
+  try {
+    await API.delete(`/homepage/success-stories/admin/${id}`);
+    loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('削除失敗: ' + e.message);
+  }
+}
+
+// ==========================================
+// ピックアップ求人設定ページ
+// ==========================================
+async function loadFeaturedJobs() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const [featuredRes, allJobsRes] = await Promise.all([
+      API.get('/homepage/featured-jobs/admin'),
+      API.get('/jobs/admin/all')
+    ]);
+    const featured = featuredRes.data.data;
+    const allJobs = allJobsRes.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">ピックアップ求人設定</h2>
+        <button onclick="showFeaturedJobModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>求人を追加
+        </button>
+      </div>
+      <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <p class="text-blue-300 mb-2"><i class="fas fa-info-circle mr-1"></i>トップページ「人気の求人5選」に表示される求人を管理します。</p>
+        <p class="text-gray-400 text-xs">表示順が小さい順に最大5件まで公開されます。</p>
+      </div>
+      <div id="featured-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>保存しました
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">求人名</th>
+              <th class="px-4 py-3">企業名</th>
+              <th class="px-4 py-3">表示順</th>
+              <th class="px-4 py-3">公開</th>
+              <th class="px-4 py-3 text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${featured.length ? featured.map(f => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${f.job_title}</td>
+                <td class="px-4 py-3 text-gray-400">${f.company_name}</td>
+                <td class="px-4 py-3 text-gray-400">${f.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${f.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${f.is_visible ? '公開' : '非公開'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showFeaturedJobModal(${f.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> 編集
+                  </button>
+                  <button onclick="deleteFeaturedJob(${f.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> 削除
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="5" class="px-4 py-8 text-center text-gray-500">ピックアップ求人が設定されていません</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">取得失敗: ${e.message}</div>`;
+  }
+}
+
+async function showFeaturedJobModal(id = null) {
+  const [featuredRes, allJobsRes] = await Promise.all([
+    API.get('/homepage/featured-jobs/admin'),
+    API.get('/jobs/admin/all')
+  ]);
+  const allJobs = allJobsRes.data.data;
+  let featured = { job_id: '', is_visible: 1, display_order: 0 };
+  
+  if (id) {
+    featured = featuredRes.data.data.find(f => f.id === id) || featured;
+  }
+  
+  document.getElementById('modal-container').innerHTML = `
+    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
+      <div class="bg-dark-800 rounded-2xl w-full max-w-lg p-6">
+        <h3 class="text-lg font-bold mb-4">${id ? 'ピックアップ求人編集' : 'ピックアップ求人追加'}</h3>
+        <form onsubmit="${id ? `submitUpdateFeaturedJob(event, ${id})` : 'submitCreateFeaturedJob(event)'}" class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">求人を選択<span class="text-red-400">*</span></label>
+            <select name="job_id" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+              <option value="">選択してください</option>
+              ${allJobs.map(j => `<option value="${j.id}" ${j.id === featured.job_id ? 'selected' : ''}>${j.title} (${j.company_name})</option>`).join('')}
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">表示順</label>
+              <input type="number" name="display_order" value="${featured.display_order}" min="0"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">公開設定</label>
+              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${featured.is_visible?'selected':''}>公開</option>
+                <option value="0" ${!featured.is_visible?'selected':''}>非公開</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              キャンセル
+            </button>
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? '更新' : '追加'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+}
+
+async function submitCreateFeaturedJob(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    job_id: Number(form.job_id.value),
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/featured-jobs/admin', data);
+    closeModal();
+    loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('追加失敗: ' + e.message);
+  }
+}
+
+async function submitUpdateFeaturedJob(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    job_id: Number(form.job_id.value),
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/featured-jobs/admin/${id}`, data);
+    closeModal();
+    loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('更新失敗: ' + e.message);
+  }
+}
+
+async function deleteFeaturedJob(id) {
+  if (!confirm('このピックアップ求人を削除しますか？')) return;
+  try {
+    await API.delete(`/homepage/featured-jobs/admin/${id}`);
+    loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('削除失敗: ' + e.message);
+  }
+}
+
+// ==========================================
+// 大学タグ管理ページ
+// ==========================================
+async function loadUniversityTags() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/homepage/university-tags/admin');
+    const tags = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">大学タグ管理</h2>
+        <button onclick="showUniversityTagModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>新規追加
+        </button>
+      </div>
+      <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <p class="text-blue-300 mb-2"><i class="fas fa-info-circle mr-1"></i>大学タグは求人に紐付けて「〇〇大学向けおすすめ求人」として表示できます。</p>
+        <p class="text-gray-400 text-xs">求人編集ページで大学タグを選択して紐付けてください。</p>
+      </div>
+      <div id="tag-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>保存しました
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">大学名</th>
+              <th class="px-4 py-3">スラッグ</th>
+              <th class="px-4 py-3">説明文</th>
+              <th class="px-4 py-3">表示順</th>
+              <th class="px-4 py-3">公開</th>
+              <th class="px-4 py-3 text-right">操作</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${tags.length ? tags.map(t => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${t.name}</td>
+                <td class="px-4 py-3 text-gray-400 font-mono text-xs">${t.slug}</td>
+                <td class="px-4 py-3 text-gray-400 text-xs max-w-xs truncate">${t.description || '-'}</td>
+                <td class="px-4 py-3 text-gray-400">${t.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${t.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${t.is_visible ? '公開' : '非公開'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showUniversityTagModal(${t.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> 編集
+                  </button>
+                  <button onclick="deleteUniversityTag(${t.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> 削除
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">大学タグがありません</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">取得失敗: ${e.message}</div>`;
+  }
+}
+
+async function showUniversityTagModal(id = null) {
+  let tag = { name: '', slug: '', description: '', is_visible: 1, display_order: 0 };
+  if (id) {
+    const res = await API.get('/homepage/university-tags/admin');
+    tag = res.data.data.find(t => t.id === id) || tag;
+  }
+  
+  document.getElementById('modal-container').innerHTML = `
+    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
+      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6">
+        <h3 class="text-lg font-bold mb-4">${id ? '大学タグ編集' : '大学タグ追加'}</h3>
+        <form onsubmit="${id ? `submitUpdateUniversityTag(event, ${id})` : 'submitCreateUniversityTag(event)'}" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
+              <input type="text" name="name" value="${tag.name.replace(/"/g,'&quot;')}" required
+                placeholder="例: 東京大学"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">スラッグ（URL用）<span class="text-red-400">*</span></label>
+              <input type="text" name="slug" value="${tag.slug.replace(/"/g,'&quot;')}" required
+                placeholder="例: todai"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">説明文</label>
+            <textarea name="description" rows="2"
+              placeholder="例: 日本最高峰の学府。トップ企業への内定実績多数。"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${tag.description||''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">表示順</label>
+              <input type="number" name="display_order" value="${tag.display_order}" min="0"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">公開設定</label>
+              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${tag.is_visible?'selected':''}>公開</option>
+                <option value="0" ${!tag.is_visible?'selected':''}>非公開</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              キャンセル
+            </button>
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? '更新' : '追加'}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+}
+
+async function submitCreateUniversityTag(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    slug: form.slug.value,
+    description: form.description.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/university-tags/admin', data);
+    closeModal();
+    loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('追加失敗: ' + e.message);
+  }
+}
+
+async function submitUpdateUniversityTag(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    slug: form.slug.value,
+    description: form.description.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/university-tags/admin/${id}`, data);
+    closeModal();
+    loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('更新失敗: ' + e.message);
+  }
+}
+
+async function deleteUniversityTag(id) {
+  if (!confirm('この大学タグを削除しますか？紐付いている求人からも解除されます。')) return;
+  try {
+    await API.delete(`/homepage/university-tags/admin/${id}`);
+    loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('削除失敗: ' + e.message);
+  }
+}
+
+// ==========================================
+// 共通ヘルパー関数
+// ==========================================
+function showSaveMsg(id) {
+  const msg = document.getElementById(id);
+  if (msg) {
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+  }
+}
 
 // 初期化
 window.addEventListener('DOMContentLoaded', () => {
