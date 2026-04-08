@@ -10,6 +10,7 @@ import inviteApi from './routes/api.invite'
 import consultationApi from './routes/api.consultation'
 import authApi from './routes/api.auth'
 import settingsApi from './routes/api.settings'
+import homepageApi from './routes/api.homepage'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -24,6 +25,7 @@ app.route('/api/invite', inviteApi)
 app.route('/api/consultation', consultationApi)
 app.route('/api/auth', authApi)
 app.route('/api/settings', settingsApi)
+app.route('/api/homepage', homepageApi)
 
 // ヘルスチェック
 app.get('/api/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
@@ -41,6 +43,16 @@ app.get('/jobs', (c) => {
 // 公開画面 - 求人詳細
 app.get('/jobs/:slug', (c) => {
   return c.html(getPublicHTML('job-detail'))
+})
+
+// 公開画面 - 大学別求人
+app.get('/universities', (c) => {
+  return c.html(getPublicHTML('universities'))
+})
+
+// 公開画面 - 特定大学の求人一覧
+app.get('/universities/:slug', (c) => {
+  return c.html(getPublicHTML('university-jobs'))
 })
 
 // 公開画面 - 登録
