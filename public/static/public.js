@@ -21,15 +21,21 @@ async function getSiteSettings() {
 async function initHomePage() {
   const app = document.getElementById('app');
 
-  // サイト設定・お知らせ・FAQを並列取得
-  const [s, annRes, faqRes] = await Promise.all([
+  // サイト設定・お知らせ・FAQ・内定者タイムライン・ピックアップ求人・大学タグを並列取得
+  const [s, annRes, faqRes, storiesRes, featuredRes, uniTagsRes] = await Promise.all([
     getSiteSettings(),
     API.get('/settings/announcements').catch(() => ({ data: { data: [] } })),
-    API.get('/settings/faqs').catch(() => ({ data: { data: [] } }))
+    API.get('/settings/faqs').catch(() => ({ data: { data: [] } })),
+    API.get('/homepage/success-stories').catch(() => ({ data: { data: [] } })),
+    API.get('/homepage/featured-jobs').catch(() => ({ data: { data: [] } })),
+    API.get('/homepage/university-tags').catch(() => ({ data: { data: [] } }))
   ]);
 
   const announcements = annRes.data.data;
   const faqs = faqRes.data.data;
+  const successStories = storiesRes.data.data;
+  const featuredJobs = featuredRes.data.data;
+  const universityTags = uniTagsRes.data.data;
 
   const typeColors = {
     info: 'bg-blue-500/10 border-blue-500/20 text-blue-300',
@@ -55,7 +61,7 @@ async function initHomePage() {
       </div>
     </div>` : ''}
 
-    <!-- ヒーローセクション -->
+    <!-- ヒーローセクション（高学歴層特化ニュアンス） -->
     <section class="hero-gradient min-h-[90vh] flex items-center relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl"></div>
@@ -87,7 +93,112 @@ async function initHomePage() {
       </div>
     </section>
 
-    <!-- 数字セクション -->
+    <!-- 招待コード + 無料相談（LINE誘導）セクション -->
+    <section class="py-12 border-b border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-5">
+          <!-- 招待コード -->
+          <div class="glass rounded-2xl p-6 hover:bg-white/5 transition-all">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-ticket-alt text-primary-400 text-xl"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-2">招待コード登録</h3>
+                <p class="text-gray-400 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
+                <a href="/register" class="inline-block bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/20">
+                  登録する <i class="fas fa-arrow-right ml-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- 無料相談（LINE） -->
+          <div class="glass rounded-2xl p-6 hover:bg-white/5 transition-all" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), transparent);">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 bg-green-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-line text-green-400 text-2xl"></i>
+              </div>
+              <div class="flex-1">
+                <h3 class="font-bold text-lg mb-2">無料相談（LINE）</h3>
+                <p class="text-gray-400 text-sm mb-4">キャリアのプロが無料でサポート</p>
+                <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500/10 hover:bg-green-500/20 text-green-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-green-500/20">
+                  <i class="fab fa-line mr-1"></i>LINEで相談する <i class="fas fa-external-link-alt ml-1 text-xs"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 大学別おすすめ求人セクション -->
+    ${universityTags.length > 0 ? `
+    <section class="py-20">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-black mb-3">あなたの大学のおすすめ求人</h2>
+          <p class="text-gray-500">各大学に特化した厳選インターン</p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
+          ${universityTags.slice(0, 12).map(tag => `
+            <a href="/universities/${tag.slug}" class="glass rounded-xl p-4 text-center hover:bg-white/10 transition-all group">
+              <div class="w-12 h-12 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/20 transition-colors">
+                <i class="fas fa-university text-primary-400"></i>
+              </div>
+              <p class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">${tag.name}</p>
+            </a>
+          `).join('')}
+        </div>
+        <div class="text-center">
+          <a href="/universities" class="inline-block text-primary-400 hover:text-primary-300 text-sm transition-colors">
+            全ての大学を見る <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </section>` : ''}
+
+    <!-- 人気求人5選（ピックアップ） -->
+    ${featuredJobs.length > 0 ? `
+    <section class="py-20 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between mb-10">
+          <div>
+            <h2 class="text-3xl font-black mb-2">人気求人5選</h2>
+            <p class="text-gray-500">今最も注目されているインターン</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+          ${featuredJobs.map(job => renderJobCard(job)).join('')}
+        </div>
+        <div class="text-center">
+          <a href="/jobs" class="inline-block bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 font-medium px-8 py-3 rounded-xl transition-colors border border-primary-500/20">
+            もっと見る <i class="fas fa-arrow-right ml-2"></i>
+          </a>
+        </div>
+      </div>
+    </section>` : ''}
+
+    <!-- 会員限定バナー（登録済みでない場合のみ） -->
+    ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
+    <section class="py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-6 flex flex-col sm:flex-row items-center gap-4">
+          <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-transparent pointer-events-none"></div>
+          <div class="text-3xl">🔒</div>
+          <div class="flex-1 text-center sm:text-left">
+            <p class="font-bold text-yellow-300 text-lg">${s.members_banner_title || '登録者限定！非公開求人あり'}</p>
+            <p class="text-gray-400 text-sm mt-0.5" id="members-job-count-text">
+              ${s.members_banner_text || '登録するだけで見られる特別求人をチェックしよう'}
+            </p>
+          </div>
+          <a href="/register" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl transition-colors text-sm whitespace-nowrap">
+            ${s.members_banner_btn || '今すぐ登録して確認する'} <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </section>` : ''}
+
+    <!-- 実績セクション（数字） -->
     <section class="py-16 border-y border-white/5">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
@@ -111,41 +222,41 @@ async function initHomePage() {
       </div>
     </section>
 
-    <!-- 会員限定バナー（登録済みでない場合のみ） -->
-    ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
-    <section class="py-6">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative overflow-hidden rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-6 flex flex-col sm:flex-row items-center gap-4">
-          <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-transparent pointer-events-none"></div>
-          <div class="text-3xl">🔒</div>
-          <div class="flex-1 text-center sm:text-left">
-            <p class="font-bold text-yellow-300 text-lg">${s.members_banner_title || '登録者限定！非公開求人あり'}</p>
-            <p class="text-gray-400 text-sm mt-0.5" id="members-job-count-text">
-              ${s.members_banner_text || '登録するだけで見られる特別求人をチェックしよう'}
-            </p>
-          </div>
-          <a href="/register" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl transition-colors text-sm whitespace-nowrap">
-            ${s.members_banner_btn || '今すぐ登録して確認する'} <i class="fas fa-arrow-right ml-1"></i>
-          </a>
+    <!-- 内定者タイムライン（自動横スクロール） -->
+    ${successStories.length > 0 ? `
+    <section class="py-20 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+        <div class="text-center">
+          <h2 class="text-3xl font-black mb-3">内定者タイムライン</h2>
+          <p class="text-gray-500">先輩たちの成功ストーリー</p>
         </div>
       </div>
-    </section>` : ''}
-
-    <!-- 新着求人 -->
-    <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between mb-10">
-        <div>
-          <h2 class="text-3xl font-black mb-2">新着求人</h2>
-          <p class="text-gray-500">厳選されたスタートアップの最新募集情報</p>
+      <div class="relative">
+        <div class="timeline-scroll flex gap-4 px-4" style="animation: scroll-timeline 30s linear infinite;">
+          ${successStories.concat(successStories).map(story => `
+            <div class="glass rounded-xl p-5 flex-shrink-0 w-80">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center">
+                  <i class="fas fa-user-graduate text-primary-400"></i>
+                </div>
+                <div>
+                  <p class="text-sm font-bold">${story.university_name} ${story.student_name}</p>
+                  <p class="text-xs text-gray-500">${story.company_name} 内定</p>
+                </div>
+              </div>
+              <p class="text-sm text-gray-400 leading-relaxed">${story.comment}</p>
+            </div>
+          `).join('')}
         </div>
-        <a href="/jobs" class="text-primary-400 hover:text-primary-300 text-sm transition-colors">
-          全て見る <i class="fas fa-arrow-right ml-1"></i>
-        </a>
-      </div>
-      <div id="home-jobs" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        ${[1,2,3].map(() => `<div class="glass rounded-xl p-5 animate-pulse"><div class="h-4 bg-white/10 rounded mb-3 w-3/4"></div><div class="h-3 bg-white/5 rounded mb-2"></div></div>`).join('')}
       </div>
     </section>
+    <style>
+      @keyframes scroll-timeline {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .timeline-scroll:hover { animation-play-state: paused; }
+    </style>` : ''}
 
     <!-- 特徴セクション -->
     <section class="py-20 border-t border-white/5">
@@ -181,24 +292,22 @@ async function initHomePage() {
             </div>
           `).join('')}
         </div>
-        <div class="text-center mt-8">
-          <a href="/consultation" class="text-primary-400 hover:text-primary-300 text-sm transition-colors">
-            <i class="fas fa-comments mr-1"></i>その他のご相談はこちら
-          </a>
-        </div>
       </div>
     </section>` : ''}
 
-    <!-- CTA セクション -->
+    <!-- CTA セクション（無料相談・LINE誘導・下段） -->
     <section class="py-20">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="glass rounded-3xl p-12 relative overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-500/10 to-purple-500/5 rounded-3xl"></div>
+        <div class="glass rounded-3xl p-12 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), rgba(79,110,247,0.05));">
+          <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-primary-500/5 rounded-3xl"></div>
           <div class="relative">
-            <h2 class="text-3xl sm:text-4xl font-black mb-4">${s.cta_title || 'まずは無料相談から<br>始めてみませんか？'}</h2>
-            <p class="text-gray-400 mb-8">${s.cta_subtitle || '自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。'}</p>
-            <a href="/consultation" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25">
-              <i class="fas fa-calendar-alt mr-2"></i>${s.cta_btn_text || '無料相談を申し込む'}
+            <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <i class="fab fa-line text-green-400 text-3xl"></i>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
+            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
+            <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25">
+              <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
             </a>
           </div>
         </div>
@@ -206,17 +315,12 @@ async function initHomePage() {
     </section>
   `;
 
-  // 求人データ取得
+  // 会員限定求人件数を取得
   const studentId = localStorage.getItem('student_id');
   const params = studentId ? `?student_id=${studentId}` : '';
   try {
     const res = await API.get('/jobs' + params);
-    const jobs = res.data.data.slice(0, 6);
     const membersCount = res.data.members_job_count || 0;
-
-    document.getElementById('home-jobs').innerHTML = jobs.length
-      ? jobs.map(renderJobCard).join('')
-      : `<p class="text-gray-500 col-span-3 text-center py-10">求人情報を準備中です</p>`;
 
     // 会員限定件数を更新
     if (membersCount > 0 && !studentId) {
