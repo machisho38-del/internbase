@@ -1272,15 +1272,13 @@ async function loadSiteSettings() {
       groups[s.group_name].push(s);
     });
 
+    // LP関連グループはLP編集ページで管理するため、サイト設定から除外
+    const LP_GROUPS = ['hero', 'stats', 'cta', 'members', 'features'];
+
     const groupLabels = {
       site: 'サイト基本情報', general: 'サイト基本情報',
-      hero: 'ヒーローセクション',
-      stats: '数字セクション（実績表示）',
-      cta: 'CTAセクション（登録誘導）',
       line: 'LINE・SNS設定', contact: 'LINE・SNS・連絡先設定',
       footer: 'フッター設定',
-      features: '特徴セクション',
-      members: '会員限定求人バナー',
       referral: '学生招待コード設定',
     };
 
@@ -1300,15 +1298,24 @@ async function loadSiteSettings() {
 
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
-        <h2 class="font-bold">サイト設定</h2>
+        <h2 class="text-lg font-bold">サイト設定</h2>
         <button onclick="saveAllSettings()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
           <i class="fas fa-save mr-1"></i>すべて保存
         </button>
       </div>
+      <div class="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <i class="fas fa-info-circle text-blue-400 mt-0.5 shrink-0"></i>
+        <div>
+          <p class="text-blue-300 font-medium mb-1">このページについて</p>
+          <p class="text-gray-400 text-xs leading-relaxed">サービス名・LINE URL・フッターなどの<strong class="text-white">運営設定</strong>を管理します。<br>
+          ヒーロー見出し・特徴カード・CTAなどの<strong class="text-white">LP表示設定</strong>は
+          <button onclick="navigate('lp-edit')" class="text-primary-400 underline hover:text-primary-300">LP編集ページ</button>で管理してください。</p>
+        </div>
+      </div>
       <div id="settings-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
         <i class="fas fa-check-circle mr-1"></i>保存しました
       </div>
-      ${Object.entries(groups).map(([groupName, items]) => `
+      ${Object.entries(groups).filter(([groupName]) => !LP_GROUPS.includes(groupName)).map(([groupName, items]) => `
         <div class="glass rounded-xl p-5 mb-4">
           <h3 class="font-semibold text-sm mb-4 text-primary-400">
             <i class="fas fa-layer-group mr-2"></i>${groupLabels[groupName] || groupName}
@@ -1594,7 +1601,7 @@ async function saveLpGroupSettings(groupKey) {
     if (el) updates[f.key] = el.value;
   });
   try {
-    await API.put('/settings/admin/bulk/update', { settings: updates });
+    await API.put('/settings/admin/bulk/update', updates);
     const msg = document.getElementById('lp-save-msg');
     if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
   } catch(e) {
