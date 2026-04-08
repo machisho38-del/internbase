@@ -62,19 +62,24 @@ homepage.delete('/success-stories/admin/:id', async (c) => {
 
 // 公開用：ピックアップ求人を取得（求人詳細含む）
 homepage.get('/featured-jobs', async (c) => {
-  const { results } = await c.env.DB.prepare(`
-    SELECT
-      f.id as featured_id, f.display_order,
-      j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.wage_min, j.wage_max,
-      comp.name as company_name, comp.logo_url as company_logo
-    FROM featured_jobs f
-    JOIN jobs j ON f.job_id = j.id
-    JOIN companies comp ON j.company_id = comp.id
-    WHERE f.is_visible = 1 AND j.status = 'published' AND comp.status = 'published'
-    ORDER BY f.display_order ASC
-    LIMIT 5
-  `).all()
-  return c.json({ success: true, data: results })
+  try {
+    const { results } = await c.env.DB.prepare(`
+      SELECT
+        f.id as featured_id, f.display_order,
+        j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.hourly_wage_min, j.hourly_wage_max,
+        comp.name as company_name, comp.logo_url as company_logo
+      FROM featured_jobs f
+      JOIN jobs j ON f.job_id = j.id
+      JOIN companies comp ON j.company_id = comp.id
+      WHERE f.is_visible = 1 AND j.status = 'published' AND comp.status = 'published'
+      ORDER BY f.display_order ASC
+      LIMIT 5
+    `).all()
+    return c.json({ success: true, data: results })
+  } catch(error: any) {
+    console.error('Featured jobs error:', error)
+    return c.json({ success: false, error: error.message }, 500)
+  }
 })
 
 // 管理用：全ピックアップ求人取得
@@ -151,7 +156,7 @@ homepage.get('/universities/:slug/jobs', async (c) => {
   // その大学向けの求人を取得
   const { results } = await c.env.DB.prepare(`
     SELECT DISTINCT
-      j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.wage_min, j.wage_max,
+      j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.hourly_wage_min, j.hourly_wage_max,
       comp.name as company_name, comp.logo_url as company_logo
     FROM jobs j
     JOIN companies comp ON j.company_id = comp.id
