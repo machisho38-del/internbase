@@ -38,24 +38,24 @@ async function initHomePage() {
   const universityTags = uniTagsRes.data.data;
 
   const typeColors = {
-    info: 'bg-blue-500/10 border-blue-500/20 text-blue-300',
-    warning: 'bg-yellow-500/10 border-yellow-500/20 text-yellow-300',
-    success: 'bg-green-500/10 border-green-500/20 text-green-300',
-    campaign: 'bg-purple-500/10 border-purple-500/20 text-purple-300'
+    info: 'bg-blue-50 border-blue-200 text-blue-700',
+    warning: 'bg-yellow-50 border-yellow-200 text-yellow-700',
+    success: 'bg-green-50 border-green-200 text-green-700',
+    campaign: 'bg-purple-50 border-purple-200 text-purple-700'
   };
   const typeIcons = { info: 'info-circle', warning: 'exclamation-triangle', success: 'check-circle', campaign: 'gift' };
 
   app.innerHTML = `
     <!-- お知らせバナー -->
     ${announcements.length > 0 ? `
-    <div class="bg-dark-800 border-b border-white/10">
+    <div class="bg-gray-50 border-b border-gray-200">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 space-y-1.5">
         ${announcements.map(a => `
           <div class="flex items-center gap-3 text-sm ${(typeColors[a.type]||typeColors.info)} border rounded-lg px-4 py-2">
             <i class="fas fa-${typeIcons[a.type]||'info-circle'} flex-shrink-0"></i>
             <span class="font-medium">${a.title}</span>
             ${a.body ? `<span class="opacity-75 text-xs hidden sm:block">— ${a.body}</span>` : ''}
-            ${a.link_url && a.link_url !== '#' ? `<a href="${a.link_url}" class="ml-auto underline text-xs flex-shrink-0">${a.link_text || '詳細'}</a>` : ''}
+            ${a.link_url && a.link_url !== '#' ? `<a href="${a.link_url}" class="ml-auto underline text-xs flex-shrink-0 hover:opacity-80">${a.link_text || '詳細'}</a>` : ''}
           </div>
         `).join('')}
       </div>
@@ -75,17 +75,17 @@ async function initHomePage() {
           </div>
           <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6">
             <span class="gradient-text">${s.hero_title_line1 || '圧倒的な'}</span><br>
-            <span class="text-white">${s.hero_title_line2 || '実務経験を、'}</span><br>
-            <span class="text-white">${s.hero_title_line3 || '今すぐ始めよう。'}</span>
+            <span class="text-gray-900">${s.hero_title_line2 || '実務経験を、'}</span><br>
+            <span class="text-gray-900">${s.hero_title_line3 || '今すぐ始めよう。'}</span>
           </h1>
-          <p class="text-gray-400 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
+          <p class="text-gray-600 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
             ${s.hero_subtitle || 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルと実績を手に入れろ。'}
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <a href="/jobs" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25">
               <i class="fas fa-search mr-2"></i>${s.hero_cta1_text || '求人を探す'}
             </a>
-            <a href="/register" class="glass hover:bg-white/10 text-white font-medium px-8 py-4 rounded-xl transition-all text-center">
+            <a href="/register" class="glass hover:bg-white/95 text-gray-800 font-medium px-8 py-4 rounded-xl transition-all text-center">
               <i class="fas fa-ticket-alt mr-2"></i>${s.hero_cta2_text || '招待コードで登録'}
             </a>
           </div>
@@ -98,14 +98,14 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-5">
           <!-- 招待コード -->
-          <div class="glass rounded-2xl p-6 hover:bg-white/5 transition-all">
+          <div class="glass rounded-2xl p-6 hover:bg-white/95 transition-all">
             <div class="flex items-start gap-4">
               <div class="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-ticket-alt text-primary-400 text-xl"></i>
               </div>
               <div class="flex-1">
                 <h3 class="font-bold text-lg mb-2">招待コード登録</h3>
-                <p class="text-gray-400 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
+                <p class="text-gray-600 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
                 <a href="/register" class="inline-block bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/20">
                   登録する <i class="fas fa-arrow-right ml-1"></i>
                 </a>
@@ -120,7 +120,7 @@ async function initHomePage() {
               </div>
               <div class="flex-1">
                 <h3 class="font-bold text-lg mb-2">無料相談（LINE）</h3>
-                <p class="text-gray-400 text-sm mb-4">キャリアのプロが無料でサポート</p>
+                <p class="text-gray-600 text-sm mb-4">キャリアのプロが無料でサポート</p>
                 <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500/10 hover:bg-green-500/20 text-green-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-green-500/20">
                   <i class="fab fa-line mr-1"></i>LINEで相談する <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                 </a>
@@ -137,15 +137,15 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-black mb-3">あなたの大学のおすすめ求人</h2>
-          <p class="text-gray-500">各大学に特化した厳選インターン</p>
+          <p class="text-gray-600">各大学に特化した厳選インターン</p>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
           ${universityTags.slice(0, 12).map(tag => `
-            <a href="/universities/${tag.slug}" class="glass rounded-xl p-4 text-center hover:bg-white/10 transition-all group">
+            <a href="/universities/${tag.slug}" class="glass rounded-xl p-4 text-center hover:bg-white/95 transition-all group">
               <div class="w-12 h-12 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/20 transition-colors">
                 <i class="fas fa-university text-primary-400"></i>
               </div>
-              <p class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors">${tag.name}</p>
+              <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">${tag.name}</p>
             </a>
           `).join('')}
         </div>
@@ -164,7 +164,7 @@ async function initHomePage() {
         <div class="flex items-center justify-between mb-10">
           <div>
             <h2 class="text-3xl font-black mb-2">人気求人5選</h2>
-            <p class="text-gray-500">今最も注目されているインターン</p>
+            <p class="text-gray-600">今最も注目されているインターン</p>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
@@ -182,16 +182,16 @@ async function initHomePage() {
     ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
     <section class="py-6">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="relative overflow-hidden rounded-2xl border border-yellow-500/30 bg-yellow-500/5 p-6 flex flex-col sm:flex-row items-center gap-4">
-          <div class="absolute inset-0 bg-gradient-to-r from-yellow-500/5 to-transparent pointer-events-none"></div>
+        <div class="relative overflow-hidden rounded-2xl border border-yellow-300 bg-yellow-50 p-6 flex flex-col sm:flex-row items-center gap-4">
+          <div class="absolute inset-0 bg-gradient-to-r from-yellow-100/50 to-transparent pointer-events-none"></div>
           <div class="text-3xl">🔒</div>
           <div class="flex-1 text-center sm:text-left">
-            <p class="font-bold text-yellow-300 text-lg">${s.members_banner_title || '登録者限定！非公開求人あり'}</p>
-            <p class="text-gray-400 text-sm mt-0.5" id="members-job-count-text">
+            <p class="font-bold text-yellow-800 text-lg">${s.members_banner_title || '登録者限定！非公開求人あり'}</p>
+            <p class="text-yellow-700 text-sm mt-0.5" id="members-job-count-text">
               ${s.members_banner_text || '登録するだけで見られる特別求人をチェックしよう'}
             </p>
           </div>
-          <a href="/register" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-400 text-black font-bold px-6 py-3 rounded-xl transition-colors text-sm whitespace-nowrap">
+          <a href="/register" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-400 text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm whitespace-nowrap shadow-md">
             ${s.members_banner_btn || '今すぐ登録して確認する'} <i class="fas fa-arrow-right ml-1"></i>
           </a>
         </div>
@@ -199,24 +199,24 @@ async function initHomePage() {
     </section>` : ''}
 
     <!-- 実績セクション（数字） -->
-    <section class="py-16 border-y border-white/5">
+    <section class="py-16 border-y border-gray-200 bg-gradient-to-b from-gray-50 to-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_companies || '50'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-500 text-sm">掲載企業数</div>
+            <div class="text-gray-600 text-sm">掲載企業数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_jobs || '200'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-500 text-sm">求人数</div>
+            <div class="text-gray-600 text-sm">求人数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_students || '1000'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-500 text-sm">登録学生数</div>
+            <div class="text-gray-600 text-sm">登録学生数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_success_rate || '95'}<span class="text-2xl">%</span></div>
-            <div class="text-gray-500 text-sm">就活成功率</div>
+            <div class="text-gray-600 text-sm">就活成功率</div>
           </div>
         </div>
       </div>
@@ -228,7 +228,7 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
           <h2 class="text-3xl font-black mb-3">内定者タイムライン</h2>
-          <p class="text-gray-500">先輩たちの成功ストーリー</p>
+          <p class="text-gray-600">先輩たちの成功ストーリー</p>
         </div>
       </div>
       <div class="relative">
@@ -241,10 +241,10 @@ async function initHomePage() {
                 </div>
                 <div>
                   <p class="text-sm font-bold">${story.university_name} ${story.student_name}</p>
-                  <p class="text-xs text-gray-500">${story.company_name} 内定</p>
+                  <p class="text-xs text-gray-600">${story.company_name} 内定</p>
                 </div>
               </div>
-              <p class="text-sm text-gray-400 leading-relaxed">${story.comment}</p>
+              <p class="text-sm text-gray-600 leading-relaxed">${story.comment}</p>
             </div>
           `).join('')}
         </div>
@@ -263,10 +263,10 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14">
           <h2 class="text-3xl font-black mb-3">${s.site_name || 'InternBase'}が${s.feature_section_title || '選ばれる理由'}</h2>
-          <p class="text-gray-500">${s.feature_section_subtitle || '就活で差をつける、本質的な成長環境を提供します'}</p>
+          <p class="text-gray-600">${s.feature_section_subtitle || '就活で差をつける、本質的な成長環境を提供します'}</p>
         </div>
         <div id="features-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="glass rounded-2xl p-7 text-center animate-pulse"><div class="h-12 bg-white/5 rounded mb-4"></div></div>
+          <div class="glass rounded-2xl p-7 text-center animate-pulse"><div class="h-12 bg-gray-100 rounded mb-4"></div></div>
         </div>
       </div>
     </section>
@@ -277,17 +277,17 @@ async function initHomePage() {
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-black mb-3">よくある質問</h2>
-          <p class="text-gray-500">お気軽にご相談ください</p>
+          <p class="text-gray-600">お気軽にご相談ください</p>
         </div>
         <div class="space-y-3">
           ${faqs.map((f, i) => `
             <div class="glass rounded-xl overflow-hidden">
-              <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-white/5 transition-colors">
+              <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors">
                 <span class="font-medium text-sm pr-4">${f.question}</span>
-                <i id="faq-icon-${i}" class="fas fa-chevron-down text-gray-500 text-xs flex-shrink-0 transition-transform"></i>
+                <i id="faq-icon-${i}" class="fas fa-chevron-down text-gray-400 text-xs flex-shrink-0 transition-transform"></i>
               </button>
               <div id="faq-body-${i}" class="hidden px-5 pb-4">
-                <p class="text-gray-400 text-sm leading-relaxed">${f.answer}</p>
+                <p class="text-gray-600 text-sm leading-relaxed">${f.answer}</p>
               </div>
             </div>
           `).join('')}
@@ -305,7 +305,7 @@ async function initHomePage() {
               <i class="fab fa-line text-green-400 text-3xl"></i>
             </div>
             <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
-            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
+            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
             <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25">
               <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
             </a>
@@ -343,7 +343,7 @@ async function initHomePage() {
             <i class="${card.icon?.startsWith('fab') ? card.icon : 'fas fa-'+card.icon} text-xl"></i>
           </div>
           <h3 class="font-bold text-lg mb-2">${card.title}</h3>
-          <p class="text-gray-500 text-sm leading-relaxed">${card.body}</p>
+          <p class="text-gray-600 text-sm leading-relaxed">${card.body}</p>
         </div>
       `).join('');
     }
@@ -963,7 +963,7 @@ async function initMyPage() {
                 <span class="status-badge ${statusColors[a.status]||'bg-gray-500/20 text-gray-400'}">${statusLabels[a.status]||a.status}</span>
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-medium truncate">${a.job_title}</p>
-                  <p class="text-xs text-gray-500">${a.company_name}</p>
+                  <p class="text-xs text-gray-600">${a.company_name}</p>
                 </div>
                 <p class="text-xs text-gray-600 flex-shrink-0">${a.created_at?.split('T')[0]||''}</p>
               </a>

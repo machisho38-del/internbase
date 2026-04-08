@@ -95,10 +95,19 @@ function getPublicHTML(page: string): string {
             primary: {
               50: '#f0f4ff',
               100: '#e0e9ff',
+              400: '#6b8afd',
               500: '#4f6ef7',
               600: '#3b5ce6',
               700: '#2945d4',
               900: '#1a2f99'
+            },
+            purple: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7e22ce'
             },
             dark: {
               800: '#0f1629',
@@ -116,37 +125,37 @@ function getPublicHTML(page: string): string {
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Noto Sans JP', sans-serif; }
-    .glass { background: rgba(255,255,255,0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-    .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a78bfa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.15) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(167,139,250,0.1) 0%, transparent 50%), #080d1a; }
+    .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.15); }
+    .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%), linear-gradient(to bottom, #f8faff, #ffffff); }
     .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.5); box-shadow: 0 20px 40px rgba(79,110,247,0.15); }
-    .tag { background: rgba(79,110,247,0.15); border: 1px solid rgba(79,110,247,0.3); color: #818cf8; }
+    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.4); box-shadow: 0 20px 40px rgba(79,110,247,0.15); }
+    .tag { background: rgba(79,110,247,0.1); border: 1px solid rgba(79,110,247,0.25); color: #3b5ce6; }
     .fade-in { animation: fadeIn 0.6s ease-out; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #080d1a; } ::-webkit-scrollbar-thumb { background: #2945d4; border-radius: 3px; }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   </style>
 </head>
-<body class="bg-dark-900 text-white min-h-screen">
+<body class="bg-white text-gray-900 min-h-screen">
 
   <!-- ナビゲーション -->
-  <nav class="fixed top-0 w-full z-50 glass border-b border-white/10">
+  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <a href="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
             <i class="fas fa-rocket text-white text-sm"></i>
           </div>
           <span class="text-xl font-bold gradient-text">InternBase</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
-          <a href="/jobs" class="text-gray-300 hover:text-white transition-colors text-sm">求人を探す</a>
-          <a href="/consultation" class="text-gray-300 hover:text-white transition-colors text-sm">無料相談</a>
+          <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
+          <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
-          <a href="/consultation" class="text-sm text-gray-300 hover:text-white transition-colors hidden sm:block">無料相談</a>
-          <a href="/register" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium">
+          <a href="/consultation" class="text-sm text-gray-600 hover:text-primary-600 transition-colors hidden sm:block font-medium">無料相談</a>
+          <a href="/register" class="bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-5 py-2.5 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
             <i class="fas fa-user-plus mr-1"></i>登録する
           </a>
         </div>
@@ -158,12 +167,12 @@ function getPublicHTML(page: string): string {
   <main id="app" class="pt-16"></main>
 
   <!-- フッター -->
-  <footer class="border-t border-white/10 mt-24 py-12">
+  <footer class="border-t border-gray-200 mt-24 py-12 bg-gradient-to-b from-white to-gray-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-7 h-7 bg-primary-500 rounded-lg flex items-center justify-center">
+            <div class="w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
               <i class="fas fa-rocket text-white text-xs"></i>
             </div>
             <span class="font-bold gradient-text">InternBase</span>
@@ -171,33 +180,33 @@ function getPublicHTML(page: string): string {
           <p class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、<br>あなたのキャリアを加速させよう。</p>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-300">求人を探す</h4>
-          <ul class="space-y-2 text-gray-500 text-sm">
-            <li><a href="/jobs" class="hover:text-white transition-colors">全ての求人</a></li>
-            <li><a href="/jobs?work_style=remote" class="hover:text-white transition-colors">リモート可</a></li>
-            <li><a href="/jobs?industry=IT・SaaS" class="hover:text-white transition-colors">IT・SaaS</a></li>
+          <h4 class="text-sm font-semibold mb-3 text-gray-800">求人を探す</h4>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li><a href="/jobs" class="hover:text-primary-600 transition-colors">全ての求人</a></li>
+            <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">リモート可</a></li>
+            <li><a href="/jobs?industry=IT・SaaS" class="hover:text-primary-600 transition-colors">IT・SaaS</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-300">サービス</h4>
-          <ul class="space-y-2 text-gray-500 text-sm">
-            <li><a href="/register" class="hover:text-white transition-colors">新規登録</a></li>
-            <li><a href="/consultation" class="hover:text-white transition-colors">無料相談</a></li>
+          <h4 class="text-sm font-semibold mb-3 text-gray-800">サービス</h4>
+          <ul class="space-y-2 text-gray-600 text-sm">
+            <li><a href="/register" class="hover:text-primary-600 transition-colors">新規登録</a></li>
+            <li><a href="/consultation" class="hover:text-primary-600 transition-colors">無料相談</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-300">公式LINE</h4>
-          <p class="text-gray-500 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
+          <h4 class="text-sm font-semibold mb-3 text-gray-800">公式LINE</h4>
+          <p class="text-gray-600 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
           <a href="#" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors">
             <i class="fab fa-line"></i>LINEを追加
           </a>
         </div>
       </div>
-      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <p class="text-gray-600 text-xs">© 2024 InternBase. All rights reserved.</p>
-        <div class="flex gap-4 text-gray-600 text-xs">
-          <a href="#" class="hover:text-white transition-colors">プライバシーポリシー</a>
-          <a href="#" class="hover:text-white transition-colors">利用規約</a>
+      <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
+        <div class="flex gap-4 text-gray-500 text-xs">
+          <a href="#" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
+          <a href="#" class="hover:text-primary-600 transition-colors">利用規約</a>
         </div>
       </div>
     </div>
