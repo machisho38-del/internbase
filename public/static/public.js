@@ -69,7 +69,7 @@ async function initHomePage() {
       </div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
         <div class="max-w-3xl fade-in">
-          <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-1.5 text-xs text-primary-400 mb-6">
+          <div class="inline-flex items-center gap-2 bg-primary-500/15 border border-primary-500/30 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-6">
             <i class="fas fa-star text-yellow-400"></i>
             ${s.hero_badge_text || '高学歴大学生向け・厳選求人のみ掲載'}
           </div>
@@ -78,14 +78,14 @@ async function initHomePage() {
             <span class="text-gray-900">${s.hero_title_line2 || '実務経験を、'}</span><br>
             <span class="text-gray-900">${s.hero_title_line3 || '今すぐ始めよう。'}</span>
           </h1>
-          <p class="text-gray-600 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
+          <p class="text-gray-700 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
             ${s.hero_subtitle || 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルと実績を手に入れろ。'}
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
             <a href="/jobs" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25">
               <i class="fas fa-search mr-2"></i>${s.hero_cta1_text || '求人を探す'}
             </a>
-            <a href="/register" class="glass hover:bg-white/95 text-gray-800 font-medium px-8 py-4 rounded-xl transition-all text-center">
+            <a href="/register" class="glass hover:bg-white text-gray-900 font-medium px-8 py-4 rounded-xl transition-all text-center border-2 border-transparent hover:border-primary-200">
               <i class="fas fa-ticket-alt mr-2"></i>${s.hero_cta2_text || '招待コードで登録'}
             </a>
           </div>
@@ -98,15 +98,15 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-5">
           <!-- 招待コード -->
-          <div class="glass rounded-2xl p-6 hover:bg-white/95 transition-all">
+          <div class="glass rounded-2xl p-6 hover:bg-white transition-all">
             <div class="flex items-start gap-4">
               <div class="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-ticket-alt text-primary-400 text-xl"></i>
+                <i class="fas fa-ticket-alt text-primary-600 text-xl"></i>
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-lg mb-2">招待コード登録</h3>
-                <p class="text-gray-600 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
-                <a href="/register" class="inline-block bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/20">
+                <h3 class="font-bold text-lg mb-2 text-gray-900">招待コード登録</h3>
+                <p class="text-gray-700 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
+                <a href="/register" class="inline-block bg-primary-500/15 hover:bg-primary-500/25 text-primary-700 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/30">
                   登録する <i class="fas fa-arrow-right ml-1"></i>
                 </a>
               </div>
@@ -119,8 +119,8 @@ async function initHomePage() {
                 <i class="fab fa-line text-green-400 text-2xl"></i>
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-lg mb-2">無料相談（LINE）</h3>
-                <p class="text-gray-600 text-sm mb-4">キャリアのプロが無料でサポート</p>
+                <h3 class="font-bold text-lg mb-2 text-gray-900">無料相談（LINE）</h3>
+                <p class="text-gray-700 text-sm mb-4">キャリアのプロが無料でサポート</p>
                 <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500/10 hover:bg-green-500/20 text-green-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-green-500/20">
                   <i class="fab fa-line mr-1"></i>LINEで相談する <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                 </a>
@@ -136,21 +136,21 @@ async function initHomePage() {
     <section class="py-20">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-black mb-3">あなたの大学のおすすめ求人</h2>
-          <p class="text-gray-600">各大学に特化した厳選インターン</p>
+          <h2 class="text-3xl font-black mb-3 text-gray-900">あなたの大学のおすすめ求人</h2>
+          <p class="text-gray-700">各大学に特化した厳選インターン</p>
         </div>
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
           ${universityTags.slice(0, 12).map(tag => `
-            <a href="/universities/${tag.slug}" class="glass rounded-xl p-4 text-center hover:bg-white/95 transition-all group">
-              <div class="w-12 h-12 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/20 transition-colors">
-                <i class="fas fa-university text-primary-400"></i>
+            <a href="/universities/${tag.slug}" class="glass rounded-xl p-4 text-center hover:bg-white hover:shadow-md transition-all group">
+              <div class="w-12 h-12 bg-primary-500/15 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/25 transition-colors">
+                <i class="fas fa-university text-primary-600"></i>
               </div>
-              <p class="text-sm font-medium text-gray-700 group-hover:text-gray-900 transition-colors">${tag.name}</p>
+              <p class="text-sm font-medium text-gray-800 group-hover:text-gray-900 transition-colors">${tag.name}</p>
             </a>
           `).join('')}
         </div>
         <div class="text-center">
-          <a href="/universities" class="inline-block text-primary-400 hover:text-primary-300 text-sm transition-colors">
+          <a href="/universities" class="inline-block text-primary-600 hover:text-primary-700 text-sm font-medium transition-colors">
             全ての大学を見る <i class="fas fa-arrow-right ml-1"></i>
           </a>
         </div>
@@ -163,15 +163,15 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between mb-10">
           <div>
-            <h2 class="text-3xl font-black mb-2">人気求人5選</h2>
-            <p class="text-gray-600">今最も注目されているインターン</p>
+            <h2 class="text-3xl font-black mb-2 text-gray-900">人気求人5選</h2>
+            <p class="text-gray-700">今最も注目されているインターン</p>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
           ${featuredJobs.map(job => renderJobCard(job)).join('')}
         </div>
         <div class="text-center">
-          <a href="/jobs" class="inline-block bg-primary-500/10 hover:bg-primary-500/20 text-primary-400 font-medium px-8 py-3 rounded-xl transition-colors border border-primary-500/20">
+          <a href="/jobs" class="inline-block bg-primary-500/15 hover:bg-primary-500/25 text-primary-700 font-medium px-8 py-3 rounded-xl transition-colors border border-primary-500/30 shadow-sm">
             もっと見る <i class="fas fa-arrow-right ml-2"></i>
           </a>
         </div>
@@ -204,19 +204,19 @@ async function initHomePage() {
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_companies || '50'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-600 text-sm">掲載企業数</div>
+            <div class="text-gray-700 text-sm">掲載企業数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_jobs || '200'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-600 text-sm">求人数</div>
+            <div class="text-gray-700 text-sm">求人数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_students || '1000'}<span class="text-2xl">+</span></div>
-            <div class="text-gray-600 text-sm">登録学生数</div>
+            <div class="text-gray-700 text-sm">登録学生数</div>
           </div>
           <div class="text-center">
             <div class="text-4xl font-black gradient-text mb-1">${s.stat_success_rate || '95'}<span class="text-2xl">%</span></div>
-            <div class="text-gray-600 text-sm">就活成功率</div>
+            <div class="text-gray-700 text-sm">就活成功率</div>
           </div>
         </div>
       </div>
@@ -227,8 +227,8 @@ async function initHomePage() {
     <section class="py-20 overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
-          <h2 class="text-3xl font-black mb-3">内定者タイムライン</h2>
-          <p class="text-gray-600">先輩たちの成功ストーリー</p>
+          <h2 class="text-3xl font-black mb-3 text-gray-900">内定者タイムライン</h2>
+          <p class="text-gray-700">先輩たちの成功ストーリー</p>
         </div>
       </div>
       <div class="relative">
@@ -237,14 +237,14 @@ async function initHomePage() {
             <div class="glass rounded-xl p-5 flex-shrink-0 w-80">
               <div class="flex items-center gap-3 mb-3">
                 <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center">
-                  <i class="fas fa-user-graduate text-primary-400"></i>
+                  <i class="fas fa-user-graduate text-primary-600"></i>
                 </div>
                 <div>
-                  <p class="text-sm font-bold">${story.university_name} ${story.student_name}</p>
-                  <p class="text-xs text-gray-600">${story.company_name} 内定</p>
+                  <p class="text-sm font-bold text-gray-900">${story.university_name} ${story.student_name}</p>
+                  <p class="text-xs text-gray-700">${story.company_name} 内定</p>
                 </div>
               </div>
-              <p class="text-sm text-gray-600 leading-relaxed">${story.comment}</p>
+              <p class="text-sm text-gray-700 leading-relaxed">${story.comment}</p>
             </div>
           `).join('')}
         </div>
@@ -262,8 +262,8 @@ async function initHomePage() {
     <section class="py-20 border-t border-white/5">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14">
-          <h2 class="text-3xl font-black mb-3">${s.site_name || 'InternBase'}が${s.feature_section_title || '選ばれる理由'}</h2>
-          <p class="text-gray-600">${s.feature_section_subtitle || '就活で差をつける、本質的な成長環境を提供します'}</p>
+          <h2 class="text-3xl font-black mb-3 text-gray-900">${s.site_name || 'InternBase'}が${s.feature_section_title || '選ばれる理由'}</h2>
+          <p class="text-gray-700">${s.feature_section_subtitle || '就活で差をつける、本質的な成長環境を提供します'}</p>
         </div>
         <div id="features-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="glass rounded-2xl p-7 text-center animate-pulse"><div class="h-12 bg-gray-100 rounded mb-4"></div></div>
@@ -276,18 +276,18 @@ async function initHomePage() {
     <section class="py-20 border-t border-white/5">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
-          <h2 class="text-3xl font-black mb-3">よくある質問</h2>
-          <p class="text-gray-600">お気軽にご相談ください</p>
+          <h2 class="text-3xl font-black mb-3 text-gray-900">よくある質問</h2>
+          <p class="text-gray-700">お気軽にご相談ください</p>
         </div>
         <div class="space-y-3">
           ${faqs.map((f, i) => `
             <div class="glass rounded-xl overflow-hidden">
               <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors">
-                <span class="font-medium text-sm pr-4">${f.question}</span>
-                <i id="faq-icon-${i}" class="fas fa-chevron-down text-gray-400 text-xs flex-shrink-0 transition-transform"></i>
+                <span class="font-medium text-sm pr-4 text-gray-800">${f.question}</span>
+                <i id="faq-icon-${i}" class="fas fa-chevron-down text-gray-500 text-xs flex-shrink-0 transition-transform"></i>
               </button>
               <div id="faq-body-${i}" class="hidden px-5 pb-4">
-                <p class="text-gray-600 text-sm leading-relaxed">${f.answer}</p>
+                <p class="text-gray-700 text-sm leading-relaxed">${f.answer}</p>
               </div>
             </div>
           `).join('')}
@@ -305,7 +305,7 @@ async function initHomePage() {
               <i class="fab fa-line text-green-400 text-3xl"></i>
             </div>
             <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
-            <p class="text-gray-600 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
+            <p class="text-gray-700 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
             <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25">
               <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
             </a>
@@ -336,14 +336,14 @@ async function initHomePage() {
     if (section) {
       let cards = [];
       try { cards = JSON.parse(section.content); } catch(e) {}
-      const colorMap = { primary: 'bg-primary-500/15 text-primary-400', purple: 'bg-purple-500/15 text-purple-400', green: 'bg-green-500/15 text-green-400', yellow: 'bg-yellow-500/15 text-yellow-400', red: 'bg-red-500/15 text-red-400' };
+      const colorMap = { primary: 'bg-primary-500/15 text-primary-700', purple: 'bg-purple-500/15 text-purple-700', green: 'bg-green-500/15 text-green-700', yellow: 'bg-yellow-500/15 text-yellow-700', red: 'bg-red-500/15 text-red-700' };
       document.getElementById('features-grid').innerHTML = cards.map(card => `
         <div class="glass rounded-2xl p-7 text-center">
           <div class="w-14 h-14 ${colorMap[card.color]||colorMap.primary} rounded-2xl flex items-center justify-center mx-auto mb-5">
             <i class="${card.icon?.startsWith('fab') ? card.icon : 'fas fa-'+card.icon} text-xl"></i>
           </div>
-          <h3 class="font-bold text-lg mb-2">${card.title}</h3>
-          <p class="text-gray-600 text-sm leading-relaxed">${card.body}</p>
+          <h3 class="font-bold text-lg mb-2 text-gray-900">${card.title}</h3>
+          <p class="text-gray-700 text-sm leading-relaxed">${card.body}</p>
         </div>
       `).join('');
     }
@@ -367,7 +367,7 @@ async function initJobsPage() {
   app.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="mb-8">
-        <h1 class="text-3xl font-black mb-2">求人を探す</h1>
+        <h1 class="text-3xl font-black mb-2 text-gray-900">求人を探す</h1>
         <p class="text-gray-500">厳選された長期インターン求人一覧</p>
       </div>
 
@@ -963,7 +963,7 @@ async function initMyPage() {
                 <span class="status-badge ${statusColors[a.status]||'bg-gray-500/20 text-gray-400'}">${statusLabels[a.status]||a.status}</span>
                 <div class="flex-1 min-w-0">
                   <p class="text-sm font-medium truncate">${a.job_title}</p>
-                  <p class="text-xs text-gray-600">${a.company_name}</p>
+                  <p class="text-xs text-gray-700">${a.company_name}</p>
                 </div>
                 <p class="text-xs text-gray-600 flex-shrink-0">${a.created_at?.split('T')[0]||''}</p>
               </a>
@@ -1083,28 +1083,28 @@ function renderJobCard(job, isMembersTab = false) {
   const isMembersOnly = job.visibility === 'members';
 
   return `
-    <a href="/jobs/${job.slug}" class="glass rounded-xl p-5 card-hover block cursor-pointer ${isMembersOnly ? 'border-yellow-500/20' : ''}">
-      ${isMembersOnly ? `<div class="flex items-center gap-1 text-xs text-yellow-400 mb-2"><i class="fas fa-lock"></i> 会員限定</div>` : ''}
+    <a href="/jobs/${job.slug}" class="glass rounded-xl p-5 card-hover block cursor-pointer ${isMembersOnly ? 'border-yellow-400/40' : ''}">
+      ${isMembersOnly ? `<div class="flex items-center gap-1 text-xs text-yellow-700 font-medium mb-2"><i class="fas fa-lock"></i> 会員限定</div>` : ''}
       <div class="flex items-start gap-3 mb-3">
         <div class="w-10 h-10 bg-primary-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-          ${job.company_logo ? `<img src="${job.company_logo}" class="w-8 h-8 object-contain rounded">` : `<span class="text-primary-400 font-bold text-sm">${(job.company_name||'?')[0]}</span>`}
+          ${job.company_logo ? `<img src="${job.company_logo}" class="w-8 h-8 object-contain rounded">` : `<span class="text-primary-600 font-bold text-sm">${(job.company_name||'?')[0]}</span>`}
         </div>
         <div class="flex-1 min-w-0">
-          <p class="text-xs text-gray-500 truncate">${job.company_name || ''}</p>
-          <h3 class="font-bold text-sm leading-tight">${job.title}</h3>
+          <p class="text-xs text-gray-600 truncate">${job.company_name || ''}</p>
+          <h3 class="font-bold text-sm leading-tight text-gray-900">${job.title}</h3>
         </div>
       </div>
-      ${job.catch_copy ? `<p class="text-xs text-gray-400 mb-3 line-clamp-2 leading-relaxed">${job.catch_copy}</p>` : ''}
+      ${job.catch_copy ? `<p class="text-xs text-gray-700 mb-3 line-clamp-2 leading-relaxed">${job.catch_copy}</p>` : ''}
       <div class="flex flex-wrap gap-1.5 mb-3">
         <span class="tag text-xs px-2 py-0.5 rounded-full">${job.company_industry || ''}</span>
         ${job.work_style ? `<span class="tag text-xs px-2 py-0.5 rounded-full"><i class="fas fa-${workStyleIcon[job.work_style]||'building'} mr-1"></i>${workStyleLabel[job.work_style]||''}</span>` : ''}
-        ${job.remote_available ? '<span class="bg-green-500/15 border border-green-500/30 text-green-400 text-xs px-2 py-0.5 rounded-full">リモート可</span>' : ''}
+        ${job.remote_available ? '<span class="bg-green-50 border border-green-300 text-green-700 font-medium text-xs px-2 py-0.5 rounded-full">リモート可</span>' : ''}
       </div>
-      <div class="flex items-center justify-between pt-3 border-t border-white/5">
-        <span class="text-primary-400 font-bold text-sm">${wageText}</span>
-        <span class="text-xs text-gray-600">${job.applicant_count || 0}名応募</span>
+      <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+        <span class="text-primary-600 font-bold text-sm">${wageText}</span>
+        <span class="text-xs text-gray-600 font-medium">${job.applicant_count || 0}名応募</span>
       </div>
-      ${tags.length > 0 ? `<div class="flex flex-wrap gap-1 mt-2">${tags.slice(0,3).map(t=>`<span class="text-xs text-gray-600">#${t}</span>`).join('')}</div>` : ''}
+      ${tags.length > 0 ? `<div class="flex flex-wrap gap-1 mt-2">${tags.slice(0,3).map(t=>`<span class="text-xs text-gray-600 font-medium">#${t}</span>`).join('')}</div>` : ''}
     </a>
   `;
 }
@@ -1118,7 +1118,7 @@ async function initUniversitiesPage() {
   app.innerHTML = `
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="mb-10">
-        <h1 class="text-3xl font-black mb-2">大学別おすすめ求人</h1>
+        <h1 class="text-3xl font-black mb-2 text-gray-900">大学別おすすめ求人</h1>
         <p class="text-gray-500">あなたの大学に特化した厳選インターン</p>
       </div>
       <div class="glass rounded-xl p-4 mb-6">

@@ -125,12 +125,12 @@ function getPublicHTML(page: string): string {
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Noto Sans JP', sans-serif; }
-    .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.15); }
+    .glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
     .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%), linear-gradient(to bottom, #f8faff, #ffffff); }
     .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.4); box-shadow: 0 20px 40px rgba(79,110,247,0.15); }
-    .tag { background: rgba(79,110,247,0.1); border: 1px solid rgba(79,110,247,0.25); color: #3b5ce6; }
+    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.5); box-shadow: 0 12px 24px rgba(79,110,247,0.12); }
+    .tag { background: rgba(79,110,247,0.12); border: 1px solid rgba(79,110,247,0.3); color: #2945d4; font-weight: 500; }
     .fade-in { animation: fadeIn 0.6s ease-out; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
