@@ -8,29 +8,61 @@ jobs.get('/', async (c) => {
   const industry = c.req.query('industry')
   const workStyle = c.req.query('work_style')
   const q = c.req.query('q')
+  const membersOnly = c.req.query('members') === '1'
+  // student_id があれば会員限定も表示
+  const studentId = c.req.query('student_id')
 
   let query = `
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,
            c.industry as company_industry, c.slug as company_slug
     FROM jobs j
     JOIN companies c ON c.id = j.company_id
-    WHERE j.status = 'published' AND c.status = 'published'
+    WHERE c.status = 'published'
   `
   const params: any[] = []
 
+  // 公開範囲制御
+  if (studentId) {
+    // 登録済み学生：public + members 両方
+    query += ` AND j.visibility IN ('public','members') AND j.status = 'published'`
+  } else if (membersOnly) {
+    // 会員限定のみ（件数表示用）
+    query += ` AND j.visibility = 'members' AND j.status = 'published'`
+  } else {
+    // 未登録：public のみ
+    query += ` AND j.visibility = 'public' AND j.status = 'published'`
+  }
+
   if (industry) { query += ` AND c.industry = ?`; params.push(industry) }
   if (workStyle) { query += ` AND j.work_style = ?`; params.push(workStyle) }
-  if (q) { query += ` AND (j.title LIKE ? OR j.description LIKE ? OR c.name LIKE ?)`; params.push(`%${q}%`, `%${q}%`, `%${q}%`) }
+  if (q) {
+    query += ` AND (j.title LIKE ? OR j.description LIKE ? OR c.name LIKE ?)`
+    params.push(`%${q}%`, `%${q}%`, `%${q}%`)
+  }
 
   query += ` ORDER BY j.display_order ASC, j.created_at DESC`
 
   const { results } = await c.env.DB.prepare(query).bind(...params).all()
-  return c.json({ success: true, data: results })
+
+  // 会員限定求人の件数も返す（未登録ユーザー向けバナー用）
+  const membersCount = await c.env.DB.prepare(`
+    SELECT COUNT(*) as cnt FROM jobs j
+    JOIN companies c ON c.id = j.company_id
+    WHERE j.visibility = 'members' AND j.status = 'published' AND c.status = 'published'
+  `).first() as any
+
+  return c.json({
+    success: true,
+    data: results,
+    members_job_count: membersCount?.cnt || 0
+  })
 })
 
 // 求人詳細（公開）
 jobs.get('/:slug', async (c) => {
   const slug = c.req.param('slug')
+  const studentId = c.req.query('student_id')
+
   const job = await c.env.DB.prepare(`
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,
            c.industry as company_industry, c.slug as company_slug,
@@ -40,9 +72,19 @@ jobs.get('/:slug', async (c) => {
     FROM jobs j
     JOIN companies c ON c.id = j.company_id
     WHERE j.slug = ? AND j.status = 'published' AND c.status = 'published'
-  `).bind(slug).first()
+  `).bind(slug).first() as any
 
   if (!job) return c.json({ success: false, error: 'Not found' }, 404)
+
+  // 会員限定求人：未登録ユーザーはアクセス不可
+  if (job.visibility === 'members' && !studentId) {
+    return c.json({
+      success: false,
+      error: 'members_only',
+      message: 'この求人は登録学生のみ閲覧できます'
+    }, 403)
+  }
+
   return c.json({ success: true, data: job })
 })
 
@@ -71,7 +113,8 @@ jobs.post('/admin', async (c) => {
     requirements, preferred_requirements, highlights, growth_points,
     work_hours, work_days, work_location, work_style, remote_available,
     hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
-    min_hours_per_month, max_hours_per_month, selection_flow, tags, status, display_order
+    min_hours_per_month, max_hours_per_month, selection_flow, tags,
+    status, visibility, display_order
   } = body
 
   if (!company_id || !title || !slug || !description || !work_content) {
@@ -83,8 +126,9 @@ jobs.post('/admin', async (c) => {
       requirements, preferred_requirements, highlights, growth_points,
       work_hours, work_days, work_location, work_style, remote_available,
       hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
-      min_hours_per_month, max_hours_per_month, selection_flow, tags, status, display_order)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      min_hours_per_month, max_hours_per_month, selection_flow, tags,
+      status, visibility, display_order)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
     company_id, title, slug, catch_copy || null, description, work_content,
     requirements || null, preferred_requirements || null,
@@ -96,7 +140,7 @@ jobs.post('/admin', async (c) => {
     min_hours_per_month || null, max_hours_per_month || null,
     selection_flow || null,
     tags ? JSON.stringify(tags) : null,
-    status || 'published', display_order || 0
+    status || 'published', visibility || 'public', display_order || 0
   ).run()
 
   return c.json({ success: true, data: { id: result.meta.last_row_id } }, 201)
@@ -111,7 +155,8 @@ jobs.put('/admin/:id', async (c) => {
     requirements, preferred_requirements, highlights, growth_points,
     work_hours, work_days, work_location, work_style, remote_available,
     hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
-    min_hours_per_month, max_hours_per_month, selection_flow, tags, status, display_order
+    min_hours_per_month, max_hours_per_month, selection_flow, tags,
+    status, visibility, display_order
   } = body
 
   await c.env.DB.prepare(`
@@ -121,7 +166,7 @@ jobs.put('/admin/:id', async (c) => {
       work_hours=?, work_days=?, work_location=?, work_style=?, remote_available=?,
       hourly_wage_min=?, hourly_wage_max=?, wage_note=?, target_grade=?, university_level=?,
       min_hours_per_month=?, max_hours_per_month=?, selection_flow=?, tags=?,
-      status=?, display_order=?, updated_at=CURRENT_TIMESTAMP
+      status=?, visibility=?, display_order=?, updated_at=CURRENT_TIMESTAMP
     WHERE id=?
   `).bind(
     company_id, title, slug, catch_copy || null, description, work_content,
@@ -134,7 +179,7 @@ jobs.put('/admin/:id', async (c) => {
     min_hours_per_month || null, max_hours_per_month || null,
     selection_flow || null,
     tags ? JSON.stringify(tags) : null,
-    status || 'published', display_order || 0, id
+    status || 'published', visibility || 'public', display_order || 0, id
   ).run()
 
   return c.json({ success: true })

@@ -9,6 +9,7 @@ import applicationsApi from './routes/api.applications'
 import inviteApi from './routes/api.invite'
 import consultationApi from './routes/api.consultation'
 import authApi from './routes/api.auth'
+import settingsApi from './routes/api.settings'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
@@ -22,6 +23,7 @@ app.route('/api/applications', applicationsApi)
 app.route('/api/invite', inviteApi)
 app.route('/api/consultation', consultationApi)
 app.route('/api/auth', authApi)
+app.route('/api/settings', settingsApi)
 
 // ヘルスチェック
 app.get('/api/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
@@ -49,6 +51,11 @@ app.get('/register', (c) => {
 // 公開画面 - 無料相談
 app.get('/consultation', (c) => {
   return c.html(getPublicHTML('consultation'))
+})
+
+// 公開画面 - マイページ
+app.get('/mypage', (c) => {
+  return c.html(getPublicHTML('mypage'))
 })
 
 // 管理画面 - 全ページSPA
@@ -194,6 +201,7 @@ function getPublicHTML(page: string): string {
     else if (path.startsWith('/jobs/')) initJobDetailPage();
     else if (path === '/register') initRegisterPage();
     else if (path === '/consultation') initConsultationPage();
+    else if (path === '/mypage') initMyPage();
   </script>
 </body>
 </html>`
@@ -279,6 +287,21 @@ function getAdminHTML(): string {
       </a>
       <a href="#" onclick="navigate('consultations')" data-page="consultations" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
         <i class="fas fa-comments w-4 text-center"></i>無料相談
+      </a>
+      <div class="pt-3 pb-1">
+        <p class="text-xs text-gray-600 px-3 uppercase tracking-wider">コンテンツ管理</p>
+      </div>
+      <a href="#" onclick="navigate('site-settings')" data-page="site-settings" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-cog w-4 text-center"></i>サイト設定
+      </a>
+      <a href="#" onclick="navigate('lp-edit')" data-page="lp-edit" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-edit w-4 text-center"></i>LP編集
+      </a>
+      <a href="#" onclick="navigate('faqs')" data-page="faqs" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-question-circle w-4 text-center"></i>FAQ管理
+      </a>
+      <a href="#" onclick="navigate('announcements')" data-page="announcements" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-bullhorn w-4 text-center"></i>お知らせ管理
       </a>
     </nav>
 

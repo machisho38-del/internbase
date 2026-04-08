@@ -109,14 +109,17 @@ function navigate(page) {
   document.querySelector(`[data-page="${page}"]`)?.classList.add('active');
   const titles = {
     dashboard: 'ダッシュボード', companies: '企業管理', jobs: '求人管理',
-    students: '学生一覧', applications: '応募管理', invites: '招待コード', consultations: '無料相談'
+    students: '学生一覧', applications: '応募管理', invites: '招待コード', consultations: '無料相談',
+    'site-settings': 'サイト設定', 'lp-edit': 'LP編集', faqs: 'FAQ管理', announcements: 'お知らせ管理'
   };
   document.getElementById('page-title').textContent = titles[page] || page;
 
   const pages = {
     dashboard: loadDashboard, companies: loadCompanies, jobs: loadJobs,
     students: loadStudents, applications: loadApplications, invites: loadInvites,
-    consultations: loadConsultations
+    consultations: loadConsultations,
+    'site-settings': loadSiteSettings, 'lp-edit': loadLpEdit,
+    faqs: loadFaqs, announcements: loadAnnouncements
   };
   if (pages[page]) pages[page]();
 }
@@ -1103,6 +1106,509 @@ async function filterConsultations(status) {
 
 async function updateConsultationStatus(id, status) {
   await API.put(`/consultation/admin/${id}`, { status });
+}
+
+// ==========================================
+// サイト設定ページ
+// ==========================================
+async function loadSiteSettings() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/admin/all');
+    const settings = res.data.data;
+
+    // グループ別にまとめる
+    const groups = {};
+    settings.forEach(s => {
+      if (!groups[s.group_name]) groups[s.group_name] = [];
+      groups[s.group_name].push(s);
+    });
+
+    const groupLabels = {
+      site: 'サイト基本情報', hero: 'ヒーローセクション',
+      stats: '数字セクション', cta: 'CTAセクション',
+      line: 'LINE設定', footer: 'フッター設定', features: '特徴セクション'
+    };
+
+    const inputField = (s) => {
+      if (s.setting_type === 'boolean') {
+        return `<select id="setting-${s.setting_key}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="1" ${s.setting_value==='1'?'selected':''}>有効</option>
+          <option value="0" ${s.setting_value!=='1'?'selected':''}>無効</option>
+        </select>`;
+      }
+      if (s.setting_type === 'text' || (s.setting_value && s.setting_value.length > 60)) {
+        return `<textarea id="setting-${s.setting_key}" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${s.setting_value||''}</textarea>`;
+      }
+      return `<input id="setting-${s.setting_key}" type="text" value="${(s.setting_value||'').replace(/"/g,'&quot;')}"
+        class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">`;
+    };
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">サイト設定</h2>
+        <button onclick="saveAllSettings()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-save mr-1"></i>すべて保存
+        </button>
+      </div>
+      <div id="settings-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>保存しました
+      </div>
+      ${Object.entries(groups).map(([groupName, items]) => `
+        <div class="glass rounded-xl p-5 mb-4">
+          <h3 class="font-semibold text-sm mb-4 text-primary-400">
+            <i class="fas fa-layer-group mr-2"></i>${groupLabels[groupName] || groupName}
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${items.map(s => `
+              <div>
+                <label class="block text-xs text-gray-400 mb-1.5">${s.setting_key.replace(/_/g,' ')}</label>
+                ${inputField(s)}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('')}
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
+  }
+}
+
+async function saveAllSettings() {
+  const inputs = document.querySelectorAll('[id^="setting-"]');
+  const data = {};
+  inputs.forEach(el => {
+    const key = el.id.replace('setting-', '');
+    data[key] = el.value;
+  });
+  try {
+    await API.put('/settings/admin/bulk/update', data);
+    const msg = document.getElementById('settings-save-msg');
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+  } catch(e) {
+    alert('保存に失敗しました: ' + e.message);
+  }
+}
+
+// ==========================================
+// LP編集ページ
+// ==========================================
+async function loadLpEdit() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/lp-sections/admin');
+    const sections = res.data.data;
+
+    const sectionLabels = {
+      hero: 'ヒーローセクション', stats: '数字・実績セクション',
+      features: '特徴セクション', cta: 'CTAセクション',
+      private_jobs_banner: '非公開求人バナー', footer_cta: 'フッターCTA'
+    };
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">LP編集</h2>
+        <a href="/" target="_blank" class="text-xs text-gray-400 hover:text-white border border-white/10 rounded-lg px-3 py-2 transition-colors">
+          <i class="fas fa-external-link-alt mr-1"></i>公開画面を確認
+        </a>
+      </div>
+      <div id="lp-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>保存しました
+      </div>
+      ${sections.map(sec => {
+        let contentObj = {};
+        try { contentObj = JSON.parse(sec.content || '{}'); } catch(e) {}
+        const fields = Object.entries(contentObj);
+
+        return `
+          <div class="glass rounded-xl p-5 mb-4">
+            <div class="flex items-center justify-between mb-4">
+              <h3 class="font-semibold text-sm text-primary-400">
+                <i class="fas fa-layer-group mr-2"></i>${sectionLabels[sec.section_key] || sec.section_key}
+              </h3>
+              <div class="flex items-center gap-3">
+                <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+                  <input type="checkbox" id="lp-visible-${sec.section_key}" ${sec.is_visible?'checked':''}
+                    onchange="toggleLpSection('${sec.section_key}', this.checked)"
+                    class="rounded">
+                  表示する
+                </label>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="lp-fields-${sec.section_key}">
+              ${fields.map(([k, v]) => `
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1.5">${k}</label>
+                  ${(typeof v === 'string' && v.length > 60) ?
+                    `<textarea id="lp-${sec.section_key}-${k}" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${v}</textarea>` :
+                    `<input type="text" id="lp-${sec.section_key}-${k}" value="${String(v).replace(/"/g,'&quot;')}"
+                      class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">`
+                  }
+                </div>
+              `).join('')}
+            </div>
+            <button onclick="saveLpSection('${sec.section_key}', ${JSON.stringify(Object.keys(contentObj)).replace(/"/g,'&quot;')})"
+              class="mt-4 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
+              <i class="fas fa-save mr-1"></i>このセクションを保存
+            </button>
+          </div>
+        `;
+      }).join('')}
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
+  }
+}
+
+async function saveLpSection(sectionKey, fieldKeys) {
+  const keys = typeof fieldKeys === 'string' ? JSON.parse(fieldKeys) : fieldKeys;
+  const content = {};
+  keys.forEach(k => {
+    const el = document.getElementById(`lp-${sectionKey}-${k}`);
+    if (el) content[k] = el.value;
+  });
+  const isVisible = document.getElementById(`lp-visible-${sectionKey}`)?.checked ?? true;
+  try {
+    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { content, is_visible: isVisible });
+    const msg = document.getElementById('lp-save-msg');
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+  } catch(e) {
+    alert('保存失敗: ' + e.message);
+  }
+}
+
+async function toggleLpSection(sectionKey, isVisible) {
+  await API.put(`/settings/lp-sections/admin/${sectionKey}`, { is_visible: isVisible });
+}
+
+// ==========================================
+// FAQ管理ページ
+// ==========================================
+async function loadFaqs() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/faqs/admin');
+    const faqs = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">FAQ管理 <span class="text-gray-500 font-normal text-sm">(${faqs.length}件)</span></h2>
+        <button onclick="showFaqModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>FAQを追加
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden" id="faq-list">
+        ${faqs.length ? faqs.map(f => renderFaqRow(f)).join('') :
+          '<div class="text-center text-gray-600 py-10 text-sm">FAQがありません。追加してください。</div>'
+        }
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
+  }
+}
+
+function renderFaqRow(f) {
+  return `
+    <div class="border-b border-white/5 last:border-0 p-4" id="faq-row-${f.id}">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs px-2 py-0.5 rounded-full ${f.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-600/20 text-gray-500'}">
+              ${f.is_visible ? '表示' : '非表示'}
+            </span>
+            <span class="text-xs text-gray-500">${f.category || 'general'}</span>
+            <span class="text-xs text-gray-600">順: ${f.display_order}</span>
+          </div>
+          <p class="text-sm font-medium mb-1">Q. ${f.question}</p>
+          <p class="text-xs text-gray-400 line-clamp-2">A. ${f.answer}</p>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <button onclick="showFaqModal(${JSON.stringify(f).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">編集</button>
+          <button onclick="deleteFaq(${f.id})" class="text-xs text-red-400 hover:text-red-300">削除</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showFaqModal(faq = null) {
+  const isEdit = !!faq;
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'FAQ編集' : 'FAQ追加'}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateFaq(event,${faq.id})` : 'submitCreateFaq(event)'}">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">質問 *</label>
+            <input id="faq-question" type="text" required value="${(faq?.question||'').replace(/"/g,'&quot;')}"
+              placeholder="例: 長期インターンとは何ですか？"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">回答 *</label>
+            <textarea id="faq-answer" rows="4" required
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"
+              >${faq?.answer||''}</textarea>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">カテゴリ</label>
+              <select id="faq-category" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="general" ${faq?.category==='general'?'selected':''}>一般</option>
+                <option value="registration" ${faq?.category==='registration'?'selected':''}>登録</option>
+                <option value="application" ${faq?.category==='application'?'selected':''}>応募</option>
+                <option value="job" ${faq?.category==='job'?'selected':''}>求人</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">表示順</label>
+              <input id="faq-order" type="number" value="${faq?.display_order||0}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">表示</label>
+              <select id="faq-visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${faq?.is_visible!==0?'selected':''}>表示</option>
+                <option value="0" ${faq?.is_visible===0?'selected':''}>非表示</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <i class="fas fa-save mr-1"></i>${isEdit ? '更新' : '追加'}
+          </button>
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white transition-colors">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateFaq(e) {
+  e.preventDefault();
+  try {
+    await API.post('/settings/faqs/admin', {
+      question: document.getElementById('faq-question').value,
+      answer: document.getElementById('faq-answer').value,
+      category: document.getElementById('faq-category').value,
+      display_order: parseInt(document.getElementById('faq-order').value) || 0,
+      is_visible: document.getElementById('faq-visible').value === '1'
+    });
+    closeModal();
+    loadFaqs();
+  } catch(e) { alert('作成失敗: ' + e.message); }
+}
+
+async function submitUpdateFaq(e, id) {
+  e.preventDefault();
+  try {
+    await API.put(`/settings/faqs/admin/${id}`, {
+      question: document.getElementById('faq-question').value,
+      answer: document.getElementById('faq-answer').value,
+      category: document.getElementById('faq-category').value,
+      display_order: parseInt(document.getElementById('faq-order').value) || 0,
+      is_visible: document.getElementById('faq-visible').value === '1'
+    });
+    closeModal();
+    loadFaqs();
+  } catch(e) { alert('更新失敗: ' + e.message); }
+}
+
+async function deleteFaq(id) {
+  if (!confirm('このFAQを削除しますか？')) return;
+  try {
+    await API.delete(`/settings/faqs/admin/${id}`);
+    loadFaqs();
+  } catch(e) { alert('削除失敗: ' + e.message); }
+}
+
+// ==========================================
+// お知らせ管理ページ
+// ==========================================
+async function loadAnnouncements() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/announcements/admin');
+    const items = res.data.data;
+
+    const typeColors = {
+      info: 'bg-blue-500/20 text-blue-400', warning: 'bg-yellow-500/20 text-yellow-400',
+      success: 'bg-green-500/20 text-green-400', campaign: 'bg-purple-500/20 text-purple-400'
+    };
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">お知らせ管理 <span class="text-gray-500 font-normal text-sm">(${items.length}件)</span></h2>
+        <button onclick="showAnnouncementModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>お知らせを追加
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        ${items.length ? items.map(a => `
+          <div class="border-b border-white/5 last:border-0 p-4">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="status-badge ${typeColors[a.type]||typeColors.info}">${a.type}</span>
+                  <span class="text-xs ${a.is_visible ? 'text-green-400' : 'text-gray-500'}">${a.is_visible ? '表示中' : '非表示'}</span>
+                  ${a.starts_at ? `<span class="text-xs text-gray-600">${a.starts_at?.split('T')[0]} ～</span>` : ''}
+                  ${a.ends_at ? `<span class="text-xs text-gray-600">～ ${a.ends_at?.split('T')[0]}</span>` : ''}
+                </div>
+                <p class="text-sm font-medium">${a.title}</p>
+                ${a.body ? `<p class="text-xs text-gray-400 mt-0.5">${a.body}</p>` : ''}
+                ${a.link_url ? `<p class="text-xs text-primary-400 mt-0.5"><i class="fas fa-link mr-1"></i>${a.link_url}</p>` : ''}
+              </div>
+              <div class="flex gap-2 flex-shrink-0">
+                <button onclick="showAnnouncementModal(${JSON.stringify(a).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">編集</button>
+                <button onclick="deleteAnnouncement(${a.id})" class="text-xs text-red-400 hover:text-red-300">削除</button>
+              </div>
+            </div>
+          </div>
+        `).join('') : '<div class="text-center text-gray-600 py-10 text-sm">お知らせがありません。</div>'}
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
+  }
+}
+
+function showAnnouncementModal(item = null) {
+  const isEdit = !!item;
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'お知らせ編集' : 'お知らせ追加'}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateAnnouncement(event,${item.id})` : 'submitCreateAnnouncement(event)'}">
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">タイトル *</label>
+              <input id="ann-title" type="text" required value="${(item?.title||'').replace(/"/g,'&quot;')}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">種類</label>
+              <select id="ann-type" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="info" ${item?.type==='info'?'selected':''}>info（青）</option>
+                <option value="warning" ${item?.type==='warning'?'selected':''}>warning（黄）</option>
+                <option value="success" ${item?.type==='success'?'selected':''}>success（緑）</option>
+                <option value="campaign" ${item?.type==='campaign'?'selected':''}>campaign（紫）</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">本文（任意）</label>
+            <textarea id="ann-body" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-primary-500">${item?.body||''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">リンクURL（任意）</label>
+              <input id="ann-link-url" type="text" value="${(item?.link_url||'').replace(/"/g,'&quot;')}"
+                placeholder="https://..."
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">リンクテキスト</label>
+              <input id="ann-link-text" type="text" value="${(item?.link_text||'').replace(/"/g,'&quot;')}"
+                placeholder="詳細はこちら"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">表示</label>
+              <select id="ann-visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${item?.is_visible!==0?'selected':''}>表示</option>
+                <option value="0" ${item?.is_visible===0?'selected':''}>非表示</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">開始日</label>
+              <input id="ann-starts" type="date" value="${item?.starts_at?.split('T')[0]||''}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">終了日</label>
+              <input id="ann-ends" type="date" value="${item?.ends_at?.split('T')[0]||''}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <i class="fas fa-save mr-1"></i>${isEdit ? '更新' : '追加'}
+          </button>
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white transition-colors">キャンセル</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateAnnouncement(e) {
+  e.preventDefault();
+  try {
+    await API.post('/settings/announcements/admin', {
+      title: document.getElementById('ann-title').value,
+      body: document.getElementById('ann-body').value || null,
+      type: document.getElementById('ann-type').value,
+      link_url: document.getElementById('ann-link-url').value || null,
+      link_text: document.getElementById('ann-link-text').value || null,
+      is_visible: document.getElementById('ann-visible').value === '1',
+      starts_at: document.getElementById('ann-starts').value || null,
+      ends_at: document.getElementById('ann-ends').value || null,
+    });
+    closeModal();
+    loadAnnouncements();
+  } catch(e) { alert('作成失敗: ' + e.message); }
+}
+
+async function submitUpdateAnnouncement(e, id) {
+  e.preventDefault();
+  try {
+    await API.put(`/settings/announcements/admin/${id}`, {
+      title: document.getElementById('ann-title').value,
+      body: document.getElementById('ann-body').value || null,
+      type: document.getElementById('ann-type').value,
+      link_url: document.getElementById('ann-link-url').value || null,
+      link_text: document.getElementById('ann-link-text').value || null,
+      is_visible: document.getElementById('ann-visible').value === '1',
+      starts_at: document.getElementById('ann-starts').value || null,
+      ends_at: document.getElementById('ann-ends').value || null,
+    });
+    closeModal();
+    loadAnnouncements();
+  } catch(e) { alert('更新失敗: ' + e.message); }
+}
+
+async function deleteAnnouncement(id) {
+  if (!confirm('このお知らせを削除しますか？')) return;
+  try {
+    await API.delete(`/settings/announcements/admin/${id}`);
+    loadAnnouncements();
+  } catch(e) { alert('削除失敗: ' + e.message); }
 }
 
 // ==========================================
