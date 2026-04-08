@@ -120,16 +120,67 @@ applications.put('/admin/:id', async (c) => {
 
 // ダッシュボード統計（管理）
 applications.get('/admin/stats/summary', async (c) => {
-  const [totalStudents, totalApplications, activeJobs, pendingApplications] = await Promise.all([
-    c.env.DB.prepare(`SELECT COUNT(*) as count FROM students WHERE status='active'`).first(),
-    c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications`).first(),
-    c.env.DB.prepare(`SELECT COUNT(*) as count FROM jobs WHERE status='published'`).first(),
-    c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications WHERE status='applied'`).first(),
-  ])
+  try {
+  // ターム指定（week / month / year / all）
+  const term = c.req.query('term') || 'all'
 
+  let dateFilter = ''
+  if (term === 'week')  dateFilter = `AND a.created_at >= datetime('now', '-7 days')`
+  if (term === 'month') dateFilter = `AND a.created_at >= datetime('now', '-1 month')`
+  if (term === 'year')  dateFilter = `AND a.created_at >= datetime('now', '-1 year')`
+
+  let studentDateFilter = ''
+  if (term === 'week')  studentDateFilter = `AND s2.created_at >= datetime('now', '-7 days')`
+  if (term === 'month') studentDateFilter = `AND s2.created_at >= datetime('now', '-1 month')`
+  if (term === 'year')  studentDateFilter = `AND s2.created_at >= datetime('now', '-1 year')`
+
+  // 直列実行に変更（エラー特定のため）
+  const totalStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students WHERE status='active'`).first()
+  const totalApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications`).first()
+  const activeJobs = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM jobs WHERE status='published'`).first()
+  const pendingApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications WHERE status='applied'`).first()
+  const termStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students s2 WHERE s2.status='active' ${studentDateFilter}`).first()
+  const termApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications a2 WHERE 1=1 ${dateFilter.replace(/\ba\./g, 'a2.')}`).first()
+
+  // ターム内のステータス内訳
   const { results: statusBreakdown } = await c.env.DB.prepare(`
-    SELECT status, COUNT(*) as count FROM applications GROUP BY status
+    SELECT a.status, COUNT(*) as count FROM applications a WHERE 1=1 ${dateFilter} GROUP BY a.status
   `).all()
+
+  // ターム内の企業別応募数（上位5社）
+  const { results: topCompanies } = await c.env.DB.prepare(`
+    SELECT co.name as company_name, COUNT(*) as cnt
+    FROM applications a
+    JOIN jobs j ON j.id = a.job_id
+    JOIN companies co ON co.id = j.company_id
+    WHERE 1=1 ${dateFilter}
+    GROUP BY co.id ORDER BY cnt DESC LIMIT 5
+  `).all()
+
+  // ターム内の日別推移（直近7日 or 30日 or 12ヶ月）
+  let trendQuery = ''
+  if (term === 'week') {
+    trendQuery = `
+      SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
+      FROM applications a WHERE a.created_at >= datetime('now', '-7 days')
+      GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
+  } else if (term === 'month') {
+    trendQuery = `
+      SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
+      FROM applications a WHERE a.created_at >= datetime('now', '-30 days')
+      GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
+  } else if (term === 'year') {
+    trendQuery = `
+      SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
+      FROM applications a WHERE a.created_at >= datetime('now', '-1 year')
+      GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label`
+  } else {
+    trendQuery = `
+      SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
+      FROM applications a
+      GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label LIMIT 12`
+  }
+  const { results: trendData } = await c.env.DB.prepare(trendQuery).all()
 
   const { results: recentApplications } = await c.env.DB.prepare(`
     SELECT a.*, s.last_name || s.first_name as student_name,
@@ -144,14 +195,22 @@ applications.get('/admin/stats/summary', async (c) => {
   return c.json({
     success: true,
     data: {
+      term,
       total_students: (totalStudents as any)?.count || 0,
       total_applications: (totalApplications as any)?.count || 0,
       active_jobs: (activeJobs as any)?.count || 0,
       pending_applications: (pendingApplications as any)?.count || 0,
+      term_students: (termStudents as any)?.count || 0,
+      term_applications: (termApplications as any)?.count || 0,
       status_breakdown: statusBreakdown,
+      top_companies: topCompanies,
+      trend_data: trendData,
       recent_applications: recentApplications
     }
   })
+  } catch (err: any) {
+    return c.json({ success: false, error: err.message || 'Internal error' }, 500)
+  }
 })
 
 export default applications

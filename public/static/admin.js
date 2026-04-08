@@ -127,46 +127,144 @@ function navigate(page) {
 // ==========================================
 // ダッシュボード
 // ==========================================
-async function loadDashboard() {
+let _dashTerm = 'month'; // デフォルト: 月間
+
+async function loadDashboard(term) {
+  if (term) _dashTerm = term;
   const content = document.getElementById('admin-content');
   content.innerHTML = `<div class="animate-pulse space-y-4"><div class="h-24 bg-white/5 rounded-xl"></div><div class="h-64 bg-white/5 rounded-xl"></div></div>`;
 
   try {
-    const res = await API.get('/applications/admin/stats/summary');
+    const res = await API.get(`/applications/admin/stats/summary?term=${_dashTerm}`);
     const d = res.data.data;
 
     const statusBreakdown = {};
     d.status_breakdown.forEach(s => statusBreakdown[s.status] = s.count);
 
+    const termLabel = { week: '週間', month: '月間', year: '年間', all: '累計' };
+    const termBtns = ['week', 'month', 'year', 'all'].map(t => `
+      <button onclick="loadDashboard('${t}')"
+        class="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${_dashTerm===t ? 'bg-primary-500 text-white' : 'glass text-gray-400 hover:text-white'}">
+        ${termLabel[t]}
+      </button>
+    `).join('');
+
     content.innerHTML = `
-      <!-- KPIカード -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        ${[
-          { icon: 'user-graduate', label: '登録学生数', value: d.total_students, color: 'blue', sub: '名' },
-          { icon: 'file-alt', label: '総応募数', value: d.total_applications, color: 'purple', sub: '件' },
-          { icon: 'briefcase', label: '公開中求人', value: d.active_jobs, color: 'green', sub: '件' },
-          { icon: 'bell', label: '未対応応募', value: d.pending_applications, color: 'yellow', sub: '件' },
-        ].map(k => `
-          <div class="glass rounded-xl p-5">
-            <div class="flex items-center justify-between mb-3">
-              <div class="w-9 h-9 bg-${k.color}-500/20 rounded-lg flex items-center justify-center">
-                <i class="fas fa-${k.icon} text-${k.color}-400 text-sm"></i>
-              </div>
-            </div>
-            <div class="text-3xl font-black mb-1">${k.value}<span class="text-base font-normal text-gray-500 ml-1">${k.sub}</span></div>
-            <div class="text-xs text-gray-500">${k.label}</div>
-          </div>
-        `).join('')}
+      <!-- ターム切り替え -->
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold text-lg">ダッシュボード</h2>
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-gray-500 mr-1">表示期間：</span>
+          ${termBtns}
+        </div>
       </div>
 
+      <!-- KPIカード（4枚） -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div class="glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 bg-blue-500/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-user-graduate text-blue-400 text-sm"></i>
+            </div>
+            <span class="text-xs text-gray-600">累計</span>
+          </div>
+          <div class="text-3xl font-black mb-0.5">${d.total_students}<span class="text-base font-normal text-gray-500 ml-1">名</span></div>
+          <div class="text-xs text-gray-500 mb-1">登録学生数</div>
+          ${_dashTerm !== 'all' ? `<div class="text-xs text-green-400"><i class="fas fa-arrow-up mr-0.5"></i>${termLabel[_dashTerm]}新規 ${d.term_students}名</div>` : ''}
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 bg-purple-500/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-file-alt text-purple-400 text-sm"></i>
+            </div>
+            <span class="text-xs text-gray-600">累計</span>
+          </div>
+          <div class="text-3xl font-black mb-0.5">${d.total_applications}<span class="text-base font-normal text-gray-500 ml-1">件</span></div>
+          <div class="text-xs text-gray-500 mb-1">総応募数</div>
+          ${_dashTerm !== 'all' ? `<div class="text-xs text-purple-400"><i class="fas fa-arrow-up mr-0.5"></i>${termLabel[_dashTerm]}応募 ${d.term_applications}件</div>` : ''}
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 bg-green-500/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-briefcase text-green-400 text-sm"></i>
+            </div>
+          </div>
+          <div class="text-3xl font-black mb-0.5">${d.active_jobs}<span class="text-base font-normal text-gray-500 ml-1">件</span></div>
+          <div class="text-xs text-gray-500">公開中求人</div>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 bg-yellow-500/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-bell text-yellow-400 text-sm"></i>
+            </div>
+          </div>
+          <div class="text-3xl font-black mb-0.5">${d.pending_applications}<span class="text-base font-normal text-gray-500 ml-1">件</span></div>
+          <div class="text-xs text-gray-500">未対応応募</div>
+        </div>
+      </div>
+
+      <!-- 応募推移グラフ + 企業別応募ランキング -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <!-- 応募推移 -->
+        <div class="lg:col-span-2 glass rounded-xl p-5">
+          <h3 class="font-bold text-sm mb-4">応募数推移 <span class="text-gray-500 font-normal text-xs">（${termLabel[_dashTerm]}）</span></h3>
+          ${d.trend_data && d.trend_data.length > 0 ? `
+          <div class="flex items-end gap-1 h-28" id="trend-chart">
+            ${(() => {
+              const maxVal = Math.max(...d.trend_data.map(t => t.count), 1);
+              return d.trend_data.map(t => `
+                <div class="flex-1 flex flex-col items-center gap-1 group">
+                  <div class="text-xs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity">${t.count}</div>
+                  <div class="w-full bg-primary-500/70 hover:bg-primary-500 rounded-t transition-colors"
+                    style="height:${Math.max(4, Math.round((t.count/maxVal)*96))}px"></div>
+                  <div class="text-xs text-gray-600 whitespace-nowrap" style="font-size:0.6rem">${t.label}</div>
+                </div>
+              `).join('');
+            })()}
+          </div>` : `
+          <div class="h-28 flex items-center justify-center text-gray-600 text-sm">
+            <i class="fas fa-chart-bar text-3xl mb-2 block opacity-20 text-center"></i>
+            <p class="text-center">データがまだありません</p>
+          </div>`}
+        </div>
+
+        <!-- 企業別応募ランキング -->
+        <div class="glass rounded-xl p-5">
+          <h3 class="font-bold text-sm mb-4">企業別応募数 <span class="text-gray-500 font-normal text-xs">Top 5</span></h3>
+          <div class="space-y-3">
+            ${d.top_companies && d.top_companies.length > 0
+              ? d.top_companies.map((co, i) => {
+                  const maxC = d.top_companies[0].cnt || 1;
+                  const pct = Math.round((co.cnt / maxC) * 100);
+                  return `
+                    <div>
+                      <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-300 truncate flex-1 mr-2">
+                          <span class="text-gray-600 mr-1">${i+1}.</span>${co.company_name}
+                        </span>
+                        <span class="font-bold text-white flex-shrink-0">${co.cnt}件</span>
+                      </div>
+                      <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                        <div class="h-full rounded-full transition-all" style="width:${pct}%; background:hsl(${230 + i*20},70%,60%)"></div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')
+              : '<p class="text-gray-600 text-xs text-center py-4">データがありません</p>'
+            }
+          </div>
+        </div>
+      </div>
+
+      <!-- ステータス内訳 + 最近の応募 -->
       <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
         <!-- 応募ステータス内訳 -->
         <div class="lg:col-span-2 glass rounded-xl p-5">
-          <h3 class="font-bold text-sm mb-4">応募ステータス内訳</h3>
-          <div class="space-y-3">
+          <h3 class="font-bold text-sm mb-4">ステータス内訳 <span class="text-gray-500 font-normal text-xs">（${termLabel[_dashTerm]}）</span></h3>
+          <div class="space-y-2.5">
             ${Object.entries(STATUS_LABELS).map(([k, label]) => {
               const count = statusBreakdown[k] || 0;
-              const total = d.total_applications || 1;
+              const total = d.term_applications || d.total_applications || 1;
               const pct = Math.round((count/total)*100);
               return `
                 <div>
@@ -175,7 +273,7 @@ async function loadDashboard() {
                     <span class="font-bold">${count}件</span>
                   </div>
                   <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
-                    <div class="h-full bg-primary-500 rounded-full" style="width:${pct}%"></div>
+                    <div class="h-full bg-primary-500 rounded-full transition-all" style="width:${pct}%"></div>
                   </div>
                 </div>
               `;
@@ -431,9 +529,12 @@ async function loadJobs() {
                 </td>
                 <td class="px-4 py-3 hidden lg:table-cell text-xs text-gray-400">${j.applicant_count}名</td>
                 <td class="px-4 py-3">
-                  <span class="status-badge ${j.status==='published' ? 'bg-green-500/20 text-green-400' : j.status==='draft' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}">
-                    ${j.status==='published' ? '公開中' : j.status==='draft' ? '下書き' : 'クローズ'}
-                  </span>
+                  <div class="flex flex-col gap-1">
+                    <span class="status-badge ${j.status==='published' ? 'bg-green-500/20 text-green-400' : j.status==='draft' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}">
+                      ${j.status==='published' ? '公開中' : j.status==='draft' ? '下書き' : 'クローズ'}
+                    </span>
+                    ${j.visibility==='members' ? '<span class="status-badge bg-yellow-500/20 text-yellow-400"><i class="fas fa-lock mr-0.5 text-xs"></i>会員限定</span>' : '<span class="status-badge bg-gray-600/20 text-gray-400"><i class="fas fa-globe mr-0.5 text-xs"></i>全公開</span>'}
+                  </div>
                 </td>
                 <td class="px-4 py-3">
                   <div class="flex gap-2">
@@ -542,6 +643,34 @@ function showJobModal(job = null, companies = []) {
               </select>
             </div>
           </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1 flex items-center gap-1">
+              公開範囲
+              <span class="text-gray-600 font-normal">（誰が閲覧できるか）</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="flex items-center gap-2 glass rounded-lg px-3 py-2.5 cursor-pointer hover:bg-white/5 transition-colors border-2 ${job?.visibility==='members' ? 'border-yellow-500/50' : 'border-transparent'}" id="vis-public-label">
+                <input type="radio" name="visibility" value="public" ${!job || job?.visibility==='public'?'checked':''} onchange="updateVisibilityUI(this)" class="hidden">
+                <div class="w-8 h-8 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-globe text-green-400 text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">全員に公開</p>
+                  <p class="text-xs text-gray-500">未登録でも閲覧可</p>
+                </div>
+              </label>
+              <label class="flex items-center gap-2 glass rounded-lg px-3 py-2.5 cursor-pointer hover:bg-white/5 transition-colors border-2 ${job?.visibility==='members' ? 'border-yellow-500/50' : 'border-transparent'}" id="vis-members-label">
+                <input type="radio" name="visibility" value="members" ${job?.visibility==='members'?'checked':''} onchange="updateVisibilityUI(this)" class="hidden">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/15 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-lock text-yellow-400 text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">会員限定</p>
+                  <p class="text-xs text-gray-500">登録学生のみ閲覧</p>
+                </div>
+              </label>
+            </div>
+          </div>
         </div>
         <div class="flex gap-3 mt-6">
           <button type="button" onclick="closeModal()" class="flex-1 glass text-white text-sm py-2.5 rounded-lg hover:bg-white/10">キャンセル</button>
@@ -551,6 +680,23 @@ function showJobModal(job = null, companies = []) {
     </div>
   `;
   modal.classList.remove('hidden');
+}
+
+function updateVisibilityUI(radio) {
+  const pubLabel = document.getElementById('vis-public-label');
+  const memLabel = document.getElementById('vis-members-label');
+  if (!pubLabel || !memLabel) return;
+  if (radio.value === 'public') {
+    pubLabel.classList.add('border-green-500/50');
+    pubLabel.classList.remove('border-transparent');
+    memLabel.classList.remove('border-yellow-500/50');
+    memLabel.classList.add('border-transparent');
+  } else {
+    memLabel.classList.add('border-yellow-500/50');
+    memLabel.classList.remove('border-transparent');
+    pubLabel.classList.remove('border-green-500/50');
+    pubLabel.classList.add('border-transparent');
+  }
 }
 
 async function submitCreateJob(e) {
@@ -1127,9 +1273,15 @@ async function loadSiteSettings() {
     });
 
     const groupLabels = {
-      site: 'サイト基本情報', hero: 'ヒーローセクション',
-      stats: '数字セクション', cta: 'CTAセクション',
-      line: 'LINE設定', footer: 'フッター設定', features: '特徴セクション'
+      site: 'サイト基本情報', general: 'サイト基本情報',
+      hero: 'ヒーローセクション',
+      stats: '数字セクション（実績表示）',
+      cta: 'CTAセクション（登録誘導）',
+      line: 'LINE・SNS設定', contact: 'LINE・SNS・連絡先設定',
+      footer: 'フッター設定',
+      features: '特徴セクション',
+      members: '会員限定求人バナー',
+      referral: '学生招待コード設定',
     };
 
     const inputField = (s) => {
@@ -1218,6 +1370,60 @@ async function loadLpEdit() {
           <i class="fas fa-external-link-alt mr-1"></i>公開画面を確認
         </a>
       </div>
+
+      <!-- 編集ガイドパネル -->
+      <div class="glass rounded-xl p-5 mb-6 border border-primary-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-info-circle text-primary-400"></i>
+          <h3 class="font-semibold text-sm text-primary-400">LP編集の使い方</h3>
+          <button onclick="this.closest('.glass').querySelector('#lp-guide-body').classList.toggle('hidden')" class="ml-auto text-xs text-gray-500 hover:text-white">
+            <i class="fas fa-chevron-down"></i> 折りたたむ
+          </button>
+        </div>
+        <div id="lp-guide-body">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-edit text-blue-400 mr-1"></i>① テキストを編集</p>
+              <p class="text-xs text-gray-400 leading-relaxed">各フィールドに直接テキストを入力してください。編集後は必ず「このセクションを保存」ボタンを押してください。</p>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-eye text-green-400 mr-1"></i>② 表示/非表示の切替</p>
+              <p class="text-xs text-gray-400 leading-relaxed">各セクション右上の「表示する」チェックボックスでセクション全体のON/OFFが可能です。</p>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-external-link-alt text-purple-400 mr-1"></i>③ 公開画面で確認</p>
+              <p class="text-xs text-gray-400 leading-relaxed">保存後、右上の「公開画面を確認」ボタンから反映結果をリアルタイムで確認できます。</p>
+            </div>
+          </div>
+          <div class="border-t border-white/10 pt-3">
+            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>記載事例・推奨テキスト</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-gray-400">
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">ヒーロー見出し（推奨パターン）</p>
+                <p class="text-gray-500 mb-1">パターンA（インパクト重視）:</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-1">1行目: 選ばれた学生だけが<br>2行目: 手にできる、<br>3行目: 本物のキャリア。</p>
+                <p class="text-gray-500 mb-1">パターンB（行動喚起型）:</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">1行目: 3ヶ月で変わる、<br>2行目: 就活の結果が<br>3行目: 変わる。</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">サブテキスト（推奨）</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">厳選された成長企業でのインターンで、就活で語れる本物の経験を積もう。大学1〜4年生、随時募集中。</p>
+                <p class="text-white font-medium mb-1">CTAボタンテキスト</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">求人を見る / 無料で登録 / 今すぐ応募</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">会員限定バナー（推奨）</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">タイトル: 🔒 登録者限定！非公開求人あり<br>テキスト: 現在XX件の非公開求人を掲載中。登録するだけで全て閲覧可能！</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">数字セクション（目安）</p>
+                <p class="bg-dark-900 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数<br>就活成功率: 内定率・実績値</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div id="lp-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
         <i class="fas fa-check-circle mr-1"></i>保存しました
       </div>
