@@ -95,54 +95,93 @@ async function initHomePage() {
             ${s.hero_subtitle || 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルと実績を手に入れろ。'}
           </p>
           <div class="flex flex-col sm:flex-row gap-4">
-            <a href="/jobs" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25">
-              <i class="fas fa-search mr-2"></i>${s.hero_cta1_text || '求人を探す'}
-            </a>
-            <a href="${s.line_url || '/consultation'}" target="${s.line_url ? '_blank' : '_self'}" class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-green-500/25">
+            <a href="${s.line_url_default || s.line_url || '/consultation'}" target="${(s.line_url_default || s.line_url) ? '_blank' : '_self'}" class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-green-500/25">
               <i class="fab fa-line text-xl"></i>LINEで無料相談
+            </a>
+            <a href="/jobs" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg border border-gray-200">
+              <i class="fas fa-search mr-1"></i>${s.hero_cta2_text || '求人を見る'}
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- 招待コード + 無料相談（LINE誘導）セクション -->
-    <section class="py-12 border-b border-gray-100">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-2 gap-5">
-          <!-- 招待コード -->
-          <div class="glass rounded-2xl p-6 hover:bg-white hover:shadow-md transition-all">
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fas fa-ticket-alt text-primary-600 text-xl"></i>
-              </div>
-              <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1 text-gray-900">招待コードで登録</h3>
-                <p class="text-gray-700 text-sm mb-4">先輩・友人からの招待コードで限定特典をゲット。非公開求人も閲覧可能に。</p>
-                <a href="/register" class="inline-block bg-primary-500/15 hover:bg-primary-500/25 text-primary-700 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/30">
-                  登録する <i class="fas fa-arrow-right ml-1"></i>
-                </a>
-              </div>
-            </div>
+    <!-- 流入媒体別LINE導線セクション -->
+    <section class="py-14 border-b border-gray-100">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 rounded-full px-4 py-1.5 text-xs text-green-700 font-medium mb-4">
+            <i class="fab fa-line"></i>無料LINE相談
           </div>
-          <!-- 無料相談（LINE） -->
-          <div class="rounded-2xl p-6 hover:shadow-md transition-all" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac;">
-            <div class="flex items-start gap-4">
-              <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fab fa-line text-green-600 text-2xl"></i>
+          <h2 class="text-2xl sm:text-3xl font-black mb-3 text-gray-900">どこで知りましたか？<br class="sm:hidden">あなたに合ったLINEで相談できます</h2>
+          <p class="text-gray-600 text-sm">流入元を選択すると、専用のLINE公式アカウントへ案内します</p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+          ${SOURCE_MEDIA_OPTIONS.map(opt => {
+            const lineUrl = s[opt.line_key] || s.line_url_default || s.line_url || '';
+            const href = lineUrl ? lineUrl : '/consultation';
+            const target = lineUrl ? '_blank' : '_self';
+            return `
+            <a href="${href}" target="${target}"
+              class="group glass rounded-xl p-4 text-center hover:bg-green-50 hover:border-green-300 transition-all">
+              <div class="w-10 h-10 bg-green-500/15 group-hover:bg-green-500/25 rounded-full flex items-center justify-center mx-auto mb-2 transition-colors">
+                <i class="fab fa-line text-green-600 text-lg"></i>
               </div>
-              <div class="flex-1">
-                <h3 class="font-bold text-lg mb-1 text-gray-900">無料相談（LINE）</h3>
-                <p class="text-gray-700 text-sm mb-4">キャリアのプロが就活・インターン選びを無料でサポートします。</p>
-                <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors shadow-sm">
-                  <i class="fab fa-line mr-1"></i>LINEで相談する <i class="fas fa-external-link-alt ml-1 text-xs"></i>
-                </a>
-              </div>
-            </div>
-          </div>
+              <p class="text-xs font-medium text-gray-700 group-hover:text-green-700 leading-tight">${opt.label}</p>
+            </a>`;
+          }).join('')}
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-500 mb-3">流入元が分からない場合</p>
+          <a href="${s.line_url_default || s.line_url || '/consultation'}" target="${(s.line_url_default || s.line_url) ? '_blank' : '_self'}"
+            class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-3.5 rounded-xl transition-all shadow-lg shadow-green-500/25 text-sm">
+            <i class="fab fa-line text-lg"></i>公式LINEで無料相談する
+          </a>
         </div>
       </div>
     </section>
+
+    <!-- 大学別LINE誘導ブロック（site_mode=public 時のみ表示） -->
+    ${(s.site_mode === 'public' || !s.site_mode) ? `
+    <section class="py-16 border-b border-gray-100 bg-gradient-to-br from-primary-50/60 to-purple-50/40">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-8">
+          <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-4">
+            <i class="fas fa-university"></i>大学別LINE相談
+          </div>
+          <h2 class="text-2xl sm:text-3xl font-black mb-3 text-gray-900">あなたの大学はどちらですか？</h2>
+          <p class="text-gray-600 text-sm">大学別の専用LINEで、あなたの大学の先輩社員・インターン体験談も聞けます</p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto mb-6">
+          ${[
+            { key: 'line_url_todai',  name: '東京大学',   icon: 'fa-graduation-cap', color: 'bg-blue-500/15 text-blue-700 border-blue-200 hover:bg-blue-50' },
+            { key: 'line_url_waseda', name: '早稲田大学',  icon: 'fa-university',      color: 'bg-red-500/15 text-red-700 border-red-200 hover:bg-red-50' },
+            { key: 'line_url_keio',   name: '慶應義塾大学', icon: 'fa-university',     color: 'bg-green-500/15 text-green-700 border-green-200 hover:bg-green-50' },
+            { key: 'line_url_march',  name: 'MARCH',      icon: 'fa-university',      color: 'bg-purple-500/15 text-purple-700 border-purple-200 hover:bg-purple-50' }
+          ].map(u => {
+            const url = s[u.key] || s.line_url_default || s.line_url || '';
+            const href = url ? url : '/consultation';
+            const target = url ? '_blank' : '_self';
+            return `
+            <a href="${href}" target="${target}"
+              class="group glass border rounded-xl p-5 text-center transition-all ${u.color}">
+              <div class="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 bg-white/70">
+                <i class="fas ${u.icon} text-xl" style="color:inherit"></i>
+              </div>
+              <p class="text-sm font-bold leading-tight">${u.name}</p>
+              <p class="text-xs mt-1 opacity-70"><i class="fab fa-line mr-0.5"></i>LINE相談</p>
+            </a>`;
+          }).join('')}
+        </div>
+        <div class="text-center">
+          <p class="text-xs text-gray-500 mb-3">該当校以外の方・どれか分からない方はこちら</p>
+          <a href="${s.line_url_default || s.line_url || '/consultation'}" target="${(s.line_url_default || s.line_url) ? '_blank' : '_self'}"
+            class="inline-flex items-center gap-2 text-sm text-primary-600 hover:text-primary-700 font-medium underline underline-offset-2">
+            <i class="fab fa-line text-green-500"></i>公式LINEで相談する（全大学対応）
+          </a>
+        </div>
+      </div>
+    </section>` : ''}
 
     <!-- 大学別おすすめ求人セクション -->
     ${universityTags.length > 0 ? `

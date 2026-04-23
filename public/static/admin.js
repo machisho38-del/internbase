@@ -166,8 +166,8 @@ async function loadDashboard(term) {
         </div>
       </div>
 
-      <!-- KPIカード（4枚） -->
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+      <!-- KPIカード（5枚） -->
+      <div class="grid grid-cols-2 lg:grid-cols-5 gap-4 mb-6">
         <div class="glass rounded-xl p-5">
           <div class="flex items-center justify-between mb-3">
             <div class="w-9 h-9 bg-blue-500/20 rounded-lg flex items-center justify-center">
@@ -193,7 +193,18 @@ async function loadDashboard(term) {
         <div class="glass rounded-xl p-5">
           <div class="flex items-center justify-between mb-3">
             <div class="w-9 h-9 bg-green-500/20 rounded-lg flex items-center justify-center">
-              <i class="fas fa-briefcase text-green-400 text-sm"></i>
+              <i class="fab fa-line text-green-400 text-sm"></i>
+            </div>
+            <span class="text-xs text-gray-600">累計</span>
+          </div>
+          <div class="text-3xl font-black mb-0.5">${d.total_consultations}<span class="text-base font-normal text-gray-500 ml-1">件</span></div>
+          <div class="text-xs text-gray-500 mb-1">無料相談数</div>
+          <div class="text-xs text-orange-400">${d.pending_consultations}件 対応待ち</div>
+        </div>
+        <div class="glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <div class="w-9 h-9 bg-teal-500/20 rounded-lg flex items-center justify-center">
+              <i class="fas fa-briefcase text-teal-400 text-sm"></i>
             </div>
           </div>
           <div class="text-3xl font-black mb-0.5">${d.active_jobs}<span class="text-base font-normal text-gray-500 ml-1">件</span></div>
@@ -210,7 +221,7 @@ async function loadDashboard(term) {
         </div>
       </div>
 
-      <!-- 応募推移グラフ + 企業別応募ランキング -->
+      <!-- 応募推移グラフ + 企業別応募ランキング + 流入媒体別グラフ -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <!-- 応募推移 -->
         <div class="lg:col-span-2 glass rounded-xl p-5">
@@ -261,6 +272,40 @@ async function loadDashboard(term) {
             }
           </div>
         </div>
+      </div>
+
+      <!-- 流入媒体別グラフ -->
+      <div class="glass rounded-xl p-5 mb-6">
+        <h3 class="font-bold text-sm mb-4">流入媒体別 登録学生数 <span class="text-gray-500 font-normal text-xs">（累計）</span></h3>
+        ${d.source_breakdown && d.source_breakdown.length > 0 ? (() => {
+          const sourceLabels = {
+            todai_ig: '東大Instagram', waseda_ig: '早稲田Instagram', keio_ig: '慶應Instagram',
+            march_ig: 'MARCHInstagram', web: 'Webサイト', other_sns: 'その他SNS', other: 'その他'
+          };
+          const sourceColors = [
+            '#4f6ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6'
+          ];
+          const total = d.source_breakdown.reduce((s, r) => s + (r.count || 0), 0) || 1;
+          return `
+          <div class="space-y-2.5">
+            ${d.source_breakdown.map((row, i) => {
+              const label = sourceLabels[row.source_media] || row.source_media || 'その他';
+              const pct = Math.round((row.count / total) * 100);
+              const color = sourceColors[i % sourceColors.length];
+              return `
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-gray-400">${label}</span>
+                  <span class="font-bold">${row.count}名 <span class="text-gray-600 font-normal">(${pct}%)</span></span>
+                </div>
+                <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full transition-all" style="width:${pct}%; background:${color}"></div>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+          <p class="text-xs text-gray-600 mt-3 text-right">合計 ${total}名</p>`;
+        })() : '<p class="text-gray-600 text-xs text-center py-4">データがありません</p>'}
       </div>
 
       <!-- ステータス内訳 + 最近の応募 -->

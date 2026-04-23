@@ -177,11 +177,11 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
           <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
-          <a href="/consultation" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium">
-            <i class="fab fa-line text-base"></i>無料相談
+          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-4 py-2 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
+            <i class="fas fa-user-plus text-base"></i>事前登録
           </a>
-          <a href="/register" class="bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-5 py-2.5 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
-            <i class="fas fa-user-plus mr-1"></i>登録する
+          <a href="/consultation" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium">
+            <i class="fab fa-line text-base"></i>LINE相談
           </a>
           <!-- モバイルメニューボタン -->
           <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900" onclick="toggleMobileMenu()">
@@ -200,10 +200,13 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
           <i class="fas fa-university text-primary-500 w-4"></i>大学別求人
         </a>
         <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fab fa-line text-green-500 w-4"></i>無料相談（LINE）
+          <i class="fas fa-comments text-primary-500 w-4"></i>無料相談
         </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fas fa-user-plus text-primary-500 w-4"></i>新規登録
+          <i class="fas fa-user-plus text-primary-500 w-4"></i>事前登録する
+        </a>
+        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1">
+          <i class="fab fa-line text-white w-4"></i>LINEで無料相談
         </a>
       </div>
     </div>
