@@ -85,8 +85,8 @@ async function initHomePage() {
             <a href="/jobs" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25">
               <i class="fas fa-search mr-2"></i>${s.hero_cta1_text || '求人を探す'}
             </a>
-            <a href="/register" class="glass hover:bg-white text-gray-900 font-medium px-8 py-4 rounded-xl transition-all text-center border-2 border-transparent hover:border-primary-200">
-              <i class="fas fa-ticket-alt mr-2"></i>${s.hero_cta2_text || '招待コードで登録'}
+            <a href="${s.line_url || '/consultation'}" target="${s.line_url ? '_blank' : '_self'}" class="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg shadow-green-500/25">
+              <i class="fab fa-line text-xl"></i>LINEで無料相談
             </a>
           </div>
         </div>
@@ -94,18 +94,18 @@ async function initHomePage() {
     </section>
 
     <!-- 招待コード + 無料相談（LINE誘導）セクション -->
-    <section class="py-12 border-b border-white/5">
+    <section class="py-12 border-b border-gray-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid md:grid-cols-2 gap-5">
           <!-- 招待コード -->
-          <div class="glass rounded-2xl p-6 hover:bg-white transition-all">
+          <div class="glass rounded-2xl p-6 hover:bg-white hover:shadow-md transition-all">
             <div class="flex items-start gap-4">
               <div class="w-12 h-12 bg-primary-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-ticket-alt text-primary-600 text-xl"></i>
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-lg mb-2 text-gray-900">招待コード登録</h3>
-                <p class="text-gray-700 text-sm mb-4">先輩・友人からの招待コードで特典をゲット</p>
+                <h3 class="font-bold text-lg mb-1 text-gray-900">招待コードで登録</h3>
+                <p class="text-gray-700 text-sm mb-4">先輩・友人からの招待コードで限定特典をゲット。非公開求人も閲覧可能に。</p>
                 <a href="/register" class="inline-block bg-primary-500/15 hover:bg-primary-500/25 text-primary-700 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-primary-500/30">
                   登録する <i class="fas fa-arrow-right ml-1"></i>
                 </a>
@@ -113,15 +113,15 @@ async function initHomePage() {
             </div>
           </div>
           <!-- 無料相談（LINE） -->
-          <div class="glass rounded-2xl p-6 hover:bg-white/5 transition-all" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), transparent);">
+          <div class="rounded-2xl p-6 hover:shadow-md transition-all" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7); border: 1px solid #86efac;">
             <div class="flex items-start gap-4">
-              <div class="w-12 h-12 bg-green-500/15 rounded-xl flex items-center justify-center flex-shrink-0">
-                <i class="fab fa-line text-green-400 text-2xl"></i>
+              <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-line text-green-600 text-2xl"></i>
               </div>
               <div class="flex-1">
-                <h3 class="font-bold text-lg mb-2 text-gray-900">無料相談（LINE）</h3>
-                <p class="text-gray-700 text-sm mb-4">キャリアのプロが無料でサポート</p>
-                <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500/10 hover:bg-green-500/20 text-green-400 text-sm font-medium px-5 py-2.5 rounded-lg transition-colors border border-green-500/20">
+                <h3 class="font-bold text-lg mb-1 text-gray-900">無料相談（LINE）</h3>
+                <p class="text-gray-700 text-sm mb-4">キャリアのプロが就活・インターン選びを無料でサポートします。</p>
+                <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg transition-colors shadow-sm">
                   <i class="fab fa-line mr-1"></i>LINEで相談する <i class="fas fa-external-link-alt ml-1 text-xs"></i>
                 </a>
               </div>

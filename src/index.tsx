@@ -32,42 +32,42 @@ app.get('/api/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISO
 
 // 公開画面 - LP
 app.get('/', (c) => {
-  return c.html(getPublicHTML('home'))
+  return c.html(getPublicHTML('home', 'InternBase | 高学歴大学生向け長期インターン求人サイト', '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。無料相談受付中。'))
 })
 
 // 公開画面 - 求人一覧
 app.get('/jobs', (c) => {
-  return c.html(getPublicHTML('jobs'))
+  return c.html(getPublicHTML('jobs', '求人一覧 | InternBase - 長期インターン求人', '厳選された長期インターン求人一覧。業種・勤務形態・時給などで絞り込み検索。スタートアップから成長企業まで、あなたに合った求人を見つけよう。'))
 })
 
 // 公開画面 - 求人詳細
 app.get('/jobs/:slug', (c) => {
-  return c.html(getPublicHTML('job-detail'))
+  return c.html(getPublicHTML('job-detail', '求人詳細 | InternBase - 長期インターン求人', '長期インターン求人の詳細情報。業務内容・時給・勤務条件・選考フローを確認して応募しよう。'))
 })
 
 // 公開画面 - 大学別求人
 app.get('/universities', (c) => {
-  return c.html(getPublicHTML('universities'))
+  return c.html(getPublicHTML('universities', '大学別おすすめ求人 | InternBase', '東大・早稲田・慶應など大学別に厳選したインターン求人を掲載。あなたの大学に特化したおすすめ求人を探そう。'))
 })
 
 // 公開画面 - 特定大学の求人一覧
 app.get('/universities/:slug', (c) => {
-  return c.html(getPublicHTML('university-jobs'))
+  return c.html(getPublicHTML('university-jobs', '大学別求人 | InternBase', 'あなたの大学に特化した厳選長期インターン求人。'))
 })
 
 // 公開画面 - 登録
 app.get('/register', (c) => {
-  return c.html(getPublicHTML('register'))
+  return c.html(getPublicHTML('register', '新規登録 | InternBase', '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。'))
 })
 
 // 公開画面 - 無料相談
 app.get('/consultation', (c) => {
-  return c.html(getPublicHTML('consultation'))
+  return c.html(getPublicHTML('consultation', '無料相談 | InternBase', 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。'))
 })
 
 // 公開画面 - マイページ
 app.get('/mypage', (c) => {
-  return c.html(getPublicHTML('mypage'))
+  return c.html(getPublicHTML('mypage', 'マイページ | InternBase', '応募履歴や招待コードの確認・管理ができます。'))
 })
 
 // 管理画面 - 全ページSPA
@@ -76,14 +76,23 @@ app.get('/admin/*', (c) => c.html(getAdminHTML()))
 
 // --- HTML生成 ---
 
-function getPublicHTML(page: string): string {
+function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向け長期インターン求人サイト', description = '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。'): string {
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>InternBase - 長期インターン求人サイト</title>
-  <meta name="description" content="厳選された長期インターン求人。あなたのキャリアをここから始めよう。">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>${title}</title>
+  <meta name="description" content="${description}">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="${title}">
+  <meta property="og:description" content="${description}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="InternBase">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${title}">
+  <meta name="twitter:description" content="${description}">
+  <link rel="canonical" href="https://internbase.jp">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -151,17 +160,52 @@ function getPublicHTML(page: string): string {
         </a>
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
+          <a href="/universities" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">大学別求人</a>
           <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
-          <a href="/consultation" class="text-sm text-gray-600 hover:text-primary-600 transition-colors hidden sm:block font-medium">無料相談</a>
+          <a href="/consultation" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium">
+            <i class="fab fa-line text-base"></i>無料相談
+          </a>
           <a href="/register" class="bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-5 py-2.5 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
             <i class="fas fa-user-plus mr-1"></i>登録する
           </a>
+          <!-- モバイルメニューボタン -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900" onclick="toggleMobileMenu()">
+            <i class="fas fa-bars text-lg"></i>
+          </button>
         </div>
       </div>
     </div>
+    <!-- モバイルメニュー -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+      <div class="px-4 py-3 space-y-1">
+        <a href="/jobs" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-search text-primary-500 w-4"></i>求人を探す
+        </a>
+        <a href="/universities" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-university text-primary-500 w-4"></i>大学別求人
+        </a>
+        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fab fa-line text-green-500 w-4"></i>無料相談（LINE）
+        </a>
+        <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-user-plus text-primary-500 w-4"></i>新規登録
+        </a>
+      </div>
+    </div>
   </nav>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      menu.classList.toggle('hidden');
+      btn.innerHTML = menu.classList.contains('hidden')
+        ? '<i class="fas fa-bars text-lg"></i>'
+        : '<i class="fas fa-times text-lg"></i>';
+    }
+  </script>
 
   <!-- メインコンテンツ -->
   <main id="app" class="pt-16"></main>
