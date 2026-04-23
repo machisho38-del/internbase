@@ -1,7 +1,8 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
+import { adminAuthMiddleware } from '../middleware/adminAuth'
 
-const applications = new Hono<{ Bindings: Bindings }>()
+const applications = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
 // 応募（公開）
 applications.post('/', async (c) => {
@@ -12,7 +13,6 @@ applications.post('/', async (c) => {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
   }
 
-  // 重複チェック
   const existing = await c.env.DB.prepare(
     `SELECT id FROM applications WHERE student_id = ? AND job_id = ?`
   ).bind(student_id, job_id).first()
@@ -20,7 +20,6 @@ applications.post('/', async (c) => {
     return c.json({ success: false, error: 'この求人にはすでに応募済みです' }, 409)
   }
 
-  // 求人存在確認
   const job = await c.env.DB.prepare(
     `SELECT id, title FROM jobs WHERE id = ? AND status = 'published'`
   ).bind(job_id).first()
@@ -31,7 +30,6 @@ applications.post('/', async (c) => {
     VALUES (?, ?, ?, ?)
   `).bind(student_id, job_id, motivation || null, available_hours || null).run()
 
-  // 応募数インクリメント
   await c.env.DB.prepare(
     `UPDATE jobs SET applicant_count = applicant_count + 1 WHERE id = ?`
   ).bind(job_id).run()
@@ -42,10 +40,10 @@ applications.post('/', async (c) => {
   }, 201)
 })
 
-// ---- 管理API ----
+// ---- 管理API（認証必須）----
 
 // 応募一覧（管理）
-applications.get('/admin', async (c) => {
+applications.get('/admin', adminAuthMiddleware, async (c) => {
   const status = c.req.query('status')
   const companyId = c.req.query('company_id')
   const studentId = c.req.query('student_id')
@@ -78,8 +76,11 @@ applications.get('/admin', async (c) => {
 })
 
 // 応募詳細（管理）
-applications.get('/admin/:id', async (c) => {
+applications.get('/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
+  // stats/summary との競合を防ぐ
+  if (id === 'stats') return c.json({ success: false, error: 'Not found' }, 404)
+
   const application = await c.env.DB.prepare(`
     SELECT a.*,
       s.last_name || s.first_name as student_name,
@@ -100,7 +101,7 @@ applications.get('/admin/:id', async (c) => {
 })
 
 // 応募ステータス更新（管理）
-applications.put('/admin/:id', async (c) => {
+applications.put('/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
   const { status, admin_memo, next_action, next_action_date, interview_date } = body
@@ -119,95 +120,100 @@ applications.put('/admin/:id', async (c) => {
 })
 
 // ダッシュボード統計（管理）
-applications.get('/admin/stats/summary', async (c) => {
+applications.get('/admin/stats/summary', adminAuthMiddleware, async (c) => {
   try {
-  // ターム指定（week / month / year / all）
-  const term = c.req.query('term') || 'all'
+    const term = c.req.query('term') || 'all'
 
-  let dateFilter = ''
-  if (term === 'week')  dateFilter = `AND a.created_at >= datetime('now', '-7 days')`
-  if (term === 'month') dateFilter = `AND a.created_at >= datetime('now', '-1 month')`
-  if (term === 'year')  dateFilter = `AND a.created_at >= datetime('now', '-1 year')`
+    let dateFilter = ''
+    if (term === 'week')  dateFilter = `AND a.created_at >= datetime('now', '-7 days')`
+    if (term === 'month') dateFilter = `AND a.created_at >= datetime('now', '-1 month')`
+    if (term === 'year')  dateFilter = `AND a.created_at >= datetime('now', '-1 year')`
 
-  let studentDateFilter = ''
-  if (term === 'week')  studentDateFilter = `AND s2.created_at >= datetime('now', '-7 days')`
-  if (term === 'month') studentDateFilter = `AND s2.created_at >= datetime('now', '-1 month')`
-  if (term === 'year')  studentDateFilter = `AND s2.created_at >= datetime('now', '-1 year')`
+    let studentDateFilter = ''
+    if (term === 'week')  studentDateFilter = `AND s2.created_at >= datetime('now', '-7 days')`
+    if (term === 'month') studentDateFilter = `AND s2.created_at >= datetime('now', '-1 month')`
+    if (term === 'year')  studentDateFilter = `AND s2.created_at >= datetime('now', '-1 year')`
 
-  // 直列実行に変更（エラー特定のため）
-  const totalStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students WHERE status='active'`).first()
-  const totalApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications`).first()
-  const activeJobs = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM jobs WHERE status='published'`).first()
-  const pendingApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications WHERE status='applied'`).first()
-  const termStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students s2 WHERE s2.status='active' ${studentDateFilter}`).first()
-  const termApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications a2 WHERE 1=1 ${dateFilter.replace(/\ba\./g, 'a2.')}`).first()
+    const totalStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students WHERE status='active'`).first()
+    const totalApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications`).first()
+    const activeJobs = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM jobs WHERE status='published'`).first()
+    const pendingApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications WHERE status='applied'`).first()
+    const totalConsultations = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM consultations`).first()
+    const pendingConsultations = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM consultations WHERE status='pending'`).first()
+    const termStudents = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM students s2 WHERE s2.status='active' ${studentDateFilter}`).first()
+    const termApplications = await c.env.DB.prepare(`SELECT COUNT(*) as count FROM applications a2 WHERE 1=1 ${dateFilter.replace(/\ba\./g, 'a2.')}`).first()
 
-  // ターム内のステータス内訳
-  const { results: statusBreakdown } = await c.env.DB.prepare(`
-    SELECT a.status, COUNT(*) as count FROM applications a WHERE 1=1 ${dateFilter} GROUP BY a.status
-  `).all()
+    const { results: statusBreakdown } = await c.env.DB.prepare(`
+      SELECT a.status, COUNT(*) as count FROM applications a WHERE 1=1 ${dateFilter} GROUP BY a.status
+    `).all()
 
-  // ターム内の企業別応募数（上位5社）
-  const { results: topCompanies } = await c.env.DB.prepare(`
-    SELECT co.name as company_name, COUNT(*) as cnt
-    FROM applications a
-    JOIN jobs j ON j.id = a.job_id
-    JOIN companies co ON co.id = j.company_id
-    WHERE 1=1 ${dateFilter}
-    GROUP BY co.id ORDER BY cnt DESC LIMIT 5
-  `).all()
-
-  // ターム内の日別推移（直近7日 or 30日 or 12ヶ月）
-  let trendQuery = ''
-  if (term === 'week') {
-    trendQuery = `
-      SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
-      FROM applications a WHERE a.created_at >= datetime('now', '-7 days')
-      GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
-  } else if (term === 'month') {
-    trendQuery = `
-      SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
-      FROM applications a WHERE a.created_at >= datetime('now', '-30 days')
-      GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
-  } else if (term === 'year') {
-    trendQuery = `
-      SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
-      FROM applications a WHERE a.created_at >= datetime('now', '-1 year')
-      GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label`
-  } else {
-    trendQuery = `
-      SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
+    const { results: topCompanies } = await c.env.DB.prepare(`
+      SELECT co.name as company_name, COUNT(*) as cnt
       FROM applications a
-      GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label LIMIT 12`
-  }
-  const { results: trendData } = await c.env.DB.prepare(trendQuery).all()
+      JOIN jobs j ON j.id = a.job_id
+      JOIN companies co ON co.id = j.company_id
+      WHERE 1=1 ${dateFilter}
+      GROUP BY co.id ORDER BY cnt DESC LIMIT 5
+    `).all()
 
-  const { results: recentApplications } = await c.env.DB.prepare(`
-    SELECT a.*, s.last_name || s.first_name as student_name,
-      j.title as job_title, c.name as company_name
-    FROM applications a
-    JOIN students s ON s.id = a.student_id
-    JOIN jobs j ON j.id = a.job_id
-    JOIN companies c ON c.id = j.company_id
-    ORDER BY a.created_at DESC LIMIT 10
-  `).all()
-
-  return c.json({
-    success: true,
-    data: {
-      term,
-      total_students: (totalStudents as any)?.count || 0,
-      total_applications: (totalApplications as any)?.count || 0,
-      active_jobs: (activeJobs as any)?.count || 0,
-      pending_applications: (pendingApplications as any)?.count || 0,
-      term_students: (termStudents as any)?.count || 0,
-      term_applications: (termApplications as any)?.count || 0,
-      status_breakdown: statusBreakdown,
-      top_companies: topCompanies,
-      trend_data: trendData,
-      recent_applications: recentApplications
+    let trendQuery = ''
+    if (term === 'week') {
+      trendQuery = `
+        SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
+        FROM applications a WHERE a.created_at >= datetime('now', '-7 days')
+        GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
+    } else if (term === 'month') {
+      trendQuery = `
+        SELECT strftime('%m/%d', a.created_at) as label, COUNT(*) as count
+        FROM applications a WHERE a.created_at >= datetime('now', '-30 days')
+        GROUP BY strftime('%Y-%m-%d', a.created_at) ORDER BY label`
+    } else if (term === 'year') {
+      trendQuery = `
+        SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
+        FROM applications a WHERE a.created_at >= datetime('now', '-1 year')
+        GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label`
+    } else {
+      trendQuery = `
+        SELECT strftime('%Y/%m', a.created_at) as label, COUNT(*) as count
+        FROM applications a
+        GROUP BY strftime('%Y-%m', a.created_at) ORDER BY label LIMIT 12`
     }
-  })
+    const { results: trendData } = await c.env.DB.prepare(trendQuery).all()
+
+    const { results: recentApplications } = await c.env.DB.prepare(`
+      SELECT a.*, s.last_name || s.first_name as student_name,
+        j.title as job_title, c.name as company_name
+      FROM applications a
+      JOIN students s ON s.id = a.student_id
+      JOIN jobs j ON j.id = a.job_id
+      JOIN companies c ON c.id = j.company_id
+      ORDER BY a.created_at DESC LIMIT 10
+    `).all()
+
+    // 流入媒体別学生数
+    const { results: sourceBreakdown } = await c.env.DB.prepare(`
+      SELECT source_media, COUNT(*) as count FROM students GROUP BY source_media ORDER BY count DESC
+    `).all()
+
+    return c.json({
+      success: true,
+      data: {
+        term,
+        total_students: (totalStudents as any)?.count || 0,
+        total_applications: (totalApplications as any)?.count || 0,
+        active_jobs: (activeJobs as any)?.count || 0,
+        pending_applications: (pendingApplications as any)?.count || 0,
+        total_consultations: (totalConsultations as any)?.count || 0,
+        pending_consultations: (pendingConsultations as any)?.count || 0,
+        term_students: (termStudents as any)?.count || 0,
+        term_applications: (termApplications as any)?.count || 0,
+        status_breakdown: statusBreakdown,
+        source_breakdown: sourceBreakdown,
+        top_companies: topCompanies,
+        trend_data: trendData,
+        recent_applications: recentApplications
+      }
+    })
   } catch (err: any) {
     return c.json({ success: false, error: err.message || 'Internal error' }, 500)
   }

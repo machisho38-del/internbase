@@ -1,9 +1,11 @@
 import { Hono } from 'hono'
+import { setCookie, deleteCookie } from 'hono/cookie'
 import { Bindings } from '../types'
+import { adminAuthMiddleware } from '../middleware/adminAuth'
 
-const auth = new Hono<{ Bindings: Bindings }>()
+const auth = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
-// 簡易パスワードハッシュ（Web Crypto API使用）
+// パスワードハッシュ（Web Crypto API）
 async function hashPassword(password: string): Promise<string> {
   const encoder = new TextEncoder()
   const data = encoder.encode(password + 'intern_salt_2024')
@@ -19,7 +21,9 @@ function generateToken(): string {
   return Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
-// 管理者ログイン
+// =========================================
+// 管理者ログイン（Cookie発行）
+// =========================================
 auth.post('/admin/login', async (c) => {
   const { email, password } = await c.req.json()
   if (!email || !password) {
@@ -27,37 +31,73 @@ auth.post('/admin/login', async (c) => {
   }
 
   const passwordHash = await hashPassword(password)
-  const admin = await c.env.DB.prepare(`
-    SELECT * FROM admins WHERE email = ? AND password_hash = ? AND is_active = 1
-  `).bind(email, passwordHash).first()
+  const admin = await c.env.DB.prepare(
+    `SELECT * FROM admins WHERE email = ? AND password_hash = ? AND is_active = 1`
+  ).bind(email, passwordHash).first() as any
 
   if (!admin) {
     return c.json({ success: false, error: 'メールアドレスまたはパスワードが間違っています' }, 401)
   }
 
-  // セッショントークン生成・保存
+  // セッション生成・DB保存
   const token = generateToken()
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
 
-  await c.env.DB.prepare(`
-    UPDATE admins SET last_login_at = CURRENT_TIMESTAMP WHERE id = ?
-  `).bind(admin.id).run()
+  await c.env.DB.prepare(
+    `INSERT INTO admin_sessions (admin_id, token, expires_at) VALUES (?, ?, ?)`
+  ).bind(admin.id, token, expiresAt).run()
+
+  await c.env.DB.prepare(
+    `UPDATE admins SET last_login_at = CURRENT_TIMESTAMP WHERE id = ?`
+  ).bind(admin.id).run()
+
+  // 古いセッションを削除（同一adminの期限切れ分）
+  await c.env.DB.prepare(
+    `DELETE FROM admin_sessions WHERE admin_id = ? AND expires_at <= datetime('now')`
+  ).bind(admin.id).run()
+
+  // HttpOnly Cookie 発行
+  setCookie(c, 'admin_session', token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: 'Strict',
+    path: '/',
+    maxAge: 86400
+  })
 
   return c.json({
     success: true,
-    data: {
-      token,
-      expires_at: expiresAt,
-      admin: { id: admin.id, email: admin.email, name: admin.name, role: admin.role }
-    }
+    data: { name: admin.name, role: admin.role }
   })
 })
 
-// パスワード設定（初回セットアップ用）
+// =========================================
+// ログイン状態確認
+// =========================================
+auth.get('/admin/me', adminAuthMiddleware, (c) => {
+  const admin = c.get('admin')
+  return c.json({ success: true, data: admin })
+})
+
+// =========================================
+// ログアウト（Cookie削除）
+// =========================================
+auth.post('/admin/logout', async (c) => {
+  const { getCookie } = await import('hono/cookie')
+  const token = getCookie(c, 'admin_session')
+  if (token) {
+    await c.env.DB.prepare(`DELETE FROM admin_sessions WHERE token = ?`).bind(token).run()
+  }
+  deleteCookie(c, 'admin_session', { path: '/' })
+  return c.json({ success: true })
+})
+
+// =========================================
+// パスワード設定（初回セットアップ）
+// =========================================
 auth.post('/admin/setup', async (c) => {
   const { setup_key, email, password, name } = await c.req.json()
 
-  // セットアップキー確認（環境変数から取得）
   const validSetupKey = (c.env as any).SETUP_KEY || 'setup_intern_2024'
   if (setup_key !== validSetupKey) {
     return c.json({ success: false, error: 'セットアップキーが無効です' }, 403)
@@ -65,7 +105,6 @@ auth.post('/admin/setup', async (c) => {
 
   const passwordHash = await hashPassword(password)
 
-  // 既存管理者更新 or 新規作成
   const existing = await c.env.DB.prepare(`SELECT id FROM admins WHERE email = ?`).bind(email).first()
   if (existing) {
     await c.env.DB.prepare(`UPDATE admins SET password_hash = ?, name = ? WHERE email = ?`)
@@ -78,10 +117,8 @@ auth.post('/admin/setup', async (c) => {
   return c.json({ success: true, message: 'パスワードを設定しました' })
 })
 
-// トークン検証
-auth.post('/admin/verify', async (c) => {
-  // フロントエンドでlocalStorageからトークンを持ち、
-  // 今回は簡易実装のため、DB保存なしでフロント側管理
+// 旧互換：verify エンドポイント（廃止→meにリダイレクト）
+auth.post('/admin/verify', adminAuthMiddleware, (c) => {
   return c.json({ success: true })
 })
 

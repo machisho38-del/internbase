@@ -4,6 +4,19 @@
 
 const API = axios.create({ baseURL: '/api' });
 
+// ==========================================
+// 流入媒体オプション（SOURCE_MEDIA_OPTIONS）
+// ==========================================
+const SOURCE_MEDIA_OPTIONS = [
+  { value: 'todai_ig',  label: '東大向けInstagram',   line_key: 'line_url_todai' },
+  { value: 'waseda_ig', label: '早稲田向けInstagram', line_key: 'line_url_waseda' },
+  { value: 'keio_ig',   label: '慶應向けInstagram',   line_key: 'line_url_keio' },
+  { value: 'march_ig',  label: 'MARCH向けInstagram',  line_key: 'line_url_march' },
+  { value: 'web',       label: 'Webサイトを見て',      line_key: 'line_url_default' },
+  { value: 'other_sns', label: 'その他SNS',           line_key: 'line_url_default' },
+  { value: 'other',     label: 'その他',              line_key: 'line_url_default' },
+];
+
 // サイト設定キャッシュ
 let _siteSettings = null;
 async function getSiteSettings() {
@@ -518,99 +531,345 @@ async function initJobDetailPage() {
 
 function renderJobDetail(job) {
   const app = document.getElementById('app');
+
+  // JSONフィールドのパース
   let highlights = [];
   try { highlights = JSON.parse(job.highlights || '[]'); } catch(e) {}
+  let appealPoints = [];
+  try { appealPoints = JSON.parse(job.appeal_points || '[]'); } catch(e) {}
+  let skillSet = [];
+  try { skillSet = JSON.parse(job.skill_set || '[]'); } catch(e) {}
   let tags = [];
   try { tags = JSON.parse(job.tags || '[]'); } catch(e) {}
 
+  // §2の魅力ポイント：appeal_points優先、なければhighlights
+  const attractionPoints = appealPoints.length > 0 ? appealPoints : highlights;
+
   const wageText = job.hourly_wage_min
-    ? `¥${job.hourly_wage_min.toLocaleString()}${job.hourly_wage_max ? '〜¥'+job.hourly_wage_max.toLocaleString() : '〜'}/時`
+    ? `¥${Number(job.hourly_wage_min).toLocaleString()}${job.hourly_wage_max ? '〜¥'+Number(job.hourly_wage_max).toLocaleString() : '〜'}/時`
     : '応相談';
   const workStyleMap = { onsite: '出社', remote: 'フルリモート', hybrid: 'ハイブリッド' };
   const workStyleText = workStyleMap[job.work_style] || '';
 
+  // 応募ボタンのHTML（再利用）
+  const ctaHTML = `
+    <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 mb-3">
+      <i class="fas fa-paper-plane mr-2"></i>この求人に応募する
+    </button>
+    <a href="/consultation" class="block w-full glass hover:bg-white/10 text-white text-center font-bold py-3 rounded-xl transition-all text-sm">
+      <i class="fas fa-comments mr-1"></i>まず相談してみる
+    </a>
+    <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、公式LINEにてご連絡します</p>
+  `;
+
   app.innerHTML = `
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 fade-in">
-      <div class="text-sm text-gray-500 mb-6">
-        <a href="/" class="hover:text-white transition-colors">ホーム</a>
-        <span class="mx-2">/</span>
-        <a href="/jobs" class="hover:text-white transition-colors">求人一覧</a>
-        <span class="mx-2">/</span>
-        <span class="text-gray-300">${job.title}</span>
-      </div>
+    <div class="fade-in">
 
-      ${job.visibility === 'members' ? `
-      <div class="mb-4 flex items-center gap-2 text-xs text-yellow-400 bg-yellow-500/10 border border-yellow-500/20 rounded-lg px-3 py-2 w-fit">
-        <i class="fas fa-lock"></i> 会員限定求人
-      </div>` : ''}
-
-      <div class="glass rounded-2xl p-8 mb-6">
-        <div class="flex items-start gap-4 mb-4">
-          <div class="w-16 h-16 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
-            ${job.company_logo ? `<img src="${job.company_logo}" class="w-12 h-12 object-contain rounded-lg">` : `<span class="text-primary-400 font-bold text-xl">${(job.company_name||'?')[0]}</span>`}
-          </div>
-          <div class="flex-1">
-            <div class="flex flex-wrap gap-2 mb-2">
-              <span class="tag text-xs px-2 py-0.5 rounded-full">${job.company_industry || ''}</span>
-              ${workStyleText ? `<span class="tag text-xs px-2 py-0.5 rounded-full"><i class="fas fa-map-marker-alt mr-1"></i>${workStyleText}</span>` : ''}
-              ${job.remote_available ? '<span class="bg-green-500/15 border border-green-500/30 text-green-400 text-xs px-2 py-0.5 rounded-full">リモート可</span>' : ''}
+      <!-- §1 FV（ファーストビュー） -->
+      <section id="job-fv" class="relative">
+        ${job.hero_image_url
+          ? `<div class="w-full h-56 sm:h-72 lg:h-80 overflow-hidden"><img src="${job.hero_image_url}" class="w-full h-full object-cover" alt="${job.title}"></div>`
+          : `<div class="w-full h-40 sm:h-56 bg-gradient-to-r from-primary-900 via-dark-800 to-purple-900"></div>`
+        }
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- パンくず -->
+          <nav class="text-sm text-gray-500 mb-5">
+            <a href="/" class="hover:text-white transition-colors">ホーム</a>
+            <span class="mx-2">/</span>
+            <a href="/jobs" class="hover:text-white transition-colors">求人一覧</a>
+            <span class="mx-2">/</span>
+            <span class="text-gray-300">${job.title}</span>
+          </nav>
+          <div class="glass rounded-2xl p-6 sm:p-8">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="w-16 h-16 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-primary-500/20">
+                ${job.company_logo
+                  ? `<img src="${job.company_logo}" class="w-12 h-12 object-contain rounded-lg" alt="${job.company_name}">`
+                  : `<span class="text-primary-400 font-bold text-xl">${(job.company_name||'?')[0]}</span>`}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap gap-2 mb-2">
+                  ${job.visibility === 'members' ? '<span class="bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 text-xs px-2 py-0.5 rounded-full"><i class="fas fa-lock mr-1"></i>会員限定</span>' : ''}
+                  ${job.company_industry ? `<span class="tag text-xs px-2 py-0.5 rounded-full">${job.company_industry}</span>` : ''}
+                  ${workStyleText ? `<span class="tag text-xs px-2 py-0.5 rounded-full"><i class="fas fa-map-marker-alt mr-1"></i>${workStyleText}</span>` : ''}
+                  ${job.remote_available ? '<span class="bg-green-500/15 border border-green-500/30 text-green-400 text-xs px-2 py-0.5 rounded-full">リモート可</span>' : ''}
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black mb-1 leading-tight">${job.title}</h1>
+                <p class="text-primary-400 font-semibold">${job.company_name}</p>
+              </div>
             </div>
-            <h1 class="text-2xl sm:text-3xl font-black mb-1">${job.title}</h1>
-            <p class="text-primary-400 font-medium">${job.company_name}</p>
-          </div>
-        </div>
-        ${job.catch_copy ? `<p class="text-gray-300 text-lg leading-relaxed border-l-2 border-primary-500 pl-4">${job.catch_copy}</p>` : ''}
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
-          <div class="bg-white/5 rounded-xl p-3 text-center"><i class="fas fa-yen-sign text-primary-400 mb-1 block"></i><div class="text-sm font-bold">${wageText}</div><div class="text-xs text-gray-500">時給</div></div>
-          <div class="bg-white/5 rounded-xl p-3 text-center"><i class="fas fa-clock text-primary-400 mb-1 block"></i><div class="text-xs font-medium">${job.work_hours || '要相談'}</div><div class="text-xs text-gray-500">勤務時間</div></div>
-          <div class="bg-white/5 rounded-xl p-3 text-center"><i class="fas fa-map-marker-alt text-primary-400 mb-1 block"></i><div class="text-xs font-medium truncate">${job.work_location ? job.work_location.split('（')[0] : '要確認'}</div><div class="text-xs text-gray-500">勤務地</div></div>
-          <div class="bg-white/5 rounded-xl p-3 text-center"><i class="fas fa-calendar text-primary-400 mb-1 block"></i><div class="text-xs font-medium">${job.min_hours_per_month ? job.min_hours_per_month+'h~/月' : '要相談'}</div><div class="text-xs text-gray-500">最低月間時間</div></div>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="lg:col-span-2 space-y-6">
-          ${highlights.length > 0 ? `
-          <div class="glass rounded-2xl p-7">
-            <h2 class="text-lg font-bold mb-5 flex items-center gap-2"><i class="fas fa-gift text-primary-400"></i>このインターンにしかない魅力</h2>
-            <div class="space-y-4">
-              ${highlights.map(h => `<div class="bg-primary-500/5 border border-primary-500/15 rounded-xl p-4"><div class="flex items-start gap-3"><span class="text-2xl">${h.icon||'✨'}</span><div><h3 class="font-bold text-sm mb-1">${h.title}</h3><p class="text-gray-400 text-sm leading-relaxed">${h.body}</p></div></div></div>`).join('')}
+            ${job.catch_copy ? `<p class="text-gray-300 text-base sm:text-lg leading-relaxed border-l-4 border-primary-500 pl-4 mb-5">${job.catch_copy}</p>` : ''}
+            <!-- 勤務条件サマリー（§3 先出し） -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-yen-sign text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-sm font-bold leading-tight">${wageText}</div>
+                <div class="text-xs text-gray-500 mt-0.5">時給</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-clock text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight">${job.work_hours || '要相談'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">勤務時間</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-map-marker-alt text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight truncate">${job.work_location ? job.work_location.split('（')[0] : '要確認'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">勤務地</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-calendar-alt text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight">${job.min_hours_per_month ? job.min_hours_per_month+'h~/月' : '要相談'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">最低月間</div>
+              </div>
             </div>
-          </div>` : ''}
-          <div class="glass rounded-2xl p-7"><h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-tasks text-primary-400"></i>業務内容</h2><div class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.work_content}</div></div>
-          ${job.requirements ? `<div class="glass rounded-2xl p-7"><h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-user-check text-primary-400"></i>求める人材</h2><div class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.requirements}</div>${job.preferred_requirements ? `<div class="mt-4 pt-4 border-t border-white/10"><p class="text-xs text-gray-500 mb-2">歓迎条件</p><div class="text-gray-400 text-sm whitespace-pre-line">${job.preferred_requirements}</div></div>` : ''}</div>` : ''}
-          ${job.growth_points ? `<div class="glass rounded-2xl p-7"><h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-chart-line text-primary-400"></i>身につくスキル</h2><div class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.growth_points}</div></div>` : ''}
-          ${job.selection_flow ? `<div class="glass rounded-2xl p-7"><h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="fas fa-route text-primary-400"></i>選考フロー</h2><div class="text-gray-300 text-sm">${job.selection_flow}</div></div>` : ''}
-        </div>
-        <div class="space-y-4">
-          <div class="glass rounded-2xl p-5 sticky top-20">
-            <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 text-sm mb-3">
-              <i class="fas fa-paper-plane mr-2"></i>この求人に応募する
-            </button>
-            <a href="/consultation" class="block w-full glass hover:bg-white/10 text-white text-center font-medium py-3 rounded-xl transition-all text-sm">
-              <i class="fas fa-comments mr-1"></i>まず相談してみる
-            </a>
-            <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、公式LINEにてご連絡します</p>
-          </div>
-          <div class="glass rounded-2xl p-5">
-            <h3 class="font-bold text-sm mb-4">勤務条件</h3>
-            <div class="space-y-2.5 text-xs">
-              ${[['時給',wageText],['勤務時間',job.work_hours],['勤務日数',job.work_days],['勤務地',job.work_location],['勤務形態',workStyleText],['対象学年',job.target_grade]].filter(([,v])=>v).map(([l,v])=>`<div class="flex gap-2"><span class="text-gray-500 w-16 flex-shrink-0">${l}</span><span class="text-gray-300 leading-relaxed">${v}</span></div>`).join('')}
+            <!-- モバイル：CTA -->
+            <div class="mt-5 lg:hidden">
+              ${ctaHTML}
             </div>
           </div>
-          ${tags.length > 0 ? `<div class="glass rounded-2xl p-5"><h3 class="font-bold text-sm mb-3">関連タグ</h3><div class="flex flex-wrap gap-2">${tags.map(t=>`<span class="tag text-xs px-2 py-1 rounded-full">#${t}</span>`).join('')}</div></div>` : ''}
         </div>
-      </div>
-    </div>
+      </section>
 
-    <div id="apply-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.8);backdrop-filter:blur(4px)">
-      <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
-        <div class="flex justify-between items-center mb-5">
-          <h3 class="text-lg font-bold">応募する</h3>
-          <button onclick="closeApplyModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      <!-- メインコンテンツ + サイドバー -->
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- 左：メインコンテンツ -->
+          <main class="lg:col-span-2 space-y-6">
+
+            <!-- §2 このインターンの魅力3点 -->
+            ${attractionPoints.length > 0 ? `
+            <section id="job-attraction" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-5 flex items-center gap-2">
+                <i class="fas fa-gift text-primary-400"></i>このインターンの魅力
+              </h2>
+              <div class="space-y-4">
+                ${attractionPoints.map((h, i) => `
+                  <div class="bg-primary-500/5 border border-primary-500/15 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                      <span class="text-2xl flex-shrink-0">${h.icon || ['🚀','💡','🌟'][i] || '✨'}</span>
+                      <div>
+                        <h3 class="font-bold text-sm mb-1">${h.title || ''}</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">${h.body || h.description || ''}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </section>` : ''}
+
+            <!-- §4 会社概要 / ミッション -->
+            ${(job.company_description || job.company_mission) ? `
+            <section id="job-company-about" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-building text-primary-400"></i>会社概要
+              </h2>
+              ${job.company_hero_image_url ? `<img src="${job.company_hero_image_url}" class="w-full h-40 object-cover rounded-xl mb-4" alt="${job.company_name}">` : ''}
+              ${job.company_description ? `<p class="text-gray-300 text-sm leading-relaxed mb-3">${job.company_description}</p>` : ''}
+              ${job.company_mission ? `
+              <div class="bg-primary-500/5 border border-primary-500/20 rounded-xl p-4 mt-3">
+                <p class="text-xs text-primary-400 font-bold mb-1"><i class="fas fa-flag mr-1"></i>ミッション</p>
+                <p class="text-gray-300 text-sm leading-relaxed">${job.company_mission}</p>
+              </div>` : ''}
+            </section>` : ''}
+
+            <!-- §5 サービス / 事業内容 -->
+            ${job.company_service_description ? `
+            <section id="job-service" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-briefcase text-primary-400"></i>サービス / 事業内容
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.company_service_description}</p>
+            </section>` : ''}
+
+            <!-- §6 ポジションの特徴 -->
+            ${job.position_features ? `
+            <section id="job-position" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-star text-primary-400"></i>ポジションの特徴
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.position_features}</p>
+            </section>` : ''}
+
+            <!-- §7 業務概要 -->
+            <section id="job-work" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-tasks text-primary-400"></i>業務概要
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.work_content}</p>
+            </section>
+
+            <!-- §8 入社後の流れ -->
+            ${job.onboarding_flow ? `
+            <section id="job-onboarding" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-route text-primary-400"></i>入社後の流れ
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.onboarding_flow}</p>
+            </section>` : ''}
+
+            <!-- §9 主な業務 / 案件例 -->
+            ${job.task_examples ? `
+            <section id="job-tasks" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-list-ul text-primary-400"></i>主な業務 / 案件例
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.task_examples}</p>
+            </section>` : ''}
+
+            <!-- §10 習得できるスキルセット -->
+            ${(skillSet.length > 0 || job.growth_points) ? `
+            <section id="job-skills" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-primary-400"></i>習得できるスキルセット
+              </h2>
+              ${skillSet.length > 0
+                ? `<div class="flex flex-wrap gap-2">${skillSet.map(s => `<span class="bg-primary-500/10 border border-primary-500/20 text-primary-300 text-xs px-3 py-1.5 rounded-full font-medium">${typeof s === 'string' ? s : (s.name || s)}</span>`).join('')}</div>`
+                : `<p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.growth_points}</p>`
+              }
+            </section>` : ''}
+
+            <!-- §11 キャリアパス -->
+            ${job.career_path ? `
+            <section id="job-career" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-chart-line text-primary-400"></i>キャリアパス
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.career_path}</p>
+            </section>` : ''}
+
+            <!-- §12 こんな人におすすめ -->
+            ${job.recommended_for ? `
+            <section id="job-recommended" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-user-check text-primary-400"></i>こんな人におすすめ
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.recommended_for}</p>
+            </section>` : ''}
+
+            <!-- §13 応募 / 相談 CTA（メインコンテンツ内） -->
+            <section id="job-cta-main" class="glass rounded-2xl p-7 border border-primary-500/20">
+              <h2 class="text-lg font-bold mb-2">応募 / 相談</h2>
+              <p class="text-gray-400 text-sm mb-5">少しでも興味があれば、まずは気軽にご応募ください。</p>
+              ${ctaHTML}
+            </section>
+
+            <!-- §14 採用情報 -->
+            ${(job.requirements || job.preferred_requirements || job.selection_flow) ? `
+            <section id="job-requirements" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-clipboard-list text-primary-400"></i>採用情報
+              </h2>
+              ${job.requirements ? `
+              <div class="mb-4">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">求める人材</h3>
+                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.requirements}</p>
+              </div>` : ''}
+              ${job.preferred_requirements ? `
+              <div class="mb-4 pt-4 border-t border-white/10">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">歓迎条件</h3>
+                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.preferred_requirements}</p>
+              </div>` : ''}
+              ${job.selection_flow ? `
+              <div class="${(job.requirements || job.preferred_requirements) ? 'pt-4 border-t border-white/10' : ''}">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">選考フロー</h3>
+                <p class="text-gray-400 text-sm">${job.selection_flow}</p>
+              </div>` : ''}
+            </section>` : ''}
+
+            <!-- §15 会社情報 -->
+            ${(job.office_location || job.office_access || job.company_website) ? `
+            <section id="job-company-info" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-map-marker-alt text-primary-400"></i>会社情報
+              </h2>
+              <div class="space-y-3 text-sm">
+                ${[
+                  ['勤務地', job.work_location || job.office_location],
+                  ['アクセス', job.office_access],
+                  ['勤務形態', workStyleText],
+                  ['勤務時間', job.work_hours],
+                  ['勤務日数', job.work_days],
+                  ['対象学年', job.target_grade],
+                  ['月間最低時間', job.min_hours_per_month ? job.min_hours_per_month + 'h' : null],
+                  ['Webサイト', job.company_website ? `<a href="${job.company_website}" target="_blank" rel="noopener" class="text-primary-400 hover:text-primary-300 underline">${job.company_website}</a>` : null],
+                ].filter(([,v]) => v).map(([l,v]) => `
+                  <div class="flex gap-3">
+                    <span class="text-gray-500 w-24 flex-shrink-0 text-xs leading-relaxed pt-0.5">${l}</span>
+                    <span class="text-gray-300 leading-relaxed text-sm">${v}</span>
+                  </div>
+                `).join('')}
+                ${tags.length > 0 ? `
+                <div class="flex gap-3 pt-3 border-t border-white/10">
+                  <span class="text-gray-500 w-24 flex-shrink-0 text-xs pt-0.5">関連タグ</span>
+                  <div class="flex flex-wrap gap-1.5">${tags.map(t=>`<span class="tag text-xs px-2 py-1 rounded-full">#${t}</span>`).join('')}</div>
+                </div>` : ''}
+              </div>
+            </section>` : ''}
+
+            <!-- §16 最終CTA -->
+            <section id="job-cta-final" class="glass rounded-2xl p-7 text-center border border-primary-500/30 bg-gradient-to-br from-primary-900/20 to-purple-900/20">
+              <h2 class="text-xl font-black mb-2">一緒に働きませんか？</h2>
+              <p class="text-gray-400 text-sm mb-6">まずは気軽にご応募を。選考フローもシンプルです。</p>
+              <div class="max-w-xs mx-auto">
+                ${ctaHTML}
+              </div>
+            </section>
+
+          </main>
+
+          <!-- 右：サイドバー（PC のみ sticky CTA） -->
+          <aside class="hidden lg:block space-y-4">
+            <!-- §13 サイドバー sticky CTA -->
+            <div class="glass rounded-2xl p-5 sticky top-20">
+              <p class="text-xs text-gray-500 mb-3 font-medium">${job.company_name}</p>
+              <p class="text-sm font-bold mb-4 leading-snug">${job.title}</p>
+              ${ctaHTML}
+            </div>
+            <!-- §3 勤務条件詳細 -->
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-bold text-sm mb-4 flex items-center gap-2">
+                <i class="fas fa-clipboard text-gray-400"></i>勤務条件
+              </h3>
+              <div class="space-y-2.5 text-xs">
+                ${[
+                  ['時給', wageText],
+                  ['勤務時間', job.work_hours],
+                  ['勤務日数', job.work_days],
+                  ['勤務地', job.work_location],
+                  ['勤務形態', workStyleText],
+                  ['対象学年', job.target_grade],
+                ].filter(([,v]) => v).map(([l,v]) => `
+                  <div class="flex gap-2">
+                    <span class="text-gray-500 w-16 flex-shrink-0">${l}</span>
+                    <span class="text-gray-300 leading-relaxed">${v}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </aside>
+
         </div>
-        <div id="apply-form-content"></div>
       </div>
+
+      <!-- 応募モーダル -->
+      <div id="apply-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.8);backdrop-filter:blur(4px)">
+        <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+          <div class="flex justify-between items-center mb-5">
+            <h3 class="text-lg font-bold">応募する</h3>
+            <button onclick="closeApplyModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+          </div>
+          <div id="apply-form-content"></div>
+        </div>
+      </div>
+
+      <!-- モバイル floating CTA -->
+      <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-dark-900/90 backdrop-blur-sm border-t border-white/10">
+        <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-all">
+          <i class="fas fa-paper-plane mr-2"></i>この求人に応募する
+        </button>
+      </div>
+
     </div>
   `;
 }
@@ -628,9 +887,24 @@ async function initRegisterPage() {
             <i class="fas fa-user-plus text-white text-xl"></i>
           </div>
           <h1 class="text-2xl font-black mb-2">新規登録</h1>
-          <p class="text-gray-500 text-sm">招待コードをお持ちの方は入力してください</p>
+          <p class="text-gray-500 text-sm">まず、どこでInternBaseを知りましたか？</p>
         </div>
-        <div class="glass rounded-2xl p-8">
+        <!-- STEP 1: 流入媒体選択 -->
+        <div class="glass rounded-2xl p-8 mb-4" id="source-media-step">
+          <h3 class="font-bold mb-4 text-sm">どこで知りましたか？ <span class="text-red-400">*</span></h3>
+          <div class="grid grid-cols-1 gap-2">
+            ${SOURCE_MEDIA_OPTIONS.map(opt => `
+              <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="source-opt-${opt.value}">
+                <input type="radio" name="source_media" value="${opt.value}" onchange="onSourceMediaChange('${opt.value}')"
+                  class="accent-primary-500 w-4 h-4">
+                <span class="text-sm text-gray-200">${opt.label}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="source-media-error" class="hidden mt-3 text-xs text-red-400">流入媒体を選択してください</div>
+        </div>
+        <!-- STEP 2: 招待コード + 進むボタン -->
+        <div class="glass rounded-2xl p-8" id="invite-code-step">
           <div class="mb-6">
             <label class="block text-sm font-medium mb-2 text-gray-300">招待コード <span class="text-gray-500 text-xs font-normal">（任意）</span></label>
             <div class="flex gap-2">
@@ -640,7 +914,7 @@ async function initRegisterPage() {
             </div>
             <div id="invite-code-msg" class="mt-1.5 text-xs"></div>
           </div>
-          <button onclick="showRegisterForm()" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+          <button onclick="proceedToRegisterForm()" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
             登録フォームへ進む
           </button>
           <p class="text-center text-xs text-gray-600 mt-3">招待コードなしでも登録できます</p>
@@ -657,7 +931,30 @@ async function initRegisterPage() {
   }
 }
 
-function showRegisterForm() {
+function onSourceMediaChange(value) {
+  // ラジオボタン選択時のUI更新
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-primary-500', 'bg-primary-500/10');
+    } else {
+      el.classList.remove('border-primary-500', 'bg-primary-500/10');
+    }
+  });
+}
+
+function proceedToRegisterForm() {
+  const selected = document.querySelector('input[name="source_media"]:checked');
+  if (!selected) {
+    document.getElementById('source-media-error')?.classList.remove('hidden');
+    return;
+  }
+  document.getElementById('source-media-error')?.classList.add('hidden');
+  showRegisterForm(selected.value);
+}
+
+function showRegisterForm(sourceMedia = 'other') {
   const inviteCode = document.getElementById('invite-code-input')?.value || '';
   const app = document.getElementById('app');
   app.innerHTML = `
@@ -670,22 +967,17 @@ function showRegisterForm() {
         <div class="glass rounded-2xl p-8">
           <form id="register-form" onsubmit="submitRegister(event)">
             <input type="hidden" id="reg-invite-code" value="${inviteCode}">
+            <input type="hidden" id="reg-source-media" value="${sourceMedia}">
             <div class="grid grid-cols-2 gap-4 mb-4">
               <div><label class="block text-xs text-gray-400 mb-1.5">姓 <span class="text-red-400">*</span></label><input id="reg-last-name" type="text" required placeholder="山田" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
               <div><label class="block text-xs text-gray-400 mb-1.5">名 <span class="text-red-400">*</span></label><input id="reg-first-name" type="text" required placeholder="太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
             </div>
-            <div class="grid grid-cols-2 gap-4 mb-4">
-              <div><label class="block text-xs text-gray-400 mb-1.5">姓（フリガナ）</label><input id="reg-last-kana" type="text" placeholder="ヤマダ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-              <div><label class="block text-xs text-gray-400 mb-1.5">名（フリガナ）</label><input id="reg-first-kana" type="text" placeholder="タロウ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-            </div>
             <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="reg-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-            <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">電話番号</label><input id="reg-phone" type="tel" placeholder="09012345678" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
             <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">大学名 <span class="text-red-400">*</span></label><input id="reg-university" type="text" required placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
             <div class="grid grid-cols-2 gap-4 mb-4">
-              <div><label class="block text-xs text-gray-400 mb-1.5">学部・学科</label><input id="reg-faculty" type="text" placeholder="経済学部" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-400 mb-1.5">学部・学科 <span class="text-gray-500 font-normal">（任意）</span></label><input id="reg-faculty" type="text" placeholder="経済学部" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
               <div><label class="block text-xs text-gray-400 mb-1.5">学年 <span class="text-red-400">*</span></label><select id="reg-grade" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-primary-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
             </div>
-            <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">自己PR（任意）</label><textarea id="reg-pr" rows="3" placeholder="インターンへの動機や自己PR" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
             <div id="register-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
             <button type="submit" id="register-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
               <i class="fas fa-user-plus mr-2"></i>登録する
@@ -717,18 +1009,17 @@ async function submitRegister(e) {
   btn.disabled = true; btn.textContent = '登録中...';
   errDiv.classList.add('hidden');
 
+  const sourceMedia = document.getElementById('reg-source-media')?.value || 'other';
+
   const data = {
     last_name: document.getElementById('reg-last-name').value,
     first_name: document.getElementById('reg-first-name').value,
-    last_name_kana: document.getElementById('reg-last-kana').value,
-    first_name_kana: document.getElementById('reg-first-kana').value,
     email: document.getElementById('reg-email').value,
-    phone: document.getElementById('reg-phone').value,
     university: document.getElementById('reg-university').value,
     faculty: document.getElementById('reg-faculty').value,
     grade: parseInt(document.getElementById('reg-grade').value),
     invite_code: document.getElementById('reg-invite-code').value,
-    pr_text: document.getElementById('reg-pr').value,
+    source_media: sourceMedia,
   };
 
   try {
@@ -737,7 +1028,7 @@ async function submitRegister(e) {
       localStorage.setItem('student_id', res.data.data.id);
       localStorage.setItem('student_name', data.last_name + data.first_name);
       localStorage.setItem('my_invite_code', res.data.data.my_invite_code || '');
-      showRegisterSuccess(data, res.data.data.my_invite_code);
+      showRegisterSuccess(data, res.data.data.my_invite_code, sourceMedia);
     }
   } catch(e) {
     errDiv.textContent = e.response?.data?.error || '登録に失敗しました';
@@ -747,8 +1038,13 @@ async function submitRegister(e) {
   }
 }
 
-async function showRegisterSuccess(data, myCode) {
+async function showRegisterSuccess(data, myCode, sourceMedia) {
   const s = await getSiteSettings();
+  // source_mediaに対応したLINE URLを取得
+  const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
+  const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
+  const lineUrl = s[lineKey] || s.line_url_default || s.line_url || '#';
+
   document.getElementById('app').innerHTML = `
     <div class="min-h-screen flex items-center justify-center px-4">
       <div class="text-center max-w-md">
@@ -769,7 +1065,7 @@ async function showRegisterSuccess(data, myCode) {
         </div>` : ''}
         <p class="text-gray-500 text-sm mb-6">公式LINEを友だち追加して、インターン活動をスタートしましょう。</p>
         <div class="space-y-3">
-          <a href="${s.line_url || '#'}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+          <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
             <i class="fab fa-line text-xl"></i>公式LINEを友だち追加
           </a>
           <a href="/jobs" class="block text-primary-400 hover:text-primary-300 transition-colors text-sm py-2">
@@ -795,26 +1091,45 @@ async function initConsultationPage() {
         <h1 class="text-2xl font-black mb-2">無料相談</h1>
         <p class="text-gray-500 text-sm">キャリアのプロが、インターン選びを無料でサポートします</p>
       </div>
-      <div class="glass rounded-2xl p-8">
+      <!-- STEP 1: 流入媒体選択 -->
+      <div class="glass rounded-2xl p-8 mb-4" id="con-source-step">
+        <h3 class="font-bold mb-4 text-sm">どこでInternBaseを知りましたか？ <span class="text-red-400">*</span></h3>
+        <div class="grid grid-cols-1 gap-2">
+          ${SOURCE_MEDIA_OPTIONS.map(opt => `
+            <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
+              <input type="radio" name="con_source_media" value="${opt.value}" onchange="onConSourceMediaChange('${opt.value}')"
+                class="accent-purple-500 w-4 h-4">
+              <span class="text-sm text-gray-200">${opt.label}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div id="con-source-error" class="hidden mt-3 text-xs text-red-400">流入媒体を選択してください</div>
+        <button onclick="proceedToConsultationForm()" class="w-full mt-5 bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
+          相談フォームへ進む
+        </button>
+      </div>
+      <!-- STEP 2: 相談フォーム（初期非表示） -->
+      <div class="glass rounded-2xl p-8 hidden" id="con-form-step">
         <form id="consultation-form" onsubmit="submitConsultation(event)">
+          <input type="hidden" id="con-source-media" value="">
           <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">お名前 <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="山田 太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">お名前 <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="山田 太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4">
-            <div><label class="block text-xs text-gray-400 mb-1.5">大学名</label><input id="con-university" type="text" placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-            <div><label class="block text-xs text-gray-400 mb-1.5">学年</label><select id="con-grade" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-primary-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
+            <div><label class="block text-xs text-gray-400 mb-1.5">大学名</label><input id="con-university" type="text" placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+            <div><label class="block text-xs text-gray-400 mb-1.5">学年</label><select id="con-grade" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-purple-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
           </div>
           <div class="mb-4">
             <label class="block text-xs text-gray-400 mb-1.5">お悩み・相談内容</label>
             <div class="grid grid-cols-2 gap-2 mb-3">
-              ${['インターン選びで迷っている','就活との両立が不安','どんなスキルが身につくか知りたい','給与・条件について詳しく聞きたい','面接対策がしたい','その他'].map(c => `<label class="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10"><input type="checkbox" value="${c}" class="concern-check accent-primary-500"><span class="text-xs text-gray-300">${c}</span></label>`).join('')}
+              ${['インターン選びで迷っている','就活との両立が不安','どんなスキルが身につくか知りたい','給与・条件について詳しく聞きたい','面接対策がしたい','その他'].map(c => `<label class="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10"><input type="checkbox" value="${c}" class="concern-check accent-purple-500"><span class="text-xs text-gray-300">${c}</span></label>`).join('')}
             </div>
           </div>
-          <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">その他、気になることがあればご記入ください</label><textarea id="con-message" rows="4" placeholder="気になることを何でも" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
-          <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">ご希望の日時（任意）</label><input id="con-datetime" type="text" placeholder="平日の午後など" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+          <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">その他、気になることがあればご記入ください</label><textarea id="con-message" rows="4" placeholder="気になることを何でも" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 resize-none"></textarea></div>
+          <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">ご希望の日時（任意）</label><input id="con-datetime" type="text" placeholder="平日の午後など" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
           <div id="consultation-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
-          <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+          <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
             <i class="fas fa-calendar-alt mr-2"></i>無料相談を申し込む
           </button>
         </form>
@@ -823,11 +1138,36 @@ async function initConsultationPage() {
   `;
 }
 
+function onConSourceMediaChange(value) {
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`con-source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-purple-500', 'bg-purple-500/10');
+    } else {
+      el.classList.remove('border-purple-500', 'bg-purple-500/10');
+    }
+  });
+}
+
+function proceedToConsultationForm() {
+  const selected = document.querySelector('input[name="con_source_media"]:checked');
+  if (!selected) {
+    document.getElementById('con-source-error')?.classList.remove('hidden');
+    return;
+  }
+  document.getElementById('con-source-error')?.classList.add('hidden');
+  document.getElementById('con-source-media').value = selected.value;
+  document.getElementById('con-source-step').classList.add('hidden');
+  document.getElementById('con-form-step').classList.remove('hidden');
+}
+
 async function submitConsultation(e) {
   e.preventDefault();
   const btn = e.target.querySelector('button[type=submit]');
   btn.disabled = true; btn.textContent = '送信中...';
   const concerns = [...document.querySelectorAll('.concern-check:checked')].map(c => c.value);
+  const sourceMedia = document.getElementById('con-source-media')?.value || 'other';
   try {
     const res = await API.post('/consultation', {
       name: document.getElementById('con-name').value,
@@ -837,9 +1177,14 @@ async function submitConsultation(e) {
       concern: concerns.join('、'),
       message: document.getElementById('con-message').value,
       preferred_datetime: document.getElementById('con-datetime').value,
+      source_media: sourceMedia,
     });
     if (res.data.success) {
       const s = await getSiteSettings();
+      // source_mediaに対応したLINE URLを取得
+      const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
+      const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
+      const lineUrl = s[lineKey] || s.line_url_default || s.line_url || '#';
       document.getElementById('app').innerHTML = `
         <div class="min-h-screen flex items-center justify-center px-4">
           <div class="text-center max-w-md">
@@ -849,7 +1194,7 @@ async function submitConsultation(e) {
             <h1 class="text-2xl font-black mb-3">お申し込みありがとうございます！</h1>
             <p class="text-gray-400 mb-8 text-sm">担当者より2営業日以内にご連絡いたします。<br>公式LINEを追加いただくとより迅速にご連絡できます。</p>
             <div class="space-y-3">
-              <a href="${s.line_url || '#'}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
+              <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
                 <i class="fab fa-line text-xl"></i>公式LINEを友だち追加
               </a>
               <a href="/" class="block text-gray-400 hover:text-white text-sm py-2"><i class="fas fa-home mr-1"></i>トップに戻る</a>

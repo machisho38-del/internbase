@@ -11,10 +11,14 @@ import consultationApi from './routes/api.consultation'
 import authApi from './routes/api.auth'
 import settingsApi from './routes/api.settings'
 import homepageApi from './routes/api.homepage'
+import { comingSoonMiddleware } from './middleware/comingSoon'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
 app.use('/api/*', cors())
+
+// Coming Soon ミドルウェア（公開HTMLページのみに適用）
+app.use('/*', comingSoonMiddleware)
 
 // API ルーティング
 app.route('/api/companies', companiesApi)

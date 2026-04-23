@@ -2,7 +2,7 @@
 // InternBase - 管理画面 JavaScript
 // ==========================================
 
-const API = axios.create({ baseURL: '/api' });
+const API = axios.create({ baseURL: '/api', withCredentials: true });
 
 const STATUS_LABELS = {
   applied: '応募済み', reviewing: '書類選考中',
@@ -18,17 +18,22 @@ const STATUS_COLORS = {
 };
 
 // ==========================================
-// 認証
+// 認証（Cookie ベース）
 // ==========================================
-function checkAuth() {
-  const token = localStorage.getItem('admin_token');
-  const adminData = localStorage.getItem('admin_data');
-  if (!token) { showLoginPage(); return false; }
-  if (adminData) {
-    const admin = JSON.parse(adminData);
-    document.getElementById('admin-name').textContent = admin.name;
+async function checkAuth() {
+  try {
+    const res = await API.get('/auth/admin/me');
+    if (res.data.success) {
+      const admin = res.data.data;
+      const nameEl = document.getElementById('admin-name');
+      if (nameEl) nameEl.textContent = admin.name || '管理者';
+      return true;
+    }
+  } catch(e) {
+    // 401 など → 未認証
   }
-  return true;
+  showLoginPage();
+  return false;
 }
 
 function showLoginPage() {
@@ -84,8 +89,7 @@ async function submitLogin(e) {
       password: document.getElementById('login-password').value
     });
     if (res.data.success) {
-      localStorage.setItem('admin_token', res.data.data.token);
-      localStorage.setItem('admin_data', JSON.stringify(res.data.data.admin));
+      // Cookie は自動で設定される（HttpOnly）
       window.location.reload();
     }
   } catch(e) {
@@ -95,9 +99,10 @@ async function submitLogin(e) {
   }
 }
 
-function adminLogout() {
-  localStorage.removeItem('admin_token');
-  localStorage.removeItem('admin_data');
+async function adminLogout() {
+  try {
+    await API.post('/auth/admin/logout');
+  } catch(e) { /* ignore */ }
   window.location.reload();
 }
 
@@ -449,6 +454,18 @@ function showCompanyModal(company = null) {
               </select>
             </div>
           </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ロゴ URL</label>
+            <input name="logo_url" type="url" value="${company?.logo_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ヒーロー画像 URL <span class="text-gray-600 font-normal">（求人詳細の会社概要セクションに表示）</span></label>
+            <input name="hero_image_url" type="url" value="${company?.hero_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">サービス / 事業内容 <span class="text-gray-600 font-normal">（求人詳細の§5に表示）</span></label>
+            <textarea name="service_description" rows="3" placeholder="提供しているサービス・事業の概要を記載..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${company?.service_description||''}</textarea>
+          </div>
         </div>
         <div class="flex gap-3 mt-6">
           <button type="button" onclick="closeModal()" class="flex-1 glass text-white text-sm py-2.5 rounded-lg hover:bg-white/10 transition-colors">キャンセル</button>
@@ -657,6 +674,38 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
                 <option value="closed" ${job?.status==='closed'?'selected':''}>クローズ</option>
               </select>
             </div>
+          </div>
+          <!-- Phase1 フィールド -->
+          <div class="border-t border-white/10 pt-4">
+            <p class="text-xs text-primary-400 font-bold mb-3"><i class="fas fa-star mr-1"></i>詳細ページ用フィールド（Phase1）</p>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ヒーロー画像 URL <span class="text-gray-600 font-normal">（FVに表示）</span></label>
+            <input name="hero_image_url" type="url" value="${job?.hero_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">カード画像 URL <span class="text-gray-600 font-normal">（一覧カードに表示）</span></label>
+            <input name="card_image_url" type="url" value="${job?.card_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ポジションの特徴 <span class="text-gray-600 font-normal">（§6）</span></label>
+            <textarea name="position_features" rows="3" placeholder="このポジションの特徴・魅力を記載..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.position_features||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">入社後の流れ <span class="text-gray-600 font-normal">（§8）</span></label>
+            <textarea name="onboarding_flow" rows="3" placeholder="入社後〜3ヶ月の流れを記載..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.onboarding_flow||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">主な業務 / 案件例 <span class="text-gray-600 font-normal">（§9）</span></label>
+            <textarea name="task_examples" rows="3" placeholder="具体的な業務内容・案件例を記載..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.task_examples||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">キャリアパス <span class="text-gray-600 font-normal">（§11）</span></label>
+            <textarea name="career_path" rows="2" placeholder="卒業後のキャリアパスや実績事例..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.career_path||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">こんな人におすすめ <span class="text-gray-600 font-normal">（§12）</span></label>
+            <textarea name="recommended_for" rows="2" placeholder="向いている人物像・推奨スキル..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.recommended_for||''}</textarea>
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1">おすすめ大学タグ
@@ -1364,6 +1413,11 @@ async function loadSiteSettings() {
         class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">`;
     };
 
+    // site_mode の現在値を取得
+    const siteModeSetting = settings.find(s => s.setting_key === 'site_mode');
+    const currentSiteMode = siteModeSetting?.setting_value || 'coming_soon';
+    const isPublic = currentSiteMode === 'public';
+
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
         <h2 class="text-lg font-bold">サイト設定</h2>
@@ -1371,6 +1425,31 @@ async function loadSiteSettings() {
           <i class="fas fa-save mr-1"></i>すべて保存
         </button>
       </div>
+
+      <!-- ★ 公開モード切替 -->
+      <div class="glass rounded-xl p-5 mb-5 border ${isPublic ? 'border-green-500/30' : 'border-yellow-500/30'}">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-bold mb-1 flex items-center gap-2">
+              <i class="fas fa-toggle-${isPublic ? 'on text-green-400' : 'off text-yellow-400'}"></i>
+              公開モード切替
+            </h3>
+            <p class="text-xs text-gray-400">現在: <span id="site-mode-label" class="font-bold ${isPublic ? 'text-green-400' : 'text-yellow-400'}">${isPublic ? '✅ 公開中' : '🔒 Coming Soon'}</span></p>
+            <p class="text-xs text-gray-500 mt-1">${isPublic ? '現在、全ユーザーが求人一覧・詳細を閲覧できます。' : '現在、Coming Soonページが表示されています。/register と /consultation は引き続き利用可能です。'}</p>
+          </div>
+          <div class="flex flex-col gap-2 items-end">
+            <button onclick="toggleSiteMode('public')" ${isPublic ? 'disabled' : ''}
+              class="px-4 py-2 text-sm rounded-lg font-bold transition-colors ${isPublic ? 'bg-green-500/10 text-green-500 cursor-not-allowed border border-green-500/20' : 'bg-green-500 hover:bg-green-600 text-white'}">
+              <i class="fas fa-globe mr-1"></i>公開に切り替える
+            </button>
+            <button onclick="toggleSiteMode('coming_soon')" ${!isPublic ? 'disabled' : ''}
+              class="px-4 py-2 text-sm rounded-lg font-bold transition-colors ${!isPublic ? 'bg-yellow-500/10 text-yellow-500 cursor-not-allowed border border-yellow-500/20' : 'bg-yellow-500 hover:bg-yellow-600 text-white'}">
+              <i class="fas fa-lock mr-1"></i>Coming Soon に変更
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div class="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
         <i class="fas fa-info-circle text-blue-400 mt-0.5 shrink-0"></i>
         <div>
@@ -1383,13 +1462,17 @@ async function loadSiteSettings() {
       <div id="settings-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
         <i class="fas fa-check-circle mr-1"></i>保存しました
       </div>
-      ${Object.entries(groups).filter(([groupName]) => !LP_GROUPS.includes(groupName)).map(([groupName, items]) => `
+      ${Object.entries(groups).filter(([groupName]) => !LP_GROUPS.includes(groupName)).map(([groupName, items]) => {
+        // site_mode はトグルUIで管理するので通常のフォームから除外
+        const filteredItems = items.filter(s => s.setting_key !== 'site_mode');
+        if (filteredItems.length === 0) return '';
+        return `
         <div class="glass rounded-xl p-5 mb-4">
           <h3 class="font-semibold text-sm mb-4 text-primary-400">
             <i class="fas fa-layer-group mr-2"></i>${groupLabels[groupName] || groupName}
           </h3>
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            ${items.map(s => `
+            ${filteredItems.map(s => `
               <div>
                 <label class="block text-xs text-gray-400 mb-1.5">${s.setting_key.replace(/_/g,' ')}</label>
                 ${inputField(s)}
@@ -1397,7 +1480,7 @@ async function loadSiteSettings() {
             `).join('')}
           </div>
         </div>
-      `).join('')}
+      `;}).join('')}
     `;
   } catch(e) {
     content.innerHTML = `<div class="text-red-400">取得失敗: ${e.message}</div>`;
@@ -1418,6 +1501,21 @@ async function saveAllSettings() {
     setTimeout(() => msg.classList.add('hidden'), 3000);
   } catch(e) {
     alert('保存に失敗しました: ' + e.message);
+  }
+}
+
+async function toggleSiteMode(mode) {
+  const confirmMsg = mode === 'public'
+    ? '⚠️ 公開に切り替えると、全ユーザーが求人一覧・詳細を閲覧できます。\n元に戻すことも可能です。\n\n公開に切り替えますか？'
+    : 'Coming Soonページに切り替えますか？\n（/register と /consultation は引き続き利用可能です）';
+  if (!confirm(confirmMsg)) return;
+
+  try {
+    await API.put('/settings/admin/site-mode', { site_mode: mode });
+    // ページを再読み込みして状態を反映
+    loadSiteSettings();
+  } catch(e) {
+    alert('切り替えに失敗しました: ' + (e.response?.data?.error || e.message));
   }
 }
 
@@ -2596,7 +2694,8 @@ function showSaveMsg(id) {
 }
 
 // 初期化
-window.addEventListener('DOMContentLoaded', () => {
-  if (!checkAuth()) return;
+window.addEventListener('DOMContentLoaded', async () => {
+  const authenticated = await checkAuth();
+  if (!authenticated) return;
   navigate('dashboard');
 });

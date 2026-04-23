@@ -1,7 +1,8 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
+import { adminAuthMiddleware } from '../middleware/adminAuth'
 
-const homepage = new Hono<{ Bindings: Bindings }>()
+const homepage = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
 // ==========================================
 // 内定者タイムライン API
@@ -19,7 +20,7 @@ homepage.get('/success-stories', async (c) => {
 })
 
 // 管理用：全タイムライン取得
-homepage.get('/success-stories/admin', async (c) => {
+homepage.get('/success-stories/admin', adminAuthMiddleware, async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT * FROM success_stories ORDER BY display_order ASC, created_at DESC
   `).all()
@@ -27,7 +28,7 @@ homepage.get('/success-stories/admin', async (c) => {
 })
 
 // 管理用：タイムライン新規作成
-homepage.post('/success-stories/admin', async (c) => {
+homepage.post('/success-stories/admin', adminAuthMiddleware, async (c) => {
   const { student_name, university, company_name, comment, is_visible, display_order } = await c.req.json()
   const result = await c.env.DB.prepare(`
     INSERT INTO success_stories (student_name, university, company_name, comment, is_visible, display_order)
@@ -37,7 +38,7 @@ homepage.post('/success-stories/admin', async (c) => {
 })
 
 // 管理用：タイムライン更新
-homepage.put('/success-stories/admin/:id', async (c) => {
+homepage.put('/success-stories/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   const { student_name, university, company_name, comment, is_visible, display_order } = await c.req.json()
   await c.env.DB.prepare(`
@@ -50,7 +51,7 @@ homepage.put('/success-stories/admin/:id', async (c) => {
 })
 
 // 管理用：タイムライン削除
-homepage.delete('/success-stories/admin/:id', async (c) => {
+homepage.delete('/success-stories/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   await c.env.DB.prepare(`DELETE FROM success_stories WHERE id = ?`).bind(id).run()
   return c.json({ success: true })
@@ -83,7 +84,7 @@ homepage.get('/featured-jobs', async (c) => {
 })
 
 // 管理用：全ピックアップ求人取得
-homepage.get('/featured-jobs/admin', async (c) => {
+homepage.get('/featured-jobs/admin', adminAuthMiddleware, async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT
       f.id, f.job_id, f.is_visible, f.display_order, f.created_at,
@@ -97,7 +98,7 @@ homepage.get('/featured-jobs/admin', async (c) => {
 })
 
 // 管理用：ピックアップ求人追加
-homepage.post('/featured-jobs/admin', async (c) => {
+homepage.post('/featured-jobs/admin', adminAuthMiddleware, async (c) => {
   const { job_id, is_visible, display_order } = await c.req.json()
   const result = await c.env.DB.prepare(`
     INSERT INTO featured_jobs (job_id, is_visible, display_order)
@@ -107,7 +108,7 @@ homepage.post('/featured-jobs/admin', async (c) => {
 })
 
 // 管理用：ピックアップ求人更新
-homepage.put('/featured-jobs/admin/:id', async (c) => {
+homepage.put('/featured-jobs/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   const { job_id, is_visible, display_order } = await c.req.json()
   await c.env.DB.prepare(`
@@ -119,7 +120,7 @@ homepage.put('/featured-jobs/admin/:id', async (c) => {
 })
 
 // 管理用：ピックアップ求人削除
-homepage.delete('/featured-jobs/admin/:id', async (c) => {
+homepage.delete('/featured-jobs/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   await c.env.DB.prepare(`DELETE FROM featured_jobs WHERE id = ?`).bind(id).run()
   return c.json({ success: true })
@@ -169,7 +170,7 @@ homepage.get('/universities/:slug/jobs', async (c) => {
 })
 
 // 管理用：全大学タグ取得
-homepage.get('/university-tags/admin', async (c) => {
+homepage.get('/university-tags/admin', adminAuthMiddleware, async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT * FROM university_tags ORDER BY display_order ASC
   `).all()
@@ -177,7 +178,7 @@ homepage.get('/university-tags/admin', async (c) => {
 })
 
 // 管理用：大学タグ作成
-homepage.post('/university-tags/admin', async (c) => {
+homepage.post('/university-tags/admin', adminAuthMiddleware, async (c) => {
   const { name, slug, description, is_visible, display_order } = await c.req.json()
   const result = await c.env.DB.prepare(`
     INSERT INTO university_tags (name, slug, description, is_visible, display_order)
@@ -187,7 +188,7 @@ homepage.post('/university-tags/admin', async (c) => {
 })
 
 // 管理用：大学タグ更新
-homepage.put('/university-tags/admin/:id', async (c) => {
+homepage.put('/university-tags/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   const { name, slug, description, is_visible, display_order } = await c.req.json()
   await c.env.DB.prepare(`
@@ -200,14 +201,14 @@ homepage.put('/university-tags/admin/:id', async (c) => {
 })
 
 // 管理用：大学タグ削除
-homepage.delete('/university-tags/admin/:id', async (c) => {
+homepage.delete('/university-tags/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   await c.env.DB.prepare(`DELETE FROM university_tags WHERE id = ?`).bind(id).run()
   return c.json({ success: true })
 })
 
 // 管理用：求人に大学タグを紐付け
-homepage.post('/jobs/:job_id/university-tags', async (c) => {
+homepage.post('/jobs/:job_id/university-tags', adminAuthMiddleware, async (c) => {
   const job_id = c.req.param('job_id')
   const { university_tag_ids } = await c.req.json() // 配列: [1, 3, 4]
   
@@ -225,7 +226,7 @@ homepage.post('/jobs/:job_id/university-tags', async (c) => {
 })
 
 // 管理用：求人の大学タグ一覧取得
-homepage.get('/jobs/:job_id/university-tags', async (c) => {
+homepage.get('/jobs/:job_id/university-tags', adminAuthMiddleware, async (c) => {
   const job_id = c.req.param('job_id')
   const { results } = await c.env.DB.prepare(`
     SELECT ut.id, ut.name, ut.slug

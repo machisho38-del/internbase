@@ -1,7 +1,8 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
+import { adminAuthMiddleware } from '../middleware/adminAuth'
 
-const invite = new Hono<{ Bindings: Bindings }>()
+const invite = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
 // 招待コード検証（公開）
 invite.post('/verify', async (c) => {
@@ -35,10 +36,10 @@ invite.post('/verify', async (c) => {
   })
 })
 
-// ---- 管理API ----
+// ---- 管理API（認証必須）----
 
 // 招待コード一覧（管理）
-invite.get('/admin', async (c) => {
+invite.get('/admin', adminAuthMiddleware, async (c) => {
   const { results } = await c.env.DB.prepare(`
     SELECT * FROM invite_codes ORDER BY created_at DESC
   `).all()
@@ -46,13 +47,12 @@ invite.get('/admin', async (c) => {
 })
 
 // 招待コード作成（管理）
-invite.post('/admin', async (c) => {
+invite.post('/admin', adminAuthMiddleware, async (c) => {
   const body = await c.req.json()
   const { code, description, max_uses, expires_at, issued_by } = body
 
   if (!code) return c.json({ success: false, error: 'コードは必須です' }, 400)
 
-  // 自動生成対応
   const finalCode = code === 'auto'
     ? Math.random().toString(36).substring(2, 10).toUpperCase()
     : code.trim().toUpperCase()
@@ -75,7 +75,7 @@ invite.post('/admin', async (c) => {
 })
 
 // 招待コード一括作成（管理）
-invite.post('/admin/bulk', async (c) => {
+invite.post('/admin/bulk', adminAuthMiddleware, async (c) => {
   const { count, prefix, max_uses, expires_at, description } = await c.req.json()
   const generatedCodes: string[] = []
 
@@ -92,7 +92,7 @@ invite.post('/admin/bulk', async (c) => {
 })
 
 // 招待コード無効化（管理）
-invite.put('/admin/:id/deactivate', async (c) => {
+invite.put('/admin/:id/deactivate', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   await c.env.DB.prepare(
     `UPDATE invite_codes SET is_active = 0 WHERE id = ?`
@@ -101,7 +101,7 @@ invite.put('/admin/:id/deactivate', async (c) => {
 })
 
 // 招待コード削除（管理）
-invite.delete('/admin/:id', async (c) => {
+invite.delete('/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   await c.env.DB.prepare(`DELETE FROM invite_codes WHERE id = ?`).bind(id).run()
   return c.json({ success: true })
