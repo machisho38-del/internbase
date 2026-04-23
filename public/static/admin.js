@@ -687,6 +687,46 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
             <label class="block text-xs text-gray-400 mb-1">カード画像 URL <span class="text-gray-600 font-normal">（一覧カードに表示）</span></label>
             <input name="card_image_url" type="url" value="${job?.card_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
           </div>
+          <!-- §2 魅力3点 (appeal_points) -->
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">
+              このインターンの魅力 <span class="text-gray-600 font-normal">（§2・最大3点、JSON保存）</span>
+            </label>
+            <div id="appeal-points-list" class="space-y-2 mb-2">
+              ${(() => {
+                let pts = [];
+                try { pts = JSON.parse(job?.appeal_points || '[]'); } catch(e) {}
+                if (!Array.isArray(pts) || pts.length === 0) pts = [{ icon: '🚀', title: '', body: '' }];
+                return pts.slice(0,3).map((p, i) => `
+                  <div class="flex gap-2 items-start appeal-point-row">
+                    <input type="text" placeholder="🚀" value="${p.icon||''}" maxlength="4"
+                      class="appeal-icon w-14 bg-white/5 border border-white/10 rounded-lg px-2 py-2 text-sm text-white text-center focus:outline-none focus:border-primary-500">
+                    <div class="flex-1 space-y-1">
+                      <input type="text" placeholder="タイトル（例: 圧倒的な成長）" value="${(p.title||'').replace(/"/g,'&quot;')}"
+                        class="appeal-title w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+                      <input type="text" placeholder="説明文（2〜3行）" value="${(p.body||p.description||'').replace(/"/g,'&quot;')}"
+                        class="appeal-body w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+                    </div>
+                    <button type="button" onclick="this.closest('.appeal-point-row').remove()" class="text-gray-600 hover:text-red-400 mt-1 text-xs px-1">✕</button>
+                  </div>
+                `).join('');
+              })()}
+            </div>
+            <button type="button" onclick="addAppealPoint()" class="text-xs text-primary-400 hover:text-primary-300 border border-primary-500/20 rounded-lg px-3 py-1.5 transition-colors">
+              <i class="fas fa-plus mr-1"></i>魅力ポイントを追加（最大3点）
+            </button>
+          </div>
+          <!-- §10 スキルセット (skill_set) -->
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">
+              習得できるスキルセット <span class="text-gray-600 font-normal">（§10・カンマ区切りで入力）</span>
+            </label>
+            <input id="skill-set-input" type="text"
+              value="${(() => { try { const s = JSON.parse(job?.skill_set||'[]'); return Array.isArray(s) ? s.map(x => typeof x==='string'?x:(x.name||'')).join(', ') : (job?.skill_set||''); } catch(e){ return job?.skill_set||''; } })()}"
+              placeholder="例: Python, データ分析, マーケティング戦略, SQLite"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            <p class="text-xs text-gray-600 mt-1">スキル名をカンマ区切りで入力。保存時に自動でJSON配列に変換されます。</p>
+          </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1">ポジションの特徴 <span class="text-gray-600 font-normal">（§6）</span></label>
             <textarea name="position_features" rows="3" placeholder="このポジションの特徴・魅力を記載..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.position_features||''}</textarea>
@@ -759,6 +799,45 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
   modal.classList.remove('hidden');
 }
 
+function addAppealPoint() {
+  const list = document.getElementById('appeal-points-list');
+  if (!list) return;
+  const rows = list.querySelectorAll('.appeal-point-row');
+  if (rows.length >= 3) { alert('魅力ポイントは最大3点まで追加できます'); return; }
+  const div = document.createElement('div');
+  div.className = 'flex gap-2 items-start appeal-point-row';
+  div.innerHTML = `
+    <input type="text" placeholder="✨" maxlength="4"
+      class="appeal-icon w-14 bg-white/5 border border-white/10 rounded-lg px-2 py-2 text-sm text-white text-center focus:outline-none focus:border-primary-500">
+    <div class="flex-1 space-y-1">
+      <input type="text" placeholder="タイトル（例: 圧倒的な成長）"
+        class="appeal-title w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+      <input type="text" placeholder="説明文（2〜3行）"
+        class="appeal-body w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+    </div>
+    <button type="button" onclick="this.closest('.appeal-point-row').remove()" class="text-gray-600 hover:text-red-400 mt-1 text-xs px-1">✕</button>
+  `;
+  list.appendChild(div);
+}
+
+function collectAppealPoints() {
+  const rows = document.querySelectorAll('.appeal-point-row');
+  const points = [];
+  rows.forEach(row => {
+    const icon = row.querySelector('.appeal-icon')?.value?.trim() || '';
+    const title = row.querySelector('.appeal-title')?.value?.trim() || '';
+    const body = row.querySelector('.appeal-body')?.value?.trim() || '';
+    if (title || body) points.push({ icon: icon || '✨', title, body });
+  });
+  return points;
+}
+
+function collectSkillSet() {
+  const raw = document.getElementById('skill-set-input')?.value || '';
+  if (!raw.trim()) return [];
+  return raw.split(',').map(s => s.trim()).filter(Boolean);
+}
+
 function updateVisibilityUI(radio) {
   const pubLabel = document.getElementById('vis-public-label');
   const memLabel = document.getElementById('vis-members-label');
@@ -783,6 +862,12 @@ async function submitCreateJob(e) {
   data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
   data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
   
+  // appeal_points / skill_set を動的UIから収集してJSON化
+  const appealPoints = collectAppealPoints();
+  if (appealPoints.length > 0) data.appeal_points = JSON.stringify(appealPoints);
+  const skillSet = collectSkillSet();
+  if (skillSet.length > 0) data.skill_set = JSON.stringify(skillSet);
+
   // 大学タグIDを配列として取得
   const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
   data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
@@ -810,7 +895,13 @@ async function submitUpdateJob(e, id) {
   const data = Object.fromEntries(formData);
   data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
   data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
-  
+
+  // appeal_points / skill_set を動的UIから収集してJSON化
+  const appealPoints = collectAppealPoints();
+  data.appeal_points = JSON.stringify(appealPoints);
+  const skillSet = collectSkillSet();
+  data.skill_set = JSON.stringify(skillSet);
+
   // 大学タグIDを配列として取得
   const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
   data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
@@ -949,6 +1040,11 @@ async function showStudentDetail(id) {
             <p class="text-xs text-gray-500 mb-1">招待コード</p>
             <p class="text-sm">${s.invite_code_used||'なし'}</p>
           </div>
+          ${s.source_media ? `
+          <div class="glass rounded-lg p-3 col-span-2">
+            <p class="text-xs text-gray-500 mb-1">流入媒体</p>
+            <span class="text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-1 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[s.source_media]||s.source_media}</span>
+          </div>` : ''}
         </div>
         ${s.pr_text ? `
         <div class="glass rounded-lg p-3">
@@ -1072,6 +1168,7 @@ async function showApplicationDetail(id) {
             <div><span class="text-gray-500 text-xs">大学・学年</span><p>${a.student_university} ${a.student_grade}年</p></div>
             <div><span class="text-gray-500 text-xs">メール</span><p class="text-xs">${a.student_email}</p></div>
             <div><span class="text-gray-500 text-xs">電話</span><p class="text-xs">${a.student_phone||'未登録'}</p></div>
+            ${a.student_source_media ? `<div class="col-span-2"><span class="text-gray-500 text-xs">流入媒体</span><p class="text-xs mt-0.5"><span class="bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.student_source_media]||a.student_source_media}</span></p></div>` : ''}
           </div>
         </div>
         <!-- 求人情報 -->
@@ -1333,6 +1430,11 @@ async function loadConsultations() {
   } catch(e) { content.innerHTML = `<div class="text-red-400">取得失敗</div>`; }
 }
 
+const SOURCE_MEDIA_LABEL = {
+  todai_ig: '東大Instagram', waseda_ig: '早稲田Instagram', keio_ig: '慶應Instagram',
+  march_ig: 'MARCHInstagram', web: 'Webサイト', other_sns: 'その他SNS', other: 'その他'
+};
+
 function renderConsultationRows(cons) {
   const statusMap = { pending: { label: '未対応', cls: 'bg-yellow-500/20 text-yellow-400' }, contacted: { label: '連絡済み', cls: 'bg-blue-500/20 text-blue-400' }, completed: { label: '対応完了', cls: 'bg-green-500/20 text-green-400' }, cancelled: { label: 'キャンセル', cls: 'bg-gray-600/20 text-gray-500' } };
   if (!cons.length) return '<div class="text-center text-gray-600 text-sm py-8">相談データがありません</div>';
@@ -1340,9 +1442,10 @@ function renderConsultationRows(cons) {
     <div class="glass rounded-xl p-4">
       <div class="flex items-start gap-4">
         <div class="flex-1">
-          <div class="flex items-center gap-2 mb-1">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
             <p class="font-medium text-sm">${c.name}</p>
             <span class="status-badge ${(statusMap[c.status]||{cls:'bg-gray-500/20 text-gray-400'}).cls}">${(statusMap[c.status]||{label:c.status}).label}</span>
+            ${c.source_media ? `<span class="text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[c.source_media]||c.source_media}</span>` : ''}
           </div>
           <p class="text-xs text-gray-400">${c.email} ${c.university ? '/ '+c.university : ''} ${c.grade ? c.grade+'年' : ''}</p>
           ${c.concern ? `<p class="text-xs text-gray-500 mt-1">${c.concern}</p>` : ''}

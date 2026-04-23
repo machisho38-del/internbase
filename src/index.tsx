@@ -34,6 +34,15 @@ app.route('/api/homepage', homepageApi)
 // ヘルスチェック
 app.get('/api/health', (c) => c.json({ status: 'ok', timestamp: new Date().toISOString() }))
 
+// favicon（静的ファイルとして配信）
+app.get('/favicon.svg', async (c) => {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#6366f1"/><text x="16" y="22" font-size="18" text-anchor="middle" fill="white" font-family="sans-serif" font-weight="bold">I</text></svg>`
+  return c.body(svg, 200, { 'Content-Type': 'image/svg+xml', 'Cache-Control': 'public, max-age=86400' })
+})
+app.get('/favicon.ico', async (c) => {
+  return c.redirect('/favicon.svg', 301)
+})
+
 // 公開画面 - LP
 app.get('/', (c) => {
   return c.html(getPublicHTML('home', 'InternBase | 高学歴大学生向け長期インターン求人サイト', '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。無料相談受付中。'))

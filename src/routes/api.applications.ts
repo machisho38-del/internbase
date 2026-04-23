@@ -87,6 +87,7 @@ applications.get('/admin/:id', adminAuthMiddleware, async (c) => {
       s.last_name, s.first_name,
       s.email as student_email, s.phone as student_phone,
       s.university as student_university, s.grade as student_grade,
+      s.source_media as student_source_media,
       j.title as job_title, j.work_location, j.hourly_wage_min, j.hourly_wage_max,
       c.name as company_name
     FROM applications a
