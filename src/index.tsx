@@ -173,16 +173,16 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
         </a>
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
-          <a href="/universities" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">大学別求人</a>
+          <button onclick="openUniversityModal()" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium cursor-pointer bg-transparent border-none">大学別求人</button>
           <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
           <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-4 py-2 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
             <i class="fas fa-user-plus text-base"></i>事前登録
           </a>
-          <a href="/consultation" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium">
+          <button onclick="openLineModal()" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium cursor-pointer border-none">
             <i class="fab fa-line text-base"></i>LINE相談
-          </a>
+          </button>
           <!-- モバイルメニューボタン -->
           <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900" onclick="toggleMobileMenu()">
             <i class="fas fa-bars text-lg"></i>
@@ -196,21 +196,62 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
         <a href="/jobs" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-search text-primary-500 w-4"></i>求人を探す
         </a>
-        <a href="/universities" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+        <button onclick="openUniversityModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm bg-transparent border-none cursor-pointer">
           <i class="fas fa-university text-primary-500 w-4"></i>大学別求人
-        </a>
+        </button>
         <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-comments text-primary-500 w-4"></i>無料相談
         </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-user-plus text-primary-500 w-4"></i>事前登録する
         </a>
-        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1">
+        <button onclick="openLineModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1 border-none cursor-pointer">
           <i class="fab fa-line text-white w-4"></i>LINEで無料相談
-        </a>
+        </button>
       </div>
     </div>
   </nav>
+
+  <!-- LINE媒体選択モーダル -->
+  <div id="line-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 hidden" onclick="handleLineModalOutsideClick(event)">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full" onclick="event.stopPropagation()">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-gray-900">どこで知りましたか？</h2>
+          <p class="text-sm text-gray-500 mt-1">あなたに合ったLINE公式アカウントへご案内します</p>
+        </div>
+        <button onclick="closeLineModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="line-modal-options" class="p-6 flex flex-col gap-3">
+        <!-- JS で生成 -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 大学選択モーダル -->
+  <div id="university-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 hidden" onclick="handleUniversityModalOutsideClick(event)">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-gray-900">どの大学ですか？</h2>
+          <p class="text-sm text-gray-500 mt-1">大学を選ぶと、その大学向けの求人一覧を表示します</p>
+        </div>
+        <button onclick="closeUniversityModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="university-modal-grid" class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div class="col-span-2 sm:col-span-3 text-center text-gray-400 py-8">
+          <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+          <p class="text-sm">読み込み中...</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     function toggleMobileMenu() {
@@ -220,6 +261,127 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       btn.innerHTML = menu.classList.contains('hidden')
         ? '<i class="fas fa-bars text-lg"></i>'
         : '<i class="fas fa-times text-lg"></i>';
+    }
+
+    // 大学選択モーダル
+    let _universityDataCache = null;
+
+    async function openUniversityModal() {
+      const modal = document.getElementById('university-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (_universityDataCache) {
+        renderUniversityModalGrid(_universityDataCache);
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/homepage/university-tags');
+        const json = await res.json();
+        _universityDataCache = json.data || [];
+        renderUniversityModalGrid(_universityDataCache);
+      } catch(e) {
+        document.getElementById('university-modal-grid').innerHTML =
+          '<p class="col-span-3 text-center text-red-500 text-sm py-6">読み込みに失敗しました</p>';
+      }
+    }
+
+    function renderUniversityModalGrid(universities) {
+      const grid = document.getElementById('university-modal-grid');
+      if (!universities.length) {
+        grid.innerHTML = '<p class="col-span-3 text-center text-gray-500 text-sm py-6">大学情報がありません</p>';
+        return;
+      }
+      grid.innerHTML = universities.map(uni => \`
+        <a href="/universities/\${uni.slug}" onclick="closeUniversityModal()"
+           class="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all text-center cursor-pointer">
+          <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center transition-colors">
+            <i class="fas fa-university text-primary-600 text-lg"></i>
+          </div>
+          <p class="text-sm font-semibold text-gray-800 group-hover:text-primary-700 leading-tight">\${uni.name}</p>
+        </a>
+      \`).join('');
+    }
+
+    function closeUniversityModal() {
+      document.getElementById('university-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function handleUniversityModalOutsideClick(e) {
+      if (e.target === document.getElementById('university-modal')) {
+        closeUniversityModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeUniversityModal(); closeLineModal(); }
+    });
+
+    // ============================================================
+    // LINE媒体選択モーダル
+    // ============================================================
+    // SOURCE_MEDIA_OPTIONS と同じ定義（public.js と同期させること）
+    const LINE_MEDIA_OPTIONS = [
+      { value: 'sunconnect', label: 'SUNCONNECTインターン局',         line_key: 'line_url_sunconnect' },
+      { value: 'valueup',    label: 'バリューアップ就活インターン情報局', line_key: 'line_url_valueup' },
+      { value: 'other',      label: 'その他',                          line_key: 'line_url_default' },
+    ];
+
+    // サイト設定（LINE URLなど）をキャッシュ
+    let _siteSettingsCache = null;
+
+    async function getSiteSettingsForModal() {
+      if (_siteSettingsCache) return _siteSettingsCache;
+      try {
+        const res = await fetch('/api/settings');
+        const json = await res.json();
+        _siteSettingsCache = json.data || {};
+      } catch(e) {
+        _siteSettingsCache = {};
+      }
+      return _siteSettingsCache;
+    }
+
+    async function openLineModal() {
+      const modal = document.getElementById('line-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      const s = await getSiteSettingsForModal();
+      const container = document.getElementById('line-modal-options');
+
+      container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
+        const url = s[opt.line_key] || s['line_url_default'] || s['line_url'] || '';
+        const href = url || '/consultation';
+        const isExternal = !!url;
+        return \`
+          <a href="\${href}" \${isExternal ? 'target="_blank" rel="noopener"' : ''}
+             onclick="closeLineModal()"
+             class="group flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-all cursor-pointer">
+            <div class="w-12 h-12 bg-green-500/10 group-hover:bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 transition-colors">
+              <i class="fab fa-line text-green-600 text-xl"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-800 group-hover:text-green-700 text-sm leading-snug">\${opt.label}</p>
+              <p class="text-xs text-gray-400 mt-0.5">専用LINE公式アカウントへ</p>
+            </div>
+            <i class="fas fa-chevron-right text-gray-300 group-hover:text-green-400 text-xs flex-shrink-0"></i>
+          </a>
+        \`;
+      }).join('');
+    }
+
+    function closeLineModal() {
+      document.getElementById('line-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function handleLineModalOutsideClick(e) {
+      if (e.target === document.getElementById('line-modal')) {
+        closeLineModal();
+      }
     }
   </script>
 

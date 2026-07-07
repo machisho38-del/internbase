@@ -12,11 +12,12 @@ export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(asy
     return await next()
   }
 
-  // site_mode を DB から取得
+  // site_mode を DB から取得（batch使用で最新値を確実に取得）
   try {
-    const setting = await c.env.DB.prepare(
-      `SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`
-    ).first() as any
+    const batchResult = await c.env.DB.batch([
+      c.env.DB.prepare(`SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`)
+    ])
+    const setting = batchResult[0]?.results?.[0] as any
     const mode = setting?.setting_value ?? 'coming_soon'
 
     if (mode === 'coming_soon') {

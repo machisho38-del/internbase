@@ -59,7 +59,8 @@ ALTER TABLE jobs ADD COLUMN visibility TEXT DEFAULT 'public'
   CHECK(visibility IN ('public','members','draft','closed'));
 
 -- 学生の招待コード（自分が発行できるコード）
-ALTER TABLE students ADD COLUMN my_invite_code TEXT UNIQUE;
+-- ※SQLiteはALTER TABLE ADD COLUMN UNIQUEをサポートしていないため、UNIQUEなしで追加してインデックスで代替
+ALTER TABLE students ADD COLUMN my_invite_code TEXT;
 ALTER TABLE students ADD COLUMN my_invite_code_uses INTEGER DEFAULT 0;
 ALTER TABLE students ADD COLUMN referral_count INTEGER DEFAULT 0;
 

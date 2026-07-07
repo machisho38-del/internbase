@@ -4,6 +4,10 @@ import { adminAuthMiddleware } from '../middleware/adminAuth'
 
 const settings = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
+// ローカル開発環境のWALバグ回避用メモリキャッシュ
+// Cloudflare Workers本番環境ではグローバル変数はworkerライフタイム中保持される
+const _settingsCache: Record<string, string> = {}
+
 // ==========================================
 // サイト設定 API
 // ==========================================
@@ -48,11 +52,18 @@ settings.put('/admin/:key', adminAuthMiddleware, async (c) => {
 })
 
 // 公開用：現在の公開モードのみ取得
+// キャッシュがあればキャッシュを返す（wrangler D1 WALバグ回避）
 settings.get('/site-mode', async (c) => {
-  const setting = await c.env.DB.prepare(
-    `SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`
-  ).first() as any
-  return c.json({ success: true, data: { site_mode: setting?.setting_value ?? 'coming_soon' } })
+  if (_settingsCache['site_mode'] !== undefined) {
+    return c.json({ success: true, data: { site_mode: _settingsCache['site_mode'] } })
+  }
+  const results = await c.env.DB.batch([
+    c.env.DB.prepare(`SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`)
+  ])
+  const setting = results[0]?.results?.[0] as any
+  const mode = setting?.setting_value ?? 'coming_soon'
+  _settingsCache['site_mode'] = mode
+  return c.json({ success: true, data: { site_mode: mode } })
 })
 
 // 管理用：公開モード切替
@@ -64,6 +75,8 @@ settings.put('/admin/site-mode', adminAuthMiddleware, async (c) => {
   await c.env.DB.prepare(
     `UPDATE site_settings SET setting_value = ?, updated_at = CURRENT_TIMESTAMP WHERE setting_key = 'site_mode'`
   ).bind(site_mode).run()
+  // キャッシュを即時更新（wrangler D1 WALバグ回避）
+  _settingsCache['site_mode'] = site_mode
   return c.json({ success: true, data: { site_mode } })
 })
 

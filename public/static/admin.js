@@ -279,8 +279,7 @@ async function loadDashboard(term) {
         <h3 class="font-bold text-sm mb-4">流入媒体別 登録学生数 <span class="text-gray-500 font-normal text-xs">（累計）</span></h3>
         ${d.source_breakdown && d.source_breakdown.length > 0 ? (() => {
           const sourceLabels = {
-            todai_ig: '東大Instagram', waseda_ig: '早稲田Instagram', keio_ig: '慶應Instagram',
-            march_ig: 'MARCHInstagram', web: 'Webサイト', other_sns: 'その他SNS', other: 'その他'
+            sunconnect: 'SUNCONNECTインターン局', valueup: 'バリューアップ就活インターン情報局', other: 'その他'
           };
           const sourceColors = [
             '#4f6ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6'
@@ -1476,8 +1475,7 @@ async function loadConsultations() {
 }
 
 const SOURCE_MEDIA_LABEL = {
-  todai_ig: '東大Instagram', waseda_ig: '早稲田Instagram', keio_ig: '慶應Instagram',
-  march_ig: 'MARCHInstagram', web: 'Webサイト', other_sns: 'その他SNS', other: 'その他'
+  sunconnect: 'SUNCONNECTインターン局', valueup: 'バリューアップ就活インターン情報局', other: 'その他'
 };
 
 function renderConsultationRows(cons) {
