@@ -279,7 +279,12 @@ async function loadDashboard(term) {
         <h3 class="font-bold text-sm mb-4">流入媒体別 登録学生数 <span class="text-gray-500 font-normal text-xs">（累計）</span></h3>
         ${d.source_breakdown && d.source_breakdown.length > 0 ? (() => {
           const sourceLabels = {
-            sunconnect: 'SUNCONNECT', valueup: 'バリューアップ', other: 'Web自然流入・その他'
+            sunconnect: 'SUNCONNECT',
+            valueup: 'バリューアップ',
+            genki_intern: '元気インターン',
+            sokei_intern_compass: '早慶インターンコンパス',
+            careersourcing: 'CareerSourcing',
+            other: 'その他'
           };
           const sourceColors = [
             '#4f6ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6'
@@ -1477,7 +1482,12 @@ async function loadConsultations() {
 }
 
 const SOURCE_MEDIA_LABEL = {
-  sunconnect: 'SUNCONNECT', valueup: 'バリューアップ', other: 'Web自然流入・その他'
+  sunconnect: 'SUNCONNECT',
+  valueup: 'バリューアップ',
+  genki_intern: '元気インターン',
+  sokei_intern_compass: '早慶インターンコンパス',
+  careersourcing: 'CareerSourcing',
+  other: 'その他'
 };
 
 function renderConsultationRows(cons) {

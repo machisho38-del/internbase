@@ -10,7 +10,10 @@ const API = axios.create({ baseURL: '/api' });
 const SOURCE_MEDIA_OPTIONS = [
   { value: 'sunconnect',  label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
   { value: 'valueup',     label: 'バリューアップ',       line_key: 'line_url_valueup' },
-  { value: 'other',       label: 'Web自然流入・その他', line_key: 'line_url_default' },
+  { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_default' },
+  { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_default' },
+  { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_default' },
+  { value: 'other',       label: 'その他',             line_key: 'line_url_default' },
 ];
 
 function isUsableUrl(url) {
@@ -1546,7 +1549,7 @@ function renderApplicationForm(jobId, jobTitle, sourceMedia) {
         <p class="text-xs text-gray-400">応募求人</p><p class="font-bold text-sm">${jobTitle}</p>
       </div>
       <p class="text-sm text-gray-400 mb-4">登録者: <span class="text-white">${studentName}</span></p>
-      <p class="text-xs text-gray-500 mb-4">流入媒体: <span class="text-primary-300">${sourceOption?.label || 'Web自然流入・その他'}</span></p>
+      <p class="text-xs text-gray-500 mb-4">流入媒体: <span class="text-primary-300">${sourceOption?.label || 'その他'}</span></p>
       <form onsubmit="submitApplication(event, ${jobId})">
         <input type="hidden" id="apply-source-media" value="${sourceMedia}">
         <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">応募動機 <span class="text-red-400">*</span></label><textarea id="apply-motivation" rows="4" required placeholder="なぜこの企業のインターンに応募したいですか？" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>

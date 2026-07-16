@@ -412,7 +412,10 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     const LINE_MEDIA_OPTIONS = [
       { value: 'sunconnect', label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
       { value: 'valueup',    label: 'バリューアップ',       line_key: 'line_url_valueup' },
-      { value: 'other',      label: 'Web自然流入・その他', line_key: 'line_url_default' },
+      { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_default' },
+      { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_default' },
+      { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_default' },
+      { value: 'other',      label: 'その他',             line_key: 'line_url_default' },
     ];
 
     function isUsableLineUrl(url) {
