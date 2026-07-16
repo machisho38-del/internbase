@@ -1552,7 +1552,7 @@ async function loadSiteSettings() {
 
     const groupLabels = {
       site: 'サイト基本情報', general: 'サイト基本情報',
-      line: 'LINE・SNS設定', contact: 'LINE・SNS・連絡先設定',
+      line: 'LINE・SNS設定',
       footer: 'フッター設定',
       referral: '学生招待コード設定',
     };

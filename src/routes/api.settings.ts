@@ -40,11 +40,13 @@ settings.get('/admin/all', adminAuthMiddleware, async (c) => {
     'line_url_keio',
     'line_url_march',
   ]
+  const hiddenGroups = ['contact', 'legacy_contact']
   const { results } = await c.env.DB.prepare(`
     SELECT * FROM site_settings
     WHERE setting_key NOT IN (${hiddenKeys.map(() => '?').join(',')})
+      AND group_name NOT IN (${hiddenGroups.map(() => '?').join(',')})
     ORDER BY group_name, display_order
-  `).bind(...hiddenKeys).all()
+  `).bind(...hiddenKeys, ...hiddenGroups).all()
   return c.json({ success: true, data: results })
 })
 
