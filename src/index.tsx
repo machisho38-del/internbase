@@ -511,8 +511,8 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
           <h4 class="text-sm font-semibold mb-3 text-gray-800">求人を探す</h4>
           <ul class="space-y-2 text-gray-600 text-sm">
             <li><a href="/jobs" class="hover:text-primary-600 transition-colors">全ての求人</a></li>
-            <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">リモート可</a></li>
-            <li><a href="/jobs?industry=IT・SaaS" class="hover:text-primary-600 transition-colors">IT・SaaS</a></li>
+            <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">勤務形態</a></li>
+            <li><a href="/jobs?industry=IT・SaaS" class="hover:text-primary-600 transition-colors">業界</a></li>
           </ul>
         </div>
         <div>

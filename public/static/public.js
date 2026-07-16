@@ -137,11 +137,11 @@ async function initHomePage() {
             <h2 class="text-xl font-black text-gray-900 mb-4">気になる条件から求人を見る</h2>
             <div class="space-y-2.5">
               <a href="/jobs?industry=IT・SaaS" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-laptop-code text-primary-500 mr-2"></i>IT・SaaS</span>
+                <span><i class="fas fa-laptop-code text-primary-500 mr-2"></i>業界</span>
                 <i class="fas fa-chevron-right text-xs text-gray-300"></i>
               </a>
               <a href="/jobs?work_style=remote" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-house-laptop text-primary-500 mr-2"></i>リモート可</span>
+                <span><i class="fas fa-house-laptop text-primary-500 mr-2"></i>勤務形態</span>
                 <i class="fas fa-chevron-right text-xs text-gray-300"></i>
               </a>
               <a href="/universities" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
