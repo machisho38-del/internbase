@@ -10,14 +10,37 @@ const API = axios.create({ baseURL: '/api' });
 const SOURCE_MEDIA_OPTIONS = [
   { value: 'sunconnect',  label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
   { value: 'valueup',     label: 'バリューアップ',       line_key: 'line_url_valueup' },
-  { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_default' },
-  { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_default' },
-  { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_default' },
+  { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_genki_intern', fallback_to_default: false },
+  { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_sokei_intern_compass', fallback_to_default: false },
+  { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_careersourcing', fallback_to_default: false },
   { value: 'other',       label: 'その他',             line_key: 'line_url_default' },
 ];
 
 function isUsableUrl(url) {
   return !!url && url !== '#' && !String(url).includes('xxxx');
+}
+
+function resolveLineUrl(settings, sourceMedia) {
+  const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
+  const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
+  const rawLineUrl = settings[lineKey] ||
+    (mediaOpt?.fallback_to_default === false ? '' : settings.line_url_default || settings.line_url || '');
+  return isUsableUrl(rawLineUrl) ? rawLineUrl : '';
+}
+
+function renderLineCta(lineUrl, label = '公式LINEを友だち追加', className = 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors') {
+  if (!lineUrl) {
+    return `
+      <div class="flex items-center justify-center gap-2 bg-gray-100 border border-gray-200 text-gray-500 font-bold py-3 px-8 rounded-xl text-sm">
+        <i class="fab fa-line text-lg"></i>LINE URL未設定
+      </div>
+    `;
+  }
+  return `
+    <a href="${lineUrl}" target="_blank" rel="noopener" class="${className}">
+      <i class="fab fa-line text-xl"></i>${label}
+    </a>
+  `;
 }
 
 // サイト設定キャッシュ
@@ -1049,10 +1072,7 @@ async function submitRegister(e) {
 async function showRegisterSuccess(data, myCode, sourceMedia) {
   const s = await getSiteSettings();
   // source_mediaに対応したLINE URLを取得
-  const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
-  const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
-  const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
-  const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
+  const lineUrl = resolveLineUrl(s, sourceMedia);
 
   document.getElementById('app').innerHTML = `
     <div class="min-h-screen flex items-center justify-center px-4">
@@ -1074,9 +1094,7 @@ async function showRegisterSuccess(data, myCode, sourceMedia) {
         </div>` : ''}
         <p class="text-gray-500 text-sm mb-6">公式LINEを友だち追加して、インターン活動をスタートしましょう。</p>
         <div class="space-y-3">
-          <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
-            <i class="fab fa-line text-xl"></i>公式LINEを友だち追加
-          </a>
+          ${renderLineCta(lineUrl)}
           <a href="/jobs" class="block text-primary-400 hover:text-primary-300 transition-colors text-sm py-2">
             <i class="fas fa-search mr-1"></i>会員限定求人を含む全求人を見る
           </a>
@@ -1191,10 +1209,7 @@ async function submitConsultation(e) {
     if (res.data.success) {
       const s = await getSiteSettings();
       // source_mediaに対応したLINE URLを取得
-      const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
-      const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
-      const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
-      const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
+      const lineUrl = resolveLineUrl(s, sourceMedia);
       document.getElementById('app').innerHTML = `
         <div class="min-h-screen flex items-center justify-center px-4">
           <div class="text-center max-w-md">
@@ -1204,9 +1219,7 @@ async function submitConsultation(e) {
             <h1 class="text-2xl font-black mb-3">お申し込みありがとうございます！</h1>
             <p class="text-gray-400 mb-8 text-sm">担当者より2営業日以内にご連絡いたします。<br>公式LINEを追加いただくとより迅速にご連絡できます。</p>
             <div class="space-y-3">
-              <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors">
-                <i class="fab fa-line text-xl"></i>公式LINEを友だち追加
-              </a>
+              ${renderLineCta(lineUrl)}
               <a href="/" class="block text-gray-400 hover:text-white text-sm py-2"><i class="fas fa-home mr-1"></i>トップに戻る</a>
             </div>
           </div>
@@ -1580,10 +1593,7 @@ async function submitApplication(e, jobId) {
     if (res.data.success) {
       const s = await getSiteSettings();
       const sourceMedia = document.getElementById('apply-source-media')?.value || 'other';
-      const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
-      const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
-      const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
-      const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
+      const lineUrl = resolveLineUrl(s, sourceMedia);
       document.getElementById('apply-form-content').innerHTML = `
         <div class="text-center py-4">
           <div class="w-16 h-16 bg-green-500/20 border-2 border-green-500/40 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1591,9 +1601,7 @@ async function submitApplication(e, jobId) {
           </div>
           <h3 class="font-bold mb-2">応募が完了しました！</h3>
           <p class="text-gray-500 text-sm mb-5">公式LINEにてご連絡しますので、追加をお待ちください。</p>
-          <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm">
-            <i class="fab fa-line text-lg"></i>公式LINEを追加する
-          </a>
+          ${renderLineCta(lineUrl, '公式LINEを追加する', 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm')}
         </div>`;
     }
   } catch(e) {

@@ -412,9 +412,9 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     const LINE_MEDIA_OPTIONS = [
       { value: 'sunconnect', label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
       { value: 'valueup',    label: 'バリューアップ',       line_key: 'line_url_valueup' },
-      { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_default' },
-      { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_default' },
-      { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_default' },
+      { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_genki_intern', fallback_to_default: false },
+      { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_sokei_intern_compass', fallback_to_default: false },
+      { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_careersourcing', fallback_to_default: false },
       { value: 'other',      label: 'その他',             line_key: 'line_url_default' },
     ];
 
@@ -446,12 +446,24 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       const container = document.getElementById('line-modal-options');
 
       container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
-        const rawUrl = s[opt.line_key] || s['line_url_default'] || s['line_url'] || '';
+        const rawUrl = s[opt.line_key] ||
+          (opt.fallback_to_default === false ? '' : s['line_url_default'] || s['line_url'] || '');
         const url = isUsableLineUrl(rawUrl) ? rawUrl : '';
-        const href = url || '/consultation';
-        const isExternal = !!url;
+        if (!url) {
+          return \`
+            <div class="flex items-center gap-4 p-4 rounded-xl border border-gray-100 bg-gray-50 opacity-70">
+              <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-line text-gray-400 text-xl"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-700 text-sm leading-snug">\${opt.label}</p>
+                <p class="text-xs text-gray-400 mt-0.5">LINE URL未設定</p>
+              </div>
+            </div>
+          \`;
+        }
         return \`
-          <a href="\${href}" \${isExternal ? 'target="_blank" rel="noopener"' : ''}
+          <a href="\${url}" target="_blank" rel="noopener"
              onclick="closeLineModal()"
              class="group flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-all cursor-pointer">
             <div class="w-12 h-12 bg-green-500/10 group-hover:bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 transition-colors">
