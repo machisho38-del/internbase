@@ -279,7 +279,7 @@ async function loadDashboard(term) {
         <h3 class="font-bold text-sm mb-4">流入媒体別 登録学生数 <span class="text-gray-500 font-normal text-xs">（累計）</span></h3>
         ${d.source_breakdown && d.source_breakdown.length > 0 ? (() => {
           const sourceLabels = {
-            sunconnect: 'SUNCONNECTインターン局', valueup: 'バリューアップ就活インターン情報局', other: 'その他'
+            sunconnect: 'SUNCONNECT', valueup: 'バリューアップ', other: 'Web自然流入・その他'
           };
           const sourceColors = [
             '#4f6ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6'
@@ -1175,6 +1175,7 @@ function renderApplicationRows(applications) {
           <span class="text-xs text-gray-500">${a.student_university} ${a.student_grade}年</span>
         </div>
         <p class="text-xs text-gray-500">${a.job_title} / <span class="text-gray-400">${a.company_name}</span></p>
+        ${a.source_media ? `<span class="inline-flex items-center mt-1 text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span>` : ''}
       </div>
       <div class="flex items-center gap-3 flex-shrink-0">
         ${a.next_action ? `<span class="text-xs text-yellow-400"><i class="fas fa-exclamation-circle mr-1"></i>${a.next_action}</span>` : ''}
@@ -1212,7 +1213,8 @@ async function showApplicationDetail(id) {
             <div><span class="text-gray-500 text-xs">大学・学年</span><p>${a.student_university} ${a.student_grade}年</p></div>
             <div><span class="text-gray-500 text-xs">メール</span><p class="text-xs">${a.student_email}</p></div>
             <div><span class="text-gray-500 text-xs">電話</span><p class="text-xs">${a.student_phone||'未登録'}</p></div>
-            ${a.student_source_media ? `<div class="col-span-2"><span class="text-gray-500 text-xs">流入媒体</span><p class="text-xs mt-0.5"><span class="bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.student_source_media]||a.student_source_media}</span></p></div>` : ''}
+            ${a.source_media ? `<div><span class="text-gray-500 text-xs">応募時媒体</span><p class="text-xs mt-0.5"><span class="bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span></p></div>` : ''}
+            ${a.student_source_media ? `<div><span class="text-gray-500 text-xs">登録時媒体</span><p class="text-xs mt-0.5"><span class="bg-blue-500/15 border border-blue-500/25 text-blue-300 px-2 py-0.5 rounded-full"><i class="fas fa-user-plus mr-1"></i>${SOURCE_MEDIA_LABEL[a.student_source_media]||a.student_source_media}</span></p></div>` : ''}
           </div>
         </div>
         <!-- 求人情報 -->
@@ -1475,7 +1477,7 @@ async function loadConsultations() {
 }
 
 const SOURCE_MEDIA_LABEL = {
-  sunconnect: 'SUNCONNECTインターン局', valueup: 'バリューアップ就活インターン情報局', other: 'その他'
+  sunconnect: 'SUNCONNECT', valueup: 'バリューアップ', other: 'Web自然流入・その他'
 };
 
 function renderConsultationRows(cons) {

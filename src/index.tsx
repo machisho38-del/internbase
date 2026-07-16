@@ -410,9 +410,9 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     // ============================================================
     // SOURCE_MEDIA_OPTIONS と同じ定義（public.js と同期させること）
     const LINE_MEDIA_OPTIONS = [
-      { value: 'sunconnect', label: 'SUNCONNECTインターン局',         line_key: 'line_url_sunconnect' },
-      { value: 'valueup',    label: 'バリューアップ就活インターン情報局', line_key: 'line_url_valueup' },
-      { value: 'other',      label: 'その他',                          line_key: 'line_url_default' },
+      { value: 'sunconnect', label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
+      { value: 'valueup',    label: 'バリューアップ',       line_key: 'line_url_valueup' },
+      { value: 'other',      label: 'Web自然流入・その他', line_key: 'line_url_default' },
     ];
 
     function isUsableLineUrl(url) {

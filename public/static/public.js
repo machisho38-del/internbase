@@ -8,9 +8,9 @@ const API = axios.create({ baseURL: '/api' });
 // 流入媒体オプション（SOURCE_MEDIA_OPTIONS）
 // ==========================================
 const SOURCE_MEDIA_OPTIONS = [
-  { value: 'sunconnect',  label: 'SUNCONNECTインターン局',        line_key: 'line_url_sunconnect' },
-  { value: 'valueup',     label: 'バリューアップ就活インターン情報局', line_key: 'line_url_valueup' },
-  { value: 'other',       label: 'その他',                        line_key: 'line_url_default' },
+  { value: 'sunconnect',  label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
+  { value: 'valueup',     label: 'バリューアップ',       line_key: 'line_url_valueup' },
+  { value: 'other',       label: 'Web自然流入・その他', line_key: 'line_url_default' },
 ];
 
 function isUsableUrl(url) {
@@ -1466,11 +1466,15 @@ function initTermsPage() {
 // ==========================================
 // 応募モーダル
 // ==========================================
+let currentApplyContext = null;
+
 function openApplyModal(jobId, jobTitle) {
   const studentId = localStorage.getItem('student_id');
   const studentName = localStorage.getItem('student_name');
   const modal = document.getElementById('apply-modal');
   const content = document.getElementById('apply-form-content');
+  currentApplyContext = { jobId, jobTitle };
+
   if (!studentId) {
     content.innerHTML = `
       <div class="text-center py-4">
@@ -1482,24 +1486,80 @@ function openApplyModal(jobId, jobTitle) {
         </a>
       </div>`;
   } else {
-    content.innerHTML = `
+    renderApplySourceStep(jobTitle);
+  }
+  modal.classList.remove('hidden');
+}
+
+function renderApplySourceStep(jobTitle) {
+  document.getElementById('apply-form-content').innerHTML = `
+    <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
+      <p class="text-xs text-gray-400">応募求人</p><p class="font-bold text-sm">${jobTitle}</p>
+    </div>
+    <p class="text-sm text-gray-400 mb-4">LINE連携のため、どの媒体から知ったか選択してください。</p>
+    <div class="space-y-2 mb-4">
+      ${SOURCE_MEDIA_OPTIONS.map(opt => `
+        <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="apply-source-opt-${opt.value}">
+          <input type="radio" name="apply_source_media" value="${opt.value}" onchange="onApplicationSourceMediaChange('${opt.value}')"
+            class="accent-primary-500 w-4 h-4">
+          <span class="text-sm text-gray-200">${opt.label}</span>
+        </label>
+      `).join('')}
+    </div>
+    <div id="apply-source-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs">流入媒体を選択してください</div>
+    <button onclick="proceedToApplicationForm()" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+      応募内容の入力へ進む
+    </button>
+  `;
+}
+
+function onApplicationSourceMediaChange(value) {
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`apply-source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-primary-500', 'bg-primary-500/10');
+      el.classList.remove('border-white/10');
+    } else {
+      el.classList.remove('border-primary-500', 'bg-primary-500/10');
+      el.classList.add('border-white/10');
+    }
+  });
+  document.getElementById('apply-source-error')?.classList.add('hidden');
+}
+
+function proceedToApplicationForm() {
+  const selected = document.querySelector('input[name="apply_source_media"]:checked');
+  if (!selected) {
+    document.getElementById('apply-source-error')?.classList.remove('hidden');
+    return;
+  }
+  if (!currentApplyContext) return;
+  renderApplicationForm(currentApplyContext.jobId, currentApplyContext.jobTitle, selected.value);
+}
+
+function renderApplicationForm(jobId, jobTitle, sourceMedia) {
+  const studentName = localStorage.getItem('student_name');
+  const sourceOption = SOURCE_MEDIA_OPTIONS.find(opt => opt.value === sourceMedia);
+  document.getElementById('apply-form-content').innerHTML = `
       <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
         <p class="text-xs text-gray-400">応募求人</p><p class="font-bold text-sm">${jobTitle}</p>
       </div>
       <p class="text-sm text-gray-400 mb-4">登録者: <span class="text-white">${studentName}</span></p>
+      <p class="text-xs text-gray-500 mb-4">流入媒体: <span class="text-primary-300">${sourceOption?.label || 'Web自然流入・その他'}</span></p>
       <form onsubmit="submitApplication(event, ${jobId})">
+        <input type="hidden" id="apply-source-media" value="${sourceMedia}">
         <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">応募動機 <span class="text-red-400">*</span></label><textarea id="apply-motivation" rows="4" required placeholder="なぜこの企業のインターンに応募したいですか？" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
         <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">参加可能な時間帯</label><input id="apply-hours" type="text" placeholder="平日10-18時、週3日程度" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
         <div id="apply-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
         <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-paper-plane mr-2"></i>応募を確定する</button>
         <p class="text-xs text-gray-600 text-center mt-3"><i class="fab fa-line mr-1 text-green-400"></i>応募後、公式LINEにてご連絡します</p>
       </form>`;
-  }
-  modal.classList.remove('hidden');
 }
 
 function closeApplyModal() {
   document.getElementById('apply-modal')?.classList.add('hidden');
+  currentApplyContext = null;
 }
 
 async function submitApplication(e, jobId) {
@@ -1512,10 +1572,14 @@ async function submitApplication(e, jobId) {
       job_id: jobId,
       motivation: document.getElementById('apply-motivation').value,
       available_hours: document.getElementById('apply-hours').value,
+      source_media: document.getElementById('apply-source-media')?.value || 'other',
     });
     if (res.data.success) {
       const s = await getSiteSettings();
-      const rawLineUrl = s.line_url_default || s.line_url || '';
+      const sourceMedia = document.getElementById('apply-source-media')?.value || 'other';
+      const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
+      const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
+      const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
       const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
       document.getElementById('apply-form-content').innerHTML = `
         <div class="text-center py-4">

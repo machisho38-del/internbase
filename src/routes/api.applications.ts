@@ -7,11 +7,14 @@ const applications = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>
 // 応募（公開）
 applications.post('/', async (c) => {
   const body = await c.req.json()
-  const { student_id, job_id, motivation, available_hours } = body
+  const { student_id, job_id, motivation, available_hours, source_media } = body
 
   if (!student_id || !job_id) {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
   }
+
+  const validSourceMedia = ['sunconnect','valueup','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
+  const validatedSourceMedia = validSourceMedia.includes(source_media) ? source_media : 'other'
 
   const existing = await c.env.DB.prepare(
     `SELECT id FROM applications WHERE student_id = ? AND job_id = ?`
@@ -26,9 +29,9 @@ applications.post('/', async (c) => {
   if (!job) return c.json({ success: false, error: '求人が見つかりません' }, 404)
 
   const result = await c.env.DB.prepare(`
-    INSERT INTO applications (student_id, job_id, motivation, available_hours)
-    VALUES (?, ?, ?, ?)
-  `).bind(student_id, job_id, motivation || null, available_hours || null).run()
+    INSERT INTO applications (student_id, job_id, motivation, available_hours, source_media)
+    VALUES (?, ?, ?, ?, ?)
+  `).bind(student_id, job_id, motivation || null, available_hours || null, validatedSourceMedia).run()
 
   await c.env.DB.prepare(
     `UPDATE jobs SET applicant_count = applicant_count + 1 WHERE id = ?`
