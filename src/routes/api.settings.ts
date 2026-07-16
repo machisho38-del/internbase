@@ -34,9 +34,17 @@ settings.get('/', async (c) => {
 
 // 管理用：グループ別詳細取得
 settings.get('/admin/all', adminAuthMiddleware, async (c) => {
+  const hiddenKeys = [
+    'line_url_todai',
+    'line_url_waseda',
+    'line_url_keio',
+    'line_url_march',
+  ]
   const { results } = await c.env.DB.prepare(`
-    SELECT * FROM site_settings ORDER BY group_name, display_order
-  `).all()
+    SELECT * FROM site_settings
+    WHERE setting_key NOT IN (${hiddenKeys.map(() => '?').join(',')})
+    ORDER BY group_name, display_order
+  `).bind(...hiddenKeys).all()
   return c.json({ success: true, data: results })
 })
 
