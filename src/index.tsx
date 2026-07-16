@@ -543,7 +543,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260716-occupation"></script>
+  <script src="/static/public.js?v=20260716-jsonfix"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -706,7 +706,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260716-occupation"></script>
+  <script src="/static/admin.js?v=20260716-jsonfix"></script>
 </body>
 </html>`
 }

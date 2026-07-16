@@ -4,6 +4,24 @@ import { adminAuthMiddleware } from '../middleware/adminAuth'
 
 const jobs = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
+function normalizeJsonArrayValue(value: any): string | null {
+  if (value === undefined || value === null || value === '') return null
+  if (Array.isArray(value)) return JSON.stringify(value)
+  if (typeof value !== 'string') return null
+
+  let current: any = value
+  for (let i = 0; i < 3; i++) {
+    if (Array.isArray(current)) return JSON.stringify(current)
+    if (typeof current !== 'string' || current.trim() === '') return null
+    try {
+      current = JSON.parse(current)
+    } catch {
+      return null
+    }
+  }
+  return Array.isArray(current) ? JSON.stringify(current) : null
+}
+
 // 求人一覧（公開）
 jobs.get('/', async (c) => {
   const occupation = c.req.query('occupation')
@@ -161,9 +179,9 @@ jobs.post('/admin', adminAuthMiddleware, async (c) => {
     selection_flow || null,
     tags ? JSON.stringify(tags) : null,
     status || 'published', visibility || 'public', display_order || 0,
-    appeal_points ? JSON.stringify(appeal_points) : null,
+    normalizeJsonArrayValue(appeal_points),
     position_features || null, onboarding_flow || null, task_examples || null,
-    skill_set ? JSON.stringify(skill_set) : null,
+    normalizeJsonArrayValue(skill_set),
     career_path || null, recommended_for || null,
     hero_image_url || null, card_image_url || null
   ).run()
@@ -212,9 +230,9 @@ jobs.put('/admin/:id', adminAuthMiddleware, async (c) => {
     selection_flow || null,
     tags ? JSON.stringify(tags) : null,
     status || 'published', visibility || 'public', display_order || 0,
-    appeal_points ? JSON.stringify(appeal_points) : null,
+    normalizeJsonArrayValue(appeal_points),
     position_features || null, onboarding_flow || null, task_examples || null,
-    skill_set ? JSON.stringify(skill_set) : null,
+    normalizeJsonArrayValue(skill_set),
     career_path || null, recommended_for || null,
     hero_image_url || null, card_image_url || null,
     id

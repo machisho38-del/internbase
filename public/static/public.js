@@ -12,6 +12,21 @@ function renderOccupationOptions(selected = '') {
   ).join('');
 }
 
+function parseJsonArrayField(raw) {
+  let value = raw;
+  for (let i = 0; i < 3; i++) {
+    if (Array.isArray(value)) return value;
+    if (!value) return [];
+    if (typeof value !== 'string') return [];
+    try {
+      value = JSON.parse(value);
+    } catch(e) {
+      return [];
+    }
+  }
+  return Array.isArray(value) ? value : [];
+}
+
 // ==========================================
 // 流入媒体オプション（SOURCE_MEDIA_OPTIONS）
 // ==========================================
@@ -579,14 +594,10 @@ function renderJobDetail(job) {
   const app = document.getElementById('app');
 
   // JSONフィールドのパース
-  let highlights = [];
-  try { highlights = JSON.parse(job.highlights || '[]'); } catch(e) {}
-  let appealPoints = [];
-  try { appealPoints = JSON.parse(job.appeal_points || '[]'); } catch(e) {}
-  let skillSet = [];
-  try { skillSet = JSON.parse(job.skill_set || '[]'); } catch(e) {}
-  let tags = [];
-  try { tags = JSON.parse(job.tags || '[]'); } catch(e) {}
+  let highlights = parseJsonArrayField(job.highlights);
+  let appealPoints = parseJsonArrayField(job.appeal_points);
+  let skillSet = parseJsonArrayField(job.skill_set);
+  let tags = parseJsonArrayField(job.tags);
 
   // §2の魅力ポイント：appeal_points優先、なければhighlights
   const attractionPoints = appealPoints.length > 0 ? appealPoints : highlights;

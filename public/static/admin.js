@@ -12,6 +12,21 @@ function renderAdminOccupationOptions(selected = 'その他') {
   ).join('');
 }
 
+function parseAdminJsonArray(raw) {
+  let value = raw;
+  for (let i = 0; i < 3; i++) {
+    if (Array.isArray(value)) return value;
+    if (!value) return [];
+    if (typeof value !== 'string') return [];
+    try {
+      value = JSON.parse(value);
+    } catch(e) {
+      return [];
+    }
+  }
+  return Array.isArray(value) ? value : [];
+}
+
 const STATUS_LABELS = {
   applied: '応募済み', reviewing: '書類選考中',
   interview1: '1次面接', interview2: '2次面接', interview3: '最終面接',
@@ -758,8 +773,7 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
             </label>
             <div id="appeal-points-list" class="space-y-2 mb-2">
               ${(() => {
-                let pts = [];
-                try { pts = JSON.parse(job?.appeal_points || '[]'); } catch(e) {}
+                let pts = parseAdminJsonArray(job?.appeal_points);
                 if (!Array.isArray(pts) || pts.length === 0) pts = [{ icon: '🚀', title: '', body: '' }];
                 return pts.slice(0,3).map((p, i) => `
                   <div class="flex gap-2 items-start appeal-point-row">
@@ -786,7 +800,7 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
               習得できるスキルセット <span class="text-gray-600 font-normal">（§10・カンマ区切りで入力）</span>
             </label>
             <input id="skill-set-input" type="text"
-              value="${(() => { try { const s = JSON.parse(job?.skill_set||'[]'); return Array.isArray(s) ? s.map(x => typeof x==='string'?x:(x.name||'')).join(', ') : (job?.skill_set||''); } catch(e){ return job?.skill_set||''; } })()}"
+              value="${(() => { const s = parseAdminJsonArray(job?.skill_set); return s.map(x => typeof x==='string'?x:(x.name||'')).join(', '); })()}"
               placeholder="例: Python, データ分析, マーケティング戦略, SQLite"
               class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
             <p class="text-xs text-gray-600 mt-1">スキル名をカンマ区切りで入力。保存時に自動でJSON配列に変換されます。</p>
@@ -928,9 +942,9 @@ async function submitCreateJob(e) {
   
   // appeal_points / skill_set を動的UIから収集してJSON化
   const appealPoints = collectAppealPoints();
-  if (appealPoints.length > 0) data.appeal_points = JSON.stringify(appealPoints);
+  if (appealPoints.length > 0) data.appeal_points = appealPoints;
   const skillSet = collectSkillSet();
-  if (skillSet.length > 0) data.skill_set = JSON.stringify(skillSet);
+  if (skillSet.length > 0) data.skill_set = skillSet;
 
   // 大学タグIDを配列として取得
   const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
@@ -962,9 +976,9 @@ async function submitUpdateJob(e, id) {
 
   // appeal_points / skill_set を動的UIから収集してJSON化
   const appealPoints = collectAppealPoints();
-  data.appeal_points = JSON.stringify(appealPoints);
+  data.appeal_points = appealPoints;
   const skillSet = collectSkillSet();
-  data.skill_set = JSON.stringify(skillSet);
+  data.skill_set = skillSet;
 
   // 大学タグIDを配列として取得
   const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
