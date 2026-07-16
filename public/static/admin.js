@@ -1545,6 +1545,27 @@ async function loadSiteSettings() {
       referral: '学生招待コード設定',
     };
 
+    const settingLabels = {
+      line_url: '公式LINE URL（デフォルト・旧導線）',
+      line_id: '公式LINE ID',
+      line_url_default: 'LINE URL（その他・デフォルト）',
+      line_url_sunconnect: 'SUNCONNECT公式LINE URL',
+      line_url_valueup: 'バリューアップ公式LINE URL',
+      line_url_todai: 'LINE URL（東大）',
+      line_url_waseda: 'LINE URL（早稲田）',
+      line_url_keio: 'LINE URL（慶應）',
+      line_url_march: 'LINE URL（MARCH）',
+      twitter_url: 'Twitter/X URL',
+      instagram_url: 'Instagram URL',
+      contact_email: '連絡先メールアドレス',
+      site_name: 'サイト名',
+      site_mode: '公開モード',
+      coming_soon_title: 'Coming Soon見出し',
+      coming_soon_subtitle: 'Coming Soon説明文',
+      coming_soon_date: 'Coming Soon公開予定日',
+      student_referral_enabled: '学生紹介機能',
+    };
+
     const inputField = (s) => {
       if (s.setting_type === 'boolean') {
         return `<select id="setting-${s.setting_key}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
@@ -1620,7 +1641,7 @@ async function loadSiteSettings() {
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             ${filteredItems.map(s => `
               <div>
-                <label class="block text-xs text-gray-400 mb-1.5">${s.setting_key.replace(/_/g,' ')}</label>
+                <label class="block text-xs text-gray-400 mb-1.5">${settingLabels[s.setting_key] || s.setting_key.replace(/_/g,' ')}</label>
                 ${inputField(s)}
               </div>
             `).join('')}
@@ -1690,12 +1711,11 @@ const LP_SETTING_GROUPS = [
     key: 'stats',
     label: '数字・実績セクション',
     icon: 'fas fa-chart-bar',
-    description: '掲載企業数・求人数・登録学生数・就活成功率',
+    description: '掲載企業数・求人数・登録学生数。公開画面では掲載中データを優先して表示します。',
     fields: [
       { key: 'stat_companies',    label: '掲載企業数', example: '50' },
       { key: 'stat_jobs',         label: '求人数',     example: '200' },
       { key: 'stat_students',     label: '登録学生数', example: '1000' },
-      { key: 'stat_success_rate', label: '就活成功率（%）', example: '95' },
     ]
   },
   {
@@ -1807,7 +1827,7 @@ async function loadLpEdit() {
               </div>
               <div class="bg-white/5 rounded-lg p-3">
                 <p class="text-white font-medium mb-1">数字セクション（目安）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数<br>就活成功率: 内定率・実績値</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数</p>
               </div>
             </div>
           </div>

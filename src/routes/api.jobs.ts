@@ -8,7 +8,7 @@ const jobs = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 jobs.get('/', async (c) => {
   const industry = c.req.query('industry')
   const workStyle = c.req.query('work_style')
-  const q = c.req.query('q')
+  const q = c.req.query('q')?.trim()
   const membersOnly = c.req.query('members') === '1'
   const studentId = c.req.query('student_id')
 
@@ -32,8 +32,21 @@ jobs.get('/', async (c) => {
   if (industry) { query += ` AND c.industry = ?`; params.push(industry) }
   if (workStyle) { query += ` AND j.work_style = ?`; params.push(workStyle) }
   if (q) {
-    query += ` AND (j.title LIKE ? OR j.description LIKE ? OR c.name LIKE ?)`
-    params.push(`%${q}%`, `%${q}%`, `%${q}%`)
+    const like = `%${q}%`
+    query += ` AND (
+      j.title LIKE ? OR j.slug LIKE ? OR j.catch_copy LIKE ? OR j.description LIKE ? OR
+      j.work_content LIKE ? OR j.requirements LIKE ? OR j.preferred_requirements LIKE ? OR
+      j.highlights LIKE ? OR j.growth_points LIKE ? OR j.work_hours LIKE ? OR j.work_days LIKE ? OR
+      j.work_location LIKE ? OR j.target_grade LIKE ? OR j.university_level LIKE ? OR
+      j.selection_flow LIKE ? OR j.tags LIKE ? OR j.appeal_points LIKE ? OR j.position_features LIKE ? OR
+      j.onboarding_flow LIKE ? OR j.task_examples LIKE ? OR j.skill_set LIKE ? OR j.career_path LIKE ? OR
+      j.recommended_for LIKE ? OR c.name LIKE ? OR c.industry LIKE ? OR c.description LIKE ? OR
+      c.service_description LIKE ? OR
+      CASE j.work_style WHEN 'onsite' THEN '出社' WHEN 'remote' THEN 'リモート' WHEN 'hybrid' THEN 'ハイブリッド' ELSE '' END LIKE ? OR
+      CASE j.remote_available WHEN 1 THEN 'リモート可' ELSE '' END LIKE ? OR
+      CASE j.visibility WHEN 'members' THEN '会員限定' ELSE '公開求人' END LIKE ?
+    )`
+    params.push(...Array(30).fill(like))
   }
 
   query += ` ORDER BY j.display_order ASC, j.created_at DESC`

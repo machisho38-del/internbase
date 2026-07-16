@@ -61,7 +61,7 @@ students.post('/register', async (c) => {
 
   const myCode = generateStudentCode(last_name, first_name)
 
-  const validSourceMedia = ['todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
+  const validSourceMedia = ['sunconnect','valueup','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
   const validatedSourceMedia = validSourceMedia.includes(source_media) ? source_media : 'other'
 
   const result = await c.env.DB.prepare(`

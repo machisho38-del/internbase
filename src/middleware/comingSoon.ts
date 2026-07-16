@@ -38,9 +38,9 @@ export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(asy
 })
 
 function getComingSoonHTML(s: Record<string, string>): string {
-  const title = s.coming_soon_title || '6月公開予定'
+  const title = s.coming_soon_title || '8月公開予定'
   const subtitle = s.coming_soon_subtitle || '現在InternBaseは準備中です。公開をお楽しみに。'
-  const date = s.coming_soon_date || '2025年6月'
+  const date = s.coming_soon_date || '2026年8月'
 
   return `<!DOCTYPE html>
 <html lang="ja">

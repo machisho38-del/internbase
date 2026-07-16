@@ -13,6 +13,10 @@ const SOURCE_MEDIA_OPTIONS = [
   { value: 'other',       label: 'その他',                        line_key: 'line_url_default' },
 ];
 
+function isUsableUrl(url) {
+  return !!url && url !== '#' && !String(url).includes('xxxx');
+}
+
 // サイト設定キャッシュ
 let _siteSettings = null;
 async function getSiteSettings() {
@@ -45,6 +49,7 @@ async function initHomePage() {
   const successStories = storiesRes.data.data;
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
+  const showSuccessStories = s.success_stories_enabled === true || s.success_stories_enabled === '1';
 
   const typeColors = {
     info: 'bg-blue-50 border-blue-200 text-blue-700',
@@ -71,33 +76,55 @@ async function initHomePage() {
     </div>` : ''}
 
     <!-- ヒーローセクション（高学歴層特化ニュアンス） -->
-    <section class="hero-gradient min-h-[90vh] flex items-center relative overflow-hidden">
+    <section class="hero-gradient min-h-[620px] sm:min-h-[680px] lg:min-h-[720px] flex items-center relative overflow-hidden">
       <div class="absolute inset-0 overflow-hidden pointer-events-none">
         <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/5 rounded-full blur-3xl"></div>
         <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/5 rounded-full blur-3xl"></div>
       </div>
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 w-full">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20 w-full">
+        <div class="grid lg:grid-cols-[minmax(0,1fr)_360px] gap-10 items-center">
         <div class="max-w-3xl fade-in">
           <div class="inline-flex items-center gap-2 bg-primary-500/15 border border-primary-500/30 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-6">
             <i class="fas fa-star text-yellow-400"></i>
             ${s.hero_badge_text || '高学歴大学生向け・厳選求人のみ掲載'}
           </div>
-          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6">
+          <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6">
             <span class="gradient-text">${s.hero_title_line1 || '圧倒的な'}</span><br>
             <span class="text-gray-900">${s.hero_title_line2 || '実務経験を、'}</span><br>
             <span class="text-gray-900">${s.hero_title_line3 || '今すぐ始めよう。'}</span>
           </h1>
-          <p class="text-gray-700 text-lg sm:text-xl leading-relaxed mb-8 max-w-xl">
+          <p class="text-gray-700 text-base sm:text-xl leading-relaxed mb-8 max-w-xl">
             ${s.hero_subtitle || 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルと実績を手に入れろ。'}
           </p>
-          <div class="flex flex-col sm:flex-row gap-4 items-center">
-            <a href="/register" class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
+          <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+            <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
               <i class="fas fa-ticket-alt text-xl"></i>${s.hero_cta2_text || '招待コードで登録'}
             </a>
-            <a href="/jobs" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-8 py-4 rounded-xl transition-all text-center shadow-lg border border-gray-200">
+            <a href="/jobs" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-6 sm:px-8 py-4 rounded-xl transition-all text-center shadow-lg border border-gray-200">
               <i class="fas fa-search mr-1"></i>${s.hero_cta1_text || '求人を見る'}
             </a>
           </div>
+        </div>
+        <div class="hidden lg:block fade-in">
+          <div class="glass rounded-2xl p-5">
+            <p class="text-xs font-bold text-primary-700 mb-1">すぐ探せる条件</p>
+            <h2 class="text-xl font-black text-gray-900 mb-4">気になる条件から求人を見る</h2>
+            <div class="space-y-2.5">
+              <a href="/jobs?industry=IT・SaaS" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
+                <span><i class="fas fa-laptop-code text-primary-500 mr-2"></i>IT・SaaS</span>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+              </a>
+              <a href="/jobs?work_style=remote" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
+                <span><i class="fas fa-house-laptop text-primary-500 mr-2"></i>リモート可</span>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+              </a>
+              <a href="/universities" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
+                <span><i class="fas fa-university text-primary-500 mr-2"></i>大学別おすすめ</span>
+                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
+              </a>
+            </div>
+          </div>
+        </div>
         </div>
       </div>
     </section>
@@ -180,27 +207,27 @@ async function initHomePage() {
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
           <div class="text-center">
-            <div class="text-4xl font-black gradient-text mb-1">${s.stat_companies || '50'}<span class="text-2xl">+</span></div>
+            <div class="text-4xl font-black gradient-text mb-1"><span id="stat-companies-value">${s.stat_companies || '0'}</span><span class="text-2xl">+</span></div>
             <div class="text-gray-700 text-sm">掲載企業数</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-black gradient-text mb-1">${s.stat_jobs || '200'}<span class="text-2xl">+</span></div>
+            <div class="text-4xl font-black gradient-text mb-1"><span id="stat-jobs-value">${s.stat_jobs || '0'}</span><span class="text-2xl">+</span></div>
             <div class="text-gray-700 text-sm">求人数</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-black gradient-text mb-1">${s.stat_students || '1000'}<span class="text-2xl">+</span></div>
+            <div class="text-4xl font-black gradient-text mb-1"><span id="stat-students-value">${s.stat_students || '0'}</span><span class="text-2xl">+</span></div>
             <div class="text-gray-700 text-sm">登録学生数</div>
           </div>
           <div class="text-center">
-            <div class="text-4xl font-black gradient-text mb-1">${s.stat_success_rate || '95'}<span class="text-2xl">%</span></div>
-            <div class="text-gray-700 text-sm">就活成功率</div>
+            <div class="text-3xl sm:text-4xl font-black gradient-text mb-1">受付中</div>
+            <div class="text-gray-700 text-sm">無料相談</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- 内定者タイムライン（自動横スクロール） -->
-    ${successStories.length > 0 ? `
+    ${showSuccessStories && successStories.length > 0 ? `
     <section class="py-20 overflow-hidden">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
@@ -283,9 +310,9 @@ async function initHomePage() {
             </div>
             <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
             <p class="text-gray-700 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
-            <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25">
+            <button onclick="openLineModal()" class="inline-flex items-center justify-center bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer">
               <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
-            </a>
+            </button>
           </div>
         </div>
       </div>
@@ -296,8 +323,16 @@ async function initHomePage() {
   const studentId = localStorage.getItem('student_id');
   const params = studentId ? `?student_id=${studentId}` : '';
   try {
-    const res = await API.get('/jobs' + params);
-    const membersCount = res.data.members_job_count || 0;
+    const [jobsRes, companiesRes] = await Promise.all([
+      API.get('/jobs' + params),
+      API.get('/companies').catch(() => ({ data: { data: [] } }))
+    ]);
+    const jobs = jobsRes.data.data || [];
+    const companies = companiesRes.data.data || [];
+    const membersCount = jobsRes.data.members_job_count || 0;
+
+    document.getElementById('stat-jobs-value')?.replaceChildren(String(jobs.length));
+    document.getElementById('stat-companies-value')?.replaceChildren(String(companies.length));
 
     // 会員限定件数を更新
     if (membersCount > 0 && !studentId) {
@@ -399,7 +434,13 @@ async function initJobsPage() {
   if (params.get('industry')) document.getElementById('filter-industry').value = params.get('industry');
   if (params.get('work_style')) document.getElementById('filter-style').value = params.get('work_style');
   if (params.get('q')) document.getElementById('search-q').value = params.get('q');
+  document.getElementById('search-q').addEventListener('input', () => {
+    clearTimeout(window.__jobSearchTimer);
+    window.__jobSearchTimer = setTimeout(searchJobs, 250);
+  });
   document.getElementById('search-q').addEventListener('keydown', e => { if(e.key==='Enter') searchJobs(); });
+  document.getElementById('filter-industry').addEventListener('change', searchJobs);
+  document.getElementById('filter-style').addEventListener('change', searchJobs);
 
   await searchJobs();
 }
@@ -419,7 +460,7 @@ function switchJobTab(tab) {
 }
 
 async function searchJobs() {
-  const q = document.getElementById('search-q')?.value;
+  const q = document.getElementById('search-q')?.value.trim();
   const industry = document.getElementById('filter-industry')?.value;
   const work_style = document.getElementById('filter-style')?.value;
   const studentId = localStorage.getItem('student_id');
@@ -1007,7 +1048,8 @@ async function showRegisterSuccess(data, myCode, sourceMedia) {
   // source_mediaに対応したLINE URLを取得
   const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
   const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
-  const lineUrl = s[lineKey] || s.line_url_default || s.line_url || '#';
+  const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
+  const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
 
   document.getElementById('app').innerHTML = `
     <div class="min-h-screen flex items-center justify-center px-4">
@@ -1148,7 +1190,8 @@ async function submitConsultation(e) {
       // source_mediaに対応したLINE URLを取得
       const mediaOpt = SOURCE_MEDIA_OPTIONS.find(o => o.value === sourceMedia);
       const lineKey = mediaOpt ? mediaOpt.line_key : 'line_url_default';
-      const lineUrl = s[lineKey] || s.line_url_default || s.line_url || '#';
+      const rawLineUrl = s[lineKey] || s.line_url_default || s.line_url || '';
+      const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
       document.getElementById('app').innerHTML = `
         <div class="min-h-screen flex items-center justify-center px-4">
           <div class="text-center max-w-md">
@@ -1306,6 +1349,121 @@ function studentLogout() {
 }
 
 // ==========================================
+// 法務ページ
+// ==========================================
+function renderLegalPage(title, lead, sections) {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
+        <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">${title}</h1>
+        <p class="text-gray-600 leading-relaxed">${lead}</p>
+        <p class="text-xs text-gray-400 mt-4">最終更新日：2026年7月7日</p>
+      </div>
+      <div class="space-y-6">
+        ${sections.map((section, index) => `
+          <section class="glass rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-gray-900 mb-3">${index + 1}. ${section.heading}</h2>
+            <div class="space-y-3 text-sm leading-7 text-gray-700">
+              ${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}
+            </div>
+          </section>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function initPrivacyPage() {
+  renderLegalPage(
+    'プライバシーポリシー',
+    'InternBaseは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
+    [
+      {
+        heading: '取得する情報',
+        body: [
+          '氏名、メールアドレス、電話番号、大学名、学年、希望職種、応募内容、相談内容、招待コード、流入媒体、サービス利用履歴などを取得する場合があります。',
+          'Cookieやアクセス解析情報を利用し、表示改善、セキュリティ対策、不正利用防止、サービス改善に活用する場合があります。'
+        ]
+      },
+      {
+        heading: '利用目的',
+        body: [
+          '求人紹介、応募受付、企業との選考連絡、無料相談、本人確認、問い合わせ対応、サービス改善、重要なお知らせの配信のために利用します。',
+          '個人を特定できない形に加工した統計情報を、掲載企業への説明やサービス改善に利用する場合があります。'
+        ]
+      },
+      {
+        heading: '第三者提供',
+        body: [
+          '応募または相談の目的達成に必要な範囲で、応募先企業または提携先に情報を提供する場合があります。',
+          '法令に基づく場合を除き、本人の同意なく目的外の第三者提供は行いません。'
+        ]
+      },
+      {
+        heading: '安全管理',
+        body: [
+          '取得した情報について、漏えい、滅失、毀損、不正アクセスを防止するため、必要かつ適切な安全管理措置を講じます。',
+          '管理画面やデータベースへのアクセス権限は、運用上必要な範囲に限定します。'
+        ]
+      },
+      {
+        heading: '開示・訂正・削除',
+        body: [
+          '本人から個人情報の開示、訂正、利用停止、削除等の申し出があった場合、法令に従って合理的な範囲で対応します。',
+          'お問い合わせ先は、サービス内または運営者情報ページで案内する連絡先をご確認ください。'
+        ]
+      }
+    ]
+  );
+}
+
+function initTermsPage() {
+  renderLegalPage(
+    '利用規約',
+    'この利用規約は、InternBaseが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
+    [
+      {
+        heading: 'サービス内容',
+        body: [
+          'InternBaseは、学生向けに長期インターン求人情報、応募導線、無料相談、関連情報を提供するサービスです。',
+          '掲載情報の正確性には努めますが、求人条件、選考状況、募集終了時期などは変更される場合があります。'
+        ]
+      },
+      {
+        heading: '利用者の責任',
+        body: [
+          '利用者は、登録情報、応募情報、相談内容について、真実かつ正確な情報を提供するものとします。',
+          '他人になりすます行為、虚偽情報の登録、サービス運営を妨げる行為、法令または公序良俗に反する行為を禁止します。'
+        ]
+      },
+      {
+        heading: '求人応募と選考',
+        body: [
+          '応募後の選考、面接、採否、雇用契約、勤務条件の最終決定は、応募先企業と利用者の間で行われます。',
+          'InternBaseは、求人紹介や連絡補助を行う場合がありますが、採用や勤務条件を保証するものではありません。'
+        ]
+      },
+      {
+        heading: 'サービスの変更・停止',
+        body: [
+          'InternBaseは、必要に応じてサービス内容の変更、機能追加、一時停止、終了を行う場合があります。',
+          '保守、障害、外部サービスの停止、その他やむを得ない事情により、事前告知なくサービスを停止することがあります。'
+        ]
+      },
+      {
+        heading: '免責',
+        body: [
+          'InternBaseの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
+          '利用者と掲載企業または第三者との間で生じたトラブルは、当事者間で解決するものとします。'
+        ]
+      }
+    ]
+  );
+}
+
+// ==========================================
 // 応募モーダル
 // ==========================================
 function openApplyModal(jobId, jobTitle) {
@@ -1357,6 +1515,8 @@ async function submitApplication(e, jobId) {
     });
     if (res.data.success) {
       const s = await getSiteSettings();
+      const rawLineUrl = s.line_url_default || s.line_url || '';
+      const lineUrl = isUsableUrl(rawLineUrl) ? rawLineUrl : '/consultation';
       document.getElementById('apply-form-content').innerHTML = `
         <div class="text-center py-4">
           <div class="w-16 h-16 bg-green-500/20 border-2 border-green-500/40 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -1364,7 +1524,7 @@ async function submitApplication(e, jobId) {
           </div>
           <h3 class="font-bold mb-2">応募が完了しました！</h3>
           <p class="text-gray-500 text-sm mb-5">公式LINEにてご連絡しますので、追加をお待ちください。</p>
-          <a href="${s.line_url || '#'}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm">
+          <a href="${lineUrl}" class="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm">
             <i class="fab fa-line text-lg"></i>公式LINEを追加する
           </a>
         </div>`;
@@ -1443,6 +1603,8 @@ async function initUniversitiesPage() {
     </div>
   `;
 
+  document.getElementById('uni-search')?.addEventListener('input', filterUniversities);
+
   try {
     const res = await API.get('/homepage/university-tags');
     const universities = res.data.data || [];
@@ -1475,7 +1637,7 @@ function displayUniversities(universities) {
 }
 
 function filterUniversities() {
-  const query = document.getElementById('uni-search').value.toLowerCase();
+  const query = document.getElementById('uni-search').value.trim().toLowerCase();
   if (!window.allUniversities) return;
   
   const filtered = window.allUniversities.filter(uni => 
@@ -1533,6 +1695,15 @@ async function initUniversityJobsPage(slug) {
     </div>
   `;
 
+  const searchInput = document.getElementById('search-q');
+  searchInput?.addEventListener('input', () => {
+    clearTimeout(window.__universityJobSearchTimer);
+    window.__universityJobSearchTimer = setTimeout(() => searchUniversityJobs(slug), 250);
+  });
+  searchInput?.addEventListener('keydown', e => { if(e.key==='Enter') searchUniversityJobs(slug); });
+  document.getElementById('filter-industry')?.addEventListener('change', () => searchUniversityJobs(slug));
+  document.getElementById('filter-style')?.addEventListener('change', () => searchUniversityJobs(slug));
+
   try {
     // 大学情報取得
     const uniRes = await API.get('/homepage/university-tags');
@@ -1573,17 +1744,28 @@ async function initUniversityJobsPage(slug) {
   }
 }
 
+function getSearchableJobText(job) {
+  let tags = [];
+  try { tags = JSON.parse(job.tags || '[]'); } catch(e) {}
+  const workStyleLabel = { onsite: '出社', remote: 'リモート', hybrid: 'ハイブリッド' };
+  return [
+    job.title, job.slug, job.catch_copy, job.description, job.work_content,
+    job.company_name, job.company_industry, job.work_style, workStyleLabel[job.work_style],
+    job.work_hours, job.work_days, job.work_location, job.target_grade, job.university_level,
+    job.requirements, job.preferred_requirements, job.selection_flow, job.recommended_for,
+    ...tags
+  ].filter(Boolean).join(' ').toLowerCase();
+}
+
 function searchUniversityJobs(slug) {
-  const q = document.getElementById('search-q').value.toLowerCase();
+  const q = document.getElementById('search-q').value.trim().toLowerCase();
   const industry = document.getElementById('filter-industry').value;
   const style = document.getElementById('filter-style').value;
   
   if (!window.currentUniversityJobs) return;
   
   let filtered = window.currentUniversityJobs.filter(job => {
-    const matchQ = !q || job.title.toLowerCase().includes(q) || 
-                   (job.company_name && job.company_name.toLowerCase().includes(q)) ||
-                   (job.description && job.description.toLowerCase().includes(q));
+    const matchQ = !q || getSearchableJobText(job).includes(q);
     const matchIndustry = !industry || job.company_industry === industry;
     const matchStyle = !style || job.work_style === style;
     return matchQ && matchIndustry && matchStyle;

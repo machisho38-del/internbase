@@ -40,17 +40,6 @@ settings.get('/admin/all', adminAuthMiddleware, async (c) => {
   return c.json({ success: true, data: results })
 })
 
-// 管理用：単一設定更新
-settings.put('/admin/:key', adminAuthMiddleware, async (c) => {
-  const key = c.req.param('key')
-  const { value } = await c.req.json()
-  await c.env.DB.prepare(`
-    UPDATE site_settings SET setting_value = ?, updated_at = CURRENT_TIMESTAMP
-    WHERE setting_key = ?
-  `).bind(String(value ?? ''), key).run()
-  return c.json({ success: true })
-})
-
 // 公開用：現在の公開モードのみ取得
 // キャッシュがあればキャッシュを返す（wrangler D1 WALバグ回避）
 settings.get('/site-mode', async (c) => {
@@ -89,6 +78,17 @@ settings.put('/admin/bulk/update', adminAuthMiddleware, async (c) => {
       WHERE setting_key = ?
     `).bind(String(value ?? ''), key).run()
   }
+  return c.json({ success: true })
+})
+
+// 管理用：単一設定更新
+settings.put('/admin/:key', adminAuthMiddleware, async (c) => {
+  const key = c.req.param('key')
+  const { value } = await c.req.json()
+  await c.env.DB.prepare(`
+    UPDATE site_settings SET setting_value = ?, updated_at = CURRENT_TIMESTAMP
+    WHERE setting_key = ?
+  `).bind(String(value ?? ''), key).run()
   return c.json({ success: true })
 })
 

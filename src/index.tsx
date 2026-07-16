@@ -83,9 +83,41 @@ app.get('/mypage', (c) => {
   return c.html(getPublicHTML('mypage', 'マイページ | InternBase', '応募履歴や招待コードの確認・管理ができます。'))
 })
 
+// 公開画面 - 規約
+app.get('/privacy', (c) => {
+  return c.html(getPublicHTML('privacy', 'プライバシーポリシー | InternBase', 'InternBaseのプライバシーポリシーです。個人情報の取扱いについてご確認ください。'))
+})
+
+app.get('/terms', (c) => {
+  return c.html(getPublicHTML('terms', '利用規約 | InternBase', 'InternBaseの利用規約です。サービスをご利用いただく前にご確認ください。'))
+})
+
 // 管理画面 - 全ページSPA
 app.get('/admin', (c) => c.html(getAdminHTML()))
 app.get('/admin/*', (c) => c.html(getAdminHTML()))
+
+app.get('/robots.txt', (c) => {
+  const body = `User-agent: *
+Allow: /
+
+Sitemap: https://internbase.jp/sitemap.xml
+`
+  return c.text(body, 200, { 'Content-Type': 'text/plain; charset=UTF-8' })
+})
+
+app.get('/sitemap.xml', (c) => {
+  const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://internbase.jp/</loc></url>
+  <url><loc>https://internbase.jp/jobs</loc></url>
+  <url><loc>https://internbase.jp/universities</loc></url>
+  <url><loc>https://internbase.jp/register</loc></url>
+  <url><loc>https://internbase.jp/consultation</loc></url>
+  <url><loc>https://internbase.jp/privacy</loc></url>
+  <url><loc>https://internbase.jp/terms</loc></url>
+</urlset>`
+  return c.body(body, 200, { 'Content-Type': 'application/xml; charset=UTF-8' })
+})
 
 // --- HTML生成 ---
 
@@ -157,6 +189,45 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
     .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    #source-media-step label,
+    #con-source-step label,
+    #consultation-form label:has(.concern-check) {
+      background: #ffffff;
+      border-color: #d1d5db;
+    }
+    #source-media-step label.border-primary-500 { border-color: #4f6ef7 !important; background: rgba(79,110,247,0.08); }
+    #con-source-step label.border-purple-500 { border-color: #a855f7 !important; background: rgba(168,85,247,0.08); }
+    #source-media-step span,
+    #con-source-step span,
+    #consultation-form .concern-check + span {
+      color: #374151 !important;
+    }
+    #invite-code-step input,
+    #register-form input:not([type="hidden"]),
+    #register-form select,
+    #consultation-form input:not([type="hidden"]):not([type="checkbox"]),
+    #consultation-form select,
+    #consultation-form textarea {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border-color: #d1d5db !important;
+    }
+    #invite-code-step input::placeholder,
+    #register-form input::placeholder,
+    #consultation-form input::placeholder,
+    #consultation-form textarea::placeholder {
+      color: #9ca3af !important;
+      opacity: 1;
+    }
+    #register-form input:focus,
+    #register-form select:focus,
+    #consultation-form input:focus,
+    #consultation-form select:focus,
+    #consultation-form textarea:focus,
+    #invite-code-step input:focus {
+      border-color: #4f6ef7 !important;
+      box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
+    }
   </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
@@ -184,7 +255,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
             <i class="fab fa-line text-base"></i>LINE相談
           </button>
           <!-- モバイルメニューボタン -->
-          <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900" onclick="toggleMobileMenu()">
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900 flex-shrink-0" onclick="toggleMobileMenu()" aria-label="メニューを開く">
             <i class="fas fa-bars text-lg"></i>
           </button>
         </div>
@@ -329,6 +400,10 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       { value: 'other',      label: 'その他',                          line_key: 'line_url_default' },
     ];
 
+    function isUsableLineUrl(url) {
+      return !!url && url !== '#' && !String(url).includes('xxxx');
+    }
+
     // サイト設定（LINE URLなど）をキャッシュ
     let _siteSettingsCache = null;
 
@@ -353,7 +428,8 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       const container = document.getElementById('line-modal-options');
 
       container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
-        const url = s[opt.line_key] || s['line_url_default'] || s['line_url'] || '';
+        const rawUrl = s[opt.line_key] || s['line_url_default'] || s['line_url'] || '';
+        const url = isUsableLineUrl(rawUrl) ? rawUrl : '';
         const href = url || '/consultation';
         const isExternal = !!url;
         return \`
@@ -419,16 +495,16 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
         <div>
           <h4 class="text-sm font-semibold mb-3 text-gray-800">公式LINE</h4>
           <p class="text-gray-600 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
-          <a href="#" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors">
+          <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors border-none cursor-pointer">
             <i class="fab fa-line"></i>LINEを追加
-          </a>
+          </button>
         </div>
       </div>
       <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
         <p class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
         <div class="flex gap-4 text-gray-500 text-xs">
-          <a href="#" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
-          <a href="#" class="hover:text-primary-600 transition-colors">利用規約</a>
+          <a href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
+          <a href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>
         </div>
       </div>
     </div>
@@ -450,6 +526,8 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     else if (path === '/register') initRegisterPage();
     else if (path === '/consultation') initConsultationPage();
     else if (path === '/mypage') initMyPage();
+    else if (path === '/privacy') initPrivacyPage();
+    else if (path === '/terms') initTermsPage();
   </script>
 </body>
 </html>`

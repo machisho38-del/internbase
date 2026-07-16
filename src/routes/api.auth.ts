@@ -98,8 +98,8 @@ auth.post('/admin/logout', async (c) => {
 auth.post('/admin/setup', async (c) => {
   const { setup_key, email, password, name } = await c.req.json()
 
-  const validSetupKey = (c.env as any).SETUP_KEY || 'setup_intern_2024'
-  if (setup_key !== validSetupKey) {
+  const validSetupKey = (c.env as any).SETUP_KEY
+  if (!validSetupKey || setup_key !== validSetupKey) {
     return c.json({ success: false, error: 'セットアップキーが無効です' }, 403)
   }
 

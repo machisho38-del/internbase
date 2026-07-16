@@ -157,8 +157,12 @@ homepage.get('/universities/:slug/jobs', async (c) => {
   // その大学向けの求人を取得
   const { results } = await c.env.DB.prepare(`
     SELECT DISTINCT
-      j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.hourly_wage_min, j.hourly_wage_max,
-      comp.name as company_name, comp.logo_url as company_logo
+      j.id, j.company_id, j.title, j.slug, j.catch_copy, j.description, j.work_content,
+      j.work_style, j.remote_available, j.hourly_wage_min, j.hourly_wage_max,
+      j.work_hours, j.work_days, j.work_location, j.target_grade, j.university_level,
+      j.requirements, j.preferred_requirements, j.selection_flow, j.tags, j.recommended_for,
+      j.visibility,
+      comp.name as company_name, comp.logo_url as company_logo, comp.industry as company_industry
     FROM jobs j
     JOIN companies comp ON j.company_id = comp.id
     JOIN job_university_tags jut ON j.id = jut.job_id

@@ -1,92 +1,78 @@
-# InternBase - 長期インターン求人サイト
+# InternBase
 
-## プロジェクト概要
-高学歴大学生向けの長期インターン求人プラットフォーム。
-厳選された求人のみ掲載し、招待コード制による質の高いユーザー管理を実現。
+高学歴大学生向けの長期インターン求人サイトです。
+現在は Cloudflare Pages の Preview 環境で確認・調整しています。
 
-## アクセスURL（ローカル開発）
-- **公開サイト**: http://localhost:3000/
-- **求人一覧**: http://localhost:3000/jobs
-- **求人詳細**: http://localhost:3000/jobs/:slug
-- **新規登録**: http://localhost:3000/register
-- **無料相談**: http://localhost:3000/consultation
-- **管理画面**: http://localhost:3000/admin
+最終更新日: 2026年7月16日
 
-## 管理画面ログイン情報（初期）
-- メール: admin@internship.jp
-- パスワード: admin123
-- ※本番環境では必ず変更すること
+## 現在の共有URL
 
-## 実装済み機能
+| 用途 | URL |
+| --- | --- |
+| Preview公開URL | https://codex-preview.internship-site.pages.dev |
+| 管理画面 | https://codex-preview.internship-site.pages.dev/admin |
+| 事前登録 | https://codex-preview.internship-site.pages.dev/register |
+| 無料相談 | https://codex-preview.internship-site.pages.dev/consultation |
+| 求人一覧 | https://codex-preview.internship-site.pages.dev/jobs |
+| 大学別求人 | https://codex-preview.internship-site.pages.dev/universities |
 
-### 公開画面
-- [x] LP（ヒーロー・求人一覧・特徴・CTA）
-- [x] 求人一覧（業種・勤務形態フィルタ・キーワード検索）
-- [x] 求人詳細（魅力・業務内容・勤務条件・選考フロー・応募ボタン）
-- [x] 招待コード付き新規登録フォーム（招待コード任意）
-- [x] 応募フォーム（登録済み学生→LINE誘導）
-- [x] 無料相談申込フォーム
+## 現在の公開状態
 
-### 管理画面（/admin）
-- [x] ダッシュボード（KPI・応募状況・最近の応募）
-- [x] 企業管理（一覧・追加・編集・削除）
-- [x] 求人管理（一覧・追加・編集・削除）
-- [x] 学生管理（一覧・検索・詳細・管理メモ）
-- [x] 応募管理（一覧・ステータス更新・進捗メモ・面接日程）
-- [x] 招待コード管理（作成・一括生成・無効化・削除）
-- [x] 無料相談管理（一覧・ステータス更新）
+- 公開モード: `Coming Soon`
+- 表紙表示: `8月公開予定`
+- 公開予定表示: `2026年8月公開予定`
+- `/register`、`/consultation`、`/admin` は Coming Soon 中でも利用可能
 
-## データモデル
+## 管理画面ログイン
 
-### テーブル構成
-| テーブル | 説明 |
-|---------|------|
-| companies | 企業情報 |
-| jobs | 求人情報（企業に紐付く） |
-| students | 登録学生 |
-| applications | 応募（学生×求人） |
-| invite_codes | 招待コード |
-| consultations | 無料相談申込 |
-| admins | 管理者 |
+| 項目 | 内容 |
+| --- | --- |
+| URL | https://codex-preview.internship-site.pages.dev/admin |
+| メールアドレス | `admin@internship.jp` |
+| パスワード / パスコード | 共有済みの一時パスワードを使用 |
 
-### ストレージ
-- **DB**: Cloudflare D1（SQLite）
+注意: 管理画面パスワードは GitHub README には直接記載しない運用です。必要な場合は管理者間で別途共有してください。
 
-## 技術スタック
-- **バックエンド**: Hono (TypeScript) + Cloudflare Workers
-- **フロントエンド**: Vanilla JS + Tailwind CSS (CDN)
-- **DB**: Cloudflare D1 (SQLite)
-- **デプロイ**: Cloudflare Pages
+## 現在設定しているLINE URL
 
-## 開発コマンド
-```bash
-npm run build          # ビルド
-npm run db:migrate:local  # ローカルDB作成
-npm run db:seed        # テストデータ投入
-npm run db:reset       # DB初期化
+| 導線 | URL |
+| --- | --- |
+| Sunconnect公式LINE | https://lin.ee/ohGc4ij |
+| バリューアップ公式LINE | https://lin.ee/usH63GD |
+| デフォルトLINE | https://lin.ee/ohGc4ij |
 
-pm2 start ecosystem.config.cjs   # サービス起動
-pm2 restart internship-site      # 再起動
-pm2 logs --nostream               # ログ確認
-```
+## 確認済みの主な機能
 
-## 初回セットアップ（パスワード設定）
-```bash
-curl -X POST http://localhost:3000/api/auth/admin/setup \
-  -H "Content-Type: application/json" \
-  -d '{"setup_key":"setup_intern_2024","email":"admin@example.com","password":"your_password","name":"管理者名"}'
-```
+- Coming Soon 表紙の表示
+- 管理画面ログイン
+- 管理画面からの公開モード切替
+- 管理画面の設定変更と公開画面への反映
+- LINE / SNS / 連絡先設定の公開画面連携
+- 事前登録フォーム入力
+- 無料相談フォーム入力
+- 求人キーワード検索
+- 大学別求人検索
 
-## 未実装（今後の拡張）
-- [ ] サービス名カスタマイズ（現在: InternBase）
-- [ ] 公式LINE連携（WebhookによるDM自動化）
-- [ ] メール通知（応募確認・選考連絡）
-- [ ] 企業自身によるログイン・求人更新
-- [ ] 新卒採用情報ページ
-- [ ] 就活イベント情報ページ
-- [ ] 学生-企業間チャット機能
+## Cloudflare構成
 
-## デプロイ状況
-- **プラットフォーム**: Cloudflare Pages（予定）
-- **現在**: ローカル開発中
-- **最終更新**: 2024年
+| 項目 | 内容 |
+| --- | --- |
+| Pages project | `internship-site` |
+| Preview branch | `codex-preview` |
+| D1 database | `internship-production` |
+| D1 database id | `67fcdefe-d10b-4f52-b391-a96181f1813b` |
+
+## 関係者確認時の見方
+
+1. まず Preview公開URL を開く
+2. 表紙が `8月公開予定` になっていることを確認する
+3. `/register` から事前登録フォームを確認する
+4. `/consultation` から無料相談フォームを確認する
+5. `/admin` にログインして、設定変更が公開画面へ反映されるか確認する
+
+## セキュリティメモ
+
+- `.env`、API Token、Cloudflare Token、管理画面パスワードは GitHub に載せない
+- 管理画面パスワードを変更した場合は、READMEではなく別経路で共有する
+- 本番公開前に、テスト登録データと相談データを確認・整理する
+- 本番URLへ切り替える前に、Cloudflare Pages の Production deployment とD1設定を再確認する
