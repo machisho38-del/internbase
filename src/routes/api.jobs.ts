@@ -6,6 +6,7 @@ const jobs = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
 // 求人一覧（公開）
 jobs.get('/', async (c) => {
+  const occupation = c.req.query('occupation')
   const industry = c.req.query('industry')
   const workStyle = c.req.query('work_style')
   const q = c.req.query('q')?.trim()
@@ -29,12 +30,13 @@ jobs.get('/', async (c) => {
     query += ` AND j.visibility = 'public' AND j.status = 'published'`
   }
 
+  if (occupation) { query += ` AND j.occupation = ?`; params.push(occupation) }
   if (industry) { query += ` AND c.industry = ?`; params.push(industry) }
   if (workStyle) { query += ` AND j.work_style = ?`; params.push(workStyle) }
   if (q) {
     const like = `%${q}%`
     query += ` AND (
-      j.title LIKE ? OR j.slug LIKE ? OR j.catch_copy LIKE ? OR j.description LIKE ? OR
+      j.title LIKE ? OR j.slug LIKE ? OR j.occupation LIKE ? OR j.catch_copy LIKE ? OR j.description LIKE ? OR
       j.work_content LIKE ? OR j.requirements LIKE ? OR j.preferred_requirements LIKE ? OR
       j.highlights LIKE ? OR j.growth_points LIKE ? OR j.work_hours LIKE ? OR j.work_days LIKE ? OR
       j.work_location LIKE ? OR j.target_grade LIKE ? OR j.university_level LIKE ? OR
@@ -46,7 +48,7 @@ jobs.get('/', async (c) => {
       CASE j.remote_available WHEN 1 THEN 'リモート可' ELSE '' END LIKE ? OR
       CASE j.visibility WHEN 'members' THEN '会員限定' ELSE '公開求人' END LIKE ?
     )`
-    params.push(...Array(30).fill(like))
+    params.push(...Array(31).fill(like))
   }
 
   query += ` ORDER BY j.display_order ASC, j.created_at DESC`
@@ -120,7 +122,7 @@ jobs.get('/admin/all', adminAuthMiddleware, async (c) => {
 jobs.post('/admin', adminAuthMiddleware, async (c) => {
   const body = await c.req.json()
   const {
-    company_id, title, slug, catch_copy, description, work_content,
+    company_id, title, slug, occupation, catch_copy, description, work_content,
     requirements, preferred_requirements, highlights, growth_points,
     work_hours, work_days, work_location, work_style, remote_available,
     hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
@@ -137,6 +139,7 @@ jobs.post('/admin', adminAuthMiddleware, async (c) => {
 
   const result = await c.env.DB.prepare(`
     INSERT INTO jobs (company_id, title, slug, catch_copy, description, work_content,
+      occupation,
       requirements, preferred_requirements, highlights, growth_points,
       work_hours, work_days, work_location, work_style, remote_available,
       hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
@@ -144,9 +147,10 @@ jobs.post('/admin', adminAuthMiddleware, async (c) => {
       status, visibility, display_order,
       appeal_points, position_features, onboarding_flow, task_examples, skill_set,
       career_path, recommended_for, hero_image_url, card_image_url)
-    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
     company_id, title, slug, catch_copy || null, description, work_content,
+    occupation || 'その他',
     requirements || null, preferred_requirements || null,
     highlights ? JSON.stringify(highlights) : null, growth_points || null,
     work_hours || null, work_days || null, work_location || null,
@@ -172,7 +176,7 @@ jobs.put('/admin/:id', adminAuthMiddleware, async (c) => {
   const id = c.req.param('id')
   const body = await c.req.json()
   const {
-    company_id, title, slug, catch_copy, description, work_content,
+    company_id, title, slug, occupation, catch_copy, description, work_content,
     requirements, preferred_requirements, highlights, growth_points,
     work_hours, work_days, work_location, work_style, remote_available,
     hourly_wage_min, hourly_wage_max, wage_note, target_grade, university_level,
@@ -185,6 +189,7 @@ jobs.put('/admin/:id', adminAuthMiddleware, async (c) => {
   await c.env.DB.prepare(`
     UPDATE jobs SET
       company_id=?, title=?, slug=?, catch_copy=?, description=?, work_content=?,
+      occupation=?,
       requirements=?, preferred_requirements=?, highlights=?, growth_points=?,
       work_hours=?, work_days=?, work_location=?, work_style=?, remote_available=?,
       hourly_wage_min=?, hourly_wage_max=?, wage_note=?, target_grade=?, university_level=?,
@@ -196,6 +201,7 @@ jobs.put('/admin/:id', adminAuthMiddleware, async (c) => {
     WHERE id=?
   `).bind(
     company_id, title, slug, catch_copy || null, description, work_content,
+    occupation || 'その他',
     requirements || null, preferred_requirements || null,
     highlights ? JSON.stringify(highlights) : null, growth_points || null,
     work_hours || null, work_days || null, work_location || null,

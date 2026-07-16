@@ -214,6 +214,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     }
     #search-q,
     #uni-search,
+    #filter-occupation,
     #filter-industry,
     #filter-style {
       background: #ffffff !important;
@@ -230,6 +231,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       opacity: 1;
     }
     #filter-industry option,
+    #filter-occupation option,
     #filter-style option {
       background: #ffffff;
       color: #111827;
@@ -541,7 +543,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js"></script>
+  <script src="/static/public.js?v=20260716-occupation"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -704,7 +706,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js"></script>
+  <script src="/static/admin.js?v=20260716-occupation"></script>
 </body>
 </html>`
 }

@@ -28,6 +28,7 @@ export type Job = {
   title: string
   slug: string
   job_type: string
+  occupation: string | null
   catch_copy: string | null
   description: string
   work_content: string

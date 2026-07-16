@@ -4,6 +4,14 @@
 
 const API = axios.create({ baseURL: '/api', withCredentials: true });
 
+const JOB_OCCUPATION_OPTIONS = ['営業', 'マーケティング', 'コンサルティング', '事務', 'エンジニア', '人事', '事業開発', 'その他'];
+
+function renderAdminOccupationOptions(selected = 'その他') {
+  return JOB_OCCUPATION_OPTIONS.map(o =>
+    `<option value="${o}" ${selected === o ? 'selected' : ''}>${o}</option>`
+  ).join('');
+}
+
 const STATUS_LABELS = {
   applied: '応募済み', reviewing: '書類選考中',
   interview1: '1次面接', interview2: '2次面接', interview3: '最終面接',
@@ -592,6 +600,7 @@ async function loadJobs() {
                 <td class="px-4 py-3">
                   <p class="text-sm font-medium">${j.title}</p>
                   <p class="text-xs text-gray-500">/${j.slug}</p>
+                  ${j.occupation ? `<p class="text-xs text-primary-300 mt-1"><i class="fas fa-briefcase mr-1"></i>${j.occupation}</p>` : ''}
                 </td>
                 <td class="px-4 py-3 hidden md:table-cell text-xs text-gray-400">${j.company_name}</td>
                 <td class="px-4 py-3 hidden lg:table-cell text-xs text-gray-400">
@@ -661,6 +670,12 @@ async function showJobModal(job = null, companies = [], universityTags = []) {
               <label class="block text-xs text-gray-400 mb-1">スラッグ *</label>
               <input name="slug" required value="${job?.slug||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
             </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">職種 *</label>
+            <select name="occupation" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+              ${renderAdminOccupationOptions(job?.occupation || 'その他')}
+            </select>
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1">キャッチコピー</label>
