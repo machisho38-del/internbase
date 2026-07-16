@@ -212,12 +212,27 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       color: #111827 !important;
       border-color: #d1d5db !important;
     }
+    #search-q,
+    #uni-search,
+    #filter-industry,
+    #filter-style {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border-color: #d1d5db !important;
+    }
     #invite-code-step input::placeholder,
     #register-form input::placeholder,
     #consultation-form input::placeholder,
-    #consultation-form textarea::placeholder {
+    #consultation-form textarea::placeholder,
+    #search-q::placeholder,
+    #uni-search::placeholder {
       color: #9ca3af !important;
       opacity: 1;
+    }
+    #filter-industry option,
+    #filter-style option {
+      background: #ffffff;
+      color: #111827;
     }
     #register-form input:focus,
     #register-form select:focus,
