@@ -74,6 +74,10 @@ app.get('/register', (c) => {
 })
 
 // 公開画面 - 無料相談
+app.get('/login', (c) => {
+  return c.html(getPublicHTML('login', 'ログイン | InternBase', '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。'))
+})
+
 app.get('/consultation', (c) => {
   return c.html(getPublicHTML('consultation', '無料相談 | InternBase', 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。'))
 })
@@ -203,6 +207,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       color: #374151 !important;
     }
     #invite-code-step input,
+    #login-form input,
     #register-form input:not([type="hidden"]),
     #register-form select,
     #consultation-form input:not([type="hidden"]):not([type="checkbox"]),
@@ -222,6 +227,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       border-color: #d1d5db !important;
     }
     #invite-code-step input::placeholder,
+    #login-form input::placeholder,
     #register-form input::placeholder,
     #consultation-form input::placeholder,
     #consultation-form textarea::placeholder,
@@ -237,6 +243,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       color: #111827;
     }
     #register-form input:focus,
+    #login-form input:focus,
     #register-form select:focus,
     #consultation-form input:focus,
     #consultation-form select:focus,
@@ -265,6 +272,9 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
           <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
+          <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 text-gray-600 hover:text-primary-600 text-sm px-2 py-2 rounded-lg transition-colors font-medium">
+            <i class="fas fa-right-to-bracket text-base"></i>ログイン
+          </a>
           <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-4 py-2 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
             <i class="fas fa-user-plus text-base"></i>事前登録
           </a>
@@ -292,6 +302,9 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
         </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-user-plus text-primary-500 w-4"></i>事前登録する
+        </a>
+        <a href="/login" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-right-to-bracket text-primary-500 w-4"></i>ログイン
         </a>
         <button onclick="openLineModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1 border-none cursor-pointer">
           <i class="fab fa-line text-white w-4"></i>LINEで無料相談
@@ -543,7 +556,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260716-jsonfix"></script>
+  <script src="/static/public.js?v=20260717-student-login"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -556,6 +569,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       initUniversityJobsPage(slug);
     }
     else if (path === '/register') initRegisterPage();
+    else if (path === '/login') initLoginPage();
     else if (path === '/consultation') initConsultationPage();
     else if (path === '/mypage') initMyPage();
     else if (path === '/privacy') initPrivacyPage();

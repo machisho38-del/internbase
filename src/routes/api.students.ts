@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { hashStudentPassword, verifyStudentPassword, createStudentSession, getStudentFromSession, clearStudentSession } from '../utils/studentAuth'
 
 const students = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -10,11 +11,15 @@ students.post('/register', async (c) => {
   const {
     last_name, first_name, last_name_kana, first_name_kana,
     email, phone, university, faculty, department, grade, graduation_year,
-    invite_code, pr_text, source_media
+    invite_code, pr_text, source_media, password
   } = body
 
   if (!last_name || !first_name || !email || !university || !grade) {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
+  }
+
+  if (!password || String(password).length < 8) {
+    return c.json({ success: false, error: 'パスワードは8文字以上で入力してください' }, 400)
   }
 
   const existing = await c.env.DB.prepare(
@@ -63,21 +68,22 @@ students.post('/register', async (c) => {
 
   const validSourceMedia = ['sunconnect','valueup','genki_intern','sokei_intern_compass','careersourcing','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
   const validatedSourceMedia = validSourceMedia.includes(source_media) ? source_media : 'other'
+  const passwordHash = await hashStudentPassword(String(password))
 
   const result = await c.env.DB.prepare(`
     INSERT INTO students (
       last_name, first_name, last_name_kana, first_name_kana,
       email, phone, university, faculty, department, grade, graduation_year,
       invite_code_id, invite_code_used, pr_text,
-      my_invite_code, referred_by_student_id, source_media
-    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+      my_invite_code, referred_by_student_id, source_media, password_hash
+    ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
     last_name, first_name, last_name_kana || null, first_name_kana || null,
     email, phone || null, university, faculty || null, department || null,
     grade, graduation_year || null,
     invite_code_id, invite_code ? invite_code.trim().toUpperCase() : null,
     pr_text || null,
-    myCode, referred_by_student_id, validatedSourceMedia
+    myCode, referred_by_student_id, validatedSourceMedia, passwordHash
   ).run()
 
   const studentId = result.meta.last_row_id
@@ -92,6 +98,8 @@ students.post('/register', async (c) => {
     email,
     studentId
   ).run()
+
+  await createStudentSession(c, Number(studentId))
 
   return c.json({
     success: true,
@@ -112,8 +120,60 @@ function generateStudentCode(lastName: string, firstName: string): string {
 }
 
 // マイページ情報取得（公開・学生ID必要）
+students.post('/login', async (c) => {
+  const { email, password } = await c.req.json()
+  if (!email || !password) {
+    return c.json({ success: false, error: 'メールアドレスとパスワードを入力してください' }, 400)
+  }
+
+  const student = await c.env.DB.prepare(`
+    SELECT id, last_name, first_name, email, university, grade,
+           my_invite_code, password_hash, status
+    FROM students
+    WHERE email = ? AND status = 'active'
+  `).bind(email).first() as any
+
+  if (!student || !(await verifyStudentPassword(String(password), student.password_hash))) {
+    return c.json({ success: false, error: 'メールアドレスまたはパスワードが正しくありません' }, 401)
+  }
+
+  await createStudentSession(c, Number(student.id))
+
+  return c.json({
+    success: true,
+    data: {
+      id: student.id,
+      name: `${student.last_name}${student.first_name}`,
+      my_invite_code: student.my_invite_code || ''
+    }
+  })
+})
+
+students.get('/me', async (c) => {
+  const student = await getStudentFromSession(c)
+  if (!student) return c.json({ success: false, error: 'Unauthorized' }, 401)
+
+  return c.json({
+    success: true,
+    data: {
+      id: student.id,
+      name: `${student.last_name}${student.first_name}`,
+      email: student.email,
+      university: student.university,
+      grade: student.grade,
+      my_invite_code: student.my_invite_code || ''
+    }
+  })
+})
+
+students.post('/logout', async (c) => {
+  await clearStudentSession(c)
+  return c.json({ success: true })
+})
+
 students.get('/mypage/:id', async (c) => {
-  const id = c.req.param('id')
+  const sessionStudent = await getStudentFromSession(c)
+  const id = String(sessionStudent?.id || c.req.param('id'))
   const student = await c.env.DB.prepare(`
     SELECT id, last_name, first_name, email, university, grade,
            my_invite_code, my_invite_code_uses, referral_count,

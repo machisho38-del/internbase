@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { getStudentFromSession } from '../utils/studentAuth'
 
 const jobs = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -29,7 +30,8 @@ jobs.get('/', async (c) => {
   const workStyle = c.req.query('work_style')
   const q = c.req.query('q')?.trim()
   const membersOnly = c.req.query('members') === '1'
-  const studentId = c.req.query('student_id')
+  const sessionStudent = await getStudentFromSession(c)
+  const studentId = sessionStudent?.id || c.req.query('student_id')
 
   let query = `
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,
@@ -91,7 +93,8 @@ jobs.get('/:slug', async (c) => {
   const slug = c.req.param('slug')
   if (slug === 'admin') return c.json({ success: false, error: 'Not found' }, 404)
 
-  const studentId = c.req.query('student_id')
+  const sessionStudent = await getStudentFromSession(c)
+  const studentId = sessionStudent?.id || c.req.query('student_id')
 
   const job = await c.env.DB.prepare(`
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,

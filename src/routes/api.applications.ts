@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { getStudentFromSession } from '../utils/studentAuth'
 
 const applications = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -8,8 +9,10 @@ const applications = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>
 applications.post('/', async (c) => {
   const body = await c.req.json()
   const { student_id, job_id, motivation, available_hours, source_media } = body
+  const sessionStudent = await getStudentFromSession(c)
+  const effectiveStudentId = sessionStudent?.id || student_id
 
-  if (!student_id || !job_id) {
+  if (!effectiveStudentId || !job_id) {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
   }
 
@@ -18,7 +21,7 @@ applications.post('/', async (c) => {
 
   const existing = await c.env.DB.prepare(
     `SELECT id FROM applications WHERE student_id = ? AND job_id = ?`
-  ).bind(student_id, job_id).first()
+  ).bind(effectiveStudentId, job_id).first()
   if (existing) {
     return c.json({ success: false, error: 'この求人にはすでに応募済みです' }, 409)
   }
@@ -31,7 +34,7 @@ applications.post('/', async (c) => {
   const result = await c.env.DB.prepare(`
     INSERT INTO applications (student_id, job_id, motivation, available_hours, source_media)
     VALUES (?, ?, ?, ?, ?)
-  `).bind(student_id, job_id, motivation || null, available_hours || null, validatedSourceMedia).run()
+  `).bind(effectiveStudentId, job_id, motivation || null, available_hours || null, validatedSourceMedia).run()
 
   await c.env.DB.prepare(
     `UPDATE jobs SET applicant_count = applicant_count + 1 WHERE id = ?`

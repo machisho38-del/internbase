@@ -27,6 +27,32 @@ function parseJsonArrayField(raw) {
   return Array.isArray(value) ? value : [];
 }
 
+let _studentSessionChecked = false;
+
+function storeStudentAuth(data) {
+  localStorage.setItem('student_id', data.id);
+  localStorage.setItem('student_name', data.name || '');
+  localStorage.setItem('my_invite_code', data.my_invite_code || '');
+}
+
+function clearStudentAuth() {
+  localStorage.removeItem('student_id');
+  localStorage.removeItem('student_name');
+  localStorage.removeItem('my_invite_code');
+}
+
+async function restoreStudentSession() {
+  if (_studentSessionChecked) return localStorage.getItem('student_id');
+  _studentSessionChecked = true;
+  try {
+    const res = await API.get('/students/me');
+    if (res.data.success) storeStudentAuth(res.data.data);
+  } catch(e) {
+    // Cookie sessionが無い場合は既存localStorageの互換動作を残す。
+  }
+  return localStorage.getItem('student_id');
+}
+
 // ==========================================
 // 流入媒体オプション（SOURCE_MEDIA_OPTIONS）
 // ==========================================
@@ -82,6 +108,7 @@ async function getSiteSettings() {
 // ==========================================
 async function initHomePage() {
   const app = document.getElementById('app');
+  await restoreStudentSession();
 
   // サイト設定・お知らせ・FAQ・内定者タイムライン・ピックアップ求人・大学タグを並列取得
   const [s, annRes, faqRes, storiesRes, featuredRes, uniTagsRes] = await Promise.all([
@@ -423,6 +450,7 @@ function toggleFaq(i) {
 // ==========================================
 async function initJobsPage() {
   const app = document.getElementById('app');
+  await restoreStudentSession();
   const studentId = localStorage.getItem('student_id');
 
   app.innerHTML = `
@@ -562,6 +590,7 @@ async function searchJobs() {
 async function initJobDetailPage() {
   const slug = window.location.pathname.split('/jobs/')[1];
   const app = document.getElementById('app');
+  await restoreStudentSession();
   const studentId = localStorage.getItem('student_id');
 
   app.innerHTML = `<div class="max-w-4xl mx-auto px-4 py-12"><div class="animate-pulse"><div class="h-8 bg-white/10 rounded mb-4 w-2/3"></div><div class="h-4 bg-white/5 rounded mb-2"></div></div></div>`;
@@ -935,6 +964,96 @@ function renderJobDetail(job) {
 // ==========================================
 // 登録ページ
 // ==========================================
+async function initLoginPage() {
+  await restoreStudentSession();
+  const existingId = localStorage.getItem('student_id');
+  const app = document.getElementById('app');
+
+  if (existingId) {
+    app.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="w-full max-w-md text-center">
+          <div class="w-16 h-16 bg-primary-500/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fas fa-circle-check text-primary-400 text-2xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-3">ログイン済みです</h1>
+          <p class="text-gray-500 text-sm mb-6">マイページや会員限定求人を確認できます。</p>
+          <div class="space-y-3">
+            <a href="/mypage" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-user mr-1"></i>マイページへ
+            </a>
+            <a href="/jobs" class="block w-full glass text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-search mr-1"></i>求人を探す
+            </a>
+            <button onclick="studentLogout()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">
+              ログアウト
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-right-to-bracket text-white text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-2">学生ログイン</h1>
+          <p class="text-gray-500 text-sm">登録済みのメールアドレスとパスワードでログインしてください。</p>
+        </div>
+        <div class="glass rounded-2xl p-8">
+          <form id="login-form" onsubmit="submitStudentLogin(event)">
+            <div class="mb-4">
+              <label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label>
+              <input id="login-email" type="email" required autocomplete="email" placeholder="example@univ.ac.jp">
+            </div>
+            <div class="mb-4">
+              <label class="block text-xs text-gray-400 mb-1.5">パスワード <span class="text-red-400">*</span></label>
+              <input id="login-password" type="password" required autocomplete="current-password" placeholder="パスワード">
+            </div>
+            <div id="login-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
+            <button type="submit" id="login-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-right-to-bracket mr-2"></i>ログイン
+            </button>
+          </form>
+          <p class="text-center text-xs text-gray-500 mt-5">
+            初めての方は <a href="/register" class="text-primary-400 hover:text-primary-300 font-bold">新規登録</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitStudentLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  const errDiv = document.getElementById('login-error');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>ログイン中...';
+  errDiv.classList.add('hidden');
+
+  try {
+    const res = await API.post('/students/login', {
+      email: document.getElementById('login-email').value,
+      password: document.getElementById('login-password').value,
+    });
+    if (res.data.success) {
+      storeStudentAuth(res.data.data);
+      window.location.href = '/mypage';
+    }
+  } catch(e) {
+    errDiv.textContent = e.response?.data?.error || 'ログインに失敗しました';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-right-to-bracket mr-2"></i>ログイン';
+  }
+}
+
 async function initRegisterPage() {
   const app = document.getElementById('app');
   app.innerHTML = `
@@ -1036,6 +1155,10 @@ function showRegisterForm(sourceMedia = 'other') {
               <div><label class="block text-xs text-gray-400 mb-1.5">学部・学科 <span class="text-gray-500 font-normal">（任意）</span></label><input id="reg-faculty" type="text" placeholder="経済学部" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
               <div><label class="block text-xs text-gray-400 mb-1.5">学年 <span class="text-red-400">*</span></label><select id="reg-grade" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-primary-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
             </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><label class="block text-xs text-gray-400 mb-1.5">パスワード <span class="text-red-400">*</span></label><input id="reg-password" type="password" required minlength="8" autocomplete="new-password" placeholder="8文字以上" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-400 mb-1.5">パスワード確認 <span class="text-red-400">*</span></label><input id="reg-password-confirm" type="password" required minlength="8" autocomplete="new-password" placeholder="もう一度入力" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            </div>
             <div id="register-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
             <button type="submit" id="register-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
               <i class="fas fa-user-plus mr-2"></i>登録する
@@ -1068,6 +1191,15 @@ async function submitRegister(e) {
   errDiv.classList.add('hidden');
 
   const sourceMedia = document.getElementById('reg-source-media')?.value || 'other';
+  const password = document.getElementById('reg-password').value;
+  const passwordConfirm = document.getElementById('reg-password-confirm').value;
+  if (password.length < 8 || password !== passwordConfirm) {
+    errDiv.textContent = password.length < 8 ? 'パスワードは8文字以上で入力してください' : 'パスワードが一致しません';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i>登録する';
+    return;
+  }
 
   const data = {
     last_name: document.getElementById('reg-last-name').value,
@@ -1078,14 +1210,17 @@ async function submitRegister(e) {
     grade: parseInt(document.getElementById('reg-grade').value),
     invite_code: document.getElementById('reg-invite-code').value,
     source_media: sourceMedia,
+    password,
   };
 
   try {
     const res = await API.post('/students/register', data);
     if (res.data.success) {
-      localStorage.setItem('student_id', res.data.data.id);
-      localStorage.setItem('student_name', data.last_name + data.first_name);
-      localStorage.setItem('my_invite_code', res.data.data.my_invite_code || '');
+      storeStudentAuth({
+        id: res.data.data.id,
+        name: data.last_name + data.first_name,
+        my_invite_code: res.data.data.my_invite_code || ''
+      });
       showRegisterSuccess(data, res.data.data.my_invite_code, sourceMedia);
     }
   } catch(e) {
@@ -1266,6 +1401,7 @@ async function submitConsultation(e) {
 // マイページ
 // ==========================================
 async function initMyPage() {
+  await restoreStudentSession();
   const studentId = localStorage.getItem('student_id');
   const app = document.getElementById('app');
 
@@ -1275,7 +1411,10 @@ async function initMyPage() {
         <div class="text-center">
           <h1 class="text-xl font-bold mb-4">ログインが必要です</h1>
           <p class="text-gray-400 text-sm mb-6">マイページを見るには登録が必要です</p>
-          <a href="/register" class="bg-primary-500 text-white font-bold px-6 py-3 rounded-xl">新規登録</a>
+          <div class="flex justify-center gap-3">
+            <a href="/login" class="bg-primary-500 text-white font-bold px-6 py-3 rounded-xl">ログイン</a>
+            <a href="/register" class="glass text-white font-bold px-6 py-3 rounded-xl">新規登録</a>
+          </div>
         </div>
       </div>`;
     return;
@@ -1384,10 +1523,11 @@ async function initMyPage() {
   }
 }
 
-function studentLogout() {
-  localStorage.removeItem('student_id');
-  localStorage.removeItem('student_name');
-  localStorage.removeItem('my_invite_code');
+async function studentLogout() {
+  try {
+    await API.post('/students/logout');
+  } catch(e) {}
+  clearStudentAuth();
   window.location.href = '/';
 }
 
@@ -1522,9 +1662,12 @@ function openApplyModal(jobId, jobTitle) {
     content.innerHTML = `
       <div class="text-center py-4">
         <i class="fas fa-user text-4xl text-gray-600 mb-4 block"></i>
-        <p class="text-gray-300 mb-2">応募するには登録が必要です</p>
-        <p class="text-gray-500 text-sm mb-6">まずは会員登録を完了させてください。</p>
-        <a href="/register" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors text-center mb-3">
+        <p class="text-gray-300 mb-2">応募するにはログインが必要です</p>
+        <p class="text-gray-500 text-sm mb-6">登録済みの方はログイン、初めての方は新規登録に進んでください。</p>
+        <a href="/login" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors text-center mb-3">
+          <i class="fas fa-right-to-bracket mr-1"></i>ログイン
+        </a>
+        <a href="/register" class="block w-full glass text-white font-bold py-3 rounded-xl transition-colors text-center">
           <i class="fas fa-user-plus mr-1"></i>新規登録
         </a>
       </div>`;
