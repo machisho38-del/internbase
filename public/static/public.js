@@ -181,7 +181,7 @@ function applyPrimaryColor(color) {
     .hover\\:bg-primary-600:hover { background-color: rgb(var(--site-primary-dark)) !important; }
     .border-primary-500 { border-color: rgb(var(--site-primary)) !important; }
     .focus\\:border-primary-500:focus { border-color: rgb(var(--site-primary)) !important; }
-    .from-primary-500 { --tw-gradient-from: rgb(var(--site-primary)) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgb(var(--site-primary) / 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    .from-primary-500 { --tw-gradient-from: rgb(var(--site-primary)) var(--tw-gradient-from-position) !important; }
     .to-primary-500 { --tw-gradient-to: rgb(var(--site-primary)) var(--tw-gradient-to-position) !important; }
     .bg-primary-500\\/10 { background-color: rgb(var(--site-primary) / 0.10) !important; }
     .bg-primary-500\\/15 { background-color: rgb(var(--site-primary) / 0.15) !important; }
