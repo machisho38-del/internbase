@@ -2622,7 +2622,14 @@ async function showFeaturedJobModal(id = null) {
     featured = featuredRes.data.data.find(f => f.id === id) || featured;
   }
   
-  document.getElementById('modal-container').innerHTML = `
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('モーダルを開けませんでした。画面を再読み込みして再度お試しください。');
+    return;
+  }
+
+  modalContent.innerHTML = `
     <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
       <div class="bg-dark-800 rounded-2xl w-full max-w-lg p-6">
         <h3 class="text-lg font-bold mb-4">${id ? 'ピックアップ求人編集' : 'ピックアップ求人追加'}</h3>
@@ -2660,6 +2667,7 @@ async function showFeaturedJobModal(id = null) {
       </div>
     </div>
   `;
+  modal.classList.remove('hidden');
 }
 
 async function submitCreateFeaturedJob(e) {
