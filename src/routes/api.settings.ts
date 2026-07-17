@@ -14,6 +14,7 @@ const _settingsCache: Record<string, string> = {}
 
 // 全設定取得（公開・管理共通）
 settings.get('/', async (c) => {
+  c.header('Cache-Control', 'no-store, no-cache, must-revalidate')
   const group = c.req.query('group')
   let query = `SELECT setting_key, setting_value, setting_type, group_name FROM site_settings WHERE 1=1`
   const params: any[] = []

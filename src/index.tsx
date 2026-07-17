@@ -261,10 +261,11 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <a href="/" class="flex items-center gap-2">
-          <div class="w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
+          <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="InternBase">
+          <div class="js-site-logo-icon w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
             <i class="fas fa-rocket text-white text-sm"></i>
           </div>
-          <span class="text-xl font-bold gradient-text">InternBase</span>
+          <span class="js-site-name text-xl font-bold gradient-text">InternBase</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
@@ -515,12 +516,13 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <div class="w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
+            <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="InternBase">
+            <div class="js-site-logo-icon w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
               <i class="fas fa-rocket text-white text-xs"></i>
             </div>
-            <span class="font-bold gradient-text">InternBase</span>
+            <span class="js-site-name font-bold gradient-text">InternBase</span>
           </div>
-          <p class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、<br>あなたのキャリアを加速させよう。</p>
+          <p id="footer-site-description" class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
         </div>
         <div>
           <h4 class="text-sm font-semibold mb-3 text-gray-800">求人を探す</h4>
@@ -546,17 +548,17 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
         </div>
       </div>
       <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <p class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
+        <p id="footer-copyright" class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
         <div class="flex gap-4 text-gray-500 text-xs">
-          <a href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
-          <a href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>
+          <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
+          <a id="footer-terms-link" href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>
         </div>
       </div>
     </div>
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260717-contrastfix"></script>
+  <script src="/static/public.js?v=20260717-settings-connect"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;

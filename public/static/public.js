@@ -94,14 +94,168 @@ function renderLineCta(lineUrl, label = '公式LINEを友だち追加', classNam
 
 // サイト設定キャッシュ
 let _siteSettings = null;
+let _siteSettingsPromise = null;
+
+const DEFAULT_SITE_NAME = 'InternBase';
+
+function asSettingText(value) {
+  return value == null ? '' : String(value).trim();
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[ch]));
+}
+
+function getConfiguredSiteName(settings = {}) {
+  return asSettingText(settings.site_name) || DEFAULT_SITE_NAME;
+}
+
+function getHeroTitleLines(settings = {}) {
+  const tagline = asSettingText(settings.site_tagline);
+  if (tagline) {
+    const lines = tagline.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
+    if (lines.length) return lines.slice(0, 4);
+  }
+  return [
+    asSettingText(settings.hero_title_line1) || '圧倒的な',
+    asSettingText(settings.hero_title_line2) || '実務経験を、',
+    asSettingText(settings.hero_title_line3) || '今すぐ始めよう。'
+  ];
+}
+
+function getConfiguredDescription(settings = {}) {
+  return asSettingText(settings.site_description) ||
+    asSettingText(settings.hero_subtitle) ||
+    '厳選された長期インターン求人。あなたのキャリアをここから始めよう！';
+}
+
+function isSafeRelativeOrAbsoluteUrl(url) {
+  const value = asSettingText(url);
+  return value.startsWith('/') || value.startsWith('https://') || value.startsWith('http://');
+}
+
+function setMetaContent(selector, content) {
+  const el = document.querySelector(selector);
+  if (el && content) el.setAttribute('content', content);
+}
+
+function hexToRgb(hex) {
+  const match = asSettingText(hex).match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i);
+  if (!match) return null;
+  return {
+    r: parseInt(match[1], 16),
+    g: parseInt(match[2], 16),
+    b: parseInt(match[3], 16)
+  };
+}
+
+function shadeRgb(rgb, amount) {
+  const clamp = v => Math.max(0, Math.min(255, Math.round(v)));
+  return { r: clamp(rgb.r + amount), g: clamp(rgb.g + amount), b: clamp(rgb.b + amount) };
+}
+
+function rgbCss(rgb) {
+  return `${rgb.r} ${rgb.g} ${rgb.b}`;
+}
+
+function applyPrimaryColor(color) {
+  const rgb = hexToRgb(color);
+  if (!rgb) return;
+  const darker = shadeRgb(rgb, -28);
+  let style = document.getElementById('dynamic-primary-color');
+  if (!style) {
+    style = document.createElement('style');
+    style.id = 'dynamic-primary-color';
+    document.head.appendChild(style);
+  }
+  style.textContent = `
+    :root { --site-primary: ${rgbCss(rgb)}; --site-primary-dark: ${rgbCss(darker)}; }
+    .text-primary-400, .text-primary-500, .text-primary-600, .text-primary-700 { color: rgb(var(--site-primary)) !important; }
+    .bg-primary-500 { background-color: rgb(var(--site-primary)) !important; }
+    .hover\\:bg-primary-600:hover { background-color: rgb(var(--site-primary-dark)) !important; }
+    .border-primary-500 { border-color: rgb(var(--site-primary)) !important; }
+    .focus\\:border-primary-500:focus { border-color: rgb(var(--site-primary)) !important; }
+    .from-primary-500 { --tw-gradient-from: rgb(var(--site-primary)) var(--tw-gradient-from-position) !important; --tw-gradient-to: rgb(var(--site-primary) / 0) var(--tw-gradient-to-position) !important; --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important; }
+    .to-primary-500 { --tw-gradient-to: rgb(var(--site-primary)) var(--tw-gradient-to-position) !important; }
+    .bg-primary-500\\/10 { background-color: rgb(var(--site-primary) / 0.10) !important; }
+    .bg-primary-500\\/15 { background-color: rgb(var(--site-primary) / 0.15) !important; }
+    .bg-primary-500\\/20 { background-color: rgb(var(--site-primary) / 0.20) !important; }
+    .border-primary-500\\/20 { border-color: rgb(var(--site-primary) / 0.20) !important; }
+    .border-primary-500\\/25 { border-color: rgb(var(--site-primary) / 0.25) !important; }
+    .border-primary-500\\/30 { border-color: rgb(var(--site-primary) / 0.30) !important; }
+    .gradient-text { background: linear-gradient(135deg, rgb(var(--site-primary)), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  `;
+}
+
+function applySiteChromeSettings(settings = {}) {
+  const siteName = getConfiguredSiteName(settings);
+  const description = getConfiguredDescription(settings);
+
+  document.querySelectorAll('.js-site-name').forEach(el => { el.textContent = siteName; });
+  const footerDescription = document.getElementById('footer-site-description');
+  if (footerDescription) footerDescription.textContent = description;
+
+  if (document.title.includes(DEFAULT_SITE_NAME)) document.title = document.title.replaceAll(DEFAULT_SITE_NAME, siteName);
+  setMetaContent('meta[name="description"]', description);
+  setMetaContent('meta[property="og:site_name"]', siteName);
+  setMetaContent('meta[property="og:description"]', description);
+  setMetaContent('meta[name="twitter:description"]', description);
+  const ogTitle = document.querySelector('meta[property="og:title"]');
+  if (ogTitle?.content?.includes(DEFAULT_SITE_NAME)) ogTitle.content = ogTitle.content.replaceAll(DEFAULT_SITE_NAME, siteName);
+  const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+  if (twitterTitle?.content?.includes(DEFAULT_SITE_NAME)) twitterTitle.content = twitterTitle.content.replaceAll(DEFAULT_SITE_NAME, siteName);
+
+  const logoUrl = asSettingText(settings.site_logo_url);
+  const hasLogo = isSafeRelativeOrAbsoluteUrl(logoUrl);
+  document.querySelectorAll('.js-site-logo-img').forEach(img => {
+    if (hasLogo) {
+      img.src = logoUrl;
+      img.alt = siteName;
+      img.classList.remove('hidden');
+    } else {
+      img.classList.add('hidden');
+    }
+  });
+  document.querySelectorAll('.js-site-logo-icon').forEach(icon => {
+    icon.classList.toggle('hidden', hasLogo);
+  });
+
+  const faviconUrl = asSettingText(settings.favicon_url);
+  if (isSafeRelativeOrAbsoluteUrl(faviconUrl)) {
+    document.querySelectorAll('link[rel~="icon"]').forEach(link => { link.href = faviconUrl; });
+  }
+
+  const copyright = asSettingText(settings.footer_copyright);
+  if (copyright) document.getElementById('footer-copyright')?.replaceChildren(copyright);
+  const privacyUrl = asSettingText(settings.privacy_policy_url);
+  if (isSafeRelativeOrAbsoluteUrl(privacyUrl)) document.getElementById('footer-privacy-link')?.setAttribute('href', privacyUrl);
+  const termsUrl = asSettingText(settings.terms_url);
+  if (isSafeRelativeOrAbsoluteUrl(termsUrl)) document.getElementById('footer-terms-link')?.setAttribute('href', termsUrl);
+
+  applyPrimaryColor(settings.primary_color);
+}
+
 async function getSiteSettings() {
   if (_siteSettings) return _siteSettings;
-  try {
-    const res = await API.get('/settings');
-    _siteSettings = res.data.data;
-  } catch(e) { _siteSettings = {}; }
-  return _siteSettings;
+  if (_siteSettingsPromise) return _siteSettingsPromise;
+  _siteSettingsPromise = (async () => {
+    try {
+      const res = await API.get(`/settings?ts=${Date.now()}`);
+      _siteSettings = res.data.data || {};
+    } catch(e) { _siteSettings = {}; }
+    applySiteChromeSettings(_siteSettings);
+    return _siteSettings;
+  })();
+  return _siteSettingsPromise;
 }
+
+getSiteSettings().catch(() => {});
 
 // ==========================================
 // ホームページ (LP)
@@ -126,6 +280,12 @@ async function initHomePage() {
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
   const showSuccessStories = s.success_stories_enabled === true || s.success_stories_enabled === '1';
+  const siteName = getConfiguredSiteName(s);
+  const heroTitleLines = getHeroTitleLines(s);
+  const heroDescription = getConfiguredDescription(s);
+  const heroTitleHtml = heroTitleLines.map((line, index) =>
+    `<span class="${index === 0 ? 'gradient-text' : 'text-gray-900'}">${escapeHtml(line)}</span>`
+  ).join('<br>');
 
   const typeColors = {
     info: 'bg-blue-50 border-blue-200 text-blue-700',
@@ -165,12 +325,10 @@ async function initHomePage() {
             ${s.hero_badge_text || '高学歴大学生向け・厳選求人のみ掲載'}
           </div>
           <h1 class="text-4xl sm:text-6xl lg:text-7xl font-black leading-tight mb-6">
-            <span class="gradient-text">${s.hero_title_line1 || '圧倒的な'}</span><br>
-            <span class="text-gray-900">${s.hero_title_line2 || '実務経験を、'}</span><br>
-            <span class="text-gray-900">${s.hero_title_line3 || '今すぐ始めよう。'}</span>
+            ${heroTitleHtml}
           </h1>
           <p class="text-gray-700 text-base sm:text-xl leading-relaxed mb-8 max-w-xl">
-            ${s.hero_subtitle || 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルと実績を手に入れろ。'}
+            ${escapeHtml(heroDescription)}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
             <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
@@ -342,7 +500,7 @@ async function initHomePage() {
     <section class="py-20 border-t border-white/5">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14">
-          <h2 class="text-3xl font-black mb-3 text-gray-900">${s.site_name || 'InternBase'}が${s.feature_section_title || '選ばれる理由'}</h2>
+          <h2 class="text-3xl font-black mb-3 text-gray-900">${escapeHtml(siteName)}が${s.feature_section_title || '選ばれる理由'}</h2>
           <p class="text-gray-700">${s.feature_section_subtitle || '就活で差をつける、本質的な成長環境を提供します'}</p>
         </div>
         <div id="features-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
