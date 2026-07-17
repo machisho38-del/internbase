@@ -466,18 +466,18 @@ async function initJobsPage() {
           <div class="relative">
             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
             <input id="search-q" type="text" placeholder="キーワードで検索..."
-              class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+              class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
           </div>
         </div>
-        <select id="filter-occupation" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-occupation" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           ${renderOccupationOptions()}
         </select>
-        <select id="filter-industry" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-industry" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全業種</option>
           <option>HR・人材</option><option>IT・SaaS</option><option>マーケティング</option>
           <option>コンサルティング</option><option>EC・小売</option><option>メディア</option><option>その他</option>
         </select>
-        <select id="filter-style" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-style" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全勤務形態</option>
           <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
         </select>
@@ -492,7 +492,7 @@ async function initJobsPage() {
         <button id="tab-public" onclick="switchJobTab('public')" class="px-4 py-1.5 rounded-lg text-sm font-medium bg-primary-500 text-white transition-colors">
           <i class="fas fa-globe mr-1"></i>公開求人
         </button>
-        <button id="tab-members" onclick="switchJobTab('members')" class="px-4 py-1.5 rounded-lg text-sm font-medium glass text-gray-300 hover:text-white transition-colors">
+        <button id="tab-members" onclick="switchJobTab('members')" class="px-4 py-1.5 rounded-lg text-sm font-medium glass text-gray-700 hover:text-primary-600 transition-colors">
           <i class="fas fa-lock mr-1"></i>会員限定求人
         </button>
       </div>` : `
@@ -533,11 +533,11 @@ function switchJobTab(tab) {
   document.getElementById('tab-public')?.classList.toggle('bg-primary-500', tab === 'public');
   document.getElementById('tab-public')?.classList.toggle('text-white', tab === 'public');
   document.getElementById('tab-public')?.classList.toggle('glass', tab !== 'public');
-  document.getElementById('tab-public')?.classList.toggle('text-gray-300', tab !== 'public');
+  document.getElementById('tab-public')?.classList.toggle('text-gray-700', tab !== 'public');
   document.getElementById('tab-members')?.classList.toggle('bg-primary-500', tab === 'members');
   document.getElementById('tab-members')?.classList.toggle('text-white', tab === 'members');
   document.getElementById('tab-members')?.classList.toggle('glass', tab !== 'members');
-  document.getElementById('tab-members')?.classList.toggle('text-gray-300', tab !== 'members');
+  document.getElementById('tab-members')?.classList.toggle('text-gray-700', tab !== 'members');
   searchJobs();
 }
 
@@ -642,7 +642,7 @@ function renderJobDetail(job) {
     <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 mb-3">
       <i class="fas fa-paper-plane mr-2"></i>この求人に応募する
     </button>
-    <a href="/consultation" class="block w-full glass hover:bg-white/10 text-white text-center font-bold py-3 rounded-xl transition-all text-sm">
+    <a href="/consultation" class="block w-full glass text-gray-800 hover:text-primary-600 text-center font-bold py-3 rounded-xl transition-all text-sm">
       <i class="fas fa-comments mr-1"></i>まず相談してみる
     </a>
     <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、公式LINEにてご連絡します</p>
@@ -982,7 +982,7 @@ async function initLoginPage() {
             <a href="/mypage" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
               <i class="fas fa-user mr-1"></i>マイページへ
             </a>
-            <a href="/jobs" class="block w-full glass text-white font-bold py-3 rounded-xl transition-colors">
+            <a href="/jobs" class="block w-full glass text-gray-800 hover:text-primary-600 font-bold py-3 rounded-xl transition-colors">
               <i class="fas fa-search mr-1"></i>求人を探す
             </a>
             <button onclick="studentLogout()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">
@@ -1413,7 +1413,7 @@ async function initMyPage() {
           <p class="text-gray-400 text-sm mb-6">マイページを見るには登録が必要です</p>
           <div class="flex justify-center gap-3">
             <a href="/login" class="bg-primary-500 text-white font-bold px-6 py-3 rounded-xl">ログイン</a>
-            <a href="/register" class="glass text-white font-bold px-6 py-3 rounded-xl">新規登録</a>
+            <a href="/register" class="glass text-gray-800 hover:text-primary-600 font-bold px-6 py-3 rounded-xl">新規登録</a>
           </div>
         </div>
       </div>`;
@@ -1667,7 +1667,7 @@ function openApplyModal(jobId, jobTitle) {
         <a href="/login" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors text-center mb-3">
           <i class="fas fa-right-to-bracket mr-1"></i>ログイン
         </a>
-        <a href="/register" class="block w-full glass text-white font-bold py-3 rounded-xl transition-colors text-center">
+        <a href="/register" class="block w-full glass text-gray-800 hover:text-primary-600 font-bold py-3 rounded-xl transition-colors text-center">
           <i class="fas fa-user-plus mr-1"></i>新規登録
         </a>
       </div>`;
