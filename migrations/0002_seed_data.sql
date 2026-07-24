@@ -2,9 +2,10 @@
 -- シードデータ（開発用）
 -- =============================================
 
--- 管理者（パスワード: admin123 のbcryptハッシュ相当。実際はAPIで生成）
+-- 管理者（パスワード: admin123）
+-- src/routes/api.auth.ts の SHA-256(password + 'intern_salt_2024') と一致させる
 INSERT OR IGNORE INTO admins (email, password_hash, name, role) VALUES
-  ('admin@internship.jp', '$2a$10$placeholder_hash_replace_on_deploy', 'システム管理者', 'super_admin');
+  ('admin@internship.jp', '5ed35afd3cd274ad80f692fd8485d7e30e1277f73b65fab3c441726cd0f74afc', 'システム管理者', 'super_admin');
 
 -- 招待コード（サンプル）
 INSERT OR IGNORE INTO invite_codes (code, description, max_uses, issued_by, expires_at) VALUES

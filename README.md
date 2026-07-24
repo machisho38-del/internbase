@@ -74,7 +74,7 @@ pm2 logs --nostream               # ログ確認
 ```bash
 curl -X POST http://localhost:3000/api/auth/admin/setup \
   -H "Content-Type: application/json" \
-  -d '{"setup_key":"setup_intern_2024","email":"admin@example.com","password":"your_password","name":"管理者名"}'
+  -d '{"setup_key":"setup_intern_2024","email":"admin@internship.jp","password":"admin123","name":"システム管理者"}'
 ```
 
 ## 未実装（今後の拡張）
