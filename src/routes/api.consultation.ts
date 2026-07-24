@@ -13,7 +13,7 @@ consultation.post('/', async (c) => {
     return c.json({ success: false, error: '氏名とメールアドレスは必須です' }, 400)
   }
 
-  const validSourceMedia = ['todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
+  const validSourceMedia = ['sunconnect','valueup','other','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns']
   const validatedSourceMedia = validSourceMedia.includes(source_media) ? source_media : 'other'
 
   const result = await c.env.DB.prepare(`

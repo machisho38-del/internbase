@@ -13,6 +13,12 @@ const SOURCE_MEDIA_OPTIONS = [
   { value: 'other',       label: 'その他',                        line_key: 'line_url_default' },
 ];
 
+const DEFAULT_FEATURE_CARDS = [
+  { icon: 'rocket', color: 'primary', title: '実務で伸びる厳選求人', body: '成長企業の長期インターンに絞り、裁量ある実務経験を積める環境を紹介します。' },
+  { icon: 'user-tie', color: 'purple', title: 'キャリア相談で伴走', body: 'インターン選びや就活準備の悩みを、キャリアのプロが無料でサポートします。' },
+  { icon: 'fab fa-line', color: 'green', title: 'LINEでスムーズに連絡', body: '応募後や相談後の連絡は公式LINEで行い、選考開始まで迷わず進められます。' },
+];
+
 // サイト設定キャッシュ
 let _siteSettings = null;
 async function getSiteSettings() {
@@ -283,9 +289,9 @@ async function initHomePage() {
             </div>
             <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
             <p class="text-gray-700 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
-            <a href="${s.line_url || '#'}" target="_blank" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25">
-              <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
-            </a>
+            <button onclick="openLineModal()" class="inline-block bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer">
+              <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-chevron-right ml-1 text-sm"></i>
+            </button>
           </div>
         </div>
       </div>
@@ -314,7 +320,7 @@ async function initHomePage() {
       let cards = [];
       try { cards = JSON.parse(section.content); } catch(e) {}
       const colorMap = { primary: 'bg-primary-500/15 text-primary-700', purple: 'bg-purple-500/15 text-purple-700', green: 'bg-green-500/15 text-green-700', yellow: 'bg-yellow-500/15 text-yellow-700', red: 'bg-red-500/15 text-red-700' };
-      document.getElementById('features-grid').innerHTML = cards.map(card => `
+      document.getElementById('features-grid').innerHTML = (cards.length ? cards : DEFAULT_FEATURE_CARDS).map(card => `
         <div class="glass rounded-2xl p-7 text-center">
           <div class="w-14 h-14 ${colorMap[card.color]||colorMap.primary} rounded-2xl flex items-center justify-center mx-auto mb-5">
             <i class="${card.icon?.startsWith('fab') ? card.icon : 'fas fa-'+card.icon} text-xl"></i>
@@ -323,8 +329,27 @@ async function initHomePage() {
           <p class="text-gray-700 text-sm leading-relaxed">${card.body}</p>
         </div>
       `).join('');
+    } else {
+      renderDefaultFeatureCards();
     }
-  } catch(e) {}
+  } catch(e) {
+    renderDefaultFeatureCards();
+  }
+}
+
+function renderDefaultFeatureCards() {
+  const grid = document.getElementById('features-grid');
+  if (!grid) return;
+  const colorMap = { primary: 'bg-primary-500/15 text-primary-700', purple: 'bg-purple-500/15 text-purple-700', green: 'bg-green-500/15 text-green-700' };
+  grid.innerHTML = DEFAULT_FEATURE_CARDS.map(card => `
+    <div class="glass rounded-2xl p-7 text-center">
+      <div class="w-14 h-14 ${colorMap[card.color] || colorMap.primary} rounded-2xl flex items-center justify-center mx-auto mb-5">
+        <i class="${card.icon.startsWith('fab') ? card.icon : 'fas fa-' + card.icon} text-xl"></i>
+      </div>
+      <h3 class="font-bold text-lg mb-2 text-gray-900">${card.title}</h3>
+      <p class="text-gray-700 text-sm leading-relaxed">${card.body}</p>
+    </div>
+  `).join('');
 }
 
 function toggleFaq(i) {
@@ -354,15 +379,15 @@ async function initJobsPage() {
           <div class="relative">
             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
             <input id="search-q" type="text" placeholder="キーワードで検索..."
-              class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+              class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
           </div>
         </div>
-        <select id="filter-industry" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-industry" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全業種</option>
           <option>HR・人材</option><option>IT・SaaS</option><option>マーケティング</option>
           <option>コンサルティング</option><option>EC・小売</option><option>メディア</option><option>その他</option>
         </select>
-        <select id="filter-style" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-style" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全勤務形態</option>
           <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
         </select>
@@ -861,7 +886,7 @@ async function initRegisterPage() {
               <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="source-opt-${opt.value}">
                 <input type="radio" name="source_media" value="${opt.value}" onchange="onSourceMediaChange('${opt.value}')"
                   class="accent-primary-500 w-4 h-4">
-                <span class="text-sm text-gray-200">${opt.label}</span>
+                <span class="text-sm text-gray-800">${opt.label}</span>
               </label>
             `).join('')}
           </div>
@@ -873,7 +898,7 @@ async function initRegisterPage() {
             <label class="block text-sm font-medium mb-2 text-gray-300">招待コード <span class="text-gray-500 text-xs font-normal">（任意）</span></label>
             <div class="flex gap-2">
               <input id="invite-code-input" type="text" placeholder="例: WELCOME2024" maxlength="20"
-                class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 uppercase text-sm tracking-wider">
+                class="flex-1 bg-white border border-gray-200 rounded-lg px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500 uppercase text-sm tracking-wider">
               <button onclick="verifyInviteCode()" class="bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/30 text-primary-400 px-4 py-3 rounded-lg transition-colors text-sm">確認</button>
             </div>
             <div id="invite-code-msg" class="mt-1.5 text-xs"></div>
@@ -933,14 +958,14 @@ function showRegisterForm(sourceMedia = 'other') {
             <input type="hidden" id="reg-invite-code" value="${inviteCode}">
             <input type="hidden" id="reg-source-media" value="${sourceMedia}">
             <div class="grid grid-cols-2 gap-4 mb-4">
-              <div><label class="block text-xs text-gray-400 mb-1.5">姓 <span class="text-red-400">*</span></label><input id="reg-last-name" type="text" required placeholder="山田" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-              <div><label class="block text-xs text-gray-400 mb-1.5">名 <span class="text-red-400">*</span></label><input id="reg-first-name" type="text" required placeholder="太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-700 mb-1.5">姓 <span class="text-red-400">*</span></label><input id="reg-last-name" type="text" required placeholder="山田" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-700 mb-1.5">名 <span class="text-red-400">*</span></label><input id="reg-first-name" type="text" required placeholder="太郎" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
             </div>
-            <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="reg-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-            <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">大学名 <span class="text-red-400">*</span></label><input id="reg-university" type="text" required placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            <div class="mb-4"><label class="block text-xs text-gray-700 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="reg-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
+            <div class="mb-4"><label class="block text-xs text-gray-700 mb-1.5">大学名 <span class="text-red-400">*</span></label><input id="reg-university" type="text" required placeholder="○○大学" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
             <div class="grid grid-cols-2 gap-4 mb-4">
-              <div><label class="block text-xs text-gray-400 mb-1.5">学部・学科 <span class="text-gray-500 font-normal">（任意）</span></label><input id="reg-faculty" type="text" placeholder="経済学部" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
-              <div><label class="block text-xs text-gray-400 mb-1.5">学年 <span class="text-red-400">*</span></label><select id="reg-grade" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-primary-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
+              <div><label class="block text-xs text-gray-700 mb-1.5">学部・学科 <span class="text-gray-500 font-normal">（任意）</span></label><input id="reg-faculty" type="text" placeholder="経済学部" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-700 mb-1.5">学年 <span class="text-red-400">*</span></label><select id="reg-grade" required class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-primary-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
             </div>
             <div id="register-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
             <button type="submit" id="register-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
@@ -1063,7 +1088,7 @@ async function initConsultationPage() {
             <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
               <input type="radio" name="con_source_media" value="${opt.value}" onchange="onConSourceMediaChange('${opt.value}')"
                 class="accent-purple-500 w-4 h-4">
-              <span class="text-sm text-gray-200">${opt.label}</span>
+              <span class="text-sm text-gray-800">${opt.label}</span>
             </label>
           `).join('')}
         </div>
@@ -1077,21 +1102,21 @@ async function initConsultationPage() {
         <form id="consultation-form" onsubmit="submitConsultation(event)">
           <input type="hidden" id="con-source-media" value="">
           <div class="grid grid-cols-2 gap-4 mb-4">
-            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">お名前 <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="山田 太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
-            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-700 mb-1.5">お名前 <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="山田 太郎" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500"></div>
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-700 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500"></div>
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4">
-            <div><label class="block text-xs text-gray-400 mb-1.5">大学名</label><input id="con-university" type="text" placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
-            <div><label class="block text-xs text-gray-400 mb-1.5">学年</label><select id="con-grade" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-purple-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
+            <div><label class="block text-xs text-gray-700 mb-1.5">大学名</label><input id="con-university" type="text" placeholder="○○大学" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500"></div>
+            <div><label class="block text-xs text-gray-700 mb-1.5">学年</label><select id="con-grade" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:border-purple-500"><option value="">選択</option><option value="1">1年生</option><option value="2">2年生</option><option value="3">3年生</option><option value="4">4年生</option></select></div>
           </div>
           <div class="mb-4">
-            <label class="block text-xs text-gray-400 mb-1.5">お悩み・相談内容</label>
+            <label class="block text-xs text-gray-700 mb-1.5">お悩み・相談内容</label>
             <div class="grid grid-cols-2 gap-2 mb-3">
               ${['インターン選びで迷っている','就活との両立が不安','どんなスキルが身につくか知りたい','給与・条件について詳しく聞きたい','面接対策がしたい','その他'].map(c => `<label class="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10"><input type="checkbox" value="${c}" class="concern-check accent-purple-500"><span class="text-xs text-gray-300">${c}</span></label>`).join('')}
             </div>
           </div>
-          <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">その他、気になることがあればご記入ください</label><textarea id="con-message" rows="4" placeholder="気になることを何でも" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 resize-none"></textarea></div>
-          <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">ご希望の日時（任意）</label><input id="con-datetime" type="text" placeholder="平日の午後など" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+          <div class="mb-4"><label class="block text-xs text-gray-700 mb-1.5">その他、気になることがあればご記入ください</label><textarea id="con-message" rows="4" placeholder="気になることを何でも" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500 resize-none"></textarea></div>
+          <div class="mb-6"><label class="block text-xs text-gray-700 mb-1.5">ご希望の日時（任意）</label><input id="con-datetime" type="text" placeholder="平日の午後など" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-purple-500"></div>
           <div id="consultation-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
           <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
             <i class="fas fa-calendar-alt mr-2"></i>無料相談を申し込む
@@ -1330,8 +1355,8 @@ function openApplyModal(jobId, jobTitle) {
       </div>
       <p class="text-sm text-gray-400 mb-4">登録者: <span class="text-white">${studentName}</span></p>
       <form onsubmit="submitApplication(event, ${jobId})">
-        <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">応募動機 <span class="text-red-400">*</span></label><textarea id="apply-motivation" rows="4" required placeholder="なぜこの企業のインターンに応募したいですか？" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
-        <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">参加可能な時間帯</label><input id="apply-hours" type="text" placeholder="平日10-18時、週3日程度" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+        <div class="mb-4"><label class="block text-xs text-gray-700 mb-1.5">応募動機 <span class="text-red-400">*</span></label><textarea id="apply-motivation" rows="4" required placeholder="なぜこの企業のインターンに応募したいですか？" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
+        <div class="mb-6"><label class="block text-xs text-gray-700 mb-1.5">参加可能な時間帯</label><input id="apply-hours" type="text" placeholder="平日10-18時、週3日程度" class="w-full bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500"></div>
         <div id="apply-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
         <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-paper-plane mr-2"></i>応募を確定する</button>
         <p class="text-xs text-gray-600 text-center mt-3"><i class="fab fa-line mr-1 text-green-400"></i>応募後、公式LINEにてご連絡します</p>
@@ -1434,7 +1459,7 @@ async function initUniversitiesPage() {
         <div class="relative">
           <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
           <input id="uni-search" type="text" placeholder="大学名で検索..." onkeydown="if(event.key==='Enter') filterUniversities()"
-            class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+            class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
         </div>
       </div>
       <div id="universities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -1510,15 +1535,15 @@ async function initUniversityJobsPage(slug) {
           <div class="relative">
             <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
             <input id="search-q" type="text" placeholder="キーワードで検索..."
-              class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+              class="w-full bg-white border border-gray-200 rounded-lg pl-9 pr-4 py-2 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
           </div>
         </div>
-        <select id="filter-industry" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-industry" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全業種</option>
           <option>HR・人材</option><option>IT・SaaS</option><option>マーケティング</option>
           <option>コンサルティング</option><option>EC・小売</option><option>メディア</option><option>その他</option>
         </select>
-        <select id="filter-style" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+        <select id="filter-style" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全勤務形態</option>
           <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
         </select>
