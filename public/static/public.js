@@ -331,31 +331,37 @@ async function initHomePage() {
             ${escapeHtml(heroDescription)}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-            <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
-              <i class="fas fa-ticket-alt text-xl"></i>${s.hero_cta2_text || '招待コードで登録'}
+            <a href="/jobs" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
+              <i class="fas fa-search"></i>${s.hero_cta1_text || '自分に合う求人を探す'}
+              <i class="fas fa-arrow-right text-sm opacity-80"></i>
             </a>
-            <a href="/jobs" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-6 sm:px-8 py-4 rounded-xl transition-all text-center shadow-lg border border-gray-200">
-              <i class="fas fa-search mr-1"></i>${s.hero_cta1_text || '求人を見る'}
+            <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-6 sm:px-8 py-4 rounded-xl transition-all text-center shadow-sm border border-gray-200">
+              <i class="fas fa-user-plus"></i>${s.hero_cta2_text || '無料で会員登録'}
             </a>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-gray-600">
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>登録無料</span>
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>厳選求人のみ掲載</span>
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>キャリア相談無料</span>
           </div>
         </div>
         <div class="hidden lg:block fade-in">
-          <div class="glass rounded-2xl p-5">
-            <p class="text-xs font-bold text-primary-700 mb-1">すぐ探せる条件</p>
-            <h2 class="text-xl font-black text-gray-900 mb-4">気になる条件から求人を見る</h2>
-            <div class="space-y-2.5">
-              <a href="/jobs?industry=IT・SaaS" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-laptop-code text-primary-500 mr-2"></i>業界</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
-              <a href="/jobs?work_style=remote" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-house-laptop text-primary-500 mr-2"></i>勤務形態</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
-              <a href="/universities" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-university text-primary-500 mr-2"></i>大学別おすすめ</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
+          <div class="glass rounded-2xl p-6 shadow-xl shadow-primary-900/5">
+            <p class="text-xs font-bold text-primary-700 mb-1">InternBaseの特徴</p>
+            <h2 class="text-xl font-black text-gray-900 mb-5">長期インターン選びを<br>わかりやすく、確実に。</h2>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"><i class="fas fa-briefcase"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">厳選された求人</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">成長につながる求人を見やすく掲載</p></div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i class="fas fa-user-graduate"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">学生目線の情報</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">働き方や成長環境から比較できる</p></div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-green-50 text-green-600 flex items-center justify-center"><i class="fas fa-comments"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">無料キャリア相談</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">迷ったときはLINEで気軽に相談</p></div>
+              </div>
             </div>
           </div>
         </div>
