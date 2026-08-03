@@ -96,9 +96,13 @@ app.get('/terms', (c) => {
   return c.html(getPublicHTML('terms', '利用規約 | InternBase', 'InternBaseの利用規約です。サービスをご利用いただく前にご確認ください。'))
 })
 
-// 管理画面 - 全ページSPA
-app.get('/admin', (c) => c.html(getAdminHTML()))
-app.get('/admin/*', (c) => c.html(getAdminHTML()))
+// 管理画面 - 全ページSPA（常に最新の管理画面アセットURLを返す）
+const renderAdmin = (c: any) => {
+  c.header('Cache-Control', 'no-store, no-cache, must-revalidate')
+  return c.html(getAdminHTML())
+}
+app.get('/admin', renderAdmin)
+app.get('/admin/*', renderAdmin)
 
 app.get('/robots.txt', (c) => {
   const body = `User-agent: *
@@ -558,7 +562,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260717-gradientfix"></script>
+  <script src="/static/public.js?v=20260730-hero-cta-hierarchy"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -615,6 +619,16 @@ function getAdminHTML(): string {
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
     .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+    .featured-job-control,
+    .featured-job-control option {
+      background-color: #ffffff !important;
+      color: #111827 !important;
+      color-scheme: light;
+    }
+    .featured-job-control option:checked {
+      background-color: #e5e7eb !important;
+      color: #111827 !important;
+    }
   </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen flex">
@@ -722,7 +736,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260716-jsonfix"></script>
+  <script src="/static/admin.js?v=20260730-featured-jobs-search"></script>
 </body>
 </html>`
 }
