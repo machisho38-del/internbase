@@ -4,6 +4,45 @@ import { adminAuthMiddleware } from '../middleware/adminAuth'
 
 const homepage = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
+function toPositiveInteger(value: unknown): number | null {
+  const number = typeof value === 'number' ? value : Number(value)
+  return Number.isInteger(number) && number > 0 ? number : null
+}
+
+function toNonNegativeInteger(value: unknown, fallback = 0): number | null {
+  if (value === undefined || value === null || value === '') return fallback
+  const number = typeof value === 'number' ? value : Number(value)
+  return Number.isInteger(number) && number >= 0 ? number : null
+}
+
+async function validateFeaturedJobInput(c: any, body: any, featuredId?: number) {
+  const jobId = toPositiveInteger(body?.job_id)
+  const displayOrder = toNonNegativeInteger(body?.display_order)
+  const isVisible = body?.is_visible === 0 || body?.is_visible === '0' ? 0 : 1
+
+  if (!jobId || displayOrder === null) {
+    return { error: '求人と0以上の表示順を正しく指定してください' }
+  }
+
+  const job = await c.env.DB.prepare(`
+    SELECT j.id FROM jobs j
+    JOIN companies comp ON comp.id = j.company_id
+    WHERE j.id = ?
+  `).bind(jobId).first()
+  if (!job) return { error: '指定された求人が見つかりません' }
+
+  let duplicateQuery = 'SELECT id FROM featured_jobs WHERE job_id = ?'
+  const duplicateParams: Array<number> = [jobId]
+  if (featuredId) {
+    duplicateQuery += ' AND id != ?'
+    duplicateParams.push(featuredId)
+  }
+  const duplicate = await c.env.DB.prepare(duplicateQuery).bind(...duplicateParams).first()
+  if (duplicate) return { error: 'この求人はすでにピックアップに追加されています' }
+
+  return { data: { jobId, displayOrder, isVisible } }
+}
+
 // ==========================================
 // 内定者タイムライン API
 // ==========================================
@@ -99,23 +138,32 @@ homepage.get('/featured-jobs/admin', adminAuthMiddleware, async (c) => {
 
 // 管理用：ピックアップ求人追加
 homepage.post('/featured-jobs/admin', adminAuthMiddleware, async (c) => {
-  const { job_id, is_visible, display_order } = await c.req.json()
+  const input = await validateFeaturedJobInput(c, await c.req.json())
+  if (input.error) return c.json({ success: false, error: input.error }, 400)
+
+  const { jobId, isVisible, displayOrder } = input.data!
   const result = await c.env.DB.prepare(`
-    INSERT INTO featured_jobs (job_id, is_visible, display_order)
-    VALUES (?, ?, ?)
-  `).bind(job_id, is_visible ?? 1, display_order ?? 0).run()
-  return c.json({ success: true, id: result.meta.last_row_id })
+      INSERT INTO featured_jobs (job_id, is_visible, display_order)
+      VALUES (?, ?, ?)
+    `).bind(jobId, isVisible, displayOrder).run()
+  return c.json({ success: true, id: result.meta.last_row_id }, 201)
 })
 
 // 管理用：ピックアップ求人更新
 homepage.put('/featured-jobs/admin/:id', adminAuthMiddleware, async (c) => {
-  const id = c.req.param('id')
-  const { job_id, is_visible, display_order } = await c.req.json()
+  const id = toPositiveInteger(c.req.param('id'))
+  if (!id) return c.json({ success: false, error: 'ピックアップ求人IDが不正です' }, 400)
+  const existing = await c.env.DB.prepare('SELECT id FROM featured_jobs WHERE id = ?').bind(id).first()
+  if (!existing) return c.json({ success: false, error: 'ピックアップ求人が見つかりません' }, 404)
+
+  const input = await validateFeaturedJobInput(c, await c.req.json(), id)
+  if (input.error) return c.json({ success: false, error: input.error }, 400)
+  const { jobId, isVisible, displayOrder } = input.data!
   await c.env.DB.prepare(`
     UPDATE featured_jobs SET
       job_id = ?, is_visible = ?, display_order = ?, updated_at = CURRENT_TIMESTAMP
     WHERE id = ?
-  `).bind(job_id, is_visible ?? 1, display_order ?? 0, id).run()
+  `).bind(jobId, isVisible, displayOrder, id).run()
   return c.json({ success: true })
 })
 

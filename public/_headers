@@ -1,0 +1,5 @@
+/static/admin.js
+  Cache-Control: no-store, no-cache, must-revalidate
+
+/static/public.js
+  Cache-Control: no-store, no-cache, must-revalidate
