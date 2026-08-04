@@ -8,6 +8,12 @@ const settings = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 // Cloudflare Workers本番環境ではグローバル変数はworkerライフタイム中保持される
 const _settingsCache: Record<string, string> = {}
 
+const PUBLIC_INFO_KEYS = [
+  'site_name', 'site_logo_url', 'footer_copyright', 'privacy_policy_url', 'terms_url',
+  'operator_name', 'operator_representative', 'operator_address', 'operator_business',
+  'operator_contact_email', 'legal_updated_at'
+]
+
 // ==========================================
 // サイト設定 API
 // ==========================================
@@ -31,6 +37,25 @@ settings.get('/', async (c) => {
     settingsObj[row.setting_key] = val
   }
   return c.json({ success: true, data: settingsObj })
+})
+
+// Coming Soon 期間にも規約・運営者情報で使用する、公開可能な項目だけを返す。
+settings.get('/public-info', async (c) => {
+  const placeholders = PUBLIC_INFO_KEYS.map(() => '?').join(',')
+  const { results } = await c.env.DB.prepare(`
+    SELECT setting_key, setting_value, setting_type
+    FROM site_settings
+    WHERE setting_key IN (${placeholders})
+  `).bind(...PUBLIC_INFO_KEYS).all()
+  const data: Record<string, string | number | boolean> = {}
+  for (const row of results as any[]) {
+    let value: string | number | boolean = row.setting_value
+    if (row.setting_type === 'boolean') value = row.setting_value === '1'
+    if (row.setting_type === 'number') value = Number(row.setting_value)
+    data[row.setting_key] = value
+  }
+  c.header('Cache-Control', 'no-store, no-cache, must-revalidate')
+  return c.json({ success: true, data })
 })
 
 // 管理用：グループ別詳細取得

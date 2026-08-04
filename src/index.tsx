@@ -12,10 +12,17 @@ import authApi from './routes/api.auth'
 import settingsApi from './routes/api.settings'
 import homepageApi from './routes/api.homepage'
 import { comingSoonMiddleware } from './middleware/comingSoon'
+import { absoluteUrl, escapeXml, getPublicOrigin, isPreviewDeployment, renderSeoTags, stripMarkup, truncateDescription, type SeoMetadata } from './utils/seo'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
 app.use('/api/*', cors())
+
+// Branch Preview はサイト本体を確認できる一方、検索結果には登録させない。
+app.use('/*', async (c, next) => {
+  await next()
+  if (isPreviewDeployment(c)) c.header('X-Robots-Tag', 'noindex, nofollow')
+})
 
 // Coming Soon ミドルウェア（公開HTMLページのみに適用）
 app.use('/*', comingSoonMiddleware)
@@ -45,104 +52,216 @@ app.get('/favicon.ico', async (c) => {
 
 // 公開画面 - LP
 app.get('/', (c) => {
-  return c.html(getPublicHTML('home', 'InternBase | 高学歴大学生向け長期インターン求人サイト', '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。無料相談受付中。'))
+  return c.html(getPublicHTML('home', getPublicOrigin(c), {
+    path: '/',
+    title: 'InternBase | 高学歴大学生向け長期インターン求人サイト',
+    description: '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。無料相談受付中。'
+  }))
 })
 
 // 公開画面 - 求人一覧
 app.get('/jobs', (c) => {
-  return c.html(getPublicHTML('jobs', '求人一覧 | InternBase - 長期インターン求人', '厳選された長期インターン求人一覧。業種・勤務形態・時給などで絞り込み検索。スタートアップから成長企業まで、あなたに合った求人を見つけよう。'))
+  return c.html(getPublicHTML('jobs', getPublicOrigin(c), {
+    path: '/jobs',
+    title: '求人一覧 | InternBase - 長期インターン求人',
+    description: '厳選された長期インターン求人一覧。業種・勤務形態・時給などで絞り込み検索。スタートアップから成長企業まで、あなたに合った求人を見つけよう。'
+  }))
 })
 
 // 公開画面 - 求人詳細
-app.get('/jobs/:slug', (c) => {
-  return c.html(getPublicHTML('job-detail', '求人詳細 | InternBase - 長期インターン求人', '長期インターン求人の詳細情報。業務内容・時給・勤務条件・選考フローを確認して応募しよう。'))
+app.get('/jobs/:slug', async (c) => {
+  const slug = c.req.param('slug')
+  const job = await c.env.DB.prepare(`
+    SELECT j.*, comp.name AS company_name, comp.logo_url AS company_logo,
+      comp.website_url AS company_website, comp.hero_image_url AS company_hero_image_url
+    FROM jobs j
+    JOIN companies comp ON comp.id = j.company_id
+    WHERE j.slug = ? AND j.status = 'published' AND j.visibility = 'public' AND comp.status = 'published'
+  `).bind(slug).first() as any
+  const origin = getPublicOrigin(c)
+  if (!job) return c.html(getNotFoundHTML(origin), 404)
+
+  const path = `/jobs/${encodeURIComponent(job.slug)}`
+  const description = truncateDescription(job.catch_copy || job.description || job.work_content)
+  const image = job.hero_image_url || job.card_image_url || job.company_hero_image_url || job.company_logo || '/og-default.png'
+  const jobPosting: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: job.title,
+    description: stripMarkup(`${job.description || ''}\n${job.work_content || ''}`),
+    datePosted: job.created_at,
+    employmentType: 'INTERN',
+    directApply: true,
+    url: absoluteUrl(origin, path),
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: job.company_name,
+      ...(job.company_website ? { sameAs: job.company_website } : {}),
+      ...(job.company_logo ? { logo: absoluteUrl(origin, job.company_logo) } : {})
+    },
+    ...(job.work_location ? {
+      jobLocation: {
+        '@type': 'Place',
+        address: { '@type': 'PostalAddress', addressCountry: 'JP', addressLocality: job.work_location }
+      }
+    } : {}),
+    ...(job.remote_available ? { jobLocationType: 'TELECOMMUTE' } : {}),
+    ...(job.hourly_wage_min || job.hourly_wage_max ? {
+      baseSalary: {
+        '@type': 'MonetaryAmount',
+        currency: 'JPY',
+        value: {
+          '@type': 'QuantitativeValue',
+          ...(job.hourly_wage_min ? { minValue: job.hourly_wage_min } : {}),
+          ...(job.hourly_wage_max ? { maxValue: job.hourly_wage_max } : {}),
+          unitText: 'HOUR'
+        }
+      }
+    } : {})
+  }
+
+  return c.html(getPublicHTML('job-detail', origin, {
+    path,
+    title: `${job.title} | ${job.company_name} | InternBase`,
+    description,
+    type: 'article',
+    image,
+    structuredData: jobPosting
+  }))
 })
 
 // 公開画面 - 大学別求人
 app.get('/universities', (c) => {
-  return c.html(getPublicHTML('universities', '大学別おすすめ求人 | InternBase', '東大・早稲田・慶應など大学別に厳選したインターン求人を掲載。あなたの大学に特化したおすすめ求人を探そう。'))
+  return c.html(getPublicHTML('universities', getPublicOrigin(c), {
+    path: '/universities',
+    title: '大学別おすすめ求人 | InternBase',
+    description: '東大・早稲田・慶應など大学別に厳選したインターン求人を掲載。あなたの大学に特化したおすすめ求人を探そう。'
+  }))
 })
 
 // 公開画面 - 特定大学の求人一覧
-app.get('/universities/:slug', (c) => {
-  return c.html(getPublicHTML('university-jobs', '大学別求人 | InternBase', 'あなたの大学に特化した厳選長期インターン求人。'))
+app.get('/universities/:slug', async (c) => {
+  const slug = c.req.param('slug')
+  const tag = await c.env.DB.prepare(`
+    SELECT name, slug, description FROM university_tags WHERE slug = ? AND is_visible = 1
+  `).bind(slug).first() as any
+  const origin = getPublicOrigin(c)
+  if (!tag) return c.html(getNotFoundHTML(origin), 404)
+  return c.html(getPublicHTML('university-jobs', origin, {
+    path: `/universities/${encodeURIComponent(tag.slug)}`,
+    title: `${tag.name}向け長期インターン求人 | InternBase`,
+    description: truncateDescription(tag.description || `${tag.name}の学生におすすめの厳選長期インターン求人を紹介します。`)
+  }))
 })
 
 // 公開画面 - 登録
 app.get('/register', (c) => {
-  return c.html(getPublicHTML('register', '新規登録 | InternBase', '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。'))
+  return c.html(getPublicHTML('register', getPublicOrigin(c), { path: '/register', title: '新規登録 | InternBase', description: '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - 無料相談
 app.get('/login', (c) => {
-  return c.html(getPublicHTML('login', 'ログイン | InternBase', '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。'))
+  return c.html(getPublicHTML('login', getPublicOrigin(c), { path: '/login', title: 'ログイン | InternBase', description: '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。', robots: 'noindex, nofollow' }))
 })
 
 app.get('/consultation', (c) => {
-  return c.html(getPublicHTML('consultation', '無料相談 | InternBase', 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。'))
+  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | InternBase', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
 })
 
 // 公開画面 - マイページ
 app.get('/mypage', (c) => {
-  return c.html(getPublicHTML('mypage', 'マイページ | InternBase', '応募履歴や招待コードの確認・管理ができます。'))
+  return c.html(getPublicHTML('mypage', getPublicOrigin(c), { path: '/mypage', title: 'マイページ | InternBase', description: '応募履歴や招待コードの確認・管理ができます。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - 規約
 app.get('/privacy', (c) => {
-  return c.html(getPublicHTML('privacy', 'プライバシーポリシー | InternBase', 'InternBaseのプライバシーポリシーです。個人情報の取扱いについてご確認ください。'))
+  return c.html(getPublicHTML('privacy', getPublicOrigin(c), { path: '/privacy', title: 'プライバシーポリシー | InternBase', description: 'InternBaseのプライバシーポリシーです。個人情報の取扱いについてご確認ください。' }))
 })
 
 app.get('/terms', (c) => {
-  return c.html(getPublicHTML('terms', '利用規約 | InternBase', 'InternBaseの利用規約です。サービスをご利用いただく前にご確認ください。'))
+  return c.html(getPublicHTML('terms', getPublicOrigin(c), { path: '/terms', title: '利用規約 | InternBase', description: 'InternBaseの利用規約です。サービスをご利用いただく前にご確認ください。' }))
 })
 
-// 管理画面 - 全ページSPA
-app.get('/admin', (c) => c.html(getAdminHTML()))
-app.get('/admin/*', (c) => c.html(getAdminHTML()))
+app.get('/company', (c) => {
+  return c.html(getPublicHTML('company', getPublicOrigin(c), { path: '/company', title: '運営者情報 | InternBase', description: 'InternBaseの運営者情報とお問い合わせ先です。' }))
+})
 
-app.get('/robots.txt', (c) => {
+// 管理画面 - 全ページSPA（常に最新の管理画面アセットURLを返す）
+const renderAdmin = (c: any) => {
+  c.header('Cache-Control', 'no-store, no-cache, must-revalidate')
+  return c.html(getAdminHTML())
+}
+app.get('/admin', renderAdmin)
+app.get('/admin/*', renderAdmin)
+
+app.get('/robots.txt', async (c) => {
+  const setting = await c.env.DB.prepare(`SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`).first() as any
+  const isPublic = setting?.setting_value === 'public' && !isPreviewDeployment(c)
   const body = `User-agent: *
-Allow: /
+${isPublic ? 'Allow: /\nDisallow: /admin\nDisallow: /api/' : 'Disallow: /'}
 
-Sitemap: https://internbase.jp/sitemap.xml
+Sitemap: ${getPublicOrigin(c)}/sitemap.xml
 `
   return c.text(body, 200, { 'Content-Type': 'text/plain; charset=UTF-8' })
 })
 
-app.get('/sitemap.xml', (c) => {
+app.get('/sitemap.xml', async (c) => {
+  const origin = getPublicOrigin(c)
+  const mode = await c.env.DB.prepare(`SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode'`).first() as any
+  const entries: Array<{ path: string; updated?: string }> = []
+
+  if (mode?.setting_value === 'public' && !isPreviewDeployment(c)) {
+    entries.push(
+      { path: '/' }, { path: '/jobs' }, { path: '/universities' },
+      { path: '/consultation' }, { path: '/privacy' }, { path: '/terms' }, { path: '/company' }
+    )
+    const [{ results: jobs }, { results: universities }] = await c.env.DB.batch([
+      c.env.DB.prepare(`
+        SELECT j.slug, j.updated_at FROM jobs j
+        JOIN companies comp ON comp.id = j.company_id
+        WHERE j.status = 'published' AND j.visibility = 'public' AND comp.status = 'published'
+        ORDER BY j.updated_at DESC
+      `),
+      c.env.DB.prepare(`SELECT slug, updated_at FROM university_tags WHERE is_visible = 1 ORDER BY display_order ASC`)
+    ])
+    for (const job of jobs as any[]) entries.push({ path: `/jobs/${encodeURIComponent(job.slug)}`, updated: job.updated_at })
+    for (const tag of universities as any[]) entries.push({ path: `/universities/${encodeURIComponent(tag.slug)}`, updated: tag.updated_at })
+  }
+
+  const urls = entries.map(entry => `  <url><loc>${escapeXml(absoluteUrl(origin, entry.path))}</loc>${entry.updated ? `<lastmod>${escapeXml(String(entry.updated).slice(0, 10))}</lastmod>` : ''}</url>`).join('\n')
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://internbase.jp/</loc></url>
-  <url><loc>https://internbase.jp/jobs</loc></url>
-  <url><loc>https://internbase.jp/universities</loc></url>
-  <url><loc>https://internbase.jp/register</loc></url>
-  <url><loc>https://internbase.jp/consultation</loc></url>
-  <url><loc>https://internbase.jp/privacy</loc></url>
-  <url><loc>https://internbase.jp/terms</loc></url>
+${urls}
 </urlset>`
   return c.body(body, 200, { 'Content-Type': 'application/xml; charset=UTF-8' })
 })
 
+app.notFound((c) => c.html(getNotFoundHTML(getPublicOrigin(c)), 404))
+
 // --- HTML生成 ---
 
-function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向け長期インターン求人サイト', description = '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。'): string {
+function getNotFoundHTML(origin: string): string {
+  return getPublicHTML('not-found', origin, {
+    path: '/404',
+    title: 'ページが見つかりません | InternBase',
+    description: 'お探しのページは移動または削除された可能性があります。',
+    robots: 'noindex, nofollow'
+  })
+}
+
+function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): string {
+  const seoTags = renderSeoTags(origin, metadata)
   return `<!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>${title}</title>
-  <meta name="description" content="${description}">
-  <meta name="robots" content="index, follow">
-  <meta property="og:title" content="${title}">
-  <meta property="og:description" content="${description}">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="InternBase">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="${title}">
-  <meta name="twitter:description" content="${description}">
-  <link rel="canonical" href="https://internbase.jp">
+  ${seoTags}
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
   <script>
@@ -550,6 +669,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
       <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
         <p id="footer-copyright" class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
         <div class="flex gap-4 text-gray-500 text-xs">
+          <a href="/company" class="hover:text-primary-600 transition-colors">運営者情報</a>
           <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
           <a id="footer-terms-link" href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>
         </div>
@@ -558,7 +678,7 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260717-gradientfix"></script>
+  <script src="/static/public.js?v=20260804-seo-foundation"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -576,6 +696,8 @@ function getPublicHTML(page: string, title = 'InternBase | 高学歴大学生向
     else if (path === '/mypage') initMyPage();
     else if (path === '/privacy') initPrivacyPage();
     else if (path === '/terms') initTermsPage();
+    else if (path === '/company') initCompanyPage();
+    else initNotFoundPage();
   </script>
 </body>
 </html>`
@@ -615,6 +737,16 @@ function getAdminHTML(): string {
     .fade-in { animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
     .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+    .featured-job-control,
+    .featured-job-control option {
+      background-color: #ffffff !important;
+      color: #111827 !important;
+      color-scheme: light;
+    }
+    .featured-job-control option:checked {
+      background-color: #e5e7eb !important;
+      color: #111827 !important;
+    }
   </style>
 </head>
 <body class="bg-dark-900 text-white min-h-screen flex">
@@ -722,7 +854,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260716-jsonfix"></script>
+  <script src="/static/admin.js?v=20260804-content-modals"></script>
 </body>
 </html>`
 }

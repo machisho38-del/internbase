@@ -1,5 +1,9 @@
 export type Bindings = {
   DB: D1Database
+  /** 正式ドメイン接続後に設定する公開URL（例: https://internbase.jp） */
+  PUBLIC_SITE_URL?: string
+  /** Cloudflare Pages が自動設定するデプロイ元ブランチ */
+  CF_PAGES_BRANCH?: string
 }
 
 export type Company = {
