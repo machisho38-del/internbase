@@ -2428,37 +2428,48 @@ async function loadSuccessStories() {
 
 async function showSuccessStoryModal(id = null) {
   let story = { student_name: '', university: '', company_name: '', comment: '', is_visible: 1, display_order: 0 };
-  if (id) {
-    const res = await API.get('/homepage/success-stories/admin');
-    story = res.data.data.find(s => s.id === id) || story;
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('モーダルを開けませんでした。画面を再読み込みして再度お試しください。');
+    return;
   }
-  
-  document.getElementById('modal-container').innerHTML = `
-    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
-      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/success-stories/admin');
+      story = res.data.data.find(s => Number(s.id) === Number(id)) || story;
+    } catch(e) {
+      alert('内定者タイムラインを取得できませんでした: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
         <h3 class="text-lg font-bold mb-4">${id ? '内定者タイムライン編集' : '内定者タイムライン追加'}</h3>
         <form onsubmit="${id ? `submitUpdateSuccessStory(event, ${id})` : 'submitCreateSuccessStory(event)'}" class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">学生名（例: 山田 太郎さん）<span class="text-red-400">*</span></label>
-              <input type="text" name="student_name" value="${story.student_name.replace(/"/g,'&quot;')}" required
+              <input type="text" name="student_name" value="${escapeAdminHtml(story.student_name || '')}" required
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
-              <input type="text" name="university" value="${story.university.replace(/"/g,'&quot;')}" required
+              <input type="text" name="university" value="${escapeAdminHtml(story.university || '')}" required
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1.5">内定先企業名<span class="text-red-400">*</span></label>
-            <input type="text" name="company_name" value="${story.company_name.replace(/"/g,'&quot;')}" required
+            <input type="text" name="company_name" value="${escapeAdminHtml(story.company_name || '')}" required
               class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1.5">所感（1-2行）</label>
             <textarea name="comment" rows="2"
-              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${story.comment||''}</textarea>
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(story.comment || '')}</textarea>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -2483,9 +2494,9 @@ async function showSuccessStoryModal(id = null) {
             </button>
           </div>
         </form>
-      </div>
     </div>
   `;
+  modal.classList.remove('hidden');
 }
 
 async function submitCreateSuccessStory(e) {
@@ -2502,10 +2513,10 @@ async function submitCreateSuccessStory(e) {
   try {
     await API.post('/homepage/success-stories/admin', data);
     closeModal();
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('追加失敗: ' + e.message);
+    alert('追加失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2523,10 +2534,10 @@ async function submitUpdateSuccessStory(e, id) {
   try {
     await API.put(`/homepage/success-stories/admin/${id}`, data);
     closeModal();
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('更新失敗: ' + e.message);
+    alert('更新失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2534,10 +2545,10 @@ async function deleteSuccessStory(id) {
   if (!confirm('この内定者タイムラインを削除しますか？')) return;
   try {
     await API.delete(`/homepage/success-stories/admin/${id}`);
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('削除失敗: ' + e.message);
+    alert('削除失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2897,26 +2908,37 @@ async function loadUniversityTags() {
 
 async function showUniversityTagModal(id = null) {
   let tag = { name: '', slug: '', description: '', is_visible: 1, display_order: 0 };
-  if (id) {
-    const res = await API.get('/homepage/university-tags/admin');
-    tag = res.data.data.find(t => t.id === id) || tag;
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('モーダルを開けませんでした。画面を再読み込みして再度お試しください。');
+    return;
   }
-  
-  document.getElementById('modal-container').innerHTML = `
-    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
-      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6">
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/university-tags/admin');
+      tag = res.data.data.find(t => Number(t.id) === Number(id)) || tag;
+    } catch(e) {
+      alert('大学タグを取得できませんでした: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
         <h3 class="text-lg font-bold mb-4">${id ? '大学タグ編集' : '大学タグ追加'}</h3>
         <form onsubmit="${id ? `submitUpdateUniversityTag(event, ${id})` : 'submitCreateUniversityTag(event)'}" class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
-              <input type="text" name="name" value="${tag.name.replace(/"/g,'&quot;')}" required
+              <input type="text" name="name" value="${escapeAdminHtml(tag.name || '')}" required
                 placeholder="例: 東京大学"
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">スラッグ（URL用）<span class="text-red-400">*</span></label>
-              <input type="text" name="slug" value="${tag.slug.replace(/"/g,'&quot;')}" required
+              <input type="text" name="slug" value="${escapeAdminHtml(tag.slug || '')}" required
                 placeholder="例: todai"
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono">
             </div>
@@ -2925,7 +2947,7 @@ async function showUniversityTagModal(id = null) {
             <label class="block text-xs text-gray-400 mb-1.5">説明文</label>
             <textarea name="description" rows="2"
               placeholder="例: 日本最高峰の学府。トップ企業への内定実績多数。"
-              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${tag.description||''}</textarea>
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(tag.description || '')}</textarea>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -2950,9 +2972,9 @@ async function showUniversityTagModal(id = null) {
             </button>
           </div>
         </form>
-      </div>
     </div>
   `;
+  modal.classList.remove('hidden');
 }
 
 async function submitCreateUniversityTag(e) {
@@ -2968,10 +2990,10 @@ async function submitCreateUniversityTag(e) {
   try {
     await API.post('/homepage/university-tags/admin', data);
     closeModal();
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('追加失敗: ' + e.message);
+    alert('追加失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2988,10 +3010,10 @@ async function submitUpdateUniversityTag(e, id) {
   try {
     await API.put(`/homepage/university-tags/admin/${id}`, data);
     closeModal();
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('更新失敗: ' + e.message);
+    alert('更新失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2999,10 +3021,10 @@ async function deleteUniversityTag(id) {
   if (!confirm('この大学タグを削除しますか？紐付いている求人からも解除されます。')) return;
   try {
     await API.delete(`/homepage/university-tags/admin/${id}`);
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('削除失敗: ' + e.message);
+    alert('削除失敗: ' + getApiErrorMessage(e));
   }
 }
 

@@ -43,6 +43,9 @@ jobs:
           node --check public/static/admin.js
           node --check public/static/public.js
 
+      - name: Verify admin content actions
+        run: npm run check:admin-actions
+
       - name: Verify Pages headers are included
         run: |
           test -f dist/_headers
