@@ -1585,6 +1585,7 @@ async function loadSiteSettings() {
       line: 'LINE・SNS設定',
       footer: 'フッター設定',
       referral: '学生招待コード設定',
+      operator: '運営者・法務情報',
     };
 
     const settingLabels = {
@@ -1605,6 +1606,12 @@ async function loadSiteSettings() {
       coming_soon_subtitle: 'Coming Soon説明文',
       coming_soon_date: 'Coming Soon公開予定日',
       student_referral_enabled: '学生紹介機能',
+      operator_name: '運営者名',
+      operator_representative: '代表者名',
+      operator_address: '所在地',
+      operator_business: '事業内容',
+      operator_contact_email: '公開お問い合わせメール',
+      legal_updated_at: '規約最終更新日',
     };
 
     const inputField = (s) => {

@@ -255,6 +255,15 @@ async function getSiteSettings() {
   return _siteSettingsPromise;
 }
 
+async function getPublicOperatorInfo() {
+  try {
+    const res = await API.get(`/settings/public-info?ts=${Date.now()}`);
+    return res.data.data || {};
+  } catch(e) {
+    return {};
+  }
+}
+
 getSiteSettings().catch(() => {});
 
 // ==========================================
@@ -1698,7 +1707,7 @@ async function studentLogout() {
 // ==========================================
 // 法務ページ
 // ==========================================
-function renderLegalPage(title, lead, sections) {
+function renderLegalPage(title, lead, sections, updatedAt = '2026年8月4日') {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -1706,7 +1715,7 @@ function renderLegalPage(title, lead, sections) {
         <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
         <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">${title}</h1>
         <p class="text-gray-600 leading-relaxed">${lead}</p>
-        <p class="text-xs text-gray-400 mt-4">最終更新日：2026年7月7日</p>
+        <p class="text-xs text-gray-400 mt-4">最終更新日：${escapeHtml(updatedAt)}</p>
       </div>
       <div class="space-y-6">
         ${sections.map((section, index) => `
@@ -1722,7 +1731,10 @@ function renderLegalPage(title, lead, sections) {
   `;
 }
 
-function initPrivacyPage() {
+async function initPrivacyPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'InternBase運営事務局');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     'プライバシーポリシー',
     'InternBaseは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
@@ -1761,12 +1773,23 @@ function initPrivacyPage() {
           '本人から個人情報の開示、訂正、利用停止、削除等の申し出があった場合、法令に従って合理的な範囲で対応します。',
           'お問い合わせ先は、サービス内または運営者情報ページで案内する連絡先をご確認ください。'
         ]
+      },
+      {
+        heading: '保存期間とお問い合わせ',
+        body: [
+          '取得した情報は、利用目的の達成、法令上の義務、不正利用防止に必要な期間保存し、不要となった情報は適切な方法で削除または匿名化します。',
+          `運営者：${operatorName}／お問い合わせ：${contactEmail}`
+        ]
       }
-    ]
+    ],
+    asSettingText(settings.legal_updated_at) || '2026年8月4日'
   );
 }
 
-function initTermsPage() {
+async function initTermsPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'InternBase運営事務局');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     '利用規約',
     'この利用規約は、InternBaseが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
@@ -1805,9 +1828,65 @@ function initTermsPage() {
           'InternBaseの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
           '利用者と掲載企業または第三者との間で生じたトラブルは、当事者間で解決するものとします。'
         ]
+      },
+      {
+        heading: '準拠法・お問い合わせ',
+        body: [
+          '本規約は日本法に準拠し、本サービスに関して紛争が生じた場合は、運営者の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。',
+          `運営者：${operatorName}／お問い合わせ：${contactEmail}`
+        ]
       }
-    ]
+    ],
+    asSettingText(settings.legal_updated_at) || '2026年8月4日'
   );
+}
+
+async function initCompanyPage() {
+  const app = document.getElementById('app');
+  const settings = await getPublicOperatorInfo();
+  const rows = [
+    ['運営者名', settings.operator_name],
+    ['代表者', settings.operator_representative],
+    ['所在地', settings.operator_address],
+    ['事業内容', settings.operator_business],
+    ['お問い合わせ', settings.operator_contact_email || settings.contact_email]
+  ].filter(([, value]) => asSettingText(value));
+
+  app.innerHTML = `
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
+        <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">運営者情報</h1>
+        <p class="text-gray-600">InternBaseを運営する事業者の情報です。</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden">
+        ${rows.length ? rows.map(([label, value]) => `
+          <div class="grid sm:grid-cols-[12rem_1fr] border-b border-gray-100 last:border-b-0">
+            <div class="bg-gray-50 px-5 py-4 text-sm font-semibold text-gray-700">${escapeHtml(label)}</div>
+            <div class="px-5 py-4 text-sm text-gray-700 whitespace-pre-line">${escapeHtml(value)}</div>
+          </div>
+        `).join('') : `
+          <div class="p-8 text-center text-gray-500">
+            <p class="font-medium">運営者情報は正式公開前に掲載します。</p>
+            <p class="text-xs mt-2">管理画面のサイト設定から登録できます。</p>
+          </div>
+        `}
+      </div>
+    </div>`;
+}
+
+function initNotFoundPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-xl mx-auto px-4 py-24 text-center">
+      <p class="text-7xl font-black gradient-text mb-4">404</p>
+      <h1 class="text-2xl font-bold text-gray-900 mb-3">ページが見つかりません</h1>
+      <p class="text-gray-600 mb-8">URLが変更されたか、ページが削除された可能性があります。</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <a href="/" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-xl">トップページへ戻る</a>
+        <a href="/jobs" class="border border-gray-300 hover:border-primary-400 text-gray-700 font-bold px-6 py-3 rounded-xl">求人を探す</a>
+      </div>
+    </div>`;
 }
 
 // ==========================================
