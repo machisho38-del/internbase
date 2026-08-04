@@ -1,7 +1,9 @@
 export type Bindings = {
   DB: D1Database
-  /** 正式ドメイン接続後に設定する公開URL（例: https://internbase.jp） */
+  /** 正式ドメイン接続後に設定する公開URL（例: https://example.jp） */
   PUBLIC_SITE_URL?: string
+  /** 正式ドメインへ恒久転送する旧ホスト名。複数の場合はカンマ区切り */
+  LEGACY_SITE_HOSTS?: string
   /** Cloudflare Pages が自動設定するデプロイ元ブランチ */
   CF_PAGES_BRANCH?: string
 }

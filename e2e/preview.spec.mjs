@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 const publicPages = [
-  ['/', 'InternBase'],
+  ['/', 'ガクチカインターン'],
   ['/jobs', '求人'],
   ['/universities', '大学'],
   ['/register', '登録'],
@@ -72,6 +72,20 @@ test.describe('Preview public site', () => {
     const response = await page.goto('/__e2e_not_found__');
     expect(response?.status()).toBe(404);
     await expect(page.getByText('ページが見つかりません')).toBeVisible();
+  });
+
+  test('visible success stories appear in the moving timeline', async ({ page, request }) => {
+    const response = await request.get('/api/homepage/success-stories');
+    expect(response.status()).toBe(200);
+    const payload = await response.json();
+    const stories = payload.data || [];
+    test.skip(stories.length === 0, 'Preview D1 has no visible success stories');
+
+    await page.goto('/');
+    await expect(page.locator('#success-stories')).toBeVisible();
+    await expect(page.locator('.timeline-track')).toHaveCSS('animation-name', 'scroll-success-stories');
+    await expect(page.locator('.timeline-card').first()).toContainText(stories[0].university);
+    await expect(page.locator('.timeline-card').first()).toContainText(stories[0].student_name);
   });
 });
 

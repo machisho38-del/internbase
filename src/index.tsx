@@ -18,6 +18,27 @@ const app = new Hono<{ Bindings: Bindings }>()
 
 app.use('/api/*', cors())
 
+// 独自ドメイン切替後、指定した旧ホストからcanonicalドメインへパスを保って恒久転送する。
+app.use('/*', async (c, next) => {
+  const canonical = c.env.PUBLIC_SITE_URL?.trim()
+  const legacyHosts = (c.env.LEGACY_SITE_HOSTS || '')
+    .split(',')
+    .map(host => host.trim().toLowerCase())
+    .filter(Boolean)
+  const requestUrl = new URL(c.req.url)
+  if (canonical && legacyHosts.includes(requestUrl.hostname.toLowerCase())) {
+    try {
+      const canonicalUrl = new URL(canonical)
+      if (!['http:', 'https:'].includes(canonicalUrl.protocol)) throw new Error('Invalid canonical protocol')
+      const destination = new URL(`${requestUrl.pathname}${requestUrl.search}`, canonicalUrl)
+      if (destination.origin !== requestUrl.origin) return c.redirect(destination.toString(), 308)
+    } catch {
+      // 無効な環境変数では転送せず、通常表示を継続する。
+    }
+  }
+  await next()
+})
+
 // Branch Preview はサイト本体を確認できる一方、検索結果には登録させない。
 app.use('/*', async (c, next) => {
   await next()
@@ -54,7 +75,7 @@ app.get('/favicon.ico', async (c) => {
 app.get('/', (c) => {
   return c.html(getPublicHTML('home', getPublicOrigin(c), {
     path: '/',
-    title: 'InternBase | 高学歴大学生向け長期インターン求人サイト',
+    title: 'ガクチカインターン | 高学歴大学生向け長期インターン求人サイト',
     description: '東大・早慶・MARCHなど上位大学生向けの厳選長期インターン求人サイト。成長企業でのインターンで就活に差をつける本物のスキルと実績を手に入れよう。無料相談受付中。'
   }))
 })
@@ -63,7 +84,7 @@ app.get('/', (c) => {
 app.get('/jobs', (c) => {
   return c.html(getPublicHTML('jobs', getPublicOrigin(c), {
     path: '/jobs',
-    title: '求人一覧 | InternBase - 長期インターン求人',
+    title: '求人一覧 | ガクチカインターン - 長期インターン求人',
     description: '厳選された長期インターン求人一覧。業種・勤務形態・時給などで絞り込み検索。スタートアップから成長企業まで、あなたに合った求人を見つけよう。'
   }))
 })
@@ -122,7 +143,7 @@ app.get('/jobs/:slug', async (c) => {
 
   return c.html(getPublicHTML('job-detail', origin, {
     path,
-    title: `${job.title} | ${job.company_name} | InternBase`,
+    title: `${job.title} | ${job.company_name} | ガクチカインターン`,
     description,
     type: 'article',
     image,
@@ -134,7 +155,7 @@ app.get('/jobs/:slug', async (c) => {
 app.get('/universities', (c) => {
   return c.html(getPublicHTML('universities', getPublicOrigin(c), {
     path: '/universities',
-    title: '大学別おすすめ求人 | InternBase',
+    title: '大学別おすすめ求人 | ガクチカインターン',
     description: '東大・早稲田・慶應など大学別に厳選したインターン求人を掲載。あなたの大学に特化したおすすめ求人を探そう。'
   }))
 })
@@ -149,41 +170,41 @@ app.get('/universities/:slug', async (c) => {
   if (!tag) return c.html(getNotFoundHTML(origin), 404)
   return c.html(getPublicHTML('university-jobs', origin, {
     path: `/universities/${encodeURIComponent(tag.slug)}`,
-    title: `${tag.name}向け長期インターン求人 | InternBase`,
+    title: `${tag.name}向け長期インターン求人 | ガクチカインターン`,
     description: truncateDescription(tag.description || `${tag.name}の学生におすすめの厳選長期インターン求人を紹介します。`)
   }))
 })
 
 // 公開画面 - 登録
 app.get('/register', (c) => {
-  return c.html(getPublicHTML('register', getPublicOrigin(c), { path: '/register', title: '新規登録 | InternBase', description: '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。', robots: 'noindex, nofollow' }))
+  return c.html(getPublicHTML('register', getPublicOrigin(c), { path: '/register', title: '新規登録 | ガクチカインターン', description: '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - 無料相談
 app.get('/login', (c) => {
-  return c.html(getPublicHTML('login', getPublicOrigin(c), { path: '/login', title: 'ログイン | InternBase', description: '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。', robots: 'noindex, nofollow' }))
+  return c.html(getPublicHTML('login', getPublicOrigin(c), { path: '/login', title: 'ログイン | ガクチカインターン', description: '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。', robots: 'noindex, nofollow' }))
 })
 
 app.get('/consultation', (c) => {
-  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | InternBase', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
+  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
 })
 
 // 公開画面 - マイページ
 app.get('/mypage', (c) => {
-  return c.html(getPublicHTML('mypage', getPublicOrigin(c), { path: '/mypage', title: 'マイページ | InternBase', description: '応募履歴や招待コードの確認・管理ができます。', robots: 'noindex, nofollow' }))
+  return c.html(getPublicHTML('mypage', getPublicOrigin(c), { path: '/mypage', title: 'マイページ | ガクチカインターン', description: '応募履歴や招待コードの確認・管理ができます。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - 規約
 app.get('/privacy', (c) => {
-  return c.html(getPublicHTML('privacy', getPublicOrigin(c), { path: '/privacy', title: 'プライバシーポリシー | InternBase', description: 'InternBaseのプライバシーポリシーです。個人情報の取扱いについてご確認ください。' }))
+  return c.html(getPublicHTML('privacy', getPublicOrigin(c), { path: '/privacy', title: 'プライバシーポリシー | ガクチカインターン', description: 'ガクチカインターンのプライバシーポリシーです。個人情報の取扱いについてご確認ください。' }))
 })
 
 app.get('/terms', (c) => {
-  return c.html(getPublicHTML('terms', getPublicOrigin(c), { path: '/terms', title: '利用規約 | InternBase', description: 'InternBaseの利用規約です。サービスをご利用いただく前にご確認ください。' }))
+  return c.html(getPublicHTML('terms', getPublicOrigin(c), { path: '/terms', title: '利用規約 | ガクチカインターン', description: 'ガクチカインターンの利用規約です。サービスをご利用いただく前にご確認ください。' }))
 })
 
 app.get('/company', (c) => {
-  return c.html(getPublicHTML('company', getPublicOrigin(c), { path: '/company', title: '運営者情報 | InternBase', description: 'InternBaseの運営者情報とお問い合わせ先です。' }))
+  return c.html(getPublicHTML('company', getPublicOrigin(c), { path: '/company', title: '運営者情報 | ガクチカインターン', description: 'ガクチカインターンの運営者情報とお問い合わせ先です。' }))
 })
 
 // 管理画面 - 全ページSPA（常に最新の管理画面アセットURLを返す）
@@ -243,7 +264,7 @@ app.notFound((c) => c.html(getNotFoundHTML(getPublicOrigin(c)), 404))
 function getNotFoundHTML(origin: string): string {
   return getPublicHTML('not-found', origin, {
     path: '/404',
-    title: 'ページが見つかりません | InternBase',
+    title: 'ページが見つかりません | ガクチカインターン',
     description: 'お探しのページは移動または削除された可能性があります。',
     robots: 'noindex, nofollow'
   })
@@ -380,11 +401,11 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <a href="/" class="flex items-center gap-2">
-          <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="InternBase">
+          <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="ガクチカインターン">
           <div class="js-site-logo-icon w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
             <i class="fas fa-rocket text-white text-sm"></i>
           </div>
-          <span class="js-site-name text-xl font-bold gradient-text">InternBase</span>
+          <span class="js-site-name text-xl font-bold gradient-text">ガクチカインターン</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
@@ -635,11 +656,11 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
-            <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="InternBase">
+            <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="ガクチカインターン">
             <div class="js-site-logo-icon w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
               <i class="fas fa-rocket text-white text-xs"></i>
             </div>
-            <span class="js-site-name font-bold gradient-text">InternBase</span>
+            <span class="js-site-name font-bold gradient-text">ガクチカインターン</span>
           </div>
           <p id="footer-site-description" class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
         </div>
@@ -667,7 +688,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         </div>
       </div>
       <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <p id="footer-copyright" class="text-gray-500 text-xs">© 2024 InternBase. All rights reserved.</p>
+        <p id="footer-copyright" class="text-gray-500 text-xs">© 2026 ガクチカインターン. All rights reserved.</p>
         <div class="flex gap-4 text-gray-500 text-xs">
           <a href="/company" class="hover:text-primary-600 transition-colors">運営者情報</a>
           <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
@@ -678,7 +699,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260804-seo-foundation"></script>
+  <script src="/static/public.js?v=20260804-gakuchika-timeline"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -709,7 +730,7 @@ function getAdminHTML(): string {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>管理画面 - InternBase</title>
+  <title>管理画面 - ガクチカインターン</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
@@ -758,7 +779,7 @@ function getAdminHTML(): string {
         <div class="w-7 h-7 bg-primary-500 rounded-lg flex items-center justify-center">
           <i class="fas fa-rocket text-white text-xs"></i>
         </div>
-        <span class="font-bold text-sm">InternBase</span>
+        <span class="font-bold text-sm">ガクチカインターン</span>
         <span class="text-xs text-gray-500 ml-1">管理</span>
       </div>
     </div>
@@ -854,7 +875,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260804-content-modals"></script>
+  <script src="/static/admin.js?v=20260804-gakuchika-brand"></script>
 </body>
 </html>`
 }

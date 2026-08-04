@@ -76,11 +76,11 @@ export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(asy
 
 function getComingSoonHTML(s: Record<string, string>, origin: string): string {
   const title = escapeHtml(s.coming_soon_title || '公開準備中')
-  const subtitle = escapeHtml(s.coming_soon_subtitle || '現在InternBaseは準備中です。公開をお楽しみに。')
+  const subtitle = escapeHtml(s.coming_soon_subtitle || '現在ガクチカインターンは準備中です。公開をお楽しみに。')
   const date = escapeHtml(s.coming_soon_date || '近日公開')
   const seo = renderSeoTags(origin, {
-    title: 'Coming Soon | InternBase',
-    description: `InternBase - 高学歴大学生向け長期インターン求人サイト。${date}公開予定。`,
+    title: 'Coming Soon | ガクチカインターン',
+    description: `ガクチカインターン - 高学歴大学生向け長期インターン求人サイト。${date}公開予定。`,
     path: '/',
     robots: 'noindex, nofollow'
   })
@@ -110,7 +110,7 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
         <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
           <i class="fas fa-rocket text-white text-lg"></i>
         </div>
-        <span class="text-2xl font-black gradient-text">InternBase</span>
+        <span class="text-2xl font-black gradient-text">ガクチカインターン</span>
       </div>
 
       <div class="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-500/30 rounded-full px-5 py-2 text-sm text-blue-700 font-medium mb-6">
@@ -132,7 +132,7 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
         <a href="/terms" class="hover:text-blue-600">利用規約</a>
         <a href="/company" class="hover:text-blue-600">運営者情報</a>
       </div>
-      <p class="text-xs text-gray-400 mt-4">© 2026 InternBase. All rights reserved.</p>
+      <p class="text-xs text-gray-400 mt-4">© 2026 ガクチカインターン. All rights reserved.</p>
     </div>
   </div>
 </body>

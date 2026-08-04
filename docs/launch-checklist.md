@@ -1,4 +1,4 @@
-# InternBase 公開・SEOチェックリスト
+# ガクチカインターン 公開・SEOチェックリスト
 
 この文書は、Production では Coming Soon のみを公開し、Preview ではサイト本体を確認しながら開発する期間から、正式公開へ移行するまでの手順をまとめたものです。
 
@@ -18,6 +18,8 @@
 3. Preview では `PUBLIC_SITE_URL` を設定しない。Branch Preview は自動的に `X-Robots-Tag: noindex, nofollow` と検索拒否用 robots.txt を返す。機密性も必要な場合は、さらに Cloudflare Access で保護する。
 4. HTTPS 証明書が Active になり、HTTP から HTTPS へ転送されることを確認する。
 5. `pages.dev` から正式ドメインへの転送は、正式ドメインで Production の表示確認後に Cloudflare Redirect Rules で `301` を設定する。
+
+具体的な切替・転送・切り戻しは [`docs/domain-migration.md`](./domain-migration.md) に従う。アプリ側で転送する場合は、Production環境の`LEGACY_SITE_HOSTS`へ旧ホストを設定する。
 
 > `PUBLIC_SITE_URL` を設定するまでは、canonical、OG URL、sitemap はリクエストされたホストを自動的に使用します。そのため、ドメイン決定前にコードへ仮ドメインを埋め込む必要はありません。
 

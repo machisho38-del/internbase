@@ -1,5 +1,5 @@
 // ==========================================
-// InternBase - 公開画面 JavaScript
+// ガクチカインターン - 公開画面 JavaScript
 // ==========================================
 
 const API = axios.create({ baseURL: '/api' });
@@ -96,7 +96,7 @@ function renderLineCta(lineUrl, label = '公式LINEを友だち追加', classNam
 let _siteSettings = null;
 let _siteSettingsPromise = null;
 
-const DEFAULT_SITE_NAME = 'InternBase';
+const DEFAULT_SITE_NAME = 'ガクチカインターン';
 
 function asSettingText(value) {
   return value == null ? '' : String(value).trim();
@@ -289,6 +289,20 @@ async function initHomePage() {
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
   const showSuccessStories = s.success_stories_enabled === true || s.success_stories_enabled === '1';
+  const successStoryCards = successStories.map(story => `
+    <article class="timeline-card glass rounded-2xl p-5 flex-shrink-0 w-[min(82vw,22rem)]" role="listitem">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-user-graduate text-primary-600" aria-hidden="true"></i>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold text-gray-900 truncate">${escapeHtml(story.university)} ${escapeHtml(story.student_name)}</p>
+          <p class="text-xs text-gray-700 truncate">${escapeHtml(story.company_name)} 内定</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(story.comment)}</p>
+    </article>
+  `).join('');
   const siteName = getConfiguredSiteName(s);
   const heroTitleLines = getHeroTitleLines(s);
   const heroDescription = getConfiguredDescription(s);
@@ -356,7 +370,7 @@ async function initHomePage() {
         </div>
         <div class="hidden lg:block fade-in">
           <div class="glass rounded-2xl p-6 shadow-xl shadow-primary-900/5">
-            <p class="text-xs font-bold text-primary-700 mb-1">InternBaseの特徴</p>
+            <p class="text-xs font-bold text-primary-700 mb-1">ガクチカインターンの特徴</p>
             <h2 class="text-xl font-black text-gray-900 mb-5">長期インターン選びを<br>わかりやすく、確実に。</h2>
             <div class="space-y-4">
               <div class="flex items-start gap-3">
@@ -477,38 +491,53 @@ async function initHomePage() {
 
     <!-- 内定者タイムライン（自動横スクロール） -->
     ${showSuccessStories && successStories.length > 0 ? `
-    <section class="py-20 overflow-hidden">
+    <section id="success-stories" class="py-20 overflow-hidden bg-gradient-to-r from-primary-50/30 via-white to-purple-50/30" aria-labelledby="success-stories-title">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
-          <h2 class="text-3xl font-black mb-3 text-gray-900">内定者タイムライン</h2>
-          <p class="text-gray-700">先輩たちの成功ストーリー</p>
+          <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-4">
+            <i class="fas fa-trophy" aria-hidden="true"></i>SUCCESS STORIES
+          </div>
+          <h2 id="success-stories-title" class="text-3xl font-black mb-3 text-gray-900">内定者タイムライン</h2>
+          <p class="text-gray-700">ガクチカインターンを通じて一歩を踏み出した先輩たちの声</p>
         </div>
       </div>
-      <div class="relative">
-        <div class="timeline-scroll flex gap-4 px-4" style="animation: scroll-timeline 30s linear infinite;">
-          ${successStories.concat(successStories).map(story => `
-            <div class="glass rounded-xl p-5 flex-shrink-0 w-80">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center">
-                  <i class="fas fa-user-graduate text-primary-600"></i>
-                </div>
-                <div>
-                  <p class="text-sm font-bold text-gray-900">${story.university_name} ${story.student_name}</p>
-                  <p class="text-xs text-gray-700">${story.company_name} 内定</p>
-                </div>
-              </div>
-              <p class="text-sm text-gray-700 leading-relaxed">${story.comment}</p>
-            </div>
-          `).join('')}
+      <div class="timeline-viewport relative" tabindex="0" aria-label="内定者の体験談。マウスを重ねるかフォーカスすると一時停止します。">
+        <div class="timeline-track" role="list">
+          <div class="timeline-group">${successStoryCards}</div>
+          <div class="timeline-group" aria-hidden="true">${successStoryCards}</div>
         </div>
       </div>
     </section>
     <style>
-      @keyframes scroll-timeline {
+      .timeline-viewport {
+        mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+      }
+      .timeline-track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: scroll-success-stories 55s linear infinite;
+      }
+      .timeline-group {
+        display: flex;
+        gap: 1rem;
+        padding-right: 1rem;
+      }
+      .timeline-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .timeline-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(79,110,247,0.12); }
+      @keyframes scroll-success-stories {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
       }
-      .timeline-scroll:hover { animation-play-state: paused; }
+      .timeline-viewport:hover .timeline-track,
+      .timeline-viewport:focus .timeline-track,
+      .timeline-viewport:focus-within .timeline-track { animation-play-state: paused; }
+      @media (prefers-reduced-motion: reduce) {
+        .timeline-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+        .timeline-track { animation: none; }
+        .timeline-group[aria-hidden="true"] { display: none; }
+      }
     </style>` : ''}
 
     <!-- 特徴セクション -->
@@ -1237,7 +1266,7 @@ async function initRegisterPage() {
             <i class="fas fa-user-plus text-white text-xl"></i>
           </div>
           <h1 class="text-2xl font-black mb-2">新規登録</h1>
-          <p class="text-gray-500 text-sm">まず、どこでInternBaseを知りましたか？</p>
+          <p class="text-gray-500 text-sm">まず、どこでガクチカインターンを知りましたか？</p>
         </div>
         <!-- STEP 1: 流入媒体選択 -->
         <div class="glass rounded-2xl p-8 mb-4" id="source-media-step">
@@ -1455,7 +1484,7 @@ async function initConsultationPage() {
       </div>
       <!-- STEP 1: 流入媒体選択 -->
       <div class="glass rounded-2xl p-8 mb-4" id="con-source-step">
-        <h3 class="font-bold mb-4 text-sm">どこでInternBaseを知りましたか？ <span class="text-red-400">*</span></h3>
+        <h3 class="font-bold mb-4 text-sm">どこでガクチカインターンを知りましたか？ <span class="text-red-400">*</span></h3>
         <div class="grid grid-cols-1 gap-2">
           ${SOURCE_MEDIA_OPTIONS.map(opt => `
             <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
@@ -1712,7 +1741,7 @@ function renderLegalPage(title, lead, sections, updatedAt = '2026年8月4日') {
   app.innerHTML = `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="mb-10">
-        <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
+        <p class="text-sm text-primary-600 font-semibold mb-2">ガクチカインターン</p>
         <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">${title}</h1>
         <p class="text-gray-600 leading-relaxed">${lead}</p>
         <p class="text-xs text-gray-400 mt-4">最終更新日：${escapeHtml(updatedAt)}</p>
@@ -1733,11 +1762,11 @@ function renderLegalPage(title, lead, sections, updatedAt = '2026年8月4日') {
 
 async function initPrivacyPage() {
   const settings = await getPublicOperatorInfo();
-  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'InternBase運営事務局');
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ガクチカインターン運営事務局');
   const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     'プライバシーポリシー',
-    'InternBaseは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
+    'ガクチカインターンは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
     [
       {
         heading: '取得する情報',
@@ -1788,16 +1817,16 @@ async function initPrivacyPage() {
 
 async function initTermsPage() {
   const settings = await getPublicOperatorInfo();
-  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'InternBase運営事務局');
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ガクチカインターン運営事務局');
   const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     '利用規約',
-    'この利用規約は、InternBaseが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
+    'この利用規約は、ガクチカインターンが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
     [
       {
         heading: 'サービス内容',
         body: [
-          'InternBaseは、学生向けに長期インターン求人情報、応募導線、無料相談、関連情報を提供するサービスです。',
+          'ガクチカインターンは、学生向けに長期インターン求人情報、応募導線、無料相談、関連情報を提供するサービスです。',
           '掲載情報の正確性には努めますが、求人条件、選考状況、募集終了時期などは変更される場合があります。'
         ]
       },
@@ -1812,20 +1841,20 @@ async function initTermsPage() {
         heading: '求人応募と選考',
         body: [
           '応募後の選考、面接、採否、雇用契約、勤務条件の最終決定は、応募先企業と利用者の間で行われます。',
-          'InternBaseは、求人紹介や連絡補助を行う場合がありますが、採用や勤務条件を保証するものではありません。'
+          'ガクチカインターンは、求人紹介や連絡補助を行う場合がありますが、採用や勤務条件を保証するものではありません。'
         ]
       },
       {
         heading: 'サービスの変更・停止',
         body: [
-          'InternBaseは、必要に応じてサービス内容の変更、機能追加、一時停止、終了を行う場合があります。',
+          'ガクチカインターンは、必要に応じてサービス内容の変更、機能追加、一時停止、終了を行う場合があります。',
           '保守、障害、外部サービスの停止、その他やむを得ない事情により、事前告知なくサービスを停止することがあります。'
         ]
       },
       {
         heading: '免責',
         body: [
-          'InternBaseの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
+          'ガクチカインターンの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
           '利用者と掲載企業または第三者との間で生じたトラブルは、当事者間で解決するものとします。'
         ]
       },
@@ -1855,9 +1884,9 @@ async function initCompanyPage() {
   app.innerHTML = `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="mb-10">
-        <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
+        <p class="text-sm text-primary-600 font-semibold mb-2">ガクチカインターン</p>
         <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">運営者情報</h1>
-        <p class="text-gray-600">InternBaseを運営する事業者の情報です。</p>
+        <p class="text-gray-600">ガクチカインターンを運営する事業者の情報です。</p>
       </div>
       <div class="glass rounded-2xl overflow-hidden">
         ${rows.length ? rows.map(([label, value]) => `

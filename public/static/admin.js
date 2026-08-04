@@ -1,5 +1,5 @@
 // ==========================================
-// InternBase - 管理画面 JavaScript
+// ガクチカインターン - 管理画面 JavaScript
 // ==========================================
 
 const API = axios.create({ baseURL: '/api', withCredentials: true });
@@ -71,7 +71,7 @@ function showLoginPage() {
             <i class="fas fa-rocket text-white text-lg"></i>
           </div>
           <h1 class="text-2xl font-bold mb-1">管理画面</h1>
-          <p class="text-gray-500 text-sm">InternBase Admin</p>
+          <p class="text-gray-500 text-sm">ガクチカインターン Admin</p>
         </div>
         <div class="glass rounded-2xl p-7">
           <form onsubmit="submitLogin(event)">

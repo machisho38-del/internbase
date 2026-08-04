@@ -1,7 +1,7 @@
 import type { Context } from 'hono'
 import type { Bindings } from '../types'
 
-const FALLBACK_SITE_NAME = 'InternBase'
+const FALLBACK_SITE_NAME = 'ガクチカインターン'
 
 export type SeoMetadata = {
   title: string
