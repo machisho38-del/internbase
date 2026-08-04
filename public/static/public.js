@@ -1,5 +1,5 @@
 // ==========================================
-// InternBase - 公開画面 JavaScript
+// ガクチカインターン - 公開画面 JavaScript
 // ==========================================
 
 const API = axios.create({ baseURL: '/api' });
@@ -96,7 +96,7 @@ function renderLineCta(lineUrl, label = '公式LINEを友だち追加', classNam
 let _siteSettings = null;
 let _siteSettingsPromise = null;
 
-const DEFAULT_SITE_NAME = 'InternBase';
+const DEFAULT_SITE_NAME = 'ガクチカインターン';
 
 function asSettingText(value) {
   return value == null ? '' : String(value).trim();
@@ -255,6 +255,15 @@ async function getSiteSettings() {
   return _siteSettingsPromise;
 }
 
+async function getPublicOperatorInfo() {
+  try {
+    const res = await API.get(`/settings/public-info?ts=${Date.now()}`);
+    return res.data.data || {};
+  } catch(e) {
+    return {};
+  }
+}
+
 getSiteSettings().catch(() => {});
 
 // ==========================================
@@ -280,6 +289,20 @@ async function initHomePage() {
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
   const showSuccessStories = s.success_stories_enabled === true || s.success_stories_enabled === '1';
+  const successStoryCards = successStories.map(story => `
+    <article class="timeline-card glass rounded-2xl p-5 flex-shrink-0 w-[min(82vw,22rem)]" role="listitem">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center flex-shrink-0">
+          <i class="fas fa-user-graduate text-primary-600" aria-hidden="true"></i>
+        </div>
+        <div class="min-w-0">
+          <p class="text-sm font-bold text-gray-900 truncate">${escapeHtml(story.university)} ${escapeHtml(story.student_name)}</p>
+          <p class="text-xs text-gray-700 truncate">${escapeHtml(story.company_name)} 内定</p>
+        </div>
+      </div>
+      <p class="text-sm text-gray-700 leading-relaxed">${escapeHtml(story.comment)}</p>
+    </article>
+  `).join('');
   const siteName = getConfiguredSiteName(s);
   const heroTitleLines = getHeroTitleLines(s);
   const heroDescription = getConfiguredDescription(s);
@@ -331,31 +354,37 @@ async function initHomePage() {
             ${escapeHtml(heroDescription)}
           </p>
           <div class="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
-            <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
-              <i class="fas fa-ticket-alt text-xl"></i>${s.hero_cta2_text || '招待コードで登録'}
+            <a href="/jobs" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white font-bold px-6 sm:px-10 py-4 rounded-xl transition-all text-center shadow-lg shadow-primary-500/25 text-base">
+              <i class="fas fa-search"></i>${s.hero_cta1_text || '自分に合う求人を探す'}
+              <i class="fas fa-arrow-right text-sm opacity-80"></i>
             </a>
-            <a href="/jobs" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-6 sm:px-8 py-4 rounded-xl transition-all text-center shadow-lg border border-gray-200">
-              <i class="fas fa-search mr-1"></i>${s.hero_cta1_text || '求人を見る'}
+            <a href="/register" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-800 font-bold px-6 sm:px-8 py-4 rounded-xl transition-all text-center shadow-sm border border-gray-200">
+              <i class="fas fa-user-plus"></i>${s.hero_cta2_text || '無料で会員登録'}
             </a>
+          </div>
+          <div class="mt-5 flex flex-wrap gap-x-5 gap-y-2 text-xs font-medium text-gray-600">
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>登録無料</span>
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>厳選求人のみ掲載</span>
+            <span><i class="fas fa-circle-check text-green-500 mr-1.5"></i>キャリア相談無料</span>
           </div>
         </div>
         <div class="hidden lg:block fade-in">
-          <div class="glass rounded-2xl p-5">
-            <p class="text-xs font-bold text-primary-700 mb-1">すぐ探せる条件</p>
-            <h2 class="text-xl font-black text-gray-900 mb-4">気になる条件から求人を見る</h2>
-            <div class="space-y-2.5">
-              <a href="/jobs?industry=IT・SaaS" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-laptop-code text-primary-500 mr-2"></i>業界</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
-              <a href="/jobs?work_style=remote" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-house-laptop text-primary-500 mr-2"></i>勤務形態</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
-              <a href="/universities" class="flex items-center justify-between rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm font-semibold text-gray-800 hover:border-primary-300 hover:bg-primary-50 transition-colors">
-                <span><i class="fas fa-university text-primary-500 mr-2"></i>大学別おすすめ</span>
-                <i class="fas fa-chevron-right text-xs text-gray-300"></i>
-              </a>
+          <div class="glass rounded-2xl p-6 shadow-xl shadow-primary-900/5">
+            <p class="text-xs font-bold text-primary-700 mb-1">ガクチカインターンの特徴</p>
+            <h2 class="text-xl font-black text-gray-900 mb-5">長期インターン選びを<br>わかりやすく、確実に。</h2>
+            <div class="space-y-4">
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-primary-50 text-primary-600 flex items-center justify-center"><i class="fas fa-briefcase"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">厳選された求人</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">成長につながる求人を見やすく掲載</p></div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center"><i class="fas fa-user-graduate"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">学生目線の情報</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">働き方や成長環境から比較できる</p></div>
+              </div>
+              <div class="flex items-start gap-3">
+                <span class="w-10 h-10 flex-shrink-0 rounded-xl bg-green-50 text-green-600 flex items-center justify-center"><i class="fas fa-comments"></i></span>
+                <div><p class="text-sm font-bold text-gray-900">無料キャリア相談</p><p class="text-xs text-gray-600 mt-0.5 leading-relaxed">迷ったときはLINEで気軽に相談</p></div>
+              </div>
             </div>
           </div>
         </div>
@@ -462,38 +491,53 @@ async function initHomePage() {
 
     <!-- 内定者タイムライン（自動横スクロール） -->
     ${showSuccessStories && successStories.length > 0 ? `
-    <section class="py-20 overflow-hidden">
+    <section id="success-stories" class="py-20 overflow-hidden bg-gradient-to-r from-primary-50/30 via-white to-purple-50/30" aria-labelledby="success-stories-title">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
-          <h2 class="text-3xl font-black mb-3 text-gray-900">内定者タイムライン</h2>
-          <p class="text-gray-700">先輩たちの成功ストーリー</p>
+          <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-4">
+            <i class="fas fa-trophy" aria-hidden="true"></i>SUCCESS STORIES
+          </div>
+          <h2 id="success-stories-title" class="text-3xl font-black mb-3 text-gray-900">内定者タイムライン</h2>
+          <p class="text-gray-700">ガクチカインターンを通じて一歩を踏み出した先輩たちの声</p>
         </div>
       </div>
-      <div class="relative">
-        <div class="timeline-scroll flex gap-4 px-4" style="animation: scroll-timeline 30s linear infinite;">
-          ${successStories.concat(successStories).map(story => `
-            <div class="glass rounded-xl p-5 flex-shrink-0 w-80">
-              <div class="flex items-center gap-3 mb-3">
-                <div class="w-10 h-10 bg-primary-500/15 rounded-full flex items-center justify-center">
-                  <i class="fas fa-user-graduate text-primary-600"></i>
-                </div>
-                <div>
-                  <p class="text-sm font-bold text-gray-900">${story.university_name} ${story.student_name}</p>
-                  <p class="text-xs text-gray-700">${story.company_name} 内定</p>
-                </div>
-              </div>
-              <p class="text-sm text-gray-700 leading-relaxed">${story.comment}</p>
-            </div>
-          `).join('')}
+      <div class="timeline-viewport relative" tabindex="0" aria-label="内定者の体験談。マウスを重ねるかフォーカスすると一時停止します。">
+        <div class="timeline-track" role="list">
+          <div class="timeline-group">${successStoryCards}</div>
+          <div class="timeline-group" aria-hidden="true">${successStoryCards}</div>
         </div>
       </div>
     </section>
     <style>
-      @keyframes scroll-timeline {
+      .timeline-viewport {
+        mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+      }
+      .timeline-track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: scroll-success-stories 55s linear infinite;
+      }
+      .timeline-group {
+        display: flex;
+        gap: 1rem;
+        padding-right: 1rem;
+      }
+      .timeline-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .timeline-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(79,110,247,0.12); }
+      @keyframes scroll-success-stories {
         0% { transform: translateX(0); }
         100% { transform: translateX(-50%); }
       }
-      .timeline-scroll:hover { animation-play-state: paused; }
+      .timeline-viewport:hover .timeline-track,
+      .timeline-viewport:focus .timeline-track,
+      .timeline-viewport:focus-within .timeline-track { animation-play-state: paused; }
+      @media (prefers-reduced-motion: reduce) {
+        .timeline-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+        .timeline-track { animation: none; }
+        .timeline-group[aria-hidden="true"] { display: none; }
+      }
     </style>` : ''}
 
     <!-- 特徴セクション -->
@@ -1222,7 +1266,7 @@ async function initRegisterPage() {
             <i class="fas fa-user-plus text-white text-xl"></i>
           </div>
           <h1 class="text-2xl font-black mb-2">新規登録</h1>
-          <p class="text-gray-500 text-sm">まず、どこでInternBaseを知りましたか？</p>
+          <p class="text-gray-500 text-sm">まず、どこでガクチカインターンを知りましたか？</p>
         </div>
         <!-- STEP 1: 流入媒体選択 -->
         <div class="glass rounded-2xl p-8 mb-4" id="source-media-step">
@@ -1440,7 +1484,7 @@ async function initConsultationPage() {
       </div>
       <!-- STEP 1: 流入媒体選択 -->
       <div class="glass rounded-2xl p-8 mb-4" id="con-source-step">
-        <h3 class="font-bold mb-4 text-sm">どこでInternBaseを知りましたか？ <span class="text-red-400">*</span></h3>
+        <h3 class="font-bold mb-4 text-sm">どこでガクチカインターンを知りましたか？ <span class="text-red-400">*</span></h3>
         <div class="grid grid-cols-1 gap-2">
           ${SOURCE_MEDIA_OPTIONS.map(opt => `
             <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
@@ -1692,15 +1736,15 @@ async function studentLogout() {
 // ==========================================
 // 法務ページ
 // ==========================================
-function renderLegalPage(title, lead, sections) {
+function renderLegalPage(title, lead, sections, updatedAt = '2026年8月4日') {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="mb-10">
-        <p class="text-sm text-primary-600 font-semibold mb-2">InternBase</p>
+        <p class="text-sm text-primary-600 font-semibold mb-2">ガクチカインターン</p>
         <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">${title}</h1>
         <p class="text-gray-600 leading-relaxed">${lead}</p>
-        <p class="text-xs text-gray-400 mt-4">最終更新日：2026年7月7日</p>
+        <p class="text-xs text-gray-400 mt-4">最終更新日：${escapeHtml(updatedAt)}</p>
       </div>
       <div class="space-y-6">
         ${sections.map((section, index) => `
@@ -1716,10 +1760,13 @@ function renderLegalPage(title, lead, sections) {
   `;
 }
 
-function initPrivacyPage() {
+async function initPrivacyPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ガクチカインターン運営事務局');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     'プライバシーポリシー',
-    'InternBaseは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
+    'ガクチカインターンは、長期インターン求人情報の提供、応募・相談対応、サービス改善のために必要な範囲で個人情報を取り扱います。',
     [
       {
         heading: '取得する情報',
@@ -1755,20 +1802,31 @@ function initPrivacyPage() {
           '本人から個人情報の開示、訂正、利用停止、削除等の申し出があった場合、法令に従って合理的な範囲で対応します。',
           'お問い合わせ先は、サービス内または運営者情報ページで案内する連絡先をご確認ください。'
         ]
+      },
+      {
+        heading: '保存期間とお問い合わせ',
+        body: [
+          '取得した情報は、利用目的の達成、法令上の義務、不正利用防止に必要な期間保存し、不要となった情報は適切な方法で削除または匿名化します。',
+          `運営者：${operatorName}／お問い合わせ：${contactEmail}`
+        ]
       }
-    ]
+    ],
+    asSettingText(settings.legal_updated_at) || '2026年8月4日'
   );
 }
 
-function initTermsPage() {
+async function initTermsPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ガクチカインターン運営事務局');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || '公開準備中');
   renderLegalPage(
     '利用規約',
-    'この利用規約は、InternBaseが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
+    'この利用規約は、ガクチカインターンが提供する長期インターン求人情報サービスの利用条件を定めるものです。',
     [
       {
         heading: 'サービス内容',
         body: [
-          'InternBaseは、学生向けに長期インターン求人情報、応募導線、無料相談、関連情報を提供するサービスです。',
+          'ガクチカインターンは、学生向けに長期インターン求人情報、応募導線、無料相談、関連情報を提供するサービスです。',
           '掲載情報の正確性には努めますが、求人条件、選考状況、募集終了時期などは変更される場合があります。'
         ]
       },
@@ -1783,25 +1841,81 @@ function initTermsPage() {
         heading: '求人応募と選考',
         body: [
           '応募後の選考、面接、採否、雇用契約、勤務条件の最終決定は、応募先企業と利用者の間で行われます。',
-          'InternBaseは、求人紹介や連絡補助を行う場合がありますが、採用や勤務条件を保証するものではありません。'
+          'ガクチカインターンは、求人紹介や連絡補助を行う場合がありますが、採用や勤務条件を保証するものではありません。'
         ]
       },
       {
         heading: 'サービスの変更・停止',
         body: [
-          'InternBaseは、必要に応じてサービス内容の変更、機能追加、一時停止、終了を行う場合があります。',
+          'ガクチカインターンは、必要に応じてサービス内容の変更、機能追加、一時停止、終了を行う場合があります。',
           '保守、障害、外部サービスの停止、その他やむを得ない事情により、事前告知なくサービスを停止することがあります。'
         ]
       },
       {
         heading: '免責',
         body: [
-          'InternBaseの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
+          'ガクチカインターンの利用により生じた損害について、運営者に故意または重過失がある場合を除き、運営者は責任を負いません。',
           '利用者と掲載企業または第三者との間で生じたトラブルは、当事者間で解決するものとします。'
         ]
+      },
+      {
+        heading: '準拠法・お問い合わせ',
+        body: [
+          '本規約は日本法に準拠し、本サービスに関して紛争が生じた場合は、運営者の所在地を管轄する裁判所を第一審の専属的合意管轄裁判所とします。',
+          `運営者：${operatorName}／お問い合わせ：${contactEmail}`
+        ]
       }
-    ]
+    ],
+    asSettingText(settings.legal_updated_at) || '2026年8月4日'
   );
+}
+
+async function initCompanyPage() {
+  const app = document.getElementById('app');
+  const settings = await getPublicOperatorInfo();
+  const rows = [
+    ['運営者名', settings.operator_name],
+    ['代表者', settings.operator_representative],
+    ['所在地', settings.operator_address],
+    ['事業内容', settings.operator_business],
+    ['お問い合わせ', settings.operator_contact_email || settings.contact_email]
+  ].filter(([, value]) => asSettingText(value));
+
+  app.innerHTML = `
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <p class="text-sm text-primary-600 font-semibold mb-2">ガクチカインターン</p>
+        <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">運営者情報</h1>
+        <p class="text-gray-600">ガクチカインターンを運営する事業者の情報です。</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden">
+        ${rows.length ? rows.map(([label, value]) => `
+          <div class="grid sm:grid-cols-[12rem_1fr] border-b border-gray-100 last:border-b-0">
+            <div class="bg-gray-50 px-5 py-4 text-sm font-semibold text-gray-700">${escapeHtml(label)}</div>
+            <div class="px-5 py-4 text-sm text-gray-700 whitespace-pre-line">${escapeHtml(value)}</div>
+          </div>
+        `).join('') : `
+          <div class="p-8 text-center text-gray-500">
+            <p class="font-medium">運営者情報は正式公開前に掲載します。</p>
+            <p class="text-xs mt-2">管理画面のサイト設定から登録できます。</p>
+          </div>
+        `}
+      </div>
+    </div>`;
+}
+
+function initNotFoundPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-xl mx-auto px-4 py-24 text-center">
+      <p class="text-7xl font-black gradient-text mb-4">404</p>
+      <h1 class="text-2xl font-bold text-gray-900 mb-3">ページが見つかりません</h1>
+      <p class="text-gray-600 mb-8">URLが変更されたか、ページが削除された可能性があります。</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <a href="/" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-xl">トップページへ戻る</a>
+        <a href="/jobs" class="border border-gray-300 hover:border-primary-400 text-gray-700 font-bold px-6 py-3 rounded-xl">求人を探す</a>
+      </div>
+    </div>`;
 }
 
 // ==========================================
