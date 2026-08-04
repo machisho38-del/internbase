@@ -6,10 +6,11 @@ import { escapeHtml, getPublicOrigin, renderSeoTags } from '../utils/seo'
 // 公開前も運用に必要な画面・静的アセット・法務ページは利用可能にする。
 const ALWAYS_ALLOWED_PREFIXES = ['/admin', '/static/', '/favicon']
 const ALWAYS_ALLOWED_EXACT = [
-  '/privacy', '/terms', '/company', '/robots.txt', '/sitemap.xml', '/og-default.png'
+  '/consultation', '/privacy', '/terms', '/company', '/robots.txt', '/sitemap.xml', '/og-default.png'
 ]
 const PUBLIC_API_ALLOWED = [
-  '/api/health', '/api/auth/admin/login', '/api/auth/admin/setup', '/api/settings/public-info'
+  '/api/health', '/api/auth/admin/login', '/api/auth/admin/setup',
+  '/api/settings', '/api/settings/public-info', '/api/consultation'
 ]
 
 async function hasValidAdminSession(c: any): Promise<boolean> {
@@ -32,7 +33,7 @@ export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(asy
     return await next()
   }
 
-  if (PUBLIC_API_ALLOWED.some(p => path === p || path.startsWith(`${p}/`))) {
+  if (PUBLIC_API_ALLOWED.includes(path)) {
     return await next()
   }
 
@@ -53,7 +54,7 @@ export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(asy
 
       // site_settings から CS 表示用テキストを取得
       const { results } = await c.env.DB.prepare(
-        `SELECT setting_key, setting_value FROM site_settings WHERE setting_key IN ('coming_soon_title','coming_soon_subtitle','coming_soon_date')`
+        `SELECT setting_key, setting_value FROM site_settings WHERE setting_key IN ('coming_soon_title','coming_soon_subtitle','coming_soon_date','line_url')`
       ).all() as any
       const csSettings: Record<string, string> = {}
       results.forEach((r: any) => { csSettings[r.setting_key] = r.setting_value })
@@ -78,6 +79,7 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
   const title = escapeHtml(s.coming_soon_title || '公開準備中')
   const subtitle = escapeHtml(s.coming_soon_subtitle || '現在ガクチカインターンは準備中です。公開をお楽しみに。')
   const date = escapeHtml(s.coming_soon_date || '近日公開')
+  const lineUrl = getSafeLineUrl(s.line_url)
   const seo = renderSeoTags(origin, {
     title: 'Coming Soon | ガクチカインターン',
     description: `ガクチカインターン - 高学歴大学生向け長期インターン求人サイト。${date}公開予定。`,
@@ -98,14 +100,14 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
     body { font-family: 'Noto Sans JP', sans-serif; }
     .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%), linear-gradient(to bottom, #f8faff, #ffffff); }
-    .glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.2); }
+    .glass { background: rgba(255,255,255,0.92); backdrop-filter: blur(14px); border: 1px solid rgba(79,110,247,0.16); box-shadow: 0 18px 50px rgba(79,110,247,0.08); }
     .fade-in { animation: fadeIn 0.8s ease-out; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
   <div class="hero-gradient min-h-screen flex items-center justify-center px-4">
-    <div class="max-w-lg w-full text-center fade-in">
+    <div class="max-w-xl w-full text-center fade-in py-10">
       <div class="flex items-center justify-center gap-3 mb-10">
         <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
           <i class="fas fa-rocket text-white text-lg"></i>
@@ -122,9 +124,27 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
       </h1>
       <p class="text-gray-600 text-lg leading-relaxed mb-10">${subtitle}</p>
 
-      <div class="mt-16 glass rounded-2xl p-6">
+      <div class="mt-12 glass rounded-3xl p-6 sm:p-8">
         <p class="text-sm font-semibold text-gray-700 mb-2"><i class="fas fa-tools text-blue-500 mr-1"></i>サービス公開に向けて準備中です</p>
         <p class="text-sm text-gray-600 leading-relaxed">厳選した長期インターン求人と、学生のキャリア形成を支援する機能を準備しています。</p>
+        <div class="mt-6 border-t border-gray-100 pt-6">
+          <p class="text-base font-bold text-gray-900 mb-2">公開前でも無料で相談できます</p>
+          <p class="text-xs text-gray-500 leading-relaxed mb-5">最新情報の受け取りや長期インターンの相談は、公式LINEまたは無料相談フォームをご利用ください。</p>
+          <div class="grid sm:grid-cols-2 gap-3">
+            ${lineUrl ? `
+            <a href="${escapeHtml(lineUrl)}" target="_blank" rel="noopener noreferrer"
+              class="inline-flex items-center justify-center gap-2 bg-[#06c755] hover:bg-[#05b84e] text-white font-bold px-5 py-3.5 rounded-xl transition-colors shadow-md shadow-green-500/20">
+              <i class="fab fa-line text-xl"></i>公式LINEを追加
+            </a>` : `
+            <span class="inline-flex items-center justify-center gap-2 bg-gray-100 text-gray-400 font-bold px-5 py-3.5 rounded-xl" aria-disabled="true">
+              <i class="fab fa-line text-xl"></i>公式LINE準備中
+            </span>`}
+            <a href="/consultation"
+              class="inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-bold px-5 py-3.5 rounded-xl transition-all shadow-md shadow-blue-500/20">
+              <i class="fas fa-comments"></i>無料相談を申し込む
+            </a>
+          </div>
+        </div>
       </div>
 
       <div class="flex items-center justify-center gap-4 text-xs text-gray-400 mt-8">
@@ -137,4 +157,13 @@ function getComingSoonHTML(s: Record<string, string>, origin: string): string {
   </div>
 </body>
 </html>`
+}
+
+function getSafeLineUrl(value: unknown): string | null {
+  try {
+    const url = new URL(String(value || '').trim())
+    return url.protocol === 'https:' ? url.toString() : null
+  } catch {
+    return null
+  }
 }

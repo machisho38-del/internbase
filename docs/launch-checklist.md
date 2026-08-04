@@ -40,11 +40,13 @@
 ## Coming Soon 期間の確認
 
 - Production の `/` と `/jobs` が Coming Soon を表示する。
+- Coming Soon の「公式LINEを追加」と「無料相談を申し込む」が正しい遷移先を開く。
 - Production の `/api/jobs` が `503` を返す。
 - Production の `/robots.txt` が `Disallow: /` を返す。
 - Production の `/sitemap.xml` に URL が含まれない。
 - Production の `/admin` へログインできる。
 - Preview の `/jobs`、求人詳細、大学別求人、登録、ログイン、管理画面を確認できる。
+- 公開設定の内定者タイムラインがトップページに表示され、ゆっくり横へ流れる。
 - Preview の登録・編集・削除が `internship-preview` のみに反映され、Production のデータが変化しない。
 
 ### Preview E2E 自動確認

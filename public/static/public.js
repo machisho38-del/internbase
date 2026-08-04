@@ -288,7 +288,6 @@ async function initHomePage() {
   const successStories = storiesRes.data.data;
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
-  const showSuccessStories = s.success_stories_enabled === true || s.success_stories_enabled === '1';
   const successStoryCards = successStories.map(story => `
     <article class="timeline-card glass rounded-2xl p-5 flex-shrink-0 w-[min(82vw,22rem)]" role="listitem">
       <div class="flex items-center gap-3 mb-3">
@@ -390,11 +389,13 @@ async function initHomePage() {
         </div>
         </div>
       </div>
+      <div class="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none"></div>
     </section>
 
     <!-- LINE無料相談セクション -->
-    <section class="py-16 border-b border-gray-100 bg-gradient-to-br from-green-50/60 to-emerald-50/40">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative py-20 overflow-hidden bg-gradient-to-b from-white via-green-50/45 to-white">
+      <div class="absolute -top-20 left-1/2 -translate-x-1/2 w-[36rem] h-56 bg-green-200/25 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 bg-green-500/10 border border-green-500/25 rounded-full px-4 py-1.5 text-xs text-green-700 font-medium mb-4">
           <i class="fab fa-line"></i>無料LINE相談
         </div>
@@ -409,8 +410,10 @@ async function initHomePage() {
     </section>
 
     <!-- 大学別求人セクション -->
-    <section class="py-16 border-b border-gray-100 bg-gradient-to-br from-primary-50/40 to-purple-50/30">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative py-20 overflow-hidden bg-gradient-to-b from-white via-primary-50/40 to-white">
+      <div class="absolute -top-16 right-[8%] w-72 h-72 bg-purple-200/20 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="absolute -bottom-24 left-[8%] w-80 h-80 bg-primary-200/20 blur-3xl rounded-full pointer-events-none"></div>
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/25 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-4">
           <i class="fas fa-university"></i>大学別求人
         </div>
@@ -490,7 +493,7 @@ async function initHomePage() {
     </section>
 
     <!-- 内定者タイムライン（自動横スクロール） -->
-    ${showSuccessStories && successStories.length > 0 ? `
+    ${successStories.length > 0 ? `
     <section id="success-stories" class="py-20 overflow-hidden bg-gradient-to-r from-primary-50/30 via-white to-purple-50/30" aria-labelledby="success-stories-title">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
         <div class="text-center">
