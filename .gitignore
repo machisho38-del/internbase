@@ -34,3 +34,7 @@ lerna-debug.log*
 
 # generated assets
 public/og-default.png
+
+# browser test artifacts
+playwright-report/
+test-results/

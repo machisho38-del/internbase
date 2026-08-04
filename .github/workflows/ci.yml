@@ -42,6 +42,8 @@ jobs:
         run: |
           node --check public/static/admin.js
           node --check public/static/public.js
+          node --check e2e/preview.spec.mjs
+          node --check playwright.config.mjs
 
       - name: Verify admin content actions
         run: npm run check:admin-actions

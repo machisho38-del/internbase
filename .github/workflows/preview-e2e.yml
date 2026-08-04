@@ -1,0 +1,71 @@
+name: Preview E2E
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_url:
+        description: Cloudflare Pages Branch Preview URL (https://...internship-site.pages.dev)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: preview-e2e-${{ inputs.preview_url }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test public and admin Preview pages
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      PREVIEW_BASE_URL: ${{ inputs.preview_url }}
+      PREVIEW_ADMIN_EMAIL: ${{ secrets.PREVIEW_ADMIN_EMAIL }}
+      PREVIEW_ADMIN_PASSWORD: ${{ secrets.PREVIEW_ADMIN_PASSWORD }}
+
+    steps:
+      - name: Validate Preview URL
+        shell: bash
+        run: |
+          node - <<'NODE'
+          const url = new URL(process.env.PREVIEW_BASE_URL)
+          const productionHost = 'internship-site.pages.dev'
+          if (url.protocol !== 'https:' || !url.hostname.endsWith(`.${productionHost}`) || url.hostname === productionHost) {
+            throw new Error(`Only Branch Preview URLs under *.${productionHost} are allowed`)
+          }
+          console.log(`Testing ${url.origin}`)
+          NODE
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install project dependencies
+        run: npm ci
+
+      # Keep Playwright outside package-lock so normal production installs stay small.
+      - name: Install Playwright test runner
+        run: |
+          npm install --no-save --package-lock=false @playwright/test@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Run Preview E2E tests
+        run: npx playwright test --config=playwright.config.mjs
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: preview-e2e-report
+          path: |
+            playwright-report/
+            test-results/
+          if-no-files-found: ignore
+          retention-days: 7

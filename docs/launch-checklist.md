@@ -45,6 +45,14 @@
 - Preview の `/jobs`、求人詳細、大学別求人、登録、ログイン、管理画面を確認できる。
 - Preview の登録・編集・削除が `internship-preview` のみに反映され、Production のデータが変化しない。
 
+### Preview E2E 自動確認
+
+GitHub の **Actions → Preview E2E → Run workflow** を開き、確認対象の Branch Preview URL を入力する。公開ページ、SEO、404、robots/sitemapは常に自動確認される。
+
+管理画面も自動確認する場合は、リポジトリの Actions secrets に Preview 専用管理者の `PREVIEW_ADMIN_EMAIL` と `PREVIEW_ADMIN_PASSWORD` を登録する。資格情報が未設定の場合、管理画面テストだけがSkipされる。テストは表示・移動・モーダル開閉のみで、Preview D1のデータ追加・編集・削除は行わない。
+
+失敗時はActions実行結果のArtifactsから `preview-e2e-report` をダウンロードし、スクリーンショット・動画・トレースを確認する。
+
 ## 正式公開の切り替え
 
 1. Preview の最終確認と CI が成功していることを確認する。
