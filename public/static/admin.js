@@ -3,6 +3,7 @@
 // ==========================================
 
 const API = axios.create({ baseURL: '/api', withCredentials: true });
+let featuredJobChoices = [];
 
 const JOB_OCCUPATION_OPTIONS = ['営業', 'マーケティング', 'コンサルティング', '事務', 'エンジニア', '人事', '事業開発', 'その他'];
 
@@ -2427,37 +2428,48 @@ async function loadSuccessStories() {
 
 async function showSuccessStoryModal(id = null) {
   let story = { student_name: '', university: '', company_name: '', comment: '', is_visible: 1, display_order: 0 };
-  if (id) {
-    const res = await API.get('/homepage/success-stories/admin');
-    story = res.data.data.find(s => s.id === id) || story;
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('モーダルを開けませんでした。画面を再読み込みして再度お試しください。');
+    return;
   }
-  
-  document.getElementById('modal-container').innerHTML = `
-    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
-      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6 max-h-[90vh] overflow-y-auto">
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/success-stories/admin');
+      story = res.data.data.find(s => Number(s.id) === Number(id)) || story;
+    } catch(e) {
+      alert('内定者タイムラインを取得できませんでした: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
         <h3 class="text-lg font-bold mb-4">${id ? '内定者タイムライン編集' : '内定者タイムライン追加'}</h3>
         <form onsubmit="${id ? `submitUpdateSuccessStory(event, ${id})` : 'submitCreateSuccessStory(event)'}" class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">学生名（例: 山田 太郎さん）<span class="text-red-400">*</span></label>
-              <input type="text" name="student_name" value="${story.student_name.replace(/"/g,'&quot;')}" required
+              <input type="text" name="student_name" value="${escapeAdminHtml(story.student_name || '')}" required
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
-              <input type="text" name="university" value="${story.university.replace(/"/g,'&quot;')}" required
+              <input type="text" name="university" value="${escapeAdminHtml(story.university || '')}" required
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1.5">内定先企業名<span class="text-red-400">*</span></label>
-            <input type="text" name="company_name" value="${story.company_name.replace(/"/g,'&quot;')}" required
+            <input type="text" name="company_name" value="${escapeAdminHtml(story.company_name || '')}" required
               class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
           </div>
           <div>
             <label class="block text-xs text-gray-400 mb-1.5">所感（1-2行）</label>
             <textarea name="comment" rows="2"
-              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${story.comment||''}</textarea>
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(story.comment || '')}</textarea>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -2482,9 +2494,9 @@ async function showSuccessStoryModal(id = null) {
             </button>
           </div>
         </form>
-      </div>
     </div>
   `;
+  modal.classList.remove('hidden');
 }
 
 async function submitCreateSuccessStory(e) {
@@ -2501,10 +2513,10 @@ async function submitCreateSuccessStory(e) {
   try {
     await API.post('/homepage/success-stories/admin', data);
     closeModal();
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('追加失敗: ' + e.message);
+    alert('追加失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2522,10 +2534,10 @@ async function submitUpdateSuccessStory(e, id) {
   try {
     await API.put(`/homepage/success-stories/admin/${id}`, data);
     closeModal();
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('更新失敗: ' + e.message);
+    alert('更新失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2533,10 +2545,10 @@ async function deleteSuccessStory(id) {
   if (!confirm('この内定者タイムラインを削除しますか？')) return;
   try {
     await API.delete(`/homepage/success-stories/admin/${id}`);
-    loadSuccessStories();
+    await loadSuccessStories();
     showSaveMsg('story-save-msg');
   } catch(e) {
-    alert('削除失敗: ' + e.message);
+    alert('削除失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2554,6 +2566,9 @@ async function loadFeaturedJobs() {
     ]);
     const featured = featuredRes.data.data;
     const allJobs = allJobsRes.data.data;
+    const availableJobCount = allJobs.filter(job =>
+      !featured.some(item => Number(item.job_id) === Number(job.id))
+    ).length;
 
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
@@ -2564,7 +2579,14 @@ async function loadFeaturedJobs() {
       </div>
       <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
         <p class="text-blue-300 mb-2"><i class="fas fa-info-circle mr-1"></i>トップページ「人気の求人5選」に表示される求人を管理します。</p>
-        <p class="text-gray-400 text-xs">表示順が小さい順に最大5件まで公開されます。</p>
+        <p class="text-gray-400 text-xs">表示順が小さい順に最大5件まで公開されます。登録求人 ${allJobs.length}件／設定済み ${featured.length}件／追加可能 ${availableJobCount}件</p>
+        ${availableJobCount === 0 ? `
+          <p class="text-yellow-300 text-xs mt-2">
+            <i class="fas fa-exclamation-triangle mr-1"></i>追加できる求人がありません。新しい求人を追加する場合は、先に
+            <button type="button" onclick="navigate('jobs')" class="underline hover:text-yellow-200">求人管理</button>
+            で求人を登録してください。設定済み求人の内容は、下表の「編集」から変更できます。
+          </p>
+        ` : ''}
       </div>
       <div id="featured-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
         <i class="fas fa-check-circle mr-1"></i>保存しました
@@ -2611,17 +2633,6 @@ async function loadFeaturedJobs() {
 }
 
 async function showFeaturedJobModal(id = null) {
-  const [featuredRes, allJobsRes] = await Promise.all([
-    API.get('/homepage/featured-jobs/admin'),
-    API.get('/jobs/admin/all')
-  ]);
-  const allJobs = allJobsRes.data.data;
-  let featured = { job_id: '', is_visible: 1, display_order: 0 };
-  
-  if (id) {
-    featured = featuredRes.data.data.find(f => f.id === id) || featured;
-  }
-  
   const modal = document.getElementById('modal');
   const modalContent = document.getElementById('modal-content');
   if (!modal || !modalContent) {
@@ -2629,29 +2640,86 @@ async function showFeaturedJobModal(id = null) {
     return;
   }
 
+  // 通信完了前にモーダルを表示し、クリックが反応していることを明確にする。
+  modalContent.innerHTML = `
+    <div class="p-8 text-center">
+      <i class="fas fa-spinner fa-spin text-primary-400 text-2xl mb-3"></i>
+      <p class="text-sm text-gray-400">求人情報を読み込んでいます...</p>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+
+  let featuredRes;
+  let allJobsRes;
+  try {
+    [featuredRes, allJobsRes] = await Promise.all([
+      API.get('/homepage/featured-jobs/admin'),
+      API.get('/jobs/admin/all')
+    ]);
+  } catch(e) {
+    modalContent.innerHTML = `
+      <div class="p-6">
+        <h3 class="text-lg font-bold mb-3">求人情報を取得できませんでした</h3>
+        <p class="text-sm text-red-400 mb-5">${escapeAdminHtml(getApiErrorMessage(e))}</p>
+        <div class="flex justify-end gap-3">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white">閉じる</button>
+          <button type="button" onclick="showFeaturedJobModal(${id === null ? 'null' : Number(id)})" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg">再試行</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  const allJobs = allJobsRes.data.data;
+  const featuredJobs = featuredRes.data.data;
+  let featured = { job_id: '', is_visible: 1, display_order: 0 };
+  
+  if (id) {
+    featured = featuredJobs.find(f => f.id === id) || featured;
+  }
+
+  const selectableJobs = allJobs.filter(job =>
+    Number(job.id) === Number(featured.job_id) ||
+    !featuredJobs.some(item => Number(item.job_id) === Number(job.id))
+  );
+  featuredJobChoices = selectableJobs;
+  const selectedJob = selectableJobs.find(job => Number(job.id) === Number(featured.job_id));
+  const selectedJobLabel = selectedJob ? `${selectedJob.title} (${selectedJob.company_name})` : '';
+
   modalContent.innerHTML = `
     <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
       <div class="bg-dark-800 rounded-2xl w-full max-w-lg p-6">
         <h3 class="text-lg font-bold mb-4">${id ? 'ピックアップ求人編集' : 'ピックアップ求人追加'}</h3>
         <form onsubmit="${id ? `submitUpdateFeaturedJob(event, ${id})` : 'submitCreateFeaturedJob(event)'}" class="space-y-4">
           <div>
-            <label class="block text-xs text-gray-400 mb-1.5">求人を選択<span class="text-red-400">*</span></label>
-            <select name="job_id" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
-              <option value="">選択してください</option>
-              ${allJobs.map(j => `<option value="${j.id}" ${j.id === featured.job_id ? 'selected' : ''}>${j.title} (${j.company_name})</option>`).join('')}
-            </select>
+            <label class="block text-xs text-gray-400 mb-1.5">求人を検索して選択<span class="text-red-400">*</span></label>
+            <input type="hidden" name="job_id" value="${featured.job_id}">
+            <div class="relative">
+              <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                <input id="featured-job-search" type="search" value="${escapeAdminHtml(selectedJobLabel)}"
+                  placeholder="求人名・企業名で検索"
+                  oninput="filterFeaturedJobChoices(this.value)" onfocus="renderFeaturedJobChoices(this.value)"
+                  autocomplete="off"
+                  class="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
+              </div>
+              <div id="featured-job-results" class="hidden absolute z-[60] left-0 right-0 mt-1 max-h-56 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl"></div>
+            </div>
+            <p id="featured-job-selected" class="${selectedJob ? '' : 'hidden'} mt-2 text-xs text-green-400">
+              <i class="fas fa-check-circle mr-1"></i><span>${selectedJob ? `選択中: ${escapeAdminHtml(selectedJobLabel)}` : ''}</span>
+            </p>
+            ${selectableJobs.length === 0 ? '<p class="mt-2 text-xs text-yellow-400">追加可能な求人がありません。先に求人管理で新しい求人を登録するか、設定済み求人を編集してください。</p>' : ''}
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">表示順</label>
               <input type="number" name="display_order" value="${featured.display_order}" min="0"
-                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">公開設定</label>
-              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
-                <option value="1" ${featured.is_visible?'selected':''}>公開</option>
-                <option value="0" ${!featured.is_visible?'selected':''}>非公開</option>
+              <select name="is_visible" class="featured-job-control w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900">
+                <option value="1" style="background:#fff;color:#111827" ${featured.is_visible?'selected':''}>公開</option>
+                <option value="0" style="background:#fff;color:#111827" ${!featured.is_visible?'selected':''}>非公開</option>
               </select>
             </div>
           </div>
@@ -2659,7 +2727,7 @@ async function showFeaturedJobModal(id = null) {
             <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
               キャンセル
             </button>
-            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+            <button type="submit" ${selectableJobs.length === 0 ? 'disabled' : ''} class="bg-primary-500 hover:bg-primary-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm px-6 py-2 rounded-lg transition-colors">
               ${id ? '更新' : '追加'}
             </button>
           </div>
@@ -2670,9 +2738,58 @@ async function showFeaturedJobModal(id = null) {
   modal.classList.remove('hidden');
 }
 
+function filterFeaturedJobChoices(query) {
+  const jobIdInput = document.querySelector('#modal-content input[name="job_id"]');
+  if (jobIdInput) jobIdInput.value = '';
+  document.getElementById('featured-job-selected')?.classList.add('hidden');
+  renderFeaturedJobChoices(query);
+}
+
+function renderFeaturedJobChoices(query = '') {
+  const results = document.getElementById('featured-job-results');
+  if (!results) return;
+
+  const normalizedQuery = String(query).trim().toLowerCase();
+  const matches = featuredJobChoices.filter(job =>
+    `${job.title} ${job.company_name}`.toLowerCase().includes(normalizedQuery)
+  );
+
+  results.innerHTML = matches.length
+    ? matches.map(job => `
+        <button type="button" onclick="selectFeaturedJobChoice(${Number(job.id)})"
+          class="block w-full px-4 py-3 text-left bg-white text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none border-b border-gray-100 last:border-b-0">
+          <span class="block text-sm font-medium text-gray-900">${escapeAdminHtml(job.title)}</span>
+          <span class="block mt-0.5 text-xs text-gray-600">${escapeAdminHtml(job.company_name)}</span>
+        </button>
+      `).join('')
+    : '<p class="px-4 py-4 text-sm text-gray-600 bg-white">条件に一致する求人がありません</p>';
+  results.classList.remove('hidden');
+}
+
+function selectFeaturedJobChoice(jobId) {
+  const job = featuredJobChoices.find(item => Number(item.id) === Number(jobId));
+  if (!job) return;
+
+  const label = `${job.title} (${job.company_name})`;
+  const jobIdInput = document.querySelector('#modal-content input[name="job_id"]');
+  const searchInput = document.getElementById('featured-job-search');
+  const selected = document.getElementById('featured-job-selected');
+  if (jobIdInput) jobIdInput.value = String(job.id);
+  if (searchInput) searchInput.value = label;
+  if (selected) {
+    selected.querySelector('span').textContent = `選択中: ${label}`;
+    selected.classList.remove('hidden');
+  }
+  document.getElementById('featured-job-results')?.classList.add('hidden');
+}
+
 async function submitCreateFeaturedJob(e) {
   e.preventDefault();
   const form = e.target;
+  if (!form.job_id.value) {
+    alert('追加する求人を検索結果から選択してください');
+    return;
+  }
   const data = {
     job_id: Number(form.job_id.value),
     is_visible: Number(form.is_visible.value),
@@ -2681,16 +2798,20 @@ async function submitCreateFeaturedJob(e) {
   try {
     await API.post('/homepage/featured-jobs/admin', data);
     closeModal();
-    loadFeaturedJobs();
+    await loadFeaturedJobs();
     showSaveMsg('featured-save-msg');
   } catch(e) {
-    alert('追加失敗: ' + e.message);
+    alert('追加失敗: ' + getApiErrorMessage(e));
   }
 }
 
 async function submitUpdateFeaturedJob(e, id) {
   e.preventDefault();
   const form = e.target;
+  if (!form.job_id.value) {
+    alert('更新する求人を検索結果から選択してください');
+    return;
+  }
   const data = {
     job_id: Number(form.job_id.value),
     is_visible: Number(form.is_visible.value),
@@ -2699,10 +2820,10 @@ async function submitUpdateFeaturedJob(e, id) {
   try {
     await API.put(`/homepage/featured-jobs/admin/${id}`, data);
     closeModal();
-    loadFeaturedJobs();
+    await loadFeaturedJobs();
     showSaveMsg('featured-save-msg');
   } catch(e) {
-    alert('更新失敗: ' + e.message);
+    alert('更新失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2787,26 +2908,37 @@ async function loadUniversityTags() {
 
 async function showUniversityTagModal(id = null) {
   let tag = { name: '', slug: '', description: '', is_visible: 1, display_order: 0 };
-  if (id) {
-    const res = await API.get('/homepage/university-tags/admin');
-    tag = res.data.data.find(t => t.id === id) || tag;
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('モーダルを開けませんでした。画面を再読み込みして再度お試しください。');
+    return;
   }
-  
-  document.getElementById('modal-container').innerHTML = `
-    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
-      <div class="bg-dark-800 rounded-2xl w-full max-w-2xl p-6">
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/university-tags/admin');
+      tag = res.data.data.find(t => Number(t.id) === Number(id)) || tag;
+    } catch(e) {
+      alert('大学タグを取得できませんでした: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
         <h3 class="text-lg font-bold mb-4">${id ? '大学タグ編集' : '大学タグ追加'}</h3>
         <form onsubmit="${id ? `submitUpdateUniversityTag(event, ${id})` : 'submitCreateUniversityTag(event)'}" class="space-y-4">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">大学名<span class="text-red-400">*</span></label>
-              <input type="text" name="name" value="${tag.name.replace(/"/g,'&quot;')}" required
+              <input type="text" name="name" value="${escapeAdminHtml(tag.name || '')}" required
                 placeholder="例: 東京大学"
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1.5">スラッグ（URL用）<span class="text-red-400">*</span></label>
-              <input type="text" name="slug" value="${tag.slug.replace(/"/g,'&quot;')}" required
+              <input type="text" name="slug" value="${escapeAdminHtml(tag.slug || '')}" required
                 placeholder="例: todai"
                 class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono">
             </div>
@@ -2815,7 +2947,7 @@ async function showUniversityTagModal(id = null) {
             <label class="block text-xs text-gray-400 mb-1.5">説明文</label>
             <textarea name="description" rows="2"
               placeholder="例: 日本最高峰の学府。トップ企業への内定実績多数。"
-              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${tag.description||''}</textarea>
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(tag.description || '')}</textarea>
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
@@ -2840,9 +2972,9 @@ async function showUniversityTagModal(id = null) {
             </button>
           </div>
         </form>
-      </div>
     </div>
   `;
+  modal.classList.remove('hidden');
 }
 
 async function submitCreateUniversityTag(e) {
@@ -2858,10 +2990,10 @@ async function submitCreateUniversityTag(e) {
   try {
     await API.post('/homepage/university-tags/admin', data);
     closeModal();
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('追加失敗: ' + e.message);
+    alert('追加失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2878,10 +3010,10 @@ async function submitUpdateUniversityTag(e, id) {
   try {
     await API.put(`/homepage/university-tags/admin/${id}`, data);
     closeModal();
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('更新失敗: ' + e.message);
+    alert('更新失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2889,10 +3021,10 @@ async function deleteUniversityTag(id) {
   if (!confirm('この大学タグを削除しますか？紐付いている求人からも解除されます。')) return;
   try {
     await API.delete(`/homepage/university-tags/admin/${id}`);
-    loadUniversityTags();
+    await loadUniversityTags();
     showSaveMsg('tag-save-msg');
   } catch(e) {
-    alert('削除失敗: ' + e.message);
+    alert('削除失敗: ' + getApiErrorMessage(e));
   }
 }
 
@@ -2905,6 +3037,16 @@ function showSaveMsg(id) {
     msg.classList.remove('hidden');
     setTimeout(() => msg.classList.add('hidden'), 3000);
   }
+}
+
+function getApiErrorMessage(error) {
+  return error?.response?.data?.error || error?.message || '不明なエラー';
+}
+
+function escapeAdminHtml(value) {
+  return String(value).replace(/[&<>'"]/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[character]);
 }
 
 // 初期化
