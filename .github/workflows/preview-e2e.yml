@@ -57,15 +57,39 @@ jobs:
           npx playwright install --with-deps chromium
 
       - name: Run Preview E2E tests
-        run: npx playwright test --config=playwright.config.mjs
+        id: playwright
+        shell: bash
+        run: |
+          set +e
+          npx playwright test --config=playwright.config.mjs 2>&1 | tee playwright-output.log
+          test_status=${PIPESTATUS[0]}
+
+          {
+            echo "## Preview E2E result"
+            echo
+            if [ "$test_status" -eq 0 ]; then
+              echo "✅ All enabled Preview E2E tests passed."
+            else
+              echo "❌ Preview E2E failed with exit code $test_status."
+              echo
+              echo "The final part of the Playwright output is included below. Download \`preview-e2e-report\` for screenshots, videos, and traces."
+              echo
+              echo '```text'
+              tail -n 160 playwright-output.log
+              echo '```'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          exit "$test_status"
 
       - name: Upload Playwright report
         if: always()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: preview-e2e-report
           path: |
             playwright-report/
             test-results/
+            playwright-output.log
           if-no-files-found: ignore
           retention-days: 7
