@@ -31,3 +31,10 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+
+# generated assets
+public/og-default.png
+
+# browser test artifacts
+playwright-report/
+test-results/
