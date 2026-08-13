@@ -12,5 +12,17 @@
       "database_name": "internship-production",
       "database_id": "67fcdefe-d10b-4f52-b391-a96181f1813b"
     }
-  ]
+  ],
+  // Cloudflare Pages preview deployments must never use the production D1 database.
+  "env": {
+    "preview": {
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "internship-preview",
+          "database_id": "5e253111-57f2-4f1d-bbaa-67c3b7f6e764"
+        }
+      ]
+    }
+  }
 }
