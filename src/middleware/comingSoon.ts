@@ -2,6 +2,7 @@ import { createMiddleware } from 'hono/factory'
 import { getCookie } from 'hono/cookie'
 import { Bindings } from '../types'
 import { escapeHtml, getPublicOrigin, renderSeoTags } from '../utils/seo'
+import { isPreviewDeployment } from '../utils/deployment'
 
 // 公開前も運用に必要な画面・静的アセット・法務ページは利用可能にする。
 const ALWAYS_ALLOWED_PREFIXES = ['/admin', '/static/', '/favicon']
@@ -27,6 +28,10 @@ async function hasValidAdminSession(c: any): Promise<boolean> {
 
 export const comingSoonMiddleware = createMiddleware<{ Bindings: Bindings }>(async (c, next) => {
   const path = c.req.path
+
+  // Branch Preview always exposes the application under test. Production's
+  // Coming Soon setting must not mask routes or turn public APIs into 503s.
+  if (isPreviewDeployment(c)) return await next()
 
   // 管理画面・静的アセット・法務ページはスキップ
   if (ALWAYS_ALLOWED_PREFIXES.some(prefix => path.startsWith(prefix)) || ALWAYS_ALLOWED_EXACT.includes(path)) {

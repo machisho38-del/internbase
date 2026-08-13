@@ -50,10 +50,6 @@ export function getPublicOrigin(c: Context<{ Bindings: Bindings }>): string {
   return validHttpOrigin(c.env.PUBLIC_SITE_URL) || new URL(c.req.url).origin
 }
 
-export function isPreviewDeployment(c: Context<{ Bindings: Bindings }>): boolean {
-  return Boolean(c.env.CF_PAGES_BRANCH && c.env.CF_PAGES_BRANCH !== 'main')
-}
-
 export function absoluteUrl(origin: string, value: string): string {
   try {
     return new URL(value, `${origin}/`).toString()
