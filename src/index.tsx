@@ -12,7 +12,8 @@ import authApi from './routes/api.auth'
 import settingsApi from './routes/api.settings'
 import homepageApi from './routes/api.homepage'
 import { comingSoonMiddleware } from './middleware/comingSoon'
-import { absoluteUrl, escapeXml, getPublicOrigin, isPreviewDeployment, renderSeoTags, stripMarkup, truncateDescription, type SeoMetadata } from './utils/seo'
+import { absoluteUrl, escapeXml, getPublicOrigin, renderSeoTags, stripMarkup, truncateDescription, type SeoMetadata } from './utils/seo'
+import { isPreviewDeployment } from './utils/deployment'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
