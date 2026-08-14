@@ -62,7 +62,9 @@ jobs:
         env:
           CLOUDFLARE_PRODUCTION_D1_ID: ${{ vars.CLOUDFLARE_PRODUCTION_D1_ID }}
         run: |
-          cat > "$RUNNER_TEMP/wrangler-production-ci.jsonc" <<EOF
+          # Keep the temporary config at the repository root so Wrangler's
+          # default ./migrations directory resolves to the checked-out files.
+          cat > "$GITHUB_WORKSPACE/.wrangler-production-ci.jsonc" <<EOF
           {
             "name": "internship-site-production-migrations",
             "compatibility_date": "2026-04-08",
@@ -82,7 +84,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: >-
           npx wrangler d1 migrations list DB --remote
-          --config "$RUNNER_TEMP/wrangler-production-ci.jsonc"
+          --config "$GITHUB_WORKSPACE/.wrangler-production-ci.jsonc"
 
       - name: Apply production migrations
         env:
@@ -90,7 +92,7 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: >-
           npx wrangler d1 migrations apply DB --remote
-          --config "$RUNNER_TEMP/wrangler-production-ci.jsonc"
+          --config "$GITHUB_WORKSPACE/.wrangler-production-ci.jsonc"
 
       - name: Verify migrations and Coming Soon mode
         env:
@@ -98,9 +100,9 @@ jobs:
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
         run: |
           npx wrangler d1 migrations list DB --remote \
-            --config "$RUNNER_TEMP/wrangler-production-ci.jsonc"
+            --config "$GITHUB_WORKSPACE/.wrangler-production-ci.jsonc"
           npx wrangler d1 execute DB --remote --json \
-            --config "$RUNNER_TEMP/wrangler-production-ci.jsonc" \
+            --config "$GITHUB_WORKSPACE/.wrangler-production-ci.jsonc" \
             --command "SELECT setting_value FROM site_settings WHERE setting_key = 'site_mode';" \
             > "$RUNNER_TEMP/site-mode.json"
           SITE_MODE=$(node -e '
