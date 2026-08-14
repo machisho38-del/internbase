@@ -59,8 +59,8 @@
 | --- | --- |
 | Pages project | `internship-site` |
 | Preview branch | `codex-preview` |
-| D1 database | `internship-production` |
-| D1 database id | `67fcdefe-d10b-4f52-b391-a96181f1813b` |
+| Production D1 database | `internship-production` |
+| Preview D1 database | `internship-preview` |
 
 ## 関係者確認時の見方
 
