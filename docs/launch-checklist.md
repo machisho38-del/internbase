@@ -34,8 +34,9 @@
    - 問い合わせメールアドレス
    - 規約最終更新日
 3. プライバシーポリシーと利用規約を事業内容に合わせて専門家が確認する。
-4. Production D1 のバックアップを取得してから、同じマイグレーションを適用する。
-5. Production の `site_mode` が `coming_soon` のままであることを確認してデプロイする。
+4. Production D1 の Time Travel Bookmark ID を取得して安全な場所に保存する。
+5. GitHub の **Actions → Migrate production D1 → Run workflow** を開き、`main` を選択して確認欄へ `APPLY-PRODUCTION-MIGRATIONS` と入力する。`production` Environment には承認ルールを設定しておく。
+6. Workflow が成功し、Production の `site_mode` が `coming_soon` のままであることを確認する。
 
 ## Coming Soon 期間の確認
 
