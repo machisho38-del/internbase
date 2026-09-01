@@ -292,13 +292,13 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         extend: {
           colors: {
             primary: {
-              50: '#f0f4ff',
-              100: '#e0e9ff',
-              400: '#6b8afd',
-              500: '#4f6ef7',
-              600: '#3b5ce6',
-              700: '#2945d4',
-              900: '#1a2f99'
+              50: '#eef4ff',
+              100: '#dbe8ff',
+              400: '#5b7df7',
+              500: '#315eea',
+              600: '#244bd1',
+              700: '#1f3fae',
+              900: '#172b67'
             },
             purple: {
               50: '#faf5ff',
@@ -315,21 +315,36 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
             }
           },
           fontFamily: {
-            sans: ['Noto Sans JP', 'sans-serif']
+            sans: ['Noto Sans JP', 'sans-serif'],
+            display: ['Zen Kaku Gothic New', 'Noto Sans JP', 'sans-serif']
           }
         }
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Noto Sans JP', sans-serif; }
-    .glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%), linear-gradient(to bottom, #f8faff, #ffffff); }
+    .glass { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border: 1px solid #dfe6f2; box-shadow: 0 8px 30px rgba(23,43,103,0.07); }
+    .gradient-text { background: linear-gradient(120deg, #244bd1, #315eea 55%, #ff7337); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-gradient { background: radial-gradient(circle at 8% 12%, rgba(49,94,234,.16), transparent 25%), radial-gradient(circle at 48% 88%, rgba(255,115,55,.13), transparent 30%), linear-gradient(135deg, #f9fbff 0%, #edf3ff 62%, #fff4ec 100%); }
+    .hero-copy-zone { position: relative; isolation: isolate; }
+    .hero-copy-zone::before { content: ''; position: absolute; z-index: -1; left: -2.5rem; top: 1rem; width: 8rem; height: 8rem; border: 1px solid rgba(49,94,234,.14); border-radius: 999px; }
+    .hero-title-lead { font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif; color: #244bd1; font-weight: 700; letter-spacing: .08em; }
+    .hero-title { font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif; letter-spacing: -.055em; text-wrap: balance; }
+    .hero-title-accent { position: relative; display: inline-block; color: #172b67; z-index: 0; }
+    .hero-title-accent::after { content: ''; position: absolute; z-index: -1; height: .24em; left: -.03em; right: -.05em; bottom: .06em; background: linear-gradient(90deg, #ff7337, #ffad6f); border-radius: 999px; opacity: .72; }
+    .home-hero-photo { background: linear-gradient(90deg, rgba(16,32,74,.18), rgba(16,32,74,0)), url('/images/hero-internship-team.webp') center/cover no-repeat; }
+    .search-panel { background: #fff; border: 1px solid #dfe6f2; box-shadow: 0 22px 55px rgba(23,43,103,.15); }
+    .search-field { min-width: 0; background: #f8faff; border: 1px solid #d8e1ef; color: #14213d; transition: border-color .2s, box-shadow .2s, background .2s; }
+    .search-field:focus { outline: none; background: #fff; border-color: #315eea; box-shadow: 0 0 0 3px rgba(49,94,234,.12); }
+    .section-kicker { display: inline-flex; align-items: center; gap: .55rem; color: #315eea; font-size: .75rem; letter-spacing: .15em; font-weight: 900; text-transform: uppercase; }
+    .section-kicker::before { content: ''; width: 1.75rem; height: 3px; background: #ff7337; border-radius: 999px; }
+    .job-card-media { aspect-ratio: 16 / 8.7; background: linear-gradient(135deg, #eaf0ff, #fff2e8); overflow: hidden; }
+    @media (min-width: 1024px) { .home-hero-photo { min-height: 30rem; } }
     .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.5); box-shadow: 0 12px 24px rgba(79,110,247,0.12); }
-    .tag { background: rgba(79,110,247,0.12); border: 1px solid rgba(79,110,247,0.3); color: #2945d4; font-weight: 500; }
+    .card-hover:hover { transform: translateY(-5px); border-color: rgba(49,94,234,.45); box-shadow: 0 20px 40px rgba(23,43,103,.13); }
+    .tag { background: #eef4ff; border: 1px solid #d4e0ff; color: #1f3fae; font-weight: 600; }
     .fade-in { animation: fadeIn 0.6s ease-out; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
@@ -359,6 +374,9 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       border-color: #d1d5db !important;
     }
     #search-q,
+    #home-search-q,
+    #home-filter-occupation,
+    #home-filter-style,
     #uni-search,
     #filter-occupation,
     #filter-industry,
@@ -398,13 +416,13 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
 <body class="bg-white text-gray-900 min-h-screen">
 
   <!-- ナビゲーション -->
-  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-[0_4px_20px_rgba(23,43,103,0.06)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
+      <div class="flex justify-between items-center h-[72px]">
         <a href="/" class="flex items-center gap-2">
           <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="ガクチカインターン">
-          <div class="js-site-logo-icon w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
-            <i class="fas fa-rocket text-white text-sm"></i>
+          <div class="js-site-logo-icon w-9 h-9 bg-primary-600 rounded-xl flex items-center justify-center shadow-md shadow-primary-500/20">
+            <i class="fas fa-arrow-trend-up text-white text-sm"></i>
           </div>
           <span class="js-site-name text-xl font-bold gradient-text">ガクチカインターン</span>
         </a>
@@ -417,8 +435,8 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
           <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 text-gray-600 hover:text-primary-600 text-sm px-2 py-2 rounded-lg transition-colors font-medium">
             <i class="fas fa-right-to-bracket text-base"></i>ログイン
           </a>
-          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-4 py-2 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
-            <i class="fas fa-user-plus text-base"></i>事前登録
+          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-sm px-4 py-2.5 rounded-xl transition-all font-bold shadow-md shadow-primary-500/20">
+            <i class="fas fa-user-plus text-base"></i>無料登録
           </a>
           <button onclick="openLineModal()" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium cursor-pointer border-none">
             <i class="fab fa-line text-base"></i>LINE相談
@@ -443,7 +461,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
           <i class="fas fa-comments text-primary-500 w-4"></i>無料相談
         </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fas fa-user-plus text-primary-500 w-4"></i>事前登録する
+          <i class="fas fa-user-plus text-primary-500 w-4"></i>無料登録する
         </a>
         <a href="/login" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-right-to-bracket text-primary-500 w-4"></i>ログイン
@@ -649,48 +667,48 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </script>
 
   <!-- メインコンテンツ -->
-  <main id="app" class="pt-16"></main>
+  <main id="app" class="pt-[72px]"></main>
 
   <!-- フッター -->
-  <footer class="border-t border-gray-200 mt-24 py-12 bg-gradient-to-b from-white to-gray-50">
+  <footer class="mt-24 py-14 bg-slate-950 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
             <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="ガクチカインターン">
-            <div class="js-site-logo-icon w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-rocket text-white text-xs"></i>
+            <div class="js-site-logo-icon w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-arrow-trend-up text-white text-xs"></i>
             </div>
-            <span class="js-site-name font-bold gradient-text">ガクチカインターン</span>
+            <span class="js-site-name font-bold text-white">ガクチカインターン</span>
           </div>
-          <p id="footer-site-description" class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
+          <p id="footer-site-description" class="text-slate-400 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">求人を探す</h4>
-          <ul class="space-y-2 text-gray-600 text-sm">
+          <h4 class="text-sm font-semibold mb-3 text-white">求人を探す</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
             <li><a href="/jobs" class="hover:text-primary-600 transition-colors">全ての求人</a></li>
             <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">勤務形態</a></li>
             <li><a href="/jobs?industry=IT・SaaS" class="hover:text-primary-600 transition-colors">業界</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">サービス</h4>
-          <ul class="space-y-2 text-gray-600 text-sm">
+          <h4 class="text-sm font-semibold mb-3 text-white">サービス</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
             <li><a href="/register" class="hover:text-primary-600 transition-colors">新規登録</a></li>
             <li><a href="/consultation" class="hover:text-primary-600 transition-colors">無料相談</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">公式LINE</h4>
-          <p class="text-gray-600 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
+          <h4 class="text-sm font-semibold mb-3 text-white">公式LINE</h4>
+          <p class="text-slate-400 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
           <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors border-none cursor-pointer">
             <i class="fab fa-line"></i>LINEを追加
           </button>
         </div>
       </div>
-      <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <p id="footer-copyright" class="text-gray-500 text-xs">© 2026 ガクチカインターン. All rights reserved.</p>
-        <div class="flex gap-4 text-gray-500 text-xs">
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p id="footer-copyright" class="text-slate-500 text-xs">© 2026 ガクチカインターン. All rights reserved.</p>
+        <div class="flex gap-4 text-slate-500 text-xs">
           <a href="/company" class="hover:text-primary-600 transition-colors">運営者情報</a>
           <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
           <a id="footer-terms-link" href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>

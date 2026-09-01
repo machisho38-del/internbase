@@ -68,6 +68,24 @@ test.describe('Preview public site', () => {
     expect(JSON.parse(jsonLd)['@type']).toBe('JobPosting');
   });
 
+  test('development seed content is not publicly exposed', async ({ request }) => {
+    const jobsResponse = await request.get('/api/jobs?visibility=public');
+    expect(jobsResponse.status()).toBe(200);
+    const jobsPayload = await jobsResponse.json();
+    const publicJobSlugs = (jobsPayload.data || []).map(job => job.slug);
+    expect(publicJobSlugs).not.toContain('acroforce-sales');
+    expect(publicJobSlugs).not.toContain('techgrowth-marketing');
+    expect(publicJobSlugs).not.toContain('sssssssssss');
+
+    const storiesResponse = await request.get('/api/homepage/success-stories');
+    expect(storiesResponse.status()).toBe(200);
+    expect((await storiesResponse.json()).data || []).toEqual([]);
+
+    const universitiesResponse = await request.get('/api/homepage/university-tags');
+    expect(universitiesResponse.status()).toBe(200);
+    expect((await universitiesResponse.json()).data || []).toEqual([]);
+  });
+
   test('unknown routes return the custom 404 page', async ({ page }) => {
     const response = await page.goto('/__e2e_not_found__');
     expect(response?.status()).toBe(404);

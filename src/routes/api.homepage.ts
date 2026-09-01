@@ -106,8 +106,11 @@ homepage.get('/featured-jobs', async (c) => {
     const { results } = await c.env.DB.prepare(`
       SELECT
         f.id as featured_id, f.display_order,
-        j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.hourly_wage_min, j.hourly_wage_max,
-        comp.name as company_name, comp.logo_url as company_logo
+        j.id, j.company_id, j.title, j.slug, j.catch_copy, j.occupation, j.tags,
+        j.work_style, j.remote_available, j.hourly_wage_min, j.hourly_wage_max,
+        j.work_days, j.work_location, j.card_image_url, j.hero_image_url,
+        comp.name as company_name, comp.logo_url as company_logo, comp.industry as company_industry,
+        comp.hero_image_url as company_hero_image_url
       FROM featured_jobs f
       JOIN jobs j ON f.job_id = j.id
       JOIN companies comp ON j.company_id = comp.id
