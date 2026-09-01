@@ -337,4 +337,1962 @@ async function initHomePage() {
         ${announcements.map(a => `
           <div class="flex items-center gap-3 text-sm ${(typeColors[a.type]||typeColors.info)} border rounded-lg px-4 py-2">
             <i class="fas fa-${typeIcons[a.type]||'info-circle'} flex-shrink-0"></i>
-            <span class="font-ß~{æÚ$z{-®éÜj×~8î88î8~8‹ûŞXª8).8®[è^88ş88^8N8#Â÷àĞ¢G·&VæFW$Æ–æT7F†Æ–æUW&ÂÂ~XZÎ[ÈôÄ”ä^8).‹ûŞXª88(²rÂvfÆW‚—FV×2Ö6VçFW"§W7F–g’Ö6VçFW"vÓ"&rÖw&VVâÓS†÷fW#¦&rÖw&VVâÓcFW‡B×v†—FRföçBÖ&öÆB’Ó2‚Ób&÷VæFVB×†ÂFW‡B×6Òr—ĞĞ¢ÂöF—cæ°Ğ¢ĞĞ¢Ò6F6‚†R’°Ğ¢6öç7BW'$F—bÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vÇ’ÖW'&÷"r“°Ğ¢W'$F—bçFW‡D6öçFVçBÒRç&W7öç6SòæFFòæW'&÷"ÇÂ~[ùÎX¹ş8¾ZKiY~8~8î8~8òs°Ğ¢W'$F—bæ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ¢'FâæF—6&ÆVBÒfÇ6S°Ğ¢'Fâæ–ææW$…DÔÂÒsÆ’6Æ73Ò&f2f×W"×ÆæR×"Ó"#ãÂö“î[ùÎX¹ş8).z+®Zé®88(²s°Ğ¢ĞĞ§ĞĞ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¢òòX[˜	®8+>8;>89Ş8;Î88Ş8;>88€Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¦gVæ7F–öâ&VæFW$¦ö$6&B†¦ö"Â—4ÖVÖ&W'5F"ÒfÇ6R’°¢ÆWBFw2ÒµÓ°Ğ¢G'’²Fw2Ò¥4ôâç'6R†¦ö"çFw2ÇÂuµÒr“²Ò6F6‚†R’·ĞĞ¢6öç7BvvUFW‡BÒ¦ö"æ†÷W&Ç•÷vvUöÖ–àĞ¢ò*RG¶¦ö"æ†÷W&Ç•÷vvUöÖ–âçFôÆö6ÆU7G&–ær‚—ÒG¶¦ö"æ†÷W&Ç•÷vvUöÖ‚ò~8	Ì*Rr¶¦ö"æ†÷W&Ç•÷vvUöÖ‚çFôÆö6ÆU7G&–ær‚’¢~8	ÂwÒö† Ğ¢¢~[ùÎy»Š¸rs°Ğ¢6öç7Bv÷&µ7G–ÆTÆ&VÂÒ²öç6—FS¢~X{®zKârÂ&VÖ÷FS¢~8:®8:.8;Î88‚rÂ‡–'&–C¢~88ş8*N89n8:®88>88’rÓ°Ğ¢6öç7Bv÷&µ7G–ÆT–6öâÒ²öç6—FS¢v'V–ÆF–ærrÂ&VÖ÷FS¢vÆF÷Ö†÷W6RrÂ‡–'&–C¢w&æFöÒrÓ°¢6öç7B—4ÖVÖ&W'4öæÇ’Ò¦ö"çf—6–&–Æ—G’ÓÓÒvÖVÖ&W'2s°¢6öç7B6&D–ÖvRÒ¦ö"æ6&Eö–ÖvU÷W&ÂÇÂ¦ö"æ†W&õö–ÖvU÷W&ÂÇÂ¦ö"æ6ö×ç•ö†W&õö–ÖvU÷W&Ã°¢6öç7BÆö6F–öåFW‡BÒ¦ö"çv÷&µöÆö6F–öâò¦ö"çv÷&µöÆö6F–öâç7Æ—B‚~ûÈ‚r•³Ò¢rs° ¢&WGW&â ¢Æ‡&VcÒ"ö¦ö'2òG¶¦ö"ç6ÇVwÒ"6Æ73Ò&&r×v†—FR&÷&FW"&÷&FW"×6ÆFRÓ#&÷VæFVBÓ'†Â6&BÖ†÷fW"&Æö6²7W'6÷"×ö–çFW"÷fW&fÆ÷rÖ†–FFVâG¶—4ÖVÖ&W'4öæÇ’òv&÷&FW"×–VÆÆ÷rÓCócr¢rwÒ#à¢ÆF—b6Æ73Ò&¦ö"Ö6&BÖÖVF–&VÆF—fR#à¢G¶6&D–ÖvP¢òÆ–Ör7&3Ò"G¶6&D–ÖvWÒ"6Æ73Ò'rÖgVÆÂ‚ÖgVÆÂö&¦V7BÖ6÷fW"G&ç6—F–öâ×G&ç6f÷&ÒGW&F–öâÓS†÷fW#§66ÆRÓR"ÇCÒ"#æ ¢¢ÆF—b6Æ73Ò'rÖgVÆÂ‚ÖgVÆÂfÆW‚—FV×2Ö6VçFW"§W7F–g’Ö6VçFW"FW‡B×&–Ö'’Ó3#ãÆ’6Æ73Ò&f2fÖ6—G’FW‡BÓW†Â#ãÂö“ãÂöF—cæĞ¢G¶—4ÖVÖ&W'4öæÇ’òÇ7â6Æ73Ò&'6öÇWFRF÷Ó2ÆVgBÓ2&r×6ÆFRÓ“SóƒRFW‡B×v†—FR&÷VæFVBÖgVÆÂ‚Ó2’ÓãRFW‡BÕ³…ÒföçBÖ&öÆB&6¶G&÷Ö&ÇW"#ãÆ’6Æ73Ò&f2fÖÆö6²×"Ó#ãÂö“îKÉ®Y:™™Zé£Â÷7ãæ¢rwĞ¢G¶¦ö"çv÷&µ÷7G–ÆRòÇ7â6Æ73Ò&'6öÇWFRF÷Ó2&–v‡BÓ2&r×v†—FRó“RFW‡B×6ÆFRÓƒ&÷VæFVBÖgVÆÂ‚Ó2’ÓãRFW‡BÕ³…ÒföçBÖ&öÆB6†F÷r×6Ò#ãÆ’6Æ73Ò&f2fÒG·v÷&µ7G–ÆT–6öå¶¦ö"çv÷&µ÷7G–ÆU×ÇÂv'V–ÆF–ærwÒFW‡B×&–Ö'’ÓS×"Ó#ãÂö“âG·v÷&µ7G–ÆTÆ&VÅ¶¦ö"çv÷&µ÷7G–ÆU×ÇÂrwÓÂ÷7ãæ¢rwĞ¢ÂöF—cà¢ÆF—b6Æ73Ò'ÓR#à¢ÆF—b6Æ73Ò&fÆW‚—FV×2×7F'BvÓ2Ö"ÓB#à¢ÆF—b6Æ73Ò'rÓ‚Ó&r×v†—FR&÷&FW"&÷&FW"×6ÆFRÓ#&÷VæFVB×†ÂfÆW‚—FV×2Ö6VçFW"§W7F–g’Ö6VçFW"fÆW‚×6‡&–æ²Ó6†F÷r×6Ò#à¢G¶¦ö"æ6ö×ç•öÆövòòÆ–Ör7&3Ò"G¶¦ö"æ6ö×ç•öÆöv÷Ò"6Æ73Ò'rÓ’‚Ó’ö&¦V7BÖ6öçF–â&÷VæFVB"ÇCÒ"#æ¢Ç7â6Æ73Ò'FW‡B×&–Ö'’ÓcföçBÖ&Æ6²FW‡B×6Ò#âG²†¦ö"æ6ö×ç•öæÖWÇÂsòr•³×ÓÂ÷7ãæĞ¢ÂöF—cà¢ÆF—b6Æ73Ò&fÆW‚ÓÖ–â×rÓ#à¢Ç6Æ73Ò'FW‡B×‡2FW‡B×6ÆFRÓSG'Væ6FRÖ"Ó#âG¶¦ö"æ6ö×ç•öæÖRÇÂrwÓÂ÷à¢Æƒ26Æ73Ò&föçBÖ&Æ6²FW‡BÖ&6RÆVF–ær×6çVrFW‡B×6ÆFRÓ“SÆ–æRÖ6Æ×Ó"#âG¶¦ö"çF—FÆWÓÂöƒ3à¢ÂöF—cà¢ÂöF—cà¢G¶¦ö"æ6F6…ö6÷’òÇ6Æ73Ò'FW‡B×‡2FW‡B×6ÆFRÓcÖ"ÓBÆ–æRÖ6Æ×Ó"ÆVF–ær×&VÆ†VB#âG¶¦ö"æ6F6…ö6÷—ÓÂ÷æ¢rwĞ¢ÆF—b6Æ73Ò&w&–Bw&–BÖ6öÇ2Ó"vÓ"Ö"ÓBFW‡B×‡2#à¢ÆF—b6Æ73Ò'&÷VæFVBÖÆr&r×6ÆFRÓSÓ"ãRFW‡B×6ÆFRÓs#ãÆ’6Æ73Ò&f2fÖ6ÆVæF"ÖF—2FW‡B×&–Ö'’ÓS×"ÓãR#ãÂö“âG¶¦ö"çv÷&µöF—2ÇÂ~XºNX¹iz^i[8şŠ›>{K8‚wÓÂöF—cà¢ÆF—b6Æ73Ò'&÷VæFVBÖÆr&r×6ÆFRÓSÓ"ãRFW‡B×6ÆFRÓsG'Væ6FR#ãÆ’6Æ73Ò&f2fÖÆö6F–öâÖF÷BFW‡B×&–Ö'’ÓS×"ÓãR#ãÂö“âG¶Æö6F–öåFW‡BÇÂ†¦ö"ç&VÖ÷FUöf–Æ&ÆRò~8:®8:.8;Î88Xúòr¢~XºNX¹YË8şŠ›>{K8‚r—ÓÂöF—cà¢ÂöF—cà¢ÆF—b6Æ73Ò&fÆW‚fÆW‚×w&vÓãRÖ"ÓB#à¢G¶¦ö"æö67WF–öâòÇ7â6Æ73Ò'FrFW‡BÕ³…Ò‚Ó"ãR’Ó&÷VæFVBÖgVÆÂ#âG¶¦ö"æö67WF–öçÓÂ÷7ãæ¢rwĞ¢G¶¦ö"æ6ö×ç•ö–æGW7G'’òÇ7â6Æ73Ò'FrFW‡BÕ³…Ò‚Ó"ãR’Ó&÷VæFVBÖgVÆÂ#âG¶¦ö"æ6ö×ç•ö–æGW7G'—ÓÂ÷7ãæ¢rwĞ¢G¶¦ö"ç&VÖ÷FUöf–Æ&ÆRòsÇ7â6Æ73Ò&&rÖw&VVâÓS&÷&FW"&÷&FW"Öw&VVâÓ#FW‡BÖw&VVâÓsföçBÖ&öÆBFW‡BÕ³…Ò‚Ó"ãR’Ó&÷VæFVBÖgVÆÂ#î8:®8:.8;Î88XúóÂ÷7ãâr¢rwĞ¢ÂöF—cà¢ÆF—b6Æ73Ò&fÆW‚—FV×2Ö6VçFW"§W7F–g’Ö&WGvVVâBÓB&÷&FW"×B&÷&FW"×6ÆFRÓ#à¢Ç7â6Æ73Ò'FW‡B×&–Ö'’ÓcföçBÖ&Æ6²FW‡BÖ&6R#âG·vvUFW‡GÓÂ÷7ãà¢Ç7â6Æ73Ò'FW‡B×‡2FW‡B×6ÆFRÓsföçBÖ&öÆB#îŠ›>{K8).Šh¾8(²Æ’6Æ73Ò&f2fÖ'&÷r×&–v‡BÖÂÓFW‡B×&–Ö'’ÓS#ãÂö“ãÂ÷7ãà¢ÂöF—cà¢G·Fw2æÆVæwF‚âòÆF—b6Æ73Ò&fÆW‚fÆW‚×w&vÓ×BÓ2#âG·Fw2ç6Æ–6RƒÃ2’æÖ‡CÓæÇ7â6Æ73Ò'FW‡BÕ³…ÒFW‡B×6ÆFRÓSföçBÖÖVF—VÒ#â2G·GÓÂ÷7ãæ’æ¦ö–â‚rr—ÓÂöF—cæ¢rwĞ¢ÂöF—cà¢Âöà¢°§Ğ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¢òòZJ~ZÚnKˆŠj~89®8;Î8+‚‚÷Væ—fW'6—F–W2Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¦7–æ2gVæ7F–öâ–æ—EVæ—fW'6—F–W5vR‚’°Ğ¢6öç7BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vr“°Ğ¢ Ğ¢æ–ææW$…DÔÂÒ Ğ¢ÆF—b6Æ73Ò&Ö‚×rÓw†Â×‚ÖWFò‚ÓB6Ó§‚ÓbÆs§‚Ó‚’Ó"#àĞ¢ÆF—b6Æ73Ò&Ö"Ó#àĞ¢Æƒ6Æ73Ò'FW‡BÓ7†ÂföçBÖ&Æ6²Ö"Ó"FW‡BÖw&’Ó“#îZJ~ZÚnXŠ^8®888(k.K«£ÂöƒàĞ¢Ç6Æ73Ò'FW‡BÖw&’ÓS#î8.8®8ş8îZJ~ZÚn8¾x›XÉn8~8şXë>˜8*N8;>8+ş8;Î8;3Â÷àĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&vÆ72&÷VæFVB×†ÂÓBÖ"Ób#àĞ¢ÆF—b6Æ73Ò'&VÆF—fR#àĞ¢Æ’6Æ73Ò&f2f×6V&6‚'6öÇWFRÆVgBÓ2F÷Óó"×G&ç6ÆFR×’Óó"FW‡BÖw&’ÓS#ãÂö“àĞ¢Æ–çWB–CÒ'Væ’×6V&6‚"G—SÒ'FW‡B"Æ6V†öÆFW#Ò.ZJ~ZÚnYŞ8~jIÎ{J"âââ"öæ¶W–F÷vãÒ&–b†WfVçBæ¶W“ÓÓÒtVçFW"r’f–ÇFW%Væ—fW'6—F–W2‚’ Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆrÂÓ’"ÓB’Ó"ãRFW‡B×6ÒFW‡B×v†—FRÆ6V†öÆFW"Öw&’ÓSfö7W3¦÷WFÆ–æRÖæöæRfö7W3¦&÷&FW"×&–Ö'’ÓS#àĞ¢ÂöF—càĞ¢ÂöF—càĞ¢ÆF—b–CÒ'Væ—fW'6—F–W2Öw&–B"6Æ73Ò&w&–Bw&–BÖ6öÇ2Ó"6Ó¦w&–BÖ6öÇ2Ó2ÖC¦w&–BÖ6öÇ2ÓBÆs¦w&–BÖ6öÇ2ÓRvÓB#àĞ¢Gµ³Ã"Ã2ÃBÃUÒæÖ‚‚’ÓâÆF—b6Æ73Ò&vÆ72&÷VæFVB×†ÂÓRæ–ÖFR×VÇ6R‚Ó#‚#ãÂöF—cæ’æ¦ö–â‚rr—ĞĞ¢ÂöF—càĞ¢ÂöF—càĞ¢°Ğ Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ’×6V&6‚r“òæFDWfVçDÆ—7FVæW"‚v–çWBrÂf–ÇFW%Væ—fW'6—F–W2“°Ğ Ğ¢G'’°Ğ¢6öç7B&W2Òv—B’ævWB‚rö†öÖWvR÷Væ—fW'6—G’×Fw2r“°Ğ¢6öç7BVæ—fW'6—F–W2Ò&W2æFFæFFÇÂµÓ°Ğ¢ Ğ¢v–æF÷ræÆÅVæ—fW'6—F–W2ÒVæ—fW'6—F–W3²òò8+8:Ş8;Î898:¾8¾KùŞZÙ€Ğ¢F—7Æ•Væ—fW'6—F–W2‡Væ—fW'6—F–W2“°Ğ¢Ò6F6‚†R’°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ—fW'6—F–W2Öw&–Br’æ–ææW$…DÔÂÒsÇ6Æ73Ò&6öÂ×7âÓRFW‡BÖ6VçFW"FW‡BÖw&’ÓS’Ó#îZJ~ZÚnh8^Z8îŠªŞ8ş‹ëÎ8ş8¾ZKiY~8~8î8~8óÂ÷âs°Ğ¢ĞĞ§ĞĞ Ğ¦gVæ7F–öâF—7Æ•Væ—fW'6—F–W2‡Væ—fW'6—F–W2’°Ğ¢6öç7Bw&–BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ—fW'6—F–W2Öw&–Br“°Ğ¢–b‚w&–B’&WGW&ã°Ğ¢ Ğ¢–b‡Væ—fW'6—F–W2æÆVæwF‚ÓÓÒ’°Ğ¢w&–Bæ–ææW$…DÔÂÒsÇ6Æ73Ò&6öÂ×7âÓRFW‡BÖ6VçFW"FW‡BÖw&’ÓS’Ó#îŠ›.[Ù>88(¾ZJ~ZÚn8ÎŠh¾8N8¾8(®8î8¾8)3Â÷âs°Ğ¢&WGW&ã°Ğ¢ĞĞ¢ Ğ¢w&–Bæ–ææW$…DÔÂÒVæ—fW'6—F–W2æÖ‡Væ’Óâ Ğ¢Æ‡&VcÒ"÷Væ—fW'6—F–W2òG·Væ’ç6ÇVwÒ"6Æ73Ò&vÆ72&÷VæFVB×†ÂÓRFW‡BÖ6VçFW"†÷fW#¦&r×v†—FRóG&ç6—F–öâÖÆÂw&÷W#àĞ¢ÆF—b6Æ73Ò'rÓB‚ÓB&r×&–Ö'’ÓSó&÷VæFVBÖgVÆÂfÆW‚—FV×2Ö6VçFW"§W7F–g’Ö6VçFW"×‚ÖWFòÖ"Ó2w&÷WÖ†÷fW#¦&r×&–Ö'’ÓSó#G&ç6—F–öâÖ6öÆ÷'2#àĞ¢Æ’6Æ73Ò&f2f×Væ—fW'6—G’FW‡B×&–Ö'’ÓCFW‡B×†Â#ãÂö“àĞ¢ÂöF—càĞ¢Ç6Æ73Ò&föçBÖÖVF—VÒFW‡B×6ÒÖ"Ów&÷WÖ†÷fW#§FW‡B×v†—FRG&ç6—F–öâÖ6öÆ÷'2#âG·Væ’ææÖWÓÂ÷àĞ¢G·Væ’æFW67&—F–öâòÇ6Æ73Ò'FW‡B×‡2FW‡BÖw&’ÓSÆ–æRÖ6Æ×Ó"#âG·Væ’æFW67&—F–öçÓÂ÷æ¢rwĞĞ¢ÂöàĞ¢’æ¦ö–â‚rr“°Ğ§ĞĞ Ğ¦gVæ7F–öâf–ÇFW%Væ—fW'6—F–W2‚’°Ğ¢6öç7BVW'’ÒFö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ’×6V&6‚r’çfÇVRçG&–Ò‚’çFôÆ÷vW$66R‚“°Ğ¢–b‚v–æF÷ræÆÅVæ—fW'6—F–W2’&WGW&ã°Ğ¢ Ğ¢6öç7Bf–ÇFW&VBÒv–æF÷ræÆÅVæ—fW'6—F–W2æf–ÇFW"‡Væ’Óâ Ğ¢Væ’ææÖRçFôÆ÷vW$66R‚’æ–æ6ÇVFW2‡VW'’’ÇÂ Ğ¢Væ’ç6ÇVrçFôÆ÷vW$66R‚’æ–æ6ÇVFW2‡VW'’’ÇÀĞ¢‡Væ’æFW67&—F–öâbbVæ’æFW67&—F–öâçFôÆ÷vW$66R‚’æ–æ6ÇVFW2‡VW'’’Ğ¢“°Ğ¢ Ğ¢F—7Æ•Væ—fW'6—F–W2†f–ÇFW&VB“°Ğ§ĞĞ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¢òòZJ~ZÚnXŠ^k.K«®KˆŠj~89®8;Î8+‚‚÷Væ—fW'6—F–W2ó§6ÇVrĞ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¦7–æ2gVæ7F–öâ–æ—EVæ—fW'6—G”¦ö'5vR‡6ÇVr’°Ğ¢6öç7BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vr“°Ğ¢6öç7B7GVFVçD–BÒÆö6Å7F÷&vRævWD—FVÒ‚w7GVFVçEö–Br“°Ğ¢ Ğ¢æ–ææW$…DÔÂÒ Ğ¢ÆF—b6Æ73Ò&Ö‚×rÓw†Â×‚ÖWFò‚ÓB6Ó§‚ÓbÆs§‚Ó‚’Ó"#àĞ¢ÆF—b6Æ73Ò&Ö"Ó‚#àĞ¢Æ‡&VcÒ"÷Væ—fW'6—F–W2"6Æ73Ò'FW‡B×&–Ö'’ÓC†÷fW#§FW‡B×&–Ö'’Ó3FW‡B×6ÒÖ"Ó2–æÆ–æRÖ&Æö6²#àĞ¢Æ’6Æ73Ò&f2fÖ'&÷rÖÆVgB×"Ó#ãÂö“îZJ~ZÚnKˆŠj~8¾h‹¾8(°Ğ¢ÂöàĞ¢Æƒ–CÒ'Væ’ÖæÖR"6Æ73Ò'FW‡BÓ7†ÂföçBÖ&Æ6²Ö"Ó"#îŠªŞ8ş‹ëÎ8şKŠÒââãÂöƒàĞ¢Ç–CÒ'Væ’ÖFW62"6Æ73Ò'FW‡BÖw&’ÓS#ãÂ÷àĞ¢ÂöF—càĞ¢ Ğ¢ÂÒÒ89^8*>8:¾8+ş8;ÂÒÓàĞ¢ÆF—b6Æ73Ò&vÆ72&÷VæFVB×†ÂÓBÖ"ÓBfÆW‚fÆW‚×w&vÓ2—FV×2Ö6VçFW"#àĞ¢ÆF—b6Æ73Ò&fÆW‚ÓÖ–â×rÓC‚#àĞ¢ÆF—b6Æ73Ò'&VÆF—fR#àĞ¢Æ’6Æ73Ò&f2f×6V&6‚'6öÇWFRÆVgBÓ2F÷Óó"×G&ç6ÆFR×’Óó"FW‡BÖw&’ÓSFW‡B×6Ò#ãÂö“àĞ¢Æ–çWB–CÒ'6V&6‚×"G—SÒ'FW‡B"Æ6V†öÆFW#Ò.8*Ş8;Î8:ş8;Î888~jIÎ{J"âââ Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆrÂÓ’"ÓB’Ó"FW‡B×6ÒFW‡B×v†—FRÆ6V†öÆFW"Öw&’ÓSfö7W3¦÷WFÆ–æRÖæöæRfö7W3¦&÷&FW"×&–Ö'’ÓS#àĞ¢ÂöF—càĞ¢ÂöF—càĞ¢Ç6VÆV7B–CÒ&f–ÇFW"Öö67WF–öâ"6Æ73Ò&&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡BÖw&’Ó3fö7W3¦÷WFÆ–æRÖæöæRfö7W3¦&÷&FW"×&–Ö'’ÓS#àĞ¢G·&VæFW$ö67WF–öä÷F–öç2‚—ĞĞ¢Â÷6VÆV7CàĞ¢Ç6VÆV7B–CÒ&f–ÇFW"Ö–æGW7G'’"6Æ73Ò&&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡BÖw&’Ó3fö7W3¦÷WFÆ–æRÖæöæRfö7W3¦&÷&FW"×&–Ö'’ÓS#àĞ¢Æ÷F–öâfÇVSÒ"#îXZjZŞzŠãÂö÷F–öãàĞ¢Æ÷F–öãä….8;¾K«®iÙÂö÷F–öããÆ÷F–öãä•N8;µ63Âö÷F–öããÆ÷F–öãî89î8;Î8+88n8*>8;>8+Âö÷F–öãàĞ¢Æ÷F–öãî8+>8;>8+^8:¾88n8*>8;>8+Âö÷F–öããÆ÷F–öãäT>8;¾[şZ;#Âö÷F–öããÆ÷F–öãî8:88~8*>8*#Âö÷F–öããÆ÷F–öãî8Ş8îK¹cÂö÷F–öãàĞ¢Â÷6VÆV7CàĞ¢Ç6VÆV7B–CÒ&f–ÇFW"×7G–ÆR"6Æ73Ò&&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡BÖw&’Ó3fö7W3¦÷WFÆ–æRÖæöæRfö7W3¦&÷&FW"×&–Ö'’ÓS#àĞ¢Æ÷F–öâfÇVSÒ"#îXZXºNX¹[Ú.hX³Âö÷F–öãàĞ¢Æ÷F–öâfÇVSÒ&öç6—FR#îX{®zKãÂö÷F–öããÆ÷F–öâfÇVSÒ'&VÖ÷FR#î8:®8:.8;Î88ƒÂö÷F–öããÆ÷F–öâfÇVSÒ&‡–'&–B#î88ş8*N89n8:®88>88“Âö÷F–öãàĞ¢Â÷6VÆV7CàĞ¢Æ'WGFöâöæ6Æ–6³Ò'6V&6…Væ—fW'6—G”¦ö'2‚rG·6ÇVwÒr’"6Æ73Ò&&r×&–Ö'’ÓS†÷fW#¦&r×&–Ö'’ÓcFW‡B×v†—FRFW‡B×6Ò‚ÓR’Ó"&÷VæFVBÖÆrG&ç6—F–öâÖ6öÆ÷'2#àĞ¢Æ’6Æ73Ò&f2f×6V&6‚×"Ó#ãÂö“îjIÎ{J Ğ¢Âö'WGFöãàĞ¢ÂöF—càĞ¢ Ğ¢ÆF—b–CÒ&¦ö'2ÖÆ—7B"6Æ73Ò&w&–Bw&–BÖ6öÇ2ÓÖC¦w&–BÖ6öÇ2Ó"Æs¦w&–BÖ6öÇ2Ó2vÓR#àĞ¢Gµ³Ã"Ã5ÒæÖ‚‚’ÓâÆF—b6Æ73Ò&vÆ72&÷VæFVB×†ÂÓRæ–ÖFR×VÇ6R‚ÓC‚#ãÂöF—cæ’æ¦ö–â‚rr—ĞĞ¢ÂöF—càĞ¢ÂöF—càĞ¢°Ğ Ğ¢6öç7B6V&6„–çWBÒFö7VÖVçBævWDVÆVÖVçD'”–B‚w6V&6‚×r“°Ğ¢6V&6„–çWCòæFDWfVçDÆ—7FVæW"‚v–çWBrÂ‚’Óâ°Ğ¢6ÆV%F–ÖV÷WB‡v–æF÷råõ÷Væ—fW'6—G”¦ö%6V&6…F–ÖW"“°Ğ¢v–æF÷råõ÷Væ—fW'6—G”¦ö%6V&6…F–ÖW"Ò6WEF–ÖV÷WB‚‚’Óâ6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr’Â#S“°Ğ¢Ò“°Ğ¢6V&6„–çWCòæFDWfVçDÆ—7FVæW"‚v¶W–F÷vârÂRÓâ²–b†Ræ¶W“ÓÓÒtVçFW"r’6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr“²Ò“°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"Öö67WF–öâr“òæFDWfVçDÆ—7FVæW"‚v6†ævRrÂ‚’Óâ6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr’“°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"Ö–æGW7G'’r“òæFDWfVçDÆ—7FVæW"‚v6†ævRrÂ‚’Óâ6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr’“°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"×7G–ÆRr“òæFDWfVçDÆ—7FVæW"‚v6†ævRrÂ‚’Óâ6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr’“°Ğ Ğ¢G'’°Ğ¢òòZJ~ZÚnh8^ZXùn[épĞ¢6öç7BVæ•&W2Òv—B’ævWB‚rö†öÖWvR÷Væ—fW'6—G’×Fw2r“°Ğ¢6öç7BVæ—fW'6—F–W2ÒVæ•&W2æFFæFFÇÂµÓ°Ğ¢6öç7BVæ’ÒVæ—fW'6—F–W2æf–æB‡RÓâRç6ÇVrÓÓÒ6ÇVr“°Ğ¢ Ğ¢–b‚Væ’’°Ğ¢æ–ææW$…DÔÂÒ Ğ¢ÆF—b6Æ73Ò&Ö‚×rÓw†Â×‚ÖWFò‚ÓB6Ó§‚ÓbÆs§‚Ó‚’Ó"FW‡BÖ6VçFW"#àĞ¢Ç6Æ73Ò'FW‡BÖw&’ÓSÖ"ÓB#îŠ›.[Ù>88(¾ZJ~ZÚn8ÎŠh¾8N8¾8(®8î8¾8)3Â÷àĞ¢Æ‡&VcÒ"÷Væ—fW'6—F–W2"6Æ73Ò'FW‡B×&–Ö'’ÓC†÷fW#§FW‡B×&–Ö'’Ó3#îZJ~ZÚnKˆŠj~8¾h‹¾8(³ÂöàĞ¢ÂöF—càĞ¢°Ğ¢&WGW&ã°Ğ¢ĞĞ¢ Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ’ÖæÖRr’çFW‡D6öçFVçBÒVæ’ææÖR²r8î8®888(k.K«¢s°Ğ¢–b‡Væ’æFW67&—F–öâ’°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚wVæ’ÖFW62r’çFW‡D6öçFVçBÒVæ’æFW67&—F–öã°Ğ¢ĞĞ¢ Ğ¢òòZJ~ZÚnXŠ^k.K«®Xùn[épĞ¢6öç7B¦ö'5&W2Òv—B’ævWB†ö†öÖWvR÷Væ—fW'6—F–W2òG·6ÇVwÒö¦ö'2G·7GVFVçD–Bòs÷7GVFVçEö–CÒr·7GVFVçD–B¢rwÖ“°Ğ¢6öç7B¦ö'2Ò¦ö'5&W2æFFæFFÇÂµÓ°Ğ¢ Ğ¢6öç7BÆ—7BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚v¦ö'2ÖÆ—7Br“°Ğ¢–b†¦ö'2æÆVæwF‚ÓÓÒ’°Ğ¢Æ—7Bæ–ææW$…DÔÂÒsÇ6Æ73Ò&6öÂ×7âÓ2FW‡BÖ6VçFW"FW‡BÖw&’ÓS’Ó#î8î88>8îZJ~ZÚnY	88îk.K«®8ş8.8(®8î8¾8)3Â÷âs°Ğ¢ÒVÇ6R°Ğ¢Æ—7Bæ–ææW$…DÔÂÒ¦ö'2æÖ†¦ö"Óâ&VæFW$¦ö$6&B†¦ö"’’æ¦ö–â‚rr“°Ğ¢ĞĞ¢ Ğ¢v–æF÷ræ7W'&VçEVæ—fW'6—G•6ÇVrÒ6ÇVs°Ğ¢v–æF÷ræ7W'&VçEVæ—fW'6—G”¦ö'2Ò¦ö'3°Ğ¢Ò6F6‚†R’°Ğ¢6öç6öÆRæW'&÷"†R“°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚v¦ö'2ÖÆ—7Br’æ–ææW$…DÔÂÒsÇ6Æ73Ò&6öÂ×7âÓ2FW‡BÖ6VçFW"FW‡B×&VBÓC’Ó#îk.K«®h8^Z8îŠªŞ8ş‹ëÎ8ş8¾ZKiY~8~8î8~8óÂ÷âs°Ğ¢ĞĞ§ĞĞ Ğ¦gVæ7F–öâvWE6V&6†&ÆT¦ö%FW‡B†¦ö"’°Ğ¢ÆWBFw2ÒµÓ°Ğ¢G'’²Fw2Ò¥4ôâç'6R†¦ö"çFw2ÇÂuµÒr“²Ò6F6‚†R’·ĞĞ¢6öç7Bv÷&µ7G–ÆTÆ&VÂÒ²öç6—FS¢~X{®zKârÂ&VÖ÷FS¢~8:®8:.8;Î88‚rÂ‡–'&–C¢~88ş8*N89n8:®88>88’rÓ°Ğ¢&WGW&â°Ğ¢¦ö"çF—FÆRÂ¦ö"ç6ÇVrÂ¦ö"æ6F6…ö6÷’Â¦ö"æFW67&—F–öâÂ¦ö"çv÷&µö6öçFVçBÀĞ¢¦ö"æö67WF–öâÂ¦ö"æ6ö×ç•öæÖRÂ¦ö"æ6ö×ç•ö–æGW7G'’Â¦ö"çv÷&µ÷7G–ÆRÂv÷&µ7G–ÆTÆ&VÅ¶¦ö"çv÷&µ÷7G–ÆUÒÀĞ¢¦ö"çv÷&µö†÷W'2Â¦ö"çv÷&µöF—2Â¦ö"çv÷&µöÆö6F–öâÂ¦ö"çF&vWEöw&FRÂ¦ö"çVæ—fW'6—G•öÆWfVÂÀĞ¢¦ö"ç&WV—&VÖVçG2Â¦ö"ç&VfW'&VE÷&WV—&VÖVçG2Â¦ö"ç6VÆV7F–öåöfÆ÷rÂ¦ö"ç&V6öÖÖVæFVEöf÷"ÀĞ¢ââçFw0Ğ¢Òæf–ÇFW"„&ööÆVâ’æ¦ö–â‚rr’çFôÆ÷vW$66R‚“°Ğ§ĞĞ Ğ¦gVæ7F–öâ6V&6…Væ—fW'6—G”¦ö'2‡6ÇVr’°Ğ¢6öç7BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚w6V&6‚×r’çfÇVRçG&–Ò‚’çFôÆ÷vW$66R‚“°Ğ¢6öç7Bö67WF–öâÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"Öö67WF–öâr’çfÇVS°Ğ¢6öç7B–æGW7G'’ÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"Ö–æGW7G'’r’çfÇVS°Ğ¢6öç7B7G–ÆRÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vf–ÇFW"×7G–ÆRr’çfÇVS°Ğ¢ Ğ¢–b‚v–æF÷ræ7W'&VçEVæ—fW'6—G”¦ö'2’&WGW&ã°Ğ¢ Ğ¢ÆWBf–ÇFW&VBÒv–æF÷ræ7W'&VçEVæ—fW'6—G”¦ö'2æf–ÇFW"†¦ö"Óâ°Ğ¢6öç7BÖF6…ÒÇÂvWE6V&6†&ÆT¦ö%FW‡B†¦ö"’æ–æ6ÇVFW2‡“°Ğ¢6öç7BÖF6„ö67WF–öâÒö67WF–öâÇÂ¦ö"æö67WF–öâÓÓÒö67WF–öã°Ğ¢6öç7BÖF6„–æGW7G'’Ò–æGW7G'’ÇÂ¦ö"æ6ö×ç•ö–æGW7G'’ÓÓÒ–æGW7G'“°Ğ¢6öç7BÖF6…7G–ÆRÒ7G–ÆRÇÂ¦ö"çv÷&µ÷7G–ÆRÓÓÒ7G–ÆS°Ğ¢&WGW&âÖF6…bbÖF6„ö67WF–öâbbÖF6„–æGW7G'’bbÖF6…7G–ÆS°Ğ¢Ò“°Ğ¢ Ğ¢6öç7BÆ—7BÒFö7VÖVçBævWDVÆVÖVçD'”–B‚v¦ö'2ÖÆ—7Br“°Ğ¢–b†f–ÇFW&VBæÆVæwF‚ÓÓÒ’°Ğ¢Æ—7Bæ–ææW$…DÔÂÒsÇ6Æ73Ò&6öÂ×7âÓ2FW‡BÖ6VçFW"FW‡BÖw&’ÓS’Ó#îiÚK»n8¾Y8nk.K«®8ÎŠh¾8N8¾8(®8î8¾8)3Â÷âs°Ğ¢ÒVÇ6R°Ğ¢Æ—7Bæ–ææW$…DÔÂÒf–ÇFW&VBæÖ†¦ö"Óâ&VæFW$¦ö$6&B†¦ö"’’æ¦ö–â‚rr“°Ğ¢ĞĞ§ĞĞ
+            <span class="font-medium">${a.title}</span>
+            ${a.body ? `<span class="opacity-75 text-xs hidden sm:block">â€” ${a.body}</span>` : ''}
+            ${a.link_url && a.link_url !== '#' ? `<a href="${a.link_url}" class="ml-auto underline text-xs flex-shrink-0 hover:opacity-80">${a.link_text || 'è©³ç´°'}</a>` : ''}
+          </div>
+        `).join('')}
+      </div>
+    </div>` : ''}
+
+    <!-- å†™çœŸã¨æ¤œç´¢ã‚’ä¸»å½¹ã«ã—ãŸãƒ•ã‚¡ãƒ¼ã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ -->
+    <section class="hero-gradient relative overflow-hidden">
+      <div class="max-w-[1680px] mx-auto xl:grid xl:grid-cols-[62%_38%] xl:min-h-[544px]">
+        <div class="px-4 sm:px-8 xl:px-10 2xl:px-16 py-10 sm:py-12 xl:py-16 flex items-center order-1">
+          <div class="hero-copy-zone max-w-[860px] fade-in">
+            <p class="section-kicker mb-4">Long-term internship for students</p>
+            <div class="inline-flex items-center gap-2 bg-white border border-primary-100 rounded-full px-4 py-2 text-xs text-primary-700 font-bold mb-5 shadow-sm">
+              <i class="fas fa-bolt text-orange-500"></i>${escapeHtml(s.hero_badge_text || 'å¤§å­¦ç”Ÿã®æŒ‘æˆ¦ã«ã€å®Ÿå‹™ã¨ã„ã†é¸æŠè‚¢ã‚’ã€‚')}
+            </div>
+            <h1 class="hero-title text-[2.45rem] sm:text-[3.2rem] lg:text-[3.65rem] xl:text-[3.55rem] 2xl:text-[4.65rem] font-black leading-[1.12] mb-6">${heroTitleHtml}</h1>
+            <p class="text-slate-600 text-sm sm:text-lg leading-relaxed max-w-2xl mb-7">${escapeHtml(heroDescription)}</p>
+            <div class="flex flex-wrap gap-3">
+              <a href="/jobs" class="inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-primary-600/20 transition-all">
+                ${escapeHtml(heroPrimaryCta)} <i class="fas fa-arrow-right text-xs"></i>
+              </a>
+              <button onclick="openLineModal()" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-green-50 text-green-700 font-bold px-6 py-3.5 rounded-xl border border-green-200 shadow-sm transition-all">
+                <i class="fab fa-line text-lg"></i>${escapeHtml(heroSecondaryCta)}
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="home-hero-photo h-[190px] sm:h-[240px] md:h-[270px] xl:h-auto xl:min-h-[544px] order-2" role="img" aria-label="é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã«ã¤ã„ã¦è©±ã—åˆã†å¤§å­¦ç”Ÿã¨ç¤¾ä¼šäºº"></div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
+        <form class="search-panel rounded-2xl p-3 sm:p-4" onsubmit="searchFromHome(event)">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_auto] gap-2.5">
+            <label class="relative block">
+              <span class="sr-only">ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰</span><i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-primary-500"></i>
+              <input id="home-search-q" class="search-field w-full rounded-xl pl-11 pr-4 py-3.5 text-sm" placeholder="è·ç¨®ãƒ»ä¼æ¥­åãƒ»ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰">
+            </label>
+            <select id="home-filter-occupation" class="search-field w-full rounded-xl px-4 py-3.5 text-sm">${renderOccupationOptions()}</select>
+            <select id="home-filter-style" class="search-field w-full rounded-xl px-4 py-3.5 text-sm">
+              <option value="">å‹¤å‹™å½¢æ…‹ã‹ã‚‰é¸ã¶</option><option value="onsite">å‡ºç¤¾</option><option value="remote">ãƒªãƒ¢ãƒ¼ãƒˆ</option><option value="hybrid">ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰</option>
+            </select>
+            <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl px-7 py-3.5 whitespace-nowrap shadow-md shadow-orange-500/20">ã“ã®æ¡ä»¶ã§æ¢ã™</button>
+          </div>
+        </form>
+        <div class="grid grid-cols-3 mt-5 gap-2 sm:gap-6 text-center">
+          <div class="text-xs sm:text-sm font-bold text-slate-700"><i class="fas fa-circle-check text-primary-500 mr-1.5"></i>ç™»éŒ²ç„¡æ–™</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-700"><i class="fas fa-shield-halved text-primary-500 mr-1.5"></i>å³é¸æ²è¼‰</div>
+          <div class="text-xs sm:text-sm font-bold text-slate-700"><i class="fab fa-line text-green-500 mr-1.5"></i>ç›¸è«‡ç„¡æ–™</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äºº -->
+    <section class="py-16 sm:py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-9">
+          <div><p class="section-kicker mb-2">Featured jobs</p><h2 class="text-3xl sm:text-4xl font-black text-slate-950">æ³¨ç›®ã®é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</h2><p class="text-slate-600 text-sm mt-2">åƒãæ–¹ã‚„ä»•äº‹å†…å®¹ã‚’æ¯”ã¹ã¦ã€è‡ªåˆ†ã«åˆã†ä¸€ç¤¾ã‚’æ¢ã›ã¾ã™ã€‚</p></div>
+          <a href="/jobs" class="hidden sm:inline-flex items-center gap-2 text-primary-600 font-bold text-sm hover:text-primary-700">æ±‚äººã‚’ã™ã¹ã¦è¦‹ã‚‹ <i class="fas fa-arrow-right"></i></a>
+        </div>
+        ${featuredJobs.length > 0 ? `
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${featuredJobs.map(job => renderJobCard(job)).join('')}</div>
+        ` : `
+          <div class="rounded-3xl border border-slate-200 bg-slate-50 px-6 py-12 text-center">
+            <div class="w-14 h-14 mx-auto mb-4 rounded-2xl bg-primary-100 text-primary-600 flex items-center justify-center"><i class="fas fa-briefcase text-xl"></i></div>
+            <h3 class="font-black text-xl text-slate-900 mb-2">æ–°ã—ã„æ±‚äººã‚’æº–å‚™ã—ã¦ã„ã¾ã™</h3>
+            <p class="text-slate-600 text-sm mb-6">å…¬é–‹å‰ã®æ±‚äººã‚„è‡ªåˆ†ã«åˆã†ä¼æ¥­ã«ã¤ã„ã¦ã€LINEã§å…ˆè¡Œæ¡ˆå†…ã‚’å—ã‘å–ã‚Œã¾ã™ã€‚</p>
+            <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold px-6 py-3 rounded-xl"><i class="fab fa-line"></i>å…ˆè¡Œæ¡ˆå†…ã‚’å—ã‘å–ã‚‹</button>
+          </div>
+        `}
+        <a href="/jobs" class="sm:hidden mt-7 inline-flex items-center gap-2 text-primary-600 font-bold text-sm">æ±‚äººã‚’ã™ã¹ã¦è¦‹ã‚‹ <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </section>
+
+    ${universityTags.length > 0 ? `
+    <section class="py-10 bg-primary-50 border-y border-primary-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
+        <div><p class="section-kicker mb-1">Campus search</p><h2 class="text-xl sm:text-2xl font-black text-slate-950">å¤§å­¦åˆ¥ã®ãŠã™ã™ã‚æ±‚äººã‹ã‚‰æ¢ã™</h2></div>
+        <button onclick="openUniversityModal()" class="inline-flex items-center gap-2 bg-white hover:bg-primary-600 hover:text-white text-primary-700 border border-primary-200 font-bold px-6 py-3 rounded-xl transition-colors"><i class="fas fa-university"></i>å¤§å­¦ã‚’é¸æŠã™ã‚‹</button>
+      </div>
+    </section>` : ''}
+
+    <!-- ä¼šå“¡é™å®šãƒãƒŠãƒ¼ï¼ˆç™»éŒ²æ¸ˆã¿ã§ãªã„å ´åˆã®ã¿ï¼‰ -->
+    ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
+    <section class="py-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="relative overflow-hidden rounded-2xl border border-yellow-300 bg-yellow-50 p-6 flex flex-col sm:flex-row items-center gap-4">
+          <div class="absolute inset-0 bg-gradient-to-r from-yellow-100/50 to-transparent pointer-events-none"></div>
+          <div class="text-3xl">ğŸ”’</div>
+          <div class="flex-1 text-center sm:text-left">
+            <p class="font-bold text-yellow-800 text-lg">${s.members_banner_title || 'ç™»éŒ²è€…é™å®šï¼éå…¬é–‹æ±‚äººã‚ã‚Š'}</p>
+            <p class="text-yellow-700 text-sm mt-0.5" id="members-job-count-text">
+              ${s.members_banner_text || 'ç™»éŒ²ã™ã‚‹ã ã‘ã§è¦‹ã‚‰ã‚Œã‚‹ç‰¹åˆ¥æ±‚äººã‚’ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†'}
+            </p>
+          </div>
+          <a href="/register" class="flex-shrink-0 bg-yellow-500 hover:bg-yellow-400 text-white font-bold px-6 py-3 rounded-xl transition-colors text-sm whitespace-nowrap shadow-md">
+            ${s.members_banner_btn || 'ä»Šã™ãç™»éŒ²ã—ã¦ç¢ºèªã™ã‚‹'} <i class="fas fa-arrow-right ml-1"></i>
+          </a>
+        </div>
+      </div>
+    </section>` : ''}
+
+    <!-- ã‚µãƒ¼ãƒ“ã‚¹ã®å®‰å¿ƒææ–™ï¼ˆæœªæ¤œè¨¼ã®ä»¶æ•°ã¯è¡¨ç¤ºã—ãªã„ï¼‰ -->
+    <section class="py-14 border-y border-slate-200 bg-slate-950 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/15 rounded-2xl overflow-hidden border border-white/10">
+          <div class="bg-slate-950 p-6 sm:p-8">
+            <i class="fas fa-filter-circle-dollar text-orange-400 text-xl mb-4"></i>
+            <div class="font-black text-lg mb-1">å³é¸æ±‚äºº</div><div class="text-slate-400 text-xs leading-relaxed">ä»•äº‹å†…å®¹ã¨æˆé•·ç’°å¢ƒã‹ã‚‰æ¯”è¼ƒ</div>
+          </div>
+          <div class="bg-slate-950 p-6 sm:p-8">
+            <i class="fas fa-user-graduate text-orange-400 text-xl mb-4"></i>
+            <div class="font-black text-lg mb-1">å­¦ç”Ÿç›®ç·š</div><div class="text-slate-400 text-xs leading-relaxed">å‹¤å‹™æ—¥æ•°ã‚„ãƒªãƒ¢ãƒ¼ãƒˆæ¡ä»¶ã‚‚æ˜ç¢º</div>
+          </div>
+          <div class="bg-slate-950 p-6 sm:p-8">
+            <i class="fas fa-coins text-orange-400 text-xl mb-4"></i>
+            <div class="font-black text-lg mb-1">ç™»éŒ²ç„¡æ–™</div><div class="text-slate-400 text-xs leading-relaxed">æ±‚äººé–²è¦§ã‹ã‚‰ç™»éŒ²ã¾ã§ç„¡æ–™</div>
+          </div>
+          <div class="bg-slate-950 p-6 sm:p-8">
+            <i class="fab fa-line text-green-400 text-xl mb-4"></i>
+            <div class="font-black text-lg mb-1">LINEç›¸è«‡</div><div class="text-slate-400 text-xs leading-relaxed">è¿·ã£ãŸã¨ãã‚‚æ°—è»½ã«ç›¸è«‡</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ï¼ˆè‡ªå‹•æ¨ªã‚¹ã‚¯ãƒ­ãƒ¼ãƒ«ï¼‰ -->
+    ${successStories.length > 0 ? `
+    <section id="success-stories" class="py-20 overflow-hidden bg-gradient-to-r from-primary-50/30 via-white to-purple-50/30" aria-labelledby="success-stories-title">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10">
+        <div class="text-center">
+          <div class="inline-flex items-center gap-2 bg-primary-500/10 border border-primary-500/20 rounded-full px-4 py-1.5 text-xs text-primary-700 font-medium mb-4">
+            <i class="fas fa-trophy" aria-hidden="true"></i>SUCCESS STORIES
+          </div>
+          <h2 id="success-stories-title" class="text-3xl font-black mb-3 text-gray-900">å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³</h2>
+          <p class="text-gray-700">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚’é€šã˜ã¦ä¸€æ­©ã‚’è¸ã¿å‡ºã—ãŸå…ˆè¼©ãŸã¡ã®å£°</p>
+        </div>
+      </div>
+      <div class="timeline-viewport relative" tabindex="0" aria-label="å†…å®šè€…ã®ä½“é¨“è«‡ã€‚ãƒã‚¦ã‚¹ã‚’é‡ã­ã‚‹ã‹ãƒ•ã‚©ãƒ¼ã‚«ã‚¹ã™ã‚‹ã¨ä¸€æ™‚åœæ­¢ã—ã¾ã™ã€‚">
+        <div class="timeline-track" role="list">
+          <div class="timeline-group">${successStoryCards}</div>
+          <div class="timeline-group" aria-hidden="true">${successStoryCards}</div>
+        </div>
+      </div>
+    </section>
+    <style>
+      .timeline-viewport {
+        mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+        -webkit-mask-image: linear-gradient(to right, transparent, black 6%, black 94%, transparent);
+      }
+      .timeline-track {
+        display: flex;
+        width: max-content;
+        will-change: transform;
+        animation: scroll-success-stories 55s linear infinite;
+      }
+      .timeline-group {
+        display: flex;
+        gap: 1rem;
+        padding-right: 1rem;
+      }
+      .timeline-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+      .timeline-card:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(79,110,247,0.12); }
+      @keyframes scroll-success-stories {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+      }
+      .timeline-viewport:hover .timeline-track,
+      .timeline-viewport:focus .timeline-track,
+      .timeline-viewport:focus-within .timeline-track { animation-play-state: paused; }
+      @media (prefers-reduced-motion: reduce) {
+        .timeline-viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; }
+        .timeline-track { animation: none; }
+        .timeline-group[aria-hidden="true"] { display: none; }
+      }
+    </style>` : ''}
+
+    <!-- ç‰¹å¾´ã‚»ã‚¯ã‚·ãƒ§ãƒ³ -->
+    <section class="py-20 border-t border-white/5">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-14">
+          <h2 class="text-3xl font-black mb-3 text-gray-900">${escapeHtml(siteName)}ãŒ${s.feature_section_title || 'é¸ã°ã‚Œã‚‹ç†ç”±'}</h2>
+          <p class="text-gray-700">${s.feature_section_subtitle || 'å°±æ´»ã§å·®ã‚’ã¤ã‘ã‚‹ã€æœ¬è³ªçš„ãªæˆé•·ç’°å¢ƒã‚’æä¾›ã—ã¾ã™'}</p>
+        </div>
+        <div id="features-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="glass rounded-2xl p-7 text-center animate-pulse"><div class="h-12 bg-gray-100 rounded mb-4"></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ ã‚»ã‚¯ã‚·ãƒ§ãƒ³ -->
+    ${faqs.length > 0 ? `
+    <section class="py-20 border-t border-white/5">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+          <h2 class="text-3xl font-black mb-3 text-gray-900">ã‚ˆãã‚ã‚‹è³ªå•</h2>
+          <p class="text-gray-700">ãŠæ°—è»½ã«ã”ç›¸è«‡ãã ã•ã„</p>
+        </div>
+        <div class="space-y-3">
+          ${faqs.map((f, i) => `
+            <div class="glass rounded-xl overflow-hidden">
+              <button onclick="toggleFaq(${i})" class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-gray-50 transition-colors">
+                <span class="font-medium text-sm pr-4 text-gray-800">${f.question}</span>
+                <i id="faq-icon-${i}" class="fas fa-chevron-down text-gray-500 text-xs flex-shrink-0 transition-transform"></i>
+              </button>
+              <div id="faq-body-${i}" class="hidden px-5 pb-4">
+                <p class="text-gray-700 text-sm leading-relaxed">${f.answer}</p>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </section>` : ''}
+
+    <!-- CTA ã‚»ã‚¯ã‚·ãƒ§ãƒ³ï¼ˆç„¡æ–™ç›¸è«‡ãƒ»LINEèª˜å°ãƒ»ä¸‹æ®µï¼‰ -->
+    <section class="py-20">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div class="glass rounded-3xl p-12 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), rgba(79,110,247,0.05));">
+          <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-primary-500/5 rounded-3xl"></div>
+          <div class="relative">
+            <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <i class="fab fa-line text-green-400 text-3xl"></i>
+            </div>
+            <h2 class="text-3xl sm:text-4xl font-black mb-4">ã¾ãšã¯ç„¡æ–™ç›¸è«‡ã‹ã‚‰<br>å§‹ã‚ã¦ã¿ã¾ã›ã‚“ã‹ï¼Ÿ</h2>
+            <p class="text-gray-700 mb-8 max-w-2xl mx-auto">è‡ªåˆ†ã«åˆã£ãŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ãŒè¦‹ã¤ã‹ã‚‹ã‹ä¸å®‰ãªæ–¹ã‚‚ã€ãŠæ°—è»½ã«ã”ç›¸è«‡ãã ã•ã„ã€‚<br>ã‚­ãƒ£ãƒªã‚¢ã®ãƒ—ãƒ­ãŒLINEã§ã‚µãƒãƒ¼ãƒˆã—ã¾ã™ã€‚</p>
+            <button onclick="openLineModal()" class="inline-flex items-center justify-center bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer">
+              <i class="fab fa-line mr-2"></i>LINEã§ç„¡æ–™ç›¸è«‡ã™ã‚‹ <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+
+  // ä¼šå“¡é™å®šæ±‚äººä»¶æ•°ã‚’å–å¾—
+  const studentId = localStorage.getItem('student_id');
+  const params = studentId ? `?student_id=${studentId}` : '';
+  try {
+    const [jobsRes] = await Promise.all([API.get('/jobs' + params)]);
+    const membersCount = jobsRes.data.members_job_count || 0;
+
+    // ä¼šå“¡é™å®šä»¶æ•°ã‚’æ›´æ–°
+    if (membersCount > 0 && !studentId) {
+      const el = document.getElementById('members-job-count-text');
+      if (el) el.textContent = `ç¾åœ¨${membersCount}ä»¶ã®éå…¬é–‹æ±‚äººã‚ã‚Šã€‚ç™»éŒ²ã™ã‚‹ã ã‘ã§å…¨ã¦é–²è¦§ã§ãã¾ã™ï¼`;
+    }
+  } catch(e) {}
+
+  // ç‰¹å¾´ã‚«ãƒ¼ãƒ‰å–å¾—
+  try {
+    const res = await API.get('/settings/lp-sections');
+    const section = res.data.data.find(s => s.section_key === 'features');
+    if (section) {
+      let cards = [];
+      try { cards = JSON.parse(section.content); } catch(e) {}
+      const colorMap = { primary: 'bg-primary-500/15 text-primary-700', purple: 'bg-purple-500/15 text-purple-700', green: 'bg-green-500/15 text-green-700', yellow: 'bg-yellow-500/15 text-yellow-700', red: 'bg-red-500/15 text-red-700' };
+      document.getElementById('features-grid').innerHTML = cards.map(card => `
+        <div class="glass rounded-2xl p-7 text-center">
+          <div class="w-14 h-14 ${colorMap[card.color]||colorMap.primary} rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="${card.icon?.startsWith('fab') ? card.icon : 'fas fa-'+card.icon} text-xl"></i>
+          </div>
+          <h3 class="font-bold text-lg mb-2 text-gray-900">${card.title}</h3>
+          <p class="text-gray-700 text-sm leading-relaxed">${card.body}</p>
+        </div>
+      `).join('');
+    }
+  } catch(e) {}
+}
+
+function searchFromHome(event) {
+  event?.preventDefault();
+  const params = new URLSearchParams();
+  const q = document.getElementById('home-search-q')?.value.trim();
+  const occupation = document.getElementById('home-filter-occupation')?.value;
+  const workStyle = document.getElementById('home-filter-style')?.value;
+  if (q) params.set('q', q);
+  if (occupation) params.set('occupation', occupation);
+  if (workStyle) params.set('work_style', workStyle);
+  window.location.href = `/jobs${params.toString() ? `?${params.toString()}` : ''}`;
+}
+
+function toggleFaq(i) {
+  const body = document.getElementById(`faq-body-${i}`);
+  const icon = document.getElementById(`faq-icon-${i}`);
+  body.classList.toggle('hidden');
+  icon.style.transform = body.classList.contains('hidden') ? '' : 'rotate(180deg)';
+}
+
+// ==========================================
+// æ±‚äººä¸€è¦§ãƒšãƒ¼ã‚¸
+// ==========================================
+async function initJobsPage() {
+  const app = document.getElementById('app');
+  await restoreStudentSession();
+  const studentId = localStorage.getItem('student_id');
+
+  app.innerHTML = `
+    <div class="bg-gradient-to-br from-slate-950 via-primary-900 to-primary-700 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+        <p class="text-xs font-black tracking-[.18em] text-orange-400 uppercase mb-3">Find your internship</p>
+        <h1 class="text-3xl sm:text-5xl font-black mb-3">é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚’æ¢ã™</h1>
+        <p class="text-primary-100 text-sm sm:text-base">ä»•äº‹å†…å®¹ãƒ»åƒãæ–¹ãƒ»å ±é…¬ã‚’æ¯”è¼ƒã—ã¦ã€æ¬¡ã®æŒ‘æˆ¦ã‚’è¦‹ã¤ã‘ã‚ˆã†ã€‚</p>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+
+      <!-- ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ -->
+      <div class="search-panel rounded-2xl p-4 mb-6 flex flex-wrap gap-3 items-center -mt-16 relative z-10">
+        <div class="flex-1 min-w-48">
+          <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+            <input id="search-q" type="text" placeholder="è·ç¨®ãƒ»ä¼æ¥­åãƒ»ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰"
+              class="w-full bg-white border border-gray-200 rounded-xl pl-9 pr-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
+          </div>
+        </div>
+        <select id="filter-occupation" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
+          ${renderOccupationOptions()}
+        </select>
+        <select id="filter-industry" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
+          <option value="">å…¨æ¥­ç¨®</option>
+          <option>HRãƒ»äººæ</option><option>ITãƒ»SaaS</option><option>ãƒãƒ¼ã‚±ãƒ†ã‚£ãƒ³ã‚°</option>
+          <option>ã‚³ãƒ³ã‚µãƒ«ãƒ†ã‚£ãƒ³ã‚°</option><option>ECãƒ»å°å£²</option><option>ãƒ¡ãƒ‡ã‚£ã‚¢</option><option>ãã®ä»–</option>
+        </select>
+        <select id="filter-style" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
+          <option value="">å…¨å‹¤å‹™å½¢æ…‹</option>
+          <option value="onsite">å‡ºç¤¾</option><option value="remote">ãƒªãƒ¢ãƒ¼ãƒˆ</option><option value="hybrid">ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰</option>
+        </select>
+        <button onclick="searchJobs()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-6 py-3 rounded-xl transition-colors">
+          <i class="fas fa-search mr-1"></i>æ¤œç´¢
+        </button>
+      </div>
+
+      <!-- ä¼šå“¡é™å®šã‚¿ãƒ–ï¼ˆç™»éŒ²æ¸ˆã¿ã®å ´åˆï¼‰ -->
+      ${studentId ? `
+      <div class="flex gap-2 mb-4">
+        <button id="tab-public" onclick="switchJobTab('public')" class="px-4 py-1.5 rounded-lg text-sm font-medium bg-primary-500 text-white transition-colors">
+          <i class="fas fa-globe mr-1"></i>å…¬é–‹æ±‚äºº
+        </button>
+        <button id="tab-members" onclick="switchJobTab('members')" class="px-4 py-1.5 rounded-lg text-sm font-medium glass text-gray-700 hover:text-primary-600 transition-colors">
+          <i class="fas fa-lock mr-1"></i>ä¼šå“¡é™å®šæ±‚äºº
+        </button>
+      </div>` : `
+      <div id="members-teaser" class="mb-4 p-3 border border-yellow-500/20 bg-yellow-500/5 rounded-xl flex items-center gap-3 text-sm">
+        <i class="fas fa-lock text-yellow-400"></i>
+        <span class="text-yellow-800"><span id="members-count-badge" class="font-bold">ï¼Ÿ</span>ä»¶ã®ä¼šå“¡é™å®šæ±‚äººãŒã‚ã‚Šã¾ã™ã€‚</span>
+        <a href="/register" class="ml-auto text-yellow-800 hover:text-yellow-900 text-xs font-bold flex-shrink-0">ç™»éŒ²ã—ã¦è¦‹ã‚‹ â†’</a>
+      </div>`}
+
+      <div id="jobs-count" class="text-xs text-gray-500 mb-4"></div>
+      <div id="jobs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        ${[1,2,3,4,5,6].map(() => `<div class="glass rounded-xl p-5 animate-pulse"><div class="h-4 bg-white/10 rounded mb-3 w-3/4"></div><div class="h-3 bg-white/5 rounded mb-2"></div></div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  // URLãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã‹ã‚‰ãƒ•ã‚£ãƒ«ã‚¿è¨­å®š
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('occupation')) document.getElementById('filter-occupation').value = params.get('occupation');
+  if (params.get('industry')) document.getElementById('filter-industry').value = params.get('industry');
+  if (params.get('work_style')) document.getElementById('filter-style').value = params.get('work_style');
+  if (params.get('q')) document.getElementById('search-q').value = params.get('q');
+  document.getElementById('search-q').addEventListener('input', () => {
+    clearTimeout(window.__jobSearchTimer);
+    window.__jobSearchTimer = setTimeout(searchJobs, 250);
+  });
+  document.getElementById('search-q').addEventListener('keydown', e => { if(e.key==='Enter') searchJobs(); });
+  document.getElementById('filter-occupation').addEventListener('change', searchJobs);
+  document.getElementById('filter-industry').addEventListener('change', searchJobs);
+  document.getElementById('filter-style').addEventListener('change', searchJobs);
+
+  await searchJobs();
+}
+
+let _currentJobTab = 'public';
+function switchJobTab(tab) {
+  _currentJobTab = tab;
+  document.getElementById('tab-public')?.classList.toggle('bg-primary-500', tab === 'public');
+  document.getElementById('tab-public')?.classList.toggle('text-white', tab === 'public');
+  document.getElementById('tab-public')?.classList.toggle('glass', tab !== 'public');
+  document.getElementById('tab-public')?.classList.toggle('text-gray-700', tab !== 'public');
+  document.getElementById('tab-members')?.classList.toggle('bg-primary-500', tab === 'members');
+  document.getElementById('tab-members')?.classList.toggle('text-white', tab === 'members');
+  document.getElementById('tab-members')?.classList.toggle('glass', tab !== 'members');
+  document.getElementById('tab-members')?.classList.toggle('text-gray-700', tab !== 'members');
+  searchJobs();
+}
+
+async function searchJobs() {
+  const q = document.getElementById('search-q')?.value.trim();
+  const occupation = document.getElementById('filter-occupation')?.value;
+  const industry = document.getElementById('filter-industry')?.value;
+  const work_style = document.getElementById('filter-style')?.value;
+  const studentId = localStorage.getItem('student_id');
+
+  const urlParams = new URLSearchParams();
+  if (q) urlParams.set('q', q);
+  if (occupation) urlParams.set('occupation', occupation);
+  if (industry) urlParams.set('industry', industry);
+  if (work_style) urlParams.set('work_style', work_style);
+  if (studentId) urlParams.set('student_id', studentId);
+
+  // ä¼šå“¡é™å®šã‚¿ãƒ–ã®å ´åˆã¯membersãƒ•ã‚£ãƒ«ã‚¿
+  if (_currentJobTab === 'members' && studentId) {
+    urlParams.set('members', '1');
+  }
+
+  document.getElementById('jobs-list').innerHTML = `<div class="glass rounded-xl p-5 animate-pulse col-span-3"><div class="h-4 bg-white/10 rounded w-3/4"></div></div>`;
+
+  try {
+    const res = await API.get('/jobs?' + urlParams.toString());
+    const jobs = res.data.data;
+    const membersCount = res.data.members_job_count || 0;
+
+    document.getElementById('jobs-count').textContent = `${jobs.length}ä»¶ã®æ±‚äººãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸ`;
+
+    // æœªç™»éŒ²ãƒ¦ãƒ¼ã‚¶ãƒ¼å‘ã‘ã®ä»¶æ•°ãƒãƒƒã‚¸ã‚’æ›´æ–°
+    const badge = document.getElementById('members-count-badge');
+    if (badge) badge.textContent = membersCount;
+
+    document.getElementById('jobs-list').innerHTML = jobs.length
+      ? jobs.map(j => renderJobCard(j, _currentJobTab === 'members')).join('')
+      : `<div class="col-span-3 text-center py-16 text-gray-500">
+          <i class="fas fa-search text-4xl mb-4 block opacity-30"></i>
+          ${_currentJobTab === 'members' ? 'ä¼šå“¡é™å®šæ±‚äººãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ' : 'æ¡ä»¶ã«åˆã†æ±‚äººãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ'}
+        </div>`;
+  } catch(e) {
+    document.getElementById('jobs-list').innerHTML = '<p class="col-span-3 text-center text-red-400">å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ</p>';
+  }
+}
+
+// ==========================================
+// æ±‚äººè©³ç´°ãƒšãƒ¼ã‚¸
+// ==========================================
+async function initJobDetailPage() {
+  const slug = window.location.pathname.split('/jobs/')[1];
+  const app = document.getElementById('app');
+  await restoreStudentSession();
+  const studentId = localStorage.getItem('student_id');
+
+  app.innerHTML = `<div class="max-w-4xl mx-auto px-4 py-12"><div class="animate-pulse"><div class="h-8 bg-white/10 rounded mb-4 w-2/3"></div><div class="h-4 bg-white/5 rounded mb-2"></div></div></div>`;
+
+  try {
+    const params = studentId ? `?student_id=${studentId}` : '';
+    const res = await API.get(`/jobs/${slug}${params}`);
+    renderJobDetail(res.data.data);
+  } catch(e) {
+    if (e.response?.data?.error === 'members_only') {
+      app.innerHTML = `
+        <div class="max-w-xl mx-auto px-4 py-24 text-center">
+          <div class="w-20 h-20 bg-yellow-500/10 border-2 border-yellow-500/30 rounded-full flex items-center justify-center mx-auto mb-6">
+            <i class="fas fa-lock text-yellow-400 text-3xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-3">ä¼šå“¡é™å®šæ±‚äººã§ã™</h1>
+          <p class="text-gray-400 mb-8 text-sm">ã“ã®æ±‚äººã¯ç™»éŒ²å­¦ç”Ÿã®ã¿é–²è¦§ã§ãã¾ã™ã€‚<br>ç„¡æ–™ç™»éŒ²ã—ã¦ã™ãã«ç¢ºèªã—ã¾ã—ã‚‡ã†ï¼</p>
+          <a href="/register" class="inline-block bg-primary-500 hover:bg-primary-600 text-white font-bold px-8 py-3 rounded-xl transition-colors">
+            <i class="fas fa-user-plus mr-2"></i>ç„¡æ–™ã§ç™»éŒ²ã™ã‚‹
+          </a>
+        </div>
+      `;
+    } else {
+      app.innerHTML = `<div class="text-center py-20 text-gray-500"><i class="fas fa-exclamation-circle text-5xl mb-4 block"></i>æ±‚äººãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸ</div>`;
+    }
+  }
+}
+
+function renderJobDetail(job) {
+  const app = document.getElementById('app');
+
+  // JSONãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã®ãƒ‘ãƒ¼ã‚¹
+  let highlights = parseJsonArrayField(job.highlights);
+  let appealPoints = parseJsonArrayField(job.appeal_points);
+  let skillSet = parseJsonArrayField(job.skill_set);
+  let tags = parseJsonArrayField(job.tags);
+
+  // Â§2ã®é­…åŠ›ãƒã‚¤ãƒ³ãƒˆï¼šappeal_pointså„ªå…ˆã€ãªã‘ã‚Œã°highlights
+  const attractionPoints = appealPoints.length > 0 ? appealPoints : highlights;
+
+  const wageText = job.hourly_wage_min
+    ? `Â¥${Number(job.hourly_wage_min).toLocaleString()}${job.hourly_wage_max ? 'ã€œÂ¥'+Number(job.hourly_wage_max).toLocaleString() : 'ã€œ'}/æ™‚`
+    : 'å¿œç›¸è«‡';
+  const workStyleMap = { onsite: 'å‡ºç¤¾', remote: 'ãƒ•ãƒ«ãƒªãƒ¢ãƒ¼ãƒˆ', hybrid: 'ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰' };
+  const workStyleText = workStyleMap[job.work_style] || '';
+
+  // å¿œå‹Ÿãƒœã‚¿ãƒ³ã®HTMLï¼ˆå†åˆ©ç”¨ï¼‰
+  const ctaHTML = `
+    <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 mb-3">
+      <i class="fas fa-paper-plane mr-2"></i>ã“ã®æ±‚äººã«å¿œå‹Ÿã™ã‚‹
+    </button>
+    <a href="/consultation" class="block w-full glass text-gray-800 hover:text-primary-600 text-center font-bold py-3 rounded-xl transition-all text-sm">
+      <i class="fas fa-comments mr-1"></i>ã¾ãšç›¸è«‡ã—ã¦ã¿ã‚‹
+    </a>
+    <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>å¿œå‹Ÿå¾Œã€å…¬å¼LINEã«ã¦ã”é€£çµ¡ã—ã¾ã™</p>
+  `;
+
+  app.innerHTML = `
+    <div class="fade-in">
+
+      <!-- Â§1 FVï¼ˆãƒ•ã‚¡ãƒ¼ã‚¹ãƒˆãƒ“ãƒ¥ãƒ¼ï¼‰ -->
+      <section id="job-fv" class="relative">
+        ${job.hero_image_url
+          ? `<div class="w-full h-56 sm:h-72 lg:h-80 overflow-hidden"><img src="${job.hero_image_url}" class="w-full h-full object-cover" alt="${job.title}"></div>`
+          : `<div class="w-full h-40 sm:h-56 bg-gradient-to-r from-primary-900 via-dark-800 to-purple-900"></div>`
+        }
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <!-- ãƒ‘ãƒ³ããš -->
+          <nav class="text-sm text-gray-500 mb-5">
+            <a href="/" class="hover:text-white transition-colors">ãƒ›ãƒ¼ãƒ </a>
+            <span class="mx-2">/</span>
+            <a href="/jobs" class="hover:text-white transition-colors">æ±‚äººä¸€è¦§</a>
+            <span class="mx-2">/</span>
+            <span class="text-gray-300">${job.title}</span>
+          </nav>
+          <div class="glass rounded-2xl p-6 sm:p-8">
+            <div class="flex items-start gap-4 mb-5">
+              <div class="w-16 h-16 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0 border border-primary-500/20">
+                ${job.company_logo
+                  ? `<img src="${job.company_logo}" class="w-12 h-12 object-contain rounded-lg" alt="${job.company_name}">`
+                  : `<span class="text-primary-400 font-bold text-xl">${(job.company_name||'?')[0]}</span>`}
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex flex-wrap gap-2 mb-2">
+                  ${job.visibility === 'members' ? '<span class="bg-yellow-500/20 border border-yellow-500/30 text-yellow-400 text-xs px-2 py-0.5 rounded-full"><i class="fas fa-lock mr-1"></i>ä¼šå“¡é™å®š</span>' : ''}
+                  ${job.occupation ? `<span class="tag text-xs px-2 py-0.5 rounded-full"><i class="fas fa-briefcase mr-1"></i>${job.occupation}</span>` : ''}
+                  ${job.company_industry ? `<span class="tag text-xs px-2 py-0.5 rounded-full">${job.company_industry}</span>` : ''}
+                  ${workStyleText ? `<span class="tag text-xs px-2 py-0.5 rounded-full"><i class="fas fa-map-marker-alt mr-1"></i>${workStyleText}</span>` : ''}
+                  ${job.remote_available ? '<span class="bg-green-500/15 border border-green-500/30 text-green-400 text-xs px-2 py-0.5 rounded-full">ãƒªãƒ¢ãƒ¼ãƒˆå¯</span>' : ''}
+                </div>
+                <h1 class="text-2xl sm:text-3xl font-black mb-1 leading-tight">${job.title}</h1>
+                <p class="text-primary-400 font-semibold">${job.company_name}</p>
+              </div>
+            </div>
+            ${job.catch_copy ? `<p class="text-gray-300 text-base sm:text-lg leading-relaxed border-l-4 border-primary-500 pl-4 mb-5">${job.catch_copy}</p>` : ''}
+            <!-- å‹¤å‹™æ¡ä»¶ã‚µãƒãƒªãƒ¼ï¼ˆÂ§3 å…ˆå‡ºã—ï¼‰ -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-yen-sign text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-sm font-bold leading-tight">${wageText}</div>
+                <div class="text-xs text-gray-500 mt-0.5">æ™‚çµ¦</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-clock text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight">${job.work_hours || 'è¦ç›¸è«‡'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">å‹¤å‹™æ™‚é–“</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-map-marker-alt text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight truncate">${job.work_location ? job.work_location.split('ï¼ˆ')[0] : 'è¦ç¢ºèª'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">å‹¤å‹™åœ°</div>
+              </div>
+              <div class="bg-white/5 rounded-xl p-3 text-center">
+                <i class="fas fa-calendar-alt text-primary-400 mb-1 block text-sm"></i>
+                <div class="text-xs font-medium leading-tight">${job.min_hours_per_month ? job.min_hours_per_month+'h~/æœˆ' : 'è¦ç›¸è«‡'}</div>
+                <div class="text-xs text-gray-500 mt-0.5">æœ€ä½æœˆé–“</div>
+              </div>
+            </div>
+            <!-- ãƒ¢ãƒã‚¤ãƒ«ï¼šCTA -->
+            <div class="mt-5 lg:hidden">
+              ${ctaHTML}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ + ã‚µã‚¤ãƒ‰ãƒãƒ¼ -->
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- å·¦ï¼šãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
+          <main class="lg:col-span-2 space-y-6">
+
+            <!-- Â§2 ã“ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã®é­…åŠ›3ç‚¹ -->
+            ${attractionPoints.length > 0 ? `
+            <section id="job-attraction" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-5 flex items-center gap-2">
+                <i class="fas fa-gift text-primary-400"></i>ã“ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã®é­…åŠ›
+              </h2>
+              <div class="space-y-4">
+                ${attractionPoints.map((h, i) => `
+                  <div class="bg-primary-500/5 border border-primary-500/15 rounded-xl p-4">
+                    <div class="flex items-start gap-3">
+                      <span class="text-2xl flex-shrink-0">${h.icon || ['ğŸš€','ğŸ’¡','ğŸŒŸ'][i] || 'âœ¨'}</span>
+                      <div>
+                        <h3 class="font-bold text-sm mb-1">${h.title || ''}</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">${h.body || h.description || ''}</p>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </section>` : ''}
+
+            <!-- Â§4 ä¼šç¤¾æ¦‚è¦ / ãƒŸãƒƒã‚·ãƒ§ãƒ³ -->
+            ${(job.company_description || job.company_mission) ? `
+            <section id="job-company-about" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-building text-primary-400"></i>ä¼šç¤¾æ¦‚è¦
+              </h2>
+              ${job.company_hero_image_url ? `<img src="${job.company_hero_image_url}" class="w-full h-40 object-cover rounded-xl mb-4" alt="${job.company_name}">` : ''}
+              ${job.company_description ? `<p class="text-gray-300 text-sm leading-relaxed mb-3">${job.company_description}</p>` : ''}
+              ${job.company_mission ? `
+              <div class="bg-primary-500/5 border border-primary-500/20 rounded-xl p-4 mt-3">
+                <p class="text-xs text-primary-400 font-bold mb-1"><i class="fas fa-flag mr-1"></i>ãƒŸãƒƒã‚·ãƒ§ãƒ³</p>
+                <p class="text-gray-300 text-sm leading-relaxed">${job.company_mission}</p>
+              </div>` : ''}
+            </section>` : ''}
+
+            <!-- Â§5 ã‚µãƒ¼ãƒ“ã‚¹ / äº‹æ¥­å†…å®¹ -->
+            ${job.company_service_description ? `
+            <section id="job-service" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-briefcase text-primary-400"></i>ã‚µãƒ¼ãƒ“ã‚¹ / äº‹æ¥­å†…å®¹
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.company_service_description}</p>
+            </section>` : ''}
+
+            <!-- Â§6 ãƒã‚¸ã‚·ãƒ§ãƒ³ã®ç‰¹å¾´ -->
+            ${job.position_features ? `
+            <section id="job-position" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-star text-primary-400"></i>ãƒã‚¸ã‚·ãƒ§ãƒ³ã®ç‰¹å¾´
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.position_features}</p>
+            </section>` : ''}
+
+            <!-- Â§7 æ¥­å‹™æ¦‚è¦ -->
+            <section id="job-work" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-tasks text-primary-400"></i>æ¥­å‹™æ¦‚è¦
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.work_content}</p>
+            </section>
+
+            <!-- Â§8 å…¥ç¤¾å¾Œã®æµã‚Œ -->
+            ${job.onboarding_flow ? `
+            <section id="job-onboarding" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-route text-primary-400"></i>å…¥ç¤¾å¾Œã®æµã‚Œ
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.onboarding_flow}</p>
+            </section>` : ''}
+
+            <!-- Â§9 ä¸»ãªæ¥­å‹™ / æ¡ˆä»¶ä¾‹ -->
+            ${job.task_examples ? `
+            <section id="job-tasks" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-list-ul text-primary-400"></i>ä¸»ãªæ¥­å‹™ / æ¡ˆä»¶ä¾‹
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.task_examples}</p>
+            </section>` : ''}
+
+            <!-- Â§10 ç¿’å¾—ã§ãã‚‹ã‚¹ã‚­ãƒ«ã‚»ãƒƒãƒˆ -->
+            ${(skillSet.length > 0 || job.growth_points) ? `
+            <section id="job-skills" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-graduation-cap text-primary-400"></i>ç¿’å¾—ã§ãã‚‹ã‚¹ã‚­ãƒ«ã‚»ãƒƒãƒˆ
+              </h2>
+              ${skillSet.length > 0
+                ? `<div class="flex flex-wrap gap-2">${skillSet.map(s => `<span class="bg-primary-500/10 border border-primary-500/20 text-primary-300 text-xs px-3 py-1.5 rounded-full font-medium">${typeof s === 'string' ? s : (s.name || s)}</span>`).join('')}</div>`
+                : `<p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.growth_points}</p>`
+              }
+            </section>` : ''}
+
+            <!-- Â§11 ã‚­ãƒ£ãƒªã‚¢ãƒ‘ã‚¹ -->
+            ${job.career_path ? `
+            <section id="job-career" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-chart-line text-primary-400"></i>ã‚­ãƒ£ãƒªã‚¢ãƒ‘ã‚¹
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.career_path}</p>
+            </section>` : ''}
+
+            <!-- Â§12 ã“ã‚“ãªäººã«ãŠã™ã™ã‚ -->
+            ${job.recommended_for ? `
+            <section id="job-recommended" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-user-check text-primary-400"></i>ã“ã‚“ãªäººã«ãŠã™ã™ã‚
+              </h2>
+              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.recommended_for}</p>
+            </section>` : ''}
+
+            <!-- Â§13 å¿œå‹Ÿ / ç›¸è«‡ CTAï¼ˆãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„å†…ï¼‰ -->
+            <section id="job-cta-main" class="glass rounded-2xl p-7 border border-primary-500/20">
+              <h2 class="text-lg font-bold mb-2">å¿œå‹Ÿ / ç›¸è«‡</h2>
+              <p class="text-gray-400 text-sm mb-5">å°‘ã—ã§ã‚‚èˆˆå‘³ãŒã‚ã‚Œã°ã€ã¾ãšã¯æ°—è»½ã«ã”å¿œå‹Ÿãã ã•ã„ã€‚</p>
+              ${ctaHTML}
+            </section>
+
+            <!-- Â§14 æ¡ç”¨æƒ…å ± -->
+            ${(job.requirements || job.preferred_requirements || job.selection_flow) ? `
+            <section id="job-requirements" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-clipboard-list text-primary-400"></i>æ¡ç”¨æƒ…å ±
+              </h2>
+              ${job.requirements ? `
+              <div class="mb-4">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">æ±‚ã‚ã‚‹äººæ</h3>
+                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.requirements}</p>
+              </div>` : ''}
+              ${job.preferred_requirements ? `
+              <div class="mb-4 pt-4 border-t border-white/10">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">æ­“è¿æ¡ä»¶</h3>
+                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.preferred_requirements}</p>
+              </div>` : ''}
+              ${job.selection_flow ? `
+              <div class="${(job.requirements || job.preferred_requirements) ? 'pt-4 border-t border-white/10' : ''}">
+                <h3 class="text-sm font-bold text-gray-300 mb-2">é¸è€ƒãƒ•ãƒ­ãƒ¼</h3>
+                <p class="text-gray-400 text-sm">${job.selection_flow}</p>
+              </div>` : ''}
+            </section>` : ''}
+
+            <!-- Â§15 ä¼šç¤¾æƒ…å ± -->
+            ${(job.office_location || job.office_access || job.company_website) ? `
+            <section id="job-company-info" class="glass rounded-2xl p-7">
+              <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+                <i class="fas fa-map-marker-alt text-primary-400"></i>ä¼šç¤¾æƒ…å ±
+              </h2>
+              <div class="space-y-3 text-sm">
+                ${[
+                  ['å‹¤å‹™åœ°', job.work_location || job.office_location],
+                  ['ã‚¢ã‚¯ã‚»ã‚¹', job.office_access],
+                  ['å‹¤å‹™å½¢æ…‹', workStyleText],
+                  ['å‹¤å‹™æ™‚é–“', job.work_hours],
+                  ['å‹¤å‹™æ—¥æ•°', job.work_days],
+                  ['å¯¾è±¡å­¦å¹´', job.target_grade],
+                  ['æœˆé–“æœ€ä½æ™‚é–“', job.min_hours_per_month ? job.min_hours_per_month + 'h' : null],
+                  ['Webã‚µã‚¤ãƒˆ', job.company_website ? `<a href="${job.company_website}" target="_blank" rel="noopener" class="text-primary-400 hover:text-primary-300 underline">${job.company_website}</a>` : null],
+                ].filter(([,v]) => v).map(([l,v]) => `
+                  <div class="flex gap-3">
+                    <span class="text-gray-500 w-24 flex-shrink-0 text-xs leading-relaxed pt-0.5">${l}</span>
+                    <span class="text-gray-300 leading-relaxed text-sm">${v}</span>
+                  </div>
+                `).join('')}
+                ${tags.length > 0 ? `
+                <div class="flex gap-3 pt-3 border-t border-white/10">
+                  <span class="text-gray-500 w-24 flex-shrink-0 text-xs pt-0.5">é–¢é€£ã‚¿ã‚°</span>
+                  <div class="flex flex-wrap gap-1.5">${tags.map(t=>`<span class="tag text-xs px-2 py-1 rounded-full">#${t}</span>`).join('')}</div>
+                </div>` : ''}
+              </div>
+            </section>` : ''}
+
+            <!-- Â§16 æœ€çµ‚CTA -->
+            <section id="job-cta-final" class="glass rounded-2xl p-7 text-center border border-primary-500/30 bg-gradient-to-br from-primary-900/20 to-purple-900/20">
+              <h2 class="text-xl font-black mb-2">ä¸€ç·’ã«åƒãã¾ã›ã‚“ã‹ï¼Ÿ</h2>
+              <p class="text-gray-400 text-sm mb-6">ã¾ãšã¯æ°—è»½ã«ã”å¿œå‹Ÿã‚’ã€‚é¸è€ƒãƒ•ãƒ­ãƒ¼ã‚‚ã‚·ãƒ³ãƒ—ãƒ«ã§ã™ã€‚</p>
+              <div class="max-w-xs mx-auto">
+                ${ctaHTML}
+              </div>
+            </section>
+
+          </main>
+
+          <!-- å³ï¼šã‚µã‚¤ãƒ‰ãƒãƒ¼ï¼ˆPC ã®ã¿ sticky CTAï¼‰ -->
+          <aside class="hidden lg:block space-y-4">
+            <!-- Â§13 ã‚µã‚¤ãƒ‰ãƒãƒ¼ sticky CTA -->
+            <div class="glass rounded-2xl p-5 sticky top-20">
+              <p class="text-xs text-gray-500 mb-3 font-medium">${job.company_name}</p>
+              <p class="text-sm font-bold mb-4 leading-snug">${job.title}</p>
+              ${ctaHTML}
+            </div>
+            <!-- Â§3 å‹¤å‹™æ¡ä»¶è©³ç´° -->
+            <div class="glass rounded-2xl p-5">
+              <h3 class="font-bold text-sm mb-4 flex items-center gap-2">
+                <i class="fas fa-clipboard text-gray-400"></i>å‹¤å‹™æ¡ä»¶
+              </h3>
+              <div class="space-y-2.5 text-xs">
+                ${[
+                  ['æ™‚çµ¦', wageText],
+                  ['å‹¤å‹™æ™‚é–“', job.work_hours],
+                  ['å‹¤å‹™æ—¥æ•°', job.work_days],
+                  ['å‹¤å‹™åœ°', job.work_location],
+                  ['å‹¤å‹™å½¢æ…‹', workStyleText],
+                  ['å¯¾è±¡å­¦å¹´', job.target_grade],
+                ].filter(([,v]) => v).map(([l,v]) => `
+                  <div class="flex gap-2">
+                    <span class="text-gray-500 w-16 flex-shrink-0">${l}</span>
+                    <span class="text-gray-300 leading-relaxed">${v}</span>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+
+      <!-- å¿œå‹Ÿãƒ¢ãƒ¼ãƒ€ãƒ« -->
+      <div id="apply-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center" style="background:rgba(0,0,0,0.8);backdrop-filter:blur(4px)">
+        <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
+          <div class="flex justify-between items-center mb-5">
+            <h3 class="text-lg font-bold">å¿œå‹Ÿã™ã‚‹</h3>
+            <button onclick="closeApplyModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+          </div>
+          <div id="apply-form-content"></div>
+        </div>
+      </div>
+
+      <!-- ãƒ¢ãƒã‚¤ãƒ« floating CTA -->
+      <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 p-4 bg-dark-900/90 backdrop-blur-sm border-t border-white/10">
+        <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-all">
+          <i class="fas fa-paper-plane mr-2"></i>ã“ã®æ±‚äººã«å¿œå‹Ÿã™ã‚‹
+        </button>
+      </div>
+
+    </div>
+  `;
+}
+
+// ==========================================
+// ç™»éŒ²ãƒšãƒ¼ã‚¸
+// ==========================================
+async function initLoginPage() {
+  await restoreStudentSession();
+  const existingId = localStorage.getItem('student_id');
+  const app = document.getElementById('app');
+
+  if (existingId) {
+    app.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center py-12 px-4">
+        <div class="w-full max-w-md text-center">
+          <div class="w-16 h-16 bg-primary-500/20 rounded-2xl flex items-center justify-center mx-auto mb-5">
+            <i class="fas fa-circle-check text-primary-400 text-2xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-3">ãƒ­ã‚°ã‚¤ãƒ³æ¸ˆã¿ã§ã™</h1>
+          <p class="text-gray-500 text-sm mb-6">ãƒã‚¤ãƒšãƒ¼ã‚¸ã‚„ä¼šå“¡é™å®šæ±‚äººã‚’ç¢ºèªã§ãã¾ã™ã€‚</p>
+          <div class="space-y-3">
+            <a href="/mypage" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-user mr-1"></i>ãƒã‚¤ãƒšãƒ¼ã‚¸ã¸
+            </a>
+            <a href="/jobs" class="block w-full glass text-gray-800 hover:text-primary-600 font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-search mr-1"></i>æ±‚äººã‚’æ¢ã™
+            </a>
+            <button onclick="studentLogout()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">
+              ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+    return;
+  }
+
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-right-to-bracket text-white text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-2">å­¦ç”Ÿãƒ­ã‚°ã‚¤ãƒ³</h1>
+          <p class="text-gray-500 text-sm">ç™»éŒ²æ¸ˆã¿ã®ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¨ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã§ãƒ­ã‚°ã‚¤ãƒ³ã—ã¦ãã ã•ã„ã€‚</p>
+        </div>
+        <div class="glass rounded-2xl p-8">
+          <form id="login-form" onsubmit="submitStudentLogin(event)">
+            <div class="mb-4">
+              <label class="block text-xs text-gray-400 mb-1.5">ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ <span class="text-red-400">*</span></label>
+              <input id="login-email" type="email" required autocomplete="email" placeholder="example@univ.ac.jp">
+            </div>
+            <div class="mb-4">
+              <label class="block text-xs text-gray-400 mb-1.5">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ <span class="text-red-400">*</span></label>
+              <input id="login-password" type="password" required autocomplete="current-password" placeholder="ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰">
+            </div>
+            <div id="login-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
+            <button type="submit" id="login-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-right-to-bracket mr-2"></i>ãƒ­ã‚°ã‚¤ãƒ³
+            </button>
+          </form>
+          <p class="text-center text-xs text-gray-500 mt-5">
+            åˆã‚ã¦ã®æ–¹ã¯ <a href="/register" class="text-primary-400 hover:text-primary-300 font-bold">æ–°è¦ç™»éŒ²</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitStudentLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('login-btn');
+  const errDiv = document.getElementById('login-error');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>ãƒ­ã‚°ã‚¤ãƒ³ä¸­...';
+  errDiv.classList.add('hidden');
+
+  try {
+    const res = await API.post('/students/login', {
+      email: document.getElementById('login-email').value,
+      password: document.getElementById('login-password').value,
+    });
+    if (res.data.success) {
+      storeStudentAuth(res.data.data);
+      window.location.href = '/mypage';
+    }
+  } catch(e) {
+    errDiv.textContent = e.response?.data?.error || 'ãƒ­ã‚°ã‚¤ãƒ³ã«å¤±æ•—ã—ã¾ã—ãŸ';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-right-to-bracket mr-2"></i>ãƒ­ã‚°ã‚¤ãƒ³';
+  }
+}
+
+async function initRegisterPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-user-plus text-white text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-2">æ–°è¦ç™»éŒ²</h1>
+          <p class="text-gray-500 text-sm">ã¾ãšã€ã©ã“ã§ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚’çŸ¥ã‚Šã¾ã—ãŸã‹ï¼Ÿ</p>
+        </div>
+        <!-- STEP 1: æµå…¥åª’ä½“é¸æŠ -->
+        <div class="glass rounded-2xl p-8 mb-4" id="source-media-step">
+          <h3 class="font-bold mb-4 text-sm">ã©ã“ã§çŸ¥ã‚Šã¾ã—ãŸã‹ï¼Ÿ <span class="text-red-400">*</span></h3>
+          <div class="grid grid-cols-1 gap-2">
+            ${SOURCE_MEDIA_OPTIONS.map(opt => `
+              <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="source-opt-${opt.value}">
+                <input type="radio" name="source_media" value="${opt.value}" onchange="onSourceMediaChange('${opt.value}')"
+                  class="accent-primary-500 w-4 h-4">
+                <span class="text-sm text-gray-200">${opt.label}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="source-media-error" class="hidden mt-3 text-xs text-red-400">æµå…¥åª’ä½“ã‚’é¸æŠã—ã¦ãã ã•ã„</div>
+        </div>
+        <!-- STEP 2: æ‹›å¾…ã‚³ãƒ¼ãƒ‰ + é€²ã‚€ãƒœã‚¿ãƒ³ -->
+        <div class="glass rounded-2xl p-8" id="invite-code-step">
+          <div class="mb-6">
+            <label class="block text-sm font-medium mb-2 text-gray-300">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ <span class="text-gray-500 text-xs font-normal">ï¼ˆä»»æ„ï¼‰</span></label>
+            <div class="flex gap-2">
+              <input id="invite-code-input" type="text" placeholder="ä¾‹: WELCOME2024" maxlength="20"
+                class="flex-1 bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 uppercase text-sm tracking-wider">
+              <button onclick="verifyInviteCode()" class="bg-primary-500/20 hover:bg-primary-500/30 border border-primary-500/30 text-primary-400 px-4 py-3 rounded-lg transition-colors text-sm">ç¢ºèª</button>
+            </div>
+            <div id="invite-code-msg" class="mt-1.5 text-xs"></div>
+          </div>
+          <button onclick="proceedToRegisterForm()" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+            ç™»éŒ²ãƒ•ã‚©ãƒ¼ãƒ ã¸é€²ã‚€
+          </button>
+          <p class="text-center text-xs text-gray-600 mt-3">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ãªã—ã§ã‚‚ç™»éŒ²ã§ãã¾ã™</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // URLã«æ‹›å¾…ã‚³ãƒ¼ãƒ‰ãŒå«ã¾ã‚Œã‚‹å ´åˆã¯è‡ªå‹•å…¥åŠ›
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('code')) {
+    document.getElementById('invite-code-input').value = params.get('code').toUpperCase();
+    await verifyInviteCode();
+  }
+}
+
+function onSourceMediaChange(value) {
+  // ãƒ©ã‚¸ã‚ªãƒœã‚¿ãƒ³é¸æŠæ™‚ã®UIæ›´æ–°
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-primary-500', 'bg-primary-500/10');
+    } else {
+      el.classList.remove('border-primary-500', 'bg-primary-500/10');
+    }
+  });
+}
+
+function proceedToRegisterForm() {
+  const selected = document.querySelector('input[name="source_media"]:checked');
+  if (!selected) {
+    document.getElementById('source-media-error')?.classList.remove('hidden');
+    return;
+  }
+  document.getElementById('source-media-error')?.classList.add('hidden');
+  showRegisterForm(selected.value);
+}
+
+function showRegisterForm(sourceMedia = 'other') {
+  const inviteCode = document.getElementById('invite-code-input')?.value || '';
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-lg">
+        <div class="text-center mb-8">
+          <h1 class="text-2xl font-black mb-2">ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ«å…¥åŠ›</h1>
+          <p class="text-gray-500 text-sm">åŸºæœ¬æƒ…å ±ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„</p>
+        </div>
+        <div class="glass rounded-2xl p-8">
+          <form id="register-form" onsubmit="submitRegister(event)">
+            <input type="hidden" id="reg-invite-code" value="${inviteCode}">
+            <input type="hidden" id="reg-source-media" value="${sourceMedia}">
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><label class="block text-xs text-gray-400 mb-1.5">å§“ <span class="text-red-400">*</span></label><input id="reg-last-name" type="text" required placeholder="å±±ç”°" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-400 mb-1.5">å <span class="text-red-400">*</span></label><input id="reg-first-name" type="text" required placeholder="å¤ªéƒ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            </div>
+            <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ <span class="text-red-400">*</span></label><input id="reg-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">å¤§å­¦å <span class="text-red-400">*</span></label><input id="reg-university" type="text" required placeholder="â—‹â—‹å¤§å­¦" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><label class="block text-xs text-gray-400 mb-1.5">å­¦éƒ¨ãƒ»å­¦ç§‘ <span class="text-gray-500 font-normal">ï¼ˆä»»æ„ï¼‰</span></label><input id="reg-faculty" type="text" placeholder="çµŒæ¸ˆå­¦éƒ¨" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-400 mb-1.5">å­¦å¹´ <span class="text-red-400">*</span></label><select id="reg-grade" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-primary-500"><option value="">é¸æŠ</option><option value="1">1å¹´ç”Ÿ</option><option value="2">2å¹´ç”Ÿ</option><option value="3">3å¹´ç”Ÿ</option><option value="4">4å¹´ç”Ÿ</option></select></div>
+            </div>
+            <div class="grid grid-cols-2 gap-4 mb-4">
+              <div><label class="block text-xs text-gray-400 mb-1.5">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ <span class="text-red-400">*</span></label><input id="reg-password" type="password" required minlength="8" autocomplete="new-password" placeholder="8æ–‡å­—ä»¥ä¸Š" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+              <div><label class="block text-xs text-gray-400 mb-1.5">ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ç¢ºèª <span class="text-red-400">*</span></label><input id="reg-password-confirm" type="password" required minlength="8" autocomplete="new-password" placeholder="ã‚‚ã†ä¸€åº¦å…¥åŠ›" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+            </div>
+            <div id="register-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
+            <button type="submit" id="register-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-user-plus mr-2"></i>ç™»éŒ²ã™ã‚‹
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function verifyInviteCode() {
+  const code = document.getElementById('invite-code-input').value.trim().toUpperCase();
+  const msg = document.getElementById('invite-code-msg');
+  if (!code) { msg.innerHTML = '<span class="text-yellow-400">ã‚³ãƒ¼ãƒ‰ã‚’å…¥åŠ›ã—ã¦ãã ã•ã„</span>'; return; }
+  msg.innerHTML = '<span class="text-gray-400">ç¢ºèªä¸­...</span>';
+  try {
+    const res = await API.post('/invite/verify', { code });
+    if (res.data.success) msg.innerHTML = `<span class="text-green-400"><i class="fas fa-check-circle mr-1"></i>${res.data.data.description || 'æœ‰åŠ¹ãªæ‹›å¾…ã‚³ãƒ¼ãƒ‰ã§ã™'}</span>`;
+  } catch(e) {
+    msg.innerHTML = `<span class="text-red-400"><i class="fas fa-times-circle mr-1"></i>${e.response?.data?.error || 'ç„¡åŠ¹ãªã‚³ãƒ¼ãƒ‰ã§ã™'}</span>`;
+  }
+}
+
+async function submitRegister(e) {
+  e.preventDefault();
+  const btn = document.getElementById('register-btn');
+  const errDiv = document.getElementById('register-error');
+  btn.disabled = true; btn.textContent = 'ç™»éŒ²ä¸­...';
+  errDiv.classList.add('hidden');
+
+  const sourceMedia = document.getElementById('reg-source-media')?.value || 'other';
+  const password = document.getElementById('reg-password').value;
+  const passwordConfirm = document.getElementById('reg-password-confirm').value;
+  if (password.length < 8 || password !== passwordConfirm) {
+    errDiv.textContent = password.length < 8 ? 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ã¯8æ–‡å­—ä»¥ä¸Šã§å…¥åŠ›ã—ã¦ãã ã•ã„' : 'ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒä¸€è‡´ã—ã¾ã›ã‚“';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i>ç™»éŒ²ã™ã‚‹';
+    return;
+  }
+
+  const data = {
+    last_name: document.getElementById('reg-last-name').value,
+    first_name: document.getElementById('reg-first-name').value,
+    email: document.getElementById('reg-email').value,
+    university: document.getElementById('reg-university').value,
+    faculty: document.getElementById('reg-faculty').value,
+    grade: parseInt(document.getElementById('reg-grade').value),
+    invite_code: document.getElementById('reg-invite-code').value,
+    source_media: sourceMedia,
+    password,
+  };
+
+  try {
+    const res = await API.post('/students/register', data);
+    if (res.data.success) {
+      storeStudentAuth({
+        id: res.data.data.id,
+        name: data.last_name + data.first_name,
+        my_invite_code: res.data.data.my_invite_code || ''
+      });
+      showRegisterSuccess(data, res.data.data.my_invite_code, sourceMedia);
+    }
+  } catch(e) {
+    errDiv.textContent = e.response?.data?.error || 'ç™»éŒ²ã«å¤±æ•—ã—ã¾ã—ãŸ';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-user-plus mr-2"></i>ç™»éŒ²ã™ã‚‹';
+  }
+}
+
+async function showRegisterSuccess(data, myCode, sourceMedia) {
+  const s = await getSiteSettings();
+  // source_mediaã«å¯¾å¿œã—ãŸLINE URLã‚’å–å¾—
+  const lineUrl = resolveLineUrl(s, sourceMedia);
+
+  document.getElementById('app').innerHTML = `
+    <div class="min-h-screen flex items-center justify-center px-4">
+      <div class="text-center max-w-md">
+        <div class="w-20 h-20 bg-green-500/20 border-2 border-green-500/50 rounded-full flex items-center justify-center mx-auto mb-6">
+          <i class="fas fa-check text-green-400 text-3xl"></i>
+        </div>
+        <h1 class="text-2xl font-black mb-3">ç™»éŒ²å®Œäº†ï¼</h1>
+        <p class="text-gray-400 mb-2">${data.last_name}${data.first_name} ã•ã‚“ã€ã‚ˆã†ã“ãï¼</p>
+        ${myCode ? `
+        <div class="glass rounded-xl p-4 mb-5 text-left">
+          <p class="text-xs text-gray-500 mb-2"><i class="fas fa-ticket-alt mr-1"></i>ã‚ãªãŸã®æ‹›å¾…ã‚³ãƒ¼ãƒ‰</p>
+          <div class="flex items-center gap-2">
+            <code class="text-primary-400 font-bold font-mono text-lg tracking-wider">${myCode}</code>
+            <button onclick="navigator.clipboard.writeText('${myCode}');this.textContent='ã‚³ãƒ”ãƒ¼æ¸ˆã¿'" class="text-xs bg-primary-500/20 text-primary-400 px-2 py-1 rounded-lg">ã‚³ãƒ”ãƒ¼</button>
+          </div>
+          <p class="text-xs text-gray-500 mt-2">${s.student_referral_reward || 'å‹äººã«å…±æœ‰ã—ã¦ç‰¹å…¸ã‚’ã‚²ãƒƒãƒˆã—ã‚ˆã†'}</p>
+          <a href="/mypage" class="text-xs text-primary-400 hover:text-primary-300 mt-1 block">ãƒã‚¤ãƒšãƒ¼ã‚¸ã§è©³ç´°ã‚’ç¢ºèª â†’</a>
+        </div>` : ''}
+        <p class="text-gray-500 text-sm mb-6">å…¬å¼LINEã‚’å‹ã ã¡è¿½åŠ ã—ã¦ã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³æ´»å‹•ã‚’ã‚¹ã‚¿ãƒ¼ãƒˆã—ã¾ã—ã‚‡ã†ã€‚</p>
+        <div class="space-y-3">
+          ${renderLineCta(lineUrl)}
+          <a href="/jobs" class="block text-primary-400 hover:text-primary-300 transition-colors text-sm py-2">
+            <i class="fas fa-search mr-1"></i>ä¼šå“¡é™å®šæ±‚äººã‚’å«ã‚€å…¨æ±‚äººã‚’è¦‹ã‚‹
+          </a>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================
+// ç„¡æ–™ç›¸è«‡ãƒšãƒ¼ã‚¸
+// ==========================================
+async function initConsultationPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="text-center mb-8">
+        <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-comments text-purple-400 text-xl"></i>
+        </div>
+        <h1 class="text-2xl font-black mb-2">ç„¡æ–™ç›¸è«‡</h1>
+        <p class="text-gray-500 text-sm">ã‚­ãƒ£ãƒªã‚¢ã®ãƒ—ãƒ­ãŒã€ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³é¸ã³ã‚’ç„¡æ–™ã§ã‚µãƒãƒ¼ãƒˆã—ã¾ã™</p>
+      </div>
+      <!-- STEP 1: æµå…¥åª’ä½“é¸æŠ -->
+      <div class="glass rounded-2xl p-8 mb-4" id="con-source-step">
+        <h3 class="font-bold mb-4 text-sm">ã©ã“ã§ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚’çŸ¥ã‚Šã¾ã—ãŸã‹ï¼Ÿ <span class="text-red-400">*</span></h3>
+        <div class="grid grid-cols-1 gap-2">
+          ${SOURCE_MEDIA_OPTIONS.map(opt => `
+            <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
+              <input type="radio" name="con_source_media" value="${opt.value}" onchange="onConSourceMediaChange('${opt.value}')"
+                class="accent-purple-500 w-4 h-4">
+              <span class="text-sm text-gray-200">${opt.label}</span>
+            </label>
+          `).join('')}
+        </div>
+        <div id="con-source-error" class="hidden mt-3 text-xs text-red-400">æµå…¥åª’ä½“ã‚’é¸æŠã—ã¦ãã ã•ã„</div>
+        <button onclick="proceedToConsultationForm()" class="w-full mt-5 bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
+          ç›¸è«‡ãƒ•ã‚©ãƒ¼ãƒ ã¸é€²ã‚€
+        </button>
+      </div>
+      <!-- STEP 2: ç›¸è«‡ãƒ•ã‚©ãƒ¼ãƒ ï¼ˆåˆæœŸéè¡¨ç¤ºï¼‰ -->
+      <div class="glass rounded-2xl p-8 hidden" id="con-form-step">
+        <form id="consultation-form" onsubmit="submitConsultation(event)">
+          <input type="hidden" id="con-source-media" value="">
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">ãŠåå‰ <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="å±±ç”° å¤ªéƒ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+            <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+          </div>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div><label class="block text-xs text-gray-400 mb-1.5">å¤§å­¦å</label><input id="con-university" type="text" placeholder="â—‹â—‹å¤§å­¦" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+            <div><label class="block text-xs text-gray-400 mb-1.5">å­¦å¹´</label><select id="con-grade" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-gray-300 focus:outline-none focus:border-purple-500"><option value="">é¸æŠ</option><option value="1">1å¹´ç”Ÿ</option><option value="2">2å¹´ç”Ÿ</option><option value="3">3å¹´ç”Ÿ</option><option value="4">4å¹´ç”Ÿ</option></select></div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-xs text-gray-400 mb-1.5">ãŠæ‚©ã¿ãƒ»ç›¸è«‡å†…å®¹</label>
+            <div class="grid grid-cols-2 gap-2 mb-3">
+              ${['ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³é¸ã³ã§è¿·ã£ã¦ã„ã‚‹','å°±æ´»ã¨ã®ä¸¡ç«‹ãŒä¸å®‰','ã©ã‚“ãªã‚¹ã‚­ãƒ«ãŒèº«ã«ã¤ãã‹çŸ¥ã‚ŠãŸã„','çµ¦ä¸ãƒ»æ¡ä»¶ã«ã¤ã„ã¦è©³ã—ãèããŸã„','é¢æ¥å¯¾ç­–ãŒã—ãŸã„','ãã®ä»–'].map(c => `<label class="flex items-center gap-2 bg-white/5 rounded-lg px-3 py-2 cursor-pointer hover:bg-white/10"><input type="checkbox" value="${c}" class="concern-check accent-purple-500"><span class="text-xs text-gray-300">${c}</span></label>`).join('')}
+            </div>
+          </div>
+          <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">ãã®ä»–ã€æ°—ã«ãªã‚‹ã“ã¨ãŒã‚ã‚Œã°ã”è¨˜å…¥ãã ã•ã„</label><textarea id="con-message" rows="4" placeholder="æ°—ã«ãªã‚‹ã“ã¨ã‚’ä½•ã§ã‚‚" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 resize-none"></textarea></div>
+          <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">ã”å¸Œæœ›ã®æ—¥æ™‚ï¼ˆä»»æ„ï¼‰</label><input id="con-datetime" type="text" placeholder="å¹³æ—¥ã®åˆå¾Œãªã©" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+          <div id="consultation-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
+          <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
+            <i class="fas fa-calendar-alt mr-2"></i>ç„¡æ–™ç›¸è«‡ã‚’ç”³ã—è¾¼ã‚€
+          </button>
+        </form>
+      </div>
+    </div>
+  `;
+}
+
+function onConSourceMediaChange(value) {
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`con-source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-purple-500', 'bg-purple-500/10');
+    } else {
+      el.classList.remove('border-purple-500', 'bg-purple-500/10');
+    }
+  });
+}
+
+function proceedToConsultationForm() {
+  const selected = document.querySelector('input[name="con_source_media"]:checked');
+  if (!selected) {
+    document.getElementById('con-source-error')?.classList.remove('hidden');
+    return;
+  }
+  document.getElementById('con-source-error')?.classList.add('hidden');
+  document.getElementById('con-source-media').value = selected.value;
+  document.getElementById('con-source-step').classList.add('hidden');
+  document.getElementById('con-form-step').classList.remove('hidden');
+}
+
+async function submitConsultation(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'é€ä¿¡ä¸­...';
+  const concerns = [...document.querySelectorAll('.concern-check:checked')].map(c => c.value);
+  const sourceMedia = document.getElementById('con-source-media')?.value || 'other';
+  try {
+    const res = await API.post('/consultation', {
+      name: document.getElementById('con-name').value,
+      email: document.getElementById('con-email').value,
+      university: document.getElementById('con-university').value,
+      grade: parseInt(document.getElementById('con-grade').value) || null,
+      concern: concerns.join('ã€'),
+      message: document.getElementById('con-message').value,
+      preferred_datetime: document.getElementById('con-datetime').value,
+      source_media: sourceMedia,
+    });
+    if (res.data.success) {
+      const s = await getSiteSettings();
+      // source_mediaã«å¯¾å¿œã—ãŸLINE URLã‚’å–å¾—
+      const lineUrl = resolveLineUrl(s, sourceMedia);
+      document.getElementById('app').innerHTML = `
+        <div class="min-h-screen flex items-center justify-center px-4">
+          <div class="text-center max-w-md">
+            <div class="w-20 h-20 bg-purple-500/20 border-2 border-purple-500/50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <i class="fas fa-check text-purple-400 text-3xl"></i>
+            </div>
+            <h1 class="text-2xl font-black mb-3">ãŠç”³ã—è¾¼ã¿ã‚ã‚ŠãŒã¨ã†ã”ã–ã„ã¾ã™ï¼</h1>
+            <p class="text-gray-400 mb-8 text-sm">æ‹…å½“è€…ã‚ˆã‚Š2å–¶æ¥­æ—¥ä»¥å†…ã«ã”é€£çµ¡ã„ãŸã—ã¾ã™ã€‚<br>å…¬å¼LINEã‚’è¿½åŠ ã„ãŸã ãã¨ã‚ˆã‚Šè¿…é€Ÿã«ã”é€£çµ¡ã§ãã¾ã™ã€‚</p>
+            <div class="space-y-3">
+              ${renderLineCta(lineUrl)}
+              <a href="/" class="block text-gray-400 hover:text-white text-sm py-2"><i class="fas fa-home mr-1"></i>ãƒˆãƒƒãƒ—ã«æˆ»ã‚‹</a>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  } catch(e) {
+    const errDiv = document.getElementById('consultation-error');
+    errDiv.textContent = e.response?.data?.error || 'é€ä¿¡ã«å¤±æ•—ã—ã¾ã—ãŸ';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-calendar-alt mr-2"></i>ç„¡æ–™ç›¸è«‡ã‚’ç”³ã—è¾¼ã‚€';
+  }
+}
+
+// ==========================================
+// ãƒã‚¤ãƒšãƒ¼ã‚¸
+// ==========================================
+async function initMyPage() {
+  await restoreStudentSession();
+  const studentId = localStorage.getItem('student_id');
+  const app = document.getElementById('app');
+
+  if (!studentId) {
+    app.innerHTML = `
+      <div class="min-h-screen flex items-center justify-center px-4">
+        <div class="text-center">
+          <h1 class="text-xl font-bold mb-4">ãƒ­ã‚°ã‚¤ãƒ³ãŒå¿…è¦ã§ã™</h1>
+          <p class="text-gray-400 text-sm mb-6">ãƒã‚¤ãƒšãƒ¼ã‚¸ã‚’è¦‹ã‚‹ã«ã¯ç™»éŒ²ãŒå¿…è¦ã§ã™</p>
+          <div class="flex justify-center gap-3">
+            <a href="/login" class="bg-primary-500 text-white font-bold px-6 py-3 rounded-xl">ãƒ­ã‚°ã‚¤ãƒ³</a>
+            <a href="/register" class="glass text-gray-800 hover:text-primary-600 font-bold px-6 py-3 rounded-xl">æ–°è¦ç™»éŒ²</a>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+
+  app.innerHTML = `<div class="max-w-3xl mx-auto px-4 py-12"><div class="animate-pulse space-y-4"><div class="h-24 bg-white/5 rounded-xl"></div></div></div>`;
+
+  try {
+    const [mypageRes, s] = await Promise.all([
+      API.get(`/students/mypage/${studentId}`),
+      getSiteSettings()
+    ]);
+    const d = mypageRes.data.data;
+    const statusColors = { applied: 'bg-gray-500/20 text-gray-300', reviewing: 'bg-blue-500/20 text-blue-300', interview1: 'bg-purple-500/20 text-purple-300', offered: 'bg-yellow-500/20 text-yellow-300', accepted: 'bg-green-500/20 text-green-300', rejected: 'bg-red-500/20 text-red-400' };
+    const statusLabels = { applied: 'å¿œå‹Ÿæ¸ˆã¿', reviewing: 'æ›¸é¡é¸è€ƒä¸­', interview1: '1æ¬¡é¢æ¥', interview2: '2æ¬¡é¢æ¥', interview3: 'æœ€çµ‚é¢æ¥', offered: 'å†…å®š', accepted: 'å†…å®šæ‰¿è«¾', rejected: 'ä¸æ¡ç”¨', withdrawn: 'è¾é€€' };
+    const myCode = d.my_invite_code || localStorage.getItem('my_invite_code');
+    const referralEnabled = s.student_referral_enabled !== false;
+    const inviteUrl = `${window.location.origin}/register?code=${myCode}`;
+
+    app.innerHTML = `
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h1 class="text-2xl font-black mb-8">ãƒã‚¤ãƒšãƒ¼ã‚¸</h1>
+
+        <!-- ãƒ—ãƒ­ãƒ•ã‚£ãƒ¼ãƒ« -->
+        <div class="glass rounded-2xl p-6 mb-5">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-primary-500/20 rounded-full flex items-center justify-center text-2xl font-black text-primary-400">
+              ${(d.last_name||'?')[0]}
+            </div>
+            <div>
+              <h2 class="text-xl font-bold">${d.last_name} ${d.first_name}</h2>
+              <p class="text-gray-400 text-sm">${d.university} ${d.grade}å¹´ç”Ÿ</p>
+              <p class="text-gray-500 text-xs">${d.email}</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- æ‹›å¾…ã‚³ãƒ¼ãƒ‰ -->
+        ${referralEnabled && myCode ? `
+        <div class="glass rounded-2xl p-6 mb-5 border border-primary-500/20">
+          <h3 class="font-bold mb-1 flex items-center gap-2">
+            <i class="fas fa-ticket-alt text-primary-400"></i>ã‚ãªãŸã®æ‹›å¾…ã‚³ãƒ¼ãƒ‰
+          </h3>
+          <p class="text-xs text-gray-500 mb-4">${s.student_referral_benefit || 'å‹äººã«å…±æœ‰ã™ã‚‹ã¨ç‰¹å…¸ãŒå¾—ã‚‰ã‚Œã¾ã™'}</p>
+          <div class="bg-dark-900 rounded-xl p-4 mb-4">
+            <div class="flex items-center justify-between">
+              <code class="text-primary-400 font-bold font-mono text-2xl tracking-widest">${myCode}</code>
+              <button onclick="navigator.clipboard.writeText('${myCode}');this.innerHTML='<i class=\\'fas fa-check\\'></i> ã‚³ãƒ”ãƒ¼æ¸ˆã¿'" class="text-xs bg-primary-500/20 border border-primary-500/30 text-primary-400 px-3 py-1.5 rounded-lg">
+                <i class="fas fa-copy"></i> ã‚³ãƒ”ãƒ¼
+              </button>
+            </div>
+            <p class="text-xs text-gray-600 mt-2">ä½¿ç”¨å›æ•°: ${d.my_invite_code_uses || 0}å›</p>
+          </div>
+          <div class="bg-white/5 rounded-xl p-3 mb-3">
+            <p class="text-xs text-gray-500 mb-1">æ‹›å¾…URLï¼ˆã‚·ã‚§ã‚¢ç”¨ï¼‰</p>
+            <div class="flex items-center gap-2">
+              <p class="text-xs text-gray-300 truncate flex-1">${inviteUrl}</p>
+              <button onclick="navigator.clipboard.writeText('${inviteUrl}');this.textContent='ã‚³ãƒ”ãƒ¼æ¸ˆã¿'" class="text-xs text-primary-400 flex-shrink-0">URLã‚’ã‚³ãƒ”ãƒ¼</button>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-sm">
+            <div class="text-center">
+              <div class="text-2xl font-black gradient-text">${d.referral_count || 0}</div>
+              <div class="text-xs text-gray-500">ç´¹ä»‹ã—ãŸå‹äººæ•°</div>
+            </div>
+            <div class="text-gray-400 text-xs max-w-xs text-right">${s.student_referral_reward || 'ç´¹ä»‹ã—ãŸå‹äººãŒå…¥ä¼šã™ã‚‹ãŸã³ã«ç‰¹å…¸ãŒã‚¢ãƒƒãƒ—ã—ã¾ã™'}</div>
+          </div>
+        </div>` : ''}
+
+        <!-- å¿œå‹Ÿå±¥æ­´ -->
+        <div class="glass rounded-2xl p-6">
+          <h3 class="font-bold mb-4 flex items-center gap-2">
+            <i class="fas fa-file-alt text-primary-400"></i>å¿œå‹Ÿå±¥æ­´
+            <span class="text-gray-500 font-normal text-sm">(${d.applications?.length || 0}ä»¶)</span>
+          </h3>
+          ${d.applications?.length > 0 ? `
+          <div class="space-y-3">
+            ${d.applications.map(a => `
+              <a href="/jobs/${a.job_slug}" class="flex items-center gap-3 glass rounded-xl p-3 hover:bg-white/5 transition-colors block">
+                <span class="status-badge ${statusColors[a.status]||'bg-gray-500/20 text-gray-400'}">${statusLabels[a.status]||a.status}</span>
+                <div class="flex-1 min-w-0">
+                  <p class="text-sm font-medium truncate">${a.job_title}</p>
+                  <p class="text-xs text-gray-700">${a.company_name}</p>
+                </div>
+                <p class="text-xs text-gray-600 flex-shrink-0">${a.created_at?.split('T')[0]||''}</p>
+              </a>
+            `).join('')}
+          </div>` : `
+          <div class="text-center py-8 text-gray-500">
+            <i class="fas fa-file-alt text-3xl mb-3 block opacity-30"></i>
+            <p class="text-sm">ã¾ã å¿œå‹Ÿã—ã¦ã„ã¾ã›ã‚“</p>
+            <a href="/jobs" class="text-primary-400 text-sm mt-2 block hover:text-primary-300">æ±‚äººã‚’æ¢ã™ â†’</a>
+          </div>`}
+        </div>
+
+        <!-- ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ -->
+        <div class="text-center mt-6">
+          <button onclick="studentLogout()" class="text-xs text-gray-600 hover:text-red-400 transition-colors">
+            <i class="fas fa-sign-out-alt mr-1"></i>ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
+          </button>
+        </div>
+      </div>
+    `;
+  } catch(e) {
+    app.innerHTML = `<div class="text-center py-20 text-gray-500">ãƒ‡ãƒ¼ã‚¿ã®å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ</div>`;
+  }
+}
+
+async function studentLogout() {
+  try {
+    await API.post('/students/logout');
+  } catch(e) {}
+  clearStudentAuth();
+  window.location.href = '/';
+}
+
+// ==========================================
+// æ³•å‹™ãƒšãƒ¼ã‚¸
+// ==========================================
+function renderLegalPage(title, lead, sections, updatedAt = '2026å¹´8æœˆ4æ—¥') {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <p class="text-sm text-primary-600 font-semibold mb-2">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</p>
+        <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">${title}</h1>
+        <p class="text-gray-600 leading-relaxed">${lead}</p>
+        <p class="text-xs text-gray-400 mt-4">æœ€çµ‚æ›´æ–°æ—¥ï¼š${escapeHtml(updatedAt)}</p>
+      </div>
+      <div class="space-y-6">
+        ${sections.map((section, index) => `
+          <section class="glass rounded-2xl p-6">
+            <h2 class="text-lg font-bold text-gray-900 mb-3">${index + 1}. ${section.heading}</h2>
+            <div class="space-y-3 text-sm leading-7 text-gray-700">
+              ${section.body.map(paragraph => `<p>${paragraph}</p>`).join('')}
+            </div>
+          </section>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+async function initPrivacyPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³é‹å–¶äº‹å‹™å±€');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || 'å…¬é–‹æº–å‚™ä¸­');
+  renderLegalPage(
+    'ãƒ—ãƒ©ã‚¤ãƒã‚·ãƒ¼ãƒãƒªã‚·ãƒ¼',
+    'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã¯ã€é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³æ±‚äººæƒ…å ±ã®æä¾›ã€å¿œå‹Ÿãƒ»ç›¸è«‡å¯¾å¿œã€ã‚µãƒ¼ãƒ“ã‚¹æ”¹å–„ã®ãŸã‚ã«å¿…è¦ãªç¯„å›²ã§å€‹äººæƒ…å ±ã‚’å–ã‚Šæ‰±ã„ã¾ã™ã€‚',
+    [
+      {
+        heading: 'å–å¾—ã™ã‚‹æƒ…å ±',
+        body: [
+          'æ°åã€ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã€é›»è©±ç•ªå·ã€å¤§å­¦åã€å­¦å¹´ã€å¸Œæœ›è·ç¨®ã€å¿œå‹Ÿå†…å®¹ã€ç›¸è«‡å†…å®¹ã€æ‹›å¾…ã‚³ãƒ¼ãƒ‰ã€æµå…¥åª’ä½“ã€ã‚µãƒ¼ãƒ“ã‚¹åˆ©ç”¨å±¥æ­´ãªã©ã‚’å–å¾—ã™ã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚',
+          'Cookieã‚„ã‚¢ã‚¯ã‚»ã‚¹è§£ææƒ…å ±ã‚’åˆ©ç”¨ã—ã€è¡¨ç¤ºæ”¹å–„ã€ã‚»ã‚­ãƒ¥ãƒªãƒ†ã‚£å¯¾ç­–ã€ä¸æ­£åˆ©ç”¨é˜²æ­¢ã€ã‚µãƒ¼ãƒ“ã‚¹æ”¹å–„ã«æ´»ç”¨ã™ã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'åˆ©ç”¨ç›®çš„',
+        body: [
+          'æ±‚äººç´¹ä»‹ã€å¿œå‹Ÿå—ä»˜ã€ä¼æ¥­ã¨ã®é¸è€ƒé€£çµ¡ã€ç„¡æ–™ç›¸è«‡ã€æœ¬äººç¢ºèªã€å•ã„åˆã‚ã›å¯¾å¿œã€ã‚µãƒ¼ãƒ“ã‚¹æ”¹å–„ã€é‡è¦ãªãŠçŸ¥ã‚‰ã›ã®é…ä¿¡ã®ãŸã‚ã«åˆ©ç”¨ã—ã¾ã™ã€‚',
+          'å€‹äººã‚’ç‰¹å®šã§ããªã„å½¢ã«åŠ å·¥ã—ãŸçµ±è¨ˆæƒ…å ±ã‚’ã€æ²è¼‰ä¼æ¥­ã¸ã®èª¬æ˜ã‚„ã‚µãƒ¼ãƒ“ã‚¹æ”¹å–„ã«åˆ©ç”¨ã™ã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'ç¬¬ä¸‰è€…æä¾›',
+        body: [
+          'å¿œå‹Ÿã¾ãŸã¯ç›¸è«‡ã®ç›®çš„é”æˆã«å¿…è¦ãªç¯„å›²ã§ã€å¿œå‹Ÿå…ˆä¼æ¥­ã¾ãŸã¯ææºå…ˆã«æƒ…å ±ã‚’æä¾›ã™ã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚',
+          'æ³•ä»¤ã«åŸºã¥ãå ´åˆã‚’é™¤ãã€æœ¬äººã®åŒæ„ãªãç›®çš„å¤–ã®ç¬¬ä¸‰è€…æä¾›ã¯è¡Œã„ã¾ã›ã‚“ã€‚'
+        ]
+      },
+      {
+        heading: 'å®‰å…¨ç®¡ç†',
+        body: [
+          'å–å¾—ã—ãŸæƒ…å ±ã«ã¤ã„ã¦ã€æ¼ãˆã„ã€æ»…å¤±ã€æ¯€æã€ä¸æ­£ã‚¢ã‚¯ã‚»ã‚¹ã‚’é˜²æ­¢ã™ã‚‹ãŸã‚ã€å¿…è¦ã‹ã¤é©åˆ‡ãªå®‰å…¨ç®¡ç†æªç½®ã‚’è¬›ã˜ã¾ã™ã€‚',
+          'ç®¡ç†ç”»é¢ã‚„ãƒ‡ãƒ¼ã‚¿ãƒ™ãƒ¼ã‚¹ã¸ã®ã‚¢ã‚¯ã‚»ã‚¹æ¨©é™ã¯ã€é‹ç”¨ä¸Šå¿…è¦ãªç¯„å›²ã«é™å®šã—ã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'é–‹ç¤ºãƒ»è¨‚æ­£ãƒ»å‰Šé™¤',
+        body: [
+          'æœ¬äººã‹ã‚‰å€‹äººæƒ…å ±ã®é–‹ç¤ºã€è¨‚æ­£ã€åˆ©ç”¨åœæ­¢ã€å‰Šé™¤ç­‰ã®ç”³ã—å‡ºãŒã‚ã£ãŸå ´åˆã€æ³•ä»¤ã«å¾“ã£ã¦åˆç†çš„ãªç¯„å›²ã§å¯¾å¿œã—ã¾ã™ã€‚',
+          'ãŠå•ã„åˆã‚ã›å…ˆã¯ã€ã‚µãƒ¼ãƒ“ã‚¹å†…ã¾ãŸã¯é‹å–¶è€…æƒ…å ±ãƒšãƒ¼ã‚¸ã§æ¡ˆå†…ã™ã‚‹é€£çµ¡å…ˆã‚’ã”ç¢ºèªãã ã•ã„ã€‚'
+        ]
+      },
+      {
+        heading: 'ä¿å­˜æœŸé–“ã¨ãŠå•ã„åˆã‚ã›',
+        body: [
+          'å–å¾—ã—ãŸæƒ…å ±ã¯ã€åˆ©ç”¨ç›®çš„ã®é”æˆã€æ³•ä»¤ä¸Šã®ç¾©å‹™ã€ä¸æ­£åˆ©ç”¨é˜²æ­¢ã«å¿…è¦ãªæœŸé–“ä¿å­˜ã—ã€ä¸è¦ã¨ãªã£ãŸæƒ…å ±ã¯é©åˆ‡ãªæ–¹æ³•ã§å‰Šé™¤ã¾ãŸã¯åŒ¿ååŒ–ã—ã¾ã™ã€‚',
+          `é‹å–¶è€…ï¼š${operatorName}ï¼ãŠå•ã„åˆã‚ã›ï¼š${contactEmail}`
+        ]
+      }
+    ],
+    asSettingText(settings.legal_updated_at) || '2026å¹´8æœˆ4æ—¥'
+  );
+}
+
+async function initTermsPage() {
+  const settings = await getPublicOperatorInfo();
+  const operatorName = escapeHtml(asSettingText(settings.operator_name) || 'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³é‹å–¶äº‹å‹™å±€');
+  const contactEmail = escapeHtml(asSettingText(settings.operator_contact_email) || asSettingText(settings.contact_email) || 'å…¬é–‹æº–å‚™ä¸­');
+  renderLegalPage(
+    'åˆ©ç”¨è¦ç´„',
+    'ã“ã®åˆ©ç”¨è¦ç´„ã¯ã€ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ãŒæä¾›ã™ã‚‹é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³æ±‚äººæƒ…å ±ã‚µãƒ¼ãƒ“ã‚¹ã®åˆ©ç”¨æ¡ä»¶ã‚’å®šã‚ã‚‹ã‚‚ã®ã§ã™ã€‚',
+    [
+      {
+        heading: 'ã‚µãƒ¼ãƒ“ã‚¹å†…å®¹',
+        body: [
+          'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã¯ã€å­¦ç”Ÿå‘ã‘ã«é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³æ±‚äººæƒ…å ±ã€å¿œå‹Ÿå°ç·šã€ç„¡æ–™ç›¸è«‡ã€é–¢é€£æƒ…å ±ã‚’æä¾›ã™ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ã§ã™ã€‚',
+          'æ²è¼‰æƒ…å ±ã®æ­£ç¢ºæ€§ã«ã¯åŠªã‚ã¾ã™ãŒã€æ±‚äººæ¡ä»¶ã€é¸è€ƒçŠ¶æ³ã€å‹Ÿé›†çµ‚äº†æ™‚æœŸãªã©ã¯å¤‰æ›´ã•ã‚Œã‚‹å ´åˆãŒã‚ã‚Šã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'åˆ©ç”¨è€…ã®è²¬ä»»',
+        body: [
+          'åˆ©ç”¨è€…ã¯ã€ç™»éŒ²æƒ…å ±ã€å¿œå‹Ÿæƒ…å ±ã€ç›¸è«‡å†…å®¹ã«ã¤ã„ã¦ã€çœŸå®Ÿã‹ã¤æ­£ç¢ºãªæƒ…å ±ã‚’æä¾›ã™ã‚‹ã‚‚ã®ã¨ã—ã¾ã™ã€‚',
+          'ä»–äººã«ãªã‚Šã™ã¾ã™è¡Œç‚ºã€è™šå½æƒ…å ±ã®ç™»éŒ²ã€ã‚µãƒ¼ãƒ“ã‚¹é‹å–¶ã‚’å¦¨ã’ã‚‹è¡Œç‚ºã€æ³•ä»¤ã¾ãŸã¯å…¬åºè‰¯ä¿—ã«åã™ã‚‹è¡Œç‚ºã‚’ç¦æ­¢ã—ã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'æ±‚äººå¿œå‹Ÿã¨é¸è€ƒ',
+        body: [
+          'å¿œå‹Ÿå¾Œã®é¸è€ƒã€é¢æ¥ã€æ¡å¦ã€é›‡ç”¨å¥‘ç´„ã€å‹¤å‹™æ¡ä»¶ã®æœ€çµ‚æ±ºå®šã¯ã€å¿œå‹Ÿå…ˆä¼æ¥­ã¨åˆ©ç”¨è€…ã®é–“ã§è¡Œã‚ã‚Œã¾ã™ã€‚',
+          'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã¯ã€æ±‚äººç´¹ä»‹ã‚„é€£çµ¡è£œåŠ©ã‚’è¡Œã†å ´åˆãŒã‚ã‚Šã¾ã™ãŒã€æ¡ç”¨ã‚„å‹¤å‹™æ¡ä»¶ã‚’ä¿è¨¼ã™ã‚‹ã‚‚ã®ã§ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚'
+        ]
+      },
+      {
+        heading: 'ã‚µãƒ¼ãƒ“ã‚¹ã®å¤‰æ›´ãƒ»åœæ­¢',
+        body: [
+          'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã¯ã€å¿…è¦ã«å¿œã˜ã¦ã‚µãƒ¼ãƒ“ã‚¹å†…å®¹ã®å¤‰æ›´ã€æ©Ÿèƒ½è¿½åŠ ã€ä¸€æ™‚åœæ­¢ã€çµ‚äº†ã‚’è¡Œã†å ´åˆãŒã‚ã‚Šã¾ã™ã€‚',
+          'ä¿å®ˆã€éšœå®³ã€å¤–éƒ¨ã‚µãƒ¼ãƒ“ã‚¹ã®åœæ­¢ã€ãã®ä»–ã‚„ã‚€ã‚’å¾—ãªã„äº‹æƒ…ã«ã‚ˆã‚Šã€äº‹å‰å‘ŠçŸ¥ãªãã‚µãƒ¼ãƒ“ã‚¹ã‚’åœæ­¢ã™ã‚‹ã“ã¨ãŒã‚ã‚Šã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'å…è²¬',
+        body: [
+          'ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã®åˆ©ç”¨ã«ã‚ˆã‚Šç”Ÿã˜ãŸæå®³ã«ã¤ã„ã¦ã€é‹å–¶è€…ã«æ•…æ„ã¾ãŸã¯é‡éå¤±ãŒã‚ã‚‹å ´åˆã‚’é™¤ãã€é‹å–¶è€…ã¯è²¬ä»»ã‚’è² ã„ã¾ã›ã‚“ã€‚',
+          'åˆ©ç”¨è€…ã¨æ²è¼‰ä¼æ¥­ã¾ãŸã¯ç¬¬ä¸‰è€…ã¨ã®é–“ã§ç”Ÿã˜ãŸãƒˆãƒ©ãƒ–ãƒ«ã¯ã€å½“äº‹è€…é–“ã§è§£æ±ºã™ã‚‹ã‚‚ã®ã¨ã—ã¾ã™ã€‚'
+        ]
+      },
+      {
+        heading: 'æº–æ‹ æ³•ãƒ»ãŠå•ã„åˆã‚ã›',
+        body: [
+          'æœ¬è¦ç´„ã¯æ—¥æœ¬æ³•ã«æº–æ‹ ã—ã€æœ¬ã‚µãƒ¼ãƒ“ã‚¹ã«é–¢ã—ã¦ç´›äº‰ãŒç”Ÿã˜ãŸå ´åˆã¯ã€é‹å–¶è€…ã®æ‰€åœ¨åœ°ã‚’ç®¡è½„ã™ã‚‹è£åˆ¤æ‰€ã‚’ç¬¬ä¸€å¯©ã®å°‚å±çš„åˆæ„ç®¡è½„è£åˆ¤æ‰€ã¨ã—ã¾ã™ã€‚',
+          `é‹å–¶è€…ï¼š${operatorName}ï¼ãŠå•ã„åˆã‚ã›ï¼š${contactEmail}`
+        ]
+      }
+    ],
+    asSettingText(settings.legal_updated_at) || '2026å¹´8æœˆ4æ—¥'
+  );
+}
+
+async function initCompanyPage() {
+  const app = document.getElementById('app');
+  const settings = await getPublicOperatorInfo();
+  const rows = [
+    ['é‹å–¶è€…å', settings.operator_name],
+    ['ä»£è¡¨è€…', settings.operator_representative],
+    ['æ‰€åœ¨åœ°', settings.operator_address],
+    ['äº‹æ¥­å†…å®¹', settings.operator_business],
+    ['ãŠå•ã„åˆã‚ã›', settings.operator_contact_email || settings.contact_email]
+  ].filter(([, value]) => asSettingText(value));
+
+  app.innerHTML = `
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <p class="text-sm text-primary-600 font-semibold mb-2">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</p>
+        <h1 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">é‹å–¶è€…æƒ…å ±</h1>
+        <p class="text-gray-600">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚’é‹å–¶ã™ã‚‹äº‹æ¥­è€…ã®æƒ…å ±ã§ã™ã€‚</p>
+      </div>
+      <div class="glass rounded-2xl overflow-hidden">
+        ${rows.length ? rows.map(([label, value]) => `
+          <div class="grid sm:grid-cols-[12rem_1fr] border-b border-gray-100 last:border-b-0">
+            <div class="bg-gray-50 px-5 py-4 text-sm font-semibold text-gray-700">${escapeHtml(label)}</div>
+            <div class="px-5 py-4 text-sm text-gray-700 whitespace-pre-line">${escapeHtml(value)}</div>
+          </div>
+        `).join('') : `
+          <div class="p-8 text-center text-gray-500">
+            <p class="font-medium">é‹å–¶è€…æƒ…å ±ã¯æ­£å¼å…¬é–‹å‰ã«æ²è¼‰ã—ã¾ã™ã€‚</p>
+            <p class="text-xs mt-2">ç®¡ç†ç”»é¢ã®ã‚µã‚¤ãƒˆè¨­å®šã‹ã‚‰ç™»éŒ²ã§ãã¾ã™ã€‚</p>
+          </div>
+        `}
+      </div>
+    </div>`;
+}
+
+function initNotFoundPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="max-w-xl mx-auto px-4 py-24 text-center">
+      <p class="text-7xl font-black gradient-text mb-4">404</p>
+      <h1 class="text-2xl font-bold text-gray-900 mb-3">ãƒšãƒ¼ã‚¸ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“</h1>
+      <p class="text-gray-600 mb-8">URLãŒå¤‰æ›´ã•ã‚ŒãŸã‹ã€ãƒšãƒ¼ã‚¸ãŒå‰Šé™¤ã•ã‚ŒãŸå¯èƒ½æ€§ãŒã‚ã‚Šã¾ã™ã€‚</p>
+      <div class="flex flex-col sm:flex-row justify-center gap-3">
+        <a href="/" class="bg-primary-500 hover:bg-primary-600 text-white font-bold px-6 py-3 rounded-xl">ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸ã¸æˆ»ã‚‹</a>
+        <a href="/jobs" class="border border-gray-300 hover:border-primary-400 text-gray-700 font-bold px-6 py-3 rounded-xl">æ±‚äººã‚’æ¢ã™</a>
+      </div>
+    </div>`;
+}
+
+// ==========================================
+// å¿œå‹Ÿãƒ¢ãƒ¼ãƒ€ãƒ«
+// ==========================================
+let currentApplyContext = null;
+
+function openApplyModal(jobId, jobTitle) {
+  const studentId = localStorage.getItem('student_id');
+  const studentName = localStorage.getItem('student_name');
+  const modal = document.getElementById('apply-modal');
+  const content = document.getElementById('apply-form-content');
+  currentApplyContext = { jobId, jobTitle };
+
+  if (!studentId) {
+    content.innerHTML = `
+      <div class="text-center py-4">
+        <i class="fas fa-user text-4xl text-gray-600 mb-4 block"></i>
+        <p class="text-gray-300 mb-2">å¿œå‹Ÿã™ã‚‹ã«ã¯ãƒ­ã‚°ã‚¤ãƒ³ãŒå¿…è¦ã§ã™</p>
+        <p class="text-gray-500 text-sm mb-6">ç™»éŒ²æ¸ˆã¿ã®æ–¹ã¯ãƒ­ã‚°ã‚¤ãƒ³ã€åˆã‚ã¦ã®æ–¹ã¯æ–°è¦ç™»éŒ²ã«é€²ã‚“ã§ãã ã•ã„ã€‚</p>
+        <a href="/login" class="block w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors text-center mb-3">
+          <i class="fas fa-right-to-bracket mr-1"></i>ãƒ­ã‚°ã‚¤ãƒ³
+        </a>
+        <a href="/register" class="block w-full glass text-gray-800 hover:text-primary-600 font-bold py-3 rounded-xl transition-colors text-center">
+          <i class="fas fa-user-plus mr-1"></i>æ–°è¦ç™»éŒ²
+        </a>
+      </div>`;
+  } else {
+    renderApplySourceStep(jobTitle);
+  }
+  modal.classList.remove('hidden');
+}
+
+function renderApplySourceStep(jobTitle) {
+  document.getElementById('apply-form-content').innerHTML = `
+    <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
+      <p class="text-xs text-gray-400">å¿œå‹Ÿæ±‚äºº</p><p class="font-bold text-sm">${jobTitle}</p>
+    </div>
+    <p class="text-sm text-gray-400 mb-4">LINEé€£æºã®ãŸã‚ã€ã©ã®åª’ä½“ã‹ã‚‰çŸ¥ã£ãŸã‹é¸æŠã—ã¦ãã ã•ã„ã€‚</p>
+    <div class="space-y-2 mb-4">
+      ${SOURCE_MEDIA_OPTIONS.map(opt => `
+        <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="apply-source-opt-${opt.value}">
+          <input type="radio" name="apply_source_media" value="${opt.value}" onchange="onApplicationSourceMediaChange('${opt.value}')"
+            class="accent-primary-500 w-4 h-4">
+          <span class="text-sm text-gray-200">${opt.label}</span>
+        </label>
+      `).join('')}
+    </div>
+    <div id="apply-source-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs">æµå…¥åª’ä½“ã‚’é¸æŠã—ã¦ãã ã•ã„</div>
+    <button onclick="proceedToApplicationForm()" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+      å¿œå‹Ÿå†…å®¹ã®å…¥åŠ›ã¸é€²ã‚€
+    </button>
+  `;
+}
+
+function onApplicationSourceMediaChange(value) {
+  SOURCE_MEDIA_OPTIONS.forEach(opt => {
+    const el = document.getElementById(`apply-source-opt-${opt.value}`);
+    if (!el) return;
+    if (opt.value === value) {
+      el.classList.add('border-primary-500', 'bg-primary-500/10');
+      el.classList.remove('border-white/10');
+    } else {
+      el.classList.remove('border-primary-500', 'bg-primary-500/10');
+      el.classList.add('border-white/10');
+    }
+  });
+  document.getElementById('apply-source-error')?.classList.add('hidden');
+}
+
+function proceedToApplicationForm() {
+  const selected = document.querySelector('input[name="apply_source_media"]:checked');
+  if (!selected) {
+    document.getElementById('apply-source-error')?.classList.remove('hidden');
+    return;
+  }
+  if (!currentApplyContext) return;
+  renderApplicationForm(currentApplyContext.jobId, currentApplyContext.jobTitle, selected.value);
+}
+
+function renderApplicationForm(jobId, jobTitle, sourceMedia) {
+  const studentName = localStorage.getItem('student_name');
+  const sourceOption = SOURCE_MEDIA_OPTIONS.find(opt => opt.value === sourceMedia);
+  document.getElementById('apply-form-content').innerHTML = `
+      <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
+        <p class="text-xs text-gray-400">å¿œå‹Ÿæ±‚äºº</p><p class="font-bold text-sm">${jobTitle}</p>
+      </div>
+      <p class="text-sm text-gray-400 mb-4">ç™»éŒ²è€…: <span class="text-white">${studentName}</span></p>
+      <p class="text-xs text-gray-500 mb-4">æµå…¥åª’ä½“: <span class="text-primary-300">${sourceOption?.label || 'ãã®ä»–'}</span></p>
+      <form onsubmit="submitApplication(event, ${jobId})">
+        <input type="hidden" id="apply-source-media" value="${sourceMedia}">
+        <div class="mb-4"><label class="block text-xs text-gray-400 mb-1.5">å¿œå‹Ÿå‹•æ©Ÿ <span class="text-red-400">*</span></label><textarea id="apply-motivation" rows="4" required placeholder="ãªãœã“ã®ä¼æ¥­ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã«å¿œå‹Ÿã—ãŸã„ã§ã™ã‹ï¼Ÿ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"></textarea></div>
+        <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">å‚åŠ å¯èƒ½ãªæ™‚é–“å¸¯</label><input id="apply-hours" type="text" placeholder="å¹³æ—¥10-18æ™‚ã€é€±3æ—¥ç¨‹åº¦" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
+        <div id="apply-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
+        <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-paper-plane mr-2"></i>å¿œå‹Ÿã‚’ç¢ºå®šã™ã‚‹</button>
+        <p class="text-xs text-gray-600 text-center mt-3"><i class="fab fa-line mr-1 text-green-400"></i>å¿œå‹Ÿå¾Œã€å…¬å¼LINEã«ã¦ã”é€£çµ¡ã—ã¾ã™</p>
+      </form>`;
+}
+
+function closeApplyModal() {
+  document.getElementById('apply-modal')?.classList.add('hidden');
+  currentApplyContext = null;
+}
+
+async function submitApplication(e, jobId) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type=submit]');
+  btn.disabled = true; btn.textContent = 'é€ä¿¡ä¸­...';
+  try {
+    const res = await API.post('/applications', {
+      student_id: parseInt(localStorage.getItem('student_id')),
+      job_id: jobId,
+      motivation: document.getElementById('apply-motivation').value,
+      available_hours: document.getElementById('apply-hours').value,
+      source_media: document.getElementById('apply-source-media')?.value || 'other',
+    });
+    if (res.data.success) {
+      const s = await getSiteSettings();
+      const sourceMedia = document.getElementById('apply-source-media')?.value || 'other';
+      const lineUrl = resolveLineUrl(s, sourceMedia);
+      document.getElementById('apply-form-content').innerHTML = `
+        <div class="text-center py-4">
+          <div class="w-16 h-16 bg-green-500/20 border-2 border-green-500/40 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-check text-green-400 text-2xl"></i>
+          </div>
+          <h3 class="font-bold mb-2">å¿œå‹ŸãŒå®Œäº†ã—ã¾ã—ãŸï¼</h3>
+          <p class="text-gray-500 text-sm mb-5">å…¬å¼LINEã«ã¦ã”é€£çµ¡ã—ã¾ã™ã®ã§ã€è¿½åŠ ã‚’ãŠå¾…ã¡ãã ã•ã„ã€‚</p>
+          ${renderLineCta(lineUrl, 'å…¬å¼LINEã‚’è¿½åŠ ã™ã‚‹', 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm')}
+        </div>`;
+    }
+  } catch(e) {
+    const errDiv = document.getElementById('apply-error');
+    errDiv.textContent = e.response?.data?.error || 'å¿œå‹Ÿã«å¤±æ•—ã—ã¾ã—ãŸ';
+    errDiv.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>å¿œå‹Ÿã‚’ç¢ºå®šã™ã‚‹';
+  }
+}
+
+// ==========================================
+// å…±é€šã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ
+// ==========================================
+function renderJobCard(job, isMembersTab = false) {
+  let tags = [];
+  try { tags = JSON.parse(job.tags || '[]'); } catch(e) {}
+  const wageText = job.hourly_wage_min
+    ? `Â¥${job.hourly_wage_min.toLocaleString()}${job.hourly_wage_max ? 'ã€œÂ¥'+job.hourly_wage_max.toLocaleString() : 'ã€œ'}/h`
+    : 'å¿œç›¸è«‡';
+  const workStyleLabel = { onsite: 'å‡ºç¤¾', remote: 'ãƒªãƒ¢ãƒ¼ãƒˆ', hybrid: 'ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰' };
+  const workStyleIcon = { onsite: 'building', remote: 'laptop-house', hybrid: 'random' };
+  const isMembersOnly = job.visibility === 'members';
+  const cardImage = job.card_image_url || job.hero_image_url || job.company_hero_image_url;
+  const locationText = job.work_location ? job.work_location.split('ï¼ˆ')[0] : '';
+
+  return `
+    <a href="/jobs/${job.slug}" class="bg-white border border-slate-200 rounded-2xl card-hover block cursor-pointer overflow-hidden ${isMembersOnly ? 'border-yellow-400/60' : ''}">
+      <div class="job-card-media relative">
+        ${cardImage
+          ? `<img src="${cardImage}" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105" alt="">`
+          : `<div class="w-full h-full flex items-center justify-center text-primary-300"><i class="fas fa-city text-5xl"></i></div>`}
+        ${isMembersOnly ? `<span class="absolute top-3 left-3 bg-slate-950/85 text-white rounded-full px-3 py-1.5 text-[11px] font-bold backdrop-blur"><i class="fas fa-lock mr-1"></i>ä¼šå“¡é™å®š</span>` : ''}
+        ${job.work_style ? `<span class="absolute top-3 right-3 bg-white/95 text-slate-800 rounded-full px-3 py-1.5 text-[11px] font-bold shadow-sm"><i class="fas fa-${workStyleIcon[job.work_style]||'building'} text-primary-500 mr-1"></i>${workStyleLabel[job.work_style]||''}</span>` : ''}
+      </div>
+      <div class="p-5">
+      <div class="flex items-start gap-3 mb-4">
+        <div class="w-11 h-11 bg-white border border-slate-200 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm">
+          ${job.company_logo ? `<img src="${job.company_logo}" class="w-9 h-9 object-contain rounded" alt="">` : `<span class="text-primary-600 font-black text-sm">${(job.company_name||'?')[0]}</span>`}
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-xs text-slate-500 truncate mb-1">${job.company_name || ''}</p>
+          <h3 class="font-black text-base leading-snug text-slate-950 line-clamp-2">${job.title}</h3>
+        </div>
+      </div>
+      ${job.catch_copy ? `<p class="text-xs text-slate-600 mb-4 line-clamp-2 leading-relaxed">${job.catch_copy}</p>` : ''}
+      <div class="grid grid-cols-2 gap-2 mb-4 text-xs">
+        <div class="rounded-lg bg-slate-50 p-2.5 text-slate-700"><i class="fas fa-calendar-days text-primary-500 mr-1.5"></i>${job.work_days || 'å‹¤å‹™æ—¥æ•°ã¯è©³ç´°ã¸'}</div>
+        <div class="rounded-lg bg-slate-50 p-2.5 text-slate-700 truncate"><i class="fas fa-location-dot text-primary-500 mr-1.5"></i>${locationText || (job.remote_available ? 'ãƒªãƒ¢ãƒ¼ãƒˆå¯' : 'å‹¤å‹™åœ°ã¯è©³ç´°ã¸')}</div>
+      </div>
+      <div class="flex flex-wrap gap-1.5 mb-4">
+        ${job.occupation ? `<span class="tag text-[11px] px-2.5 py-1 rounded-full">${job.occupation}</span>` : ''}
+        ${job.company_industry ? `<span class="tag text-[11px] px-2.5 py-1 rounded-full">${job.company_industry}</span>` : ''}
+        ${job.remote_available ? '<span class="bg-green-50 border border-green-200 text-green-700 font-bold text-[11px] px-2.5 py-1 rounded-full">ãƒªãƒ¢ãƒ¼ãƒˆå¯</span>' : ''}
+      </div>
+      <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+        <span class="text-primary-600 font-black text-base">${wageText}</span>
+        <span class="text-xs text-slate-700 font-bold">è©³ç´°ã‚’è¦‹ã‚‹ <i class="fas fa-arrow-right ml-1 text-primary-500"></i></span>
+      </div>
+      ${tags.length > 0 ? `<div class="flex flex-wrap gap-1 mt-3">${tags.slice(0,3).map(t=>`<span class="text-[11px] text-slate-500 font-medium">#${t}</span>`).join('')}</div>` : ''}
+      </div>
+    </a>
+  `;
+}
+
+// ==========================================
+// å¤§å­¦ä¸€è¦§ãƒšãƒ¼ã‚¸ (/universities)
+// ==========================================
+async function initUniversitiesPage() {
+  const app = document.getElementById('app');
+  
+  app.innerHTML = `
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-10">
+        <h1 class="text-3xl font-black mb-2 text-gray-900">å¤§å­¦åˆ¥ãŠã™ã™ã‚æ±‚äºº</h1>
+        <p class="text-gray-500">ã‚ãªãŸã®å¤§å­¦ã«ç‰¹åŒ–ã—ãŸå³é¸ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</p>
+      </div>
+      <div class="glass rounded-xl p-4 mb-6">
+        <div class="relative">
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"></i>
+          <input id="uni-search" type="text" placeholder="å¤§å­¦åã§æ¤œç´¢..." onkeydown="if(event.key==='Enter') filterUniversities()"
+            class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2.5 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+        </div>
+      </div>
+      <div id="universities-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        ${[1,2,3,4,5].map(() => `<div class="glass rounded-xl p-5 animate-pulse h-28"></div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('uni-search')?.addEventListener('input', filterUniversities);
+
+  try {
+    const res = await API.get('/homepage/university-tags');
+    const universities = res.data.data || [];
+    
+    window.allUniversities = universities; // ã‚°ãƒ­ãƒ¼ãƒãƒ«ã«ä¿å­˜
+    displayUniversities(universities);
+  } catch(e) {
+    document.getElementById('universities-grid').innerHTML = '<p class="col-span-5 text-center text-gray-500 py-10">å¤§å­¦æƒ…å ±ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ</p>';
+  }
+}
+
+function displayUniversities(universities) {
+  const grid = document.getElementById('universities-grid');
+  if (!grid) return;
+  
+  if (universities.length === 0) {
+    grid.innerHTML = '<p class="col-span-5 text-center text-gray-500 py-10">è©²å½“ã™ã‚‹å¤§å­¦ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“</p>';
+    return;
+  }
+  
+  grid.innerHTML = universities.map(uni => `
+    <a href="/universities/${uni.slug}" class="glass rounded-xl p-5 text-center hover:bg-white/10 transition-all group">
+      <div class="w-14 h-14 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary-500/20 transition-colors">
+        <i class="fas fa-university text-primary-400 text-xl"></i>
+      </div>
+      <p class="font-medium text-sm mb-1 group-hover:text-white transition-colors">${uni.name}</p>
+      ${uni.description ? `<p class="text-xs text-gray-500 line-clamp-2">${uni.description}</p>` : ''}
+    </a>
+  `).join('');
+}
+
+function filterUniversities() {
+  const query = document.getElementById('uni-search').value.trim().toLowerCase();
+  if (!window.allUniversities) return;
+  
+  const filtered = window.allUniversities.filter(uni => 
+    uni.name.toLowerCase().includes(query) || 
+    uni.slug.toLowerCase().includes(query) ||
+    (uni.description && uni.description.toLowerCase().includes(query))
+  );
+  
+  displayUniversities(filtered);
+}
+
+// ==========================================
+// å¤§å­¦åˆ¥æ±‚äººä¸€è¦§ãƒšãƒ¼ã‚¸ (/universities/:slug)
+// ==========================================
+async function initUniversityJobsPage(slug) {
+  const app = document.getElementById('app');
+  const studentId = localStorage.getItem('student_id');
+  
+  app.innerHTML = `
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="mb-8">
+        <a href="/universities" class="text-primary-400 hover:text-primary-300 text-sm mb-3 inline-block">
+          <i class="fas fa-arrow-left mr-1"></i>å¤§å­¦ä¸€è¦§ã«æˆ»ã‚‹
+        </a>
+        <h1 id="uni-name" class="text-3xl font-black mb-2">èª­ã¿è¾¼ã¿ä¸­...</h1>
+        <p id="uni-desc" class="text-gray-500"></p>
+      </div>
+      
+      <!-- ãƒ•ã‚£ãƒ«ã‚¿ãƒ¼ -->
+      <div class="glass rounded-xl p-4 mb-4 flex flex-wrap gap-3 items-center">
+        <div class="flex-1 min-w-48">
+          <div class="relative">
+            <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm"></i>
+            <input id="search-q" type="text" placeholder="ã‚­ãƒ¼ãƒ¯ãƒ¼ãƒ‰ã§æ¤œç´¢..."
+              class="w-full bg-white/5 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-primary-500">
+          </div>
+        </div>
+        <select id="filter-occupation" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          ${renderOccupationOptions()}
+        </select>
+        <select id="filter-industry" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          <option value="">å…¨æ¥­ç¨®</option>
+          <option>HRãƒ»äººæ</option><option>ITãƒ»SaaS</option><option>ãƒãƒ¼ã‚±ãƒ†ã‚£ãƒ³ã‚°</option>
+          <option>ã‚³ãƒ³ã‚µãƒ«ãƒ†ã‚£ãƒ³ã‚°</option><option>ECãƒ»å°å£²</option><option>ãƒ¡ãƒ‡ã‚£ã‚¢</option><option>ãã®ä»–</option>
+        </select>
+        <select id="filter-style" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          <option value="">å…¨å‹¤å‹™å½¢æ…‹</option>
+          <option value="onsite">å‡ºç¤¾</option><option value="remote">ãƒªãƒ¢ãƒ¼ãƒˆ</option><option value="hybrid">ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰</option>
+        </select>
+        <button onclick="searchUniversityJobs('${slug}')" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-search mr-1"></i>æ¤œç´¢
+        </button>
+      </div>
+      
+      <div id="jobs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        ${[1,2,3].map(() => `<div class="glass rounded-xl p-5 animate-pulse h-48"></div>`).join('')}
+      </div>
+    </div>
+  `;
+
+  const searchInput = document.getElementById('search-q');
+  searchInput?.addEventListener('input', () => {
+    clearTimeout(window.__universityJobSearchTimer);
+    window.__universityJobSearchTimer = setTimeout(() => searchUniversityJobs(slug), 250);
+  });
+  searchInput?.addEventListener('keydown', e => { if(e.key==='Enter') searchUniversityJobs(slug); });
+  document.getElementById('filter-occupation')?.addEventListener('change', () => searchUniversityJobs(slug));
+  document.getElementById('filter-industry')?.addEventListener('change', () => searchUniversityJobs(slug));
+  document.getElementById('filter-style')?.addEventListener('change', () => searchUniversityJobs(slug));
+
+  try {
+    // å¤§å­¦æƒ…å ±å–å¾—
+    const uniRes = await API.get('/homepage/university-tags');
+    const universities = uniRes.data.data || [];
+    const uni = universities.find(u => u.slug === slug);
+    
+    if (!uni) {
+      app.innerHTML = `
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+          <p class="text-gray-500 mb-4">è©²å½“ã™ã‚‹å¤§å­¦ãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“</p>
+          <a href="/universities" class="text-primary-400 hover:text-primary-300">å¤§å­¦ä¸€è¦§ã«æˆ»ã‚‹</a>
+        </div>
+      `;
+      return;
+    }
+    
+    document.getElementById('uni-name').textContent = uni.name + ' ã®ãŠã™ã™ã‚æ±‚äºº';
+    if (uni.description) {
+      document.getElementById('uni-desc').textContent = uni.description;
+    }
+    
+    // å¤§å­¦åˆ¥æ±‚äººå–å¾—
+    const jobsRes = await API.get(`/homepage/universities/${slug}/jobs${studentId ? '?student_id='+studentId : ''}`);
+    const jobs = jobsRes.data.data || [];
+    
+    const list = document.getElementById('jobs-list');
+    if (jobs.length === 0) {
+      list.innerHTML = '<p class="col-span-3 text-center text-gray-500 py-10">ã¾ã ã“ã®å¤§å­¦å‘ã‘ã®æ±‚äººã¯ã‚ã‚Šã¾ã›ã‚“</p>';
+    } else {
+      list.innerHTML = jobs.map(job => renderJobCard(job)).join('');
+    }
+    
+    window.currentUniversitySlug = slug;
+    window.currentUniversityJobs = jobs;
+  } catch(e) {
+    console.error(e);
+    document.getElementById('jobs-list').innerHTML = '<p class="col-span-3 text-center text-red-400 py-10">æ±‚äººæƒ…å ±ã®èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ</p>';
+  }
+}
+
+function getSearchableJobText(job) {
+  let tags = [];
+  try { tags = JSON.parse(job.tags || '[]'); } catch(e) {}
+  const workStyleLabel = { onsite: 'å‡ºç¤¾', remote: 'ãƒªãƒ¢ãƒ¼ãƒˆ', hybrid: 'ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰' };
+  return [
+    job.title, job.slug, job.catch_copy, job.description, job.work_content,
+    job.occupation, job.company_name, job.company_industry, job.work_style, workStyleLabel[job.work_style],
+    job.work_hours, job.work_days, job.work_location, job.target_grade, job.university_level,
+    job.requirements, job.preferred_requirements, job.selection_flow, job.recommended_for,
+    ...tags
+  ].filter(Boolean).join(' ').toLowerCase();
+}
+
+function searchUniversityJobs(slug) {
+  const q = document.getElementById('search-q').value.trim().toLowerCase();
+  const occupation = document.getElementById('filter-occupation').value;
+  const industry = document.getElementById('filter-industry').value;
+  const style = document.getElementById('filter-style').value;
+  
+  if (!window.currentUniversityJobs) return;
+  
+  let filtered = window.currentUniversityJobs.filter(job => {
+    const matchQ = !q || getSearchableJobText(job).includes(q);
+    const matchOccupation = !occupation || job.occupation === occupation;
+    const matchIndustry = !industry || job.company_industry === industry;
+    const matchStyle = !style || job.work_style === style;
+    return matchQ && matchOccupation && matchIndustry && matchStyle;
+  });
+  
+  const list = document.getElementById('jobs-list');
+  if (filtered.length === 0) {
+    list.innerHTML = '<p class="col-span-3 text-center text-gray-500 py-10">æ¡ä»¶ã«åˆã†æ±‚äººãŒè¦‹ã¤ã‹ã‚Šã¾ã›ã‚“</p>';
+  } else {
+    list.innerHTML = filtered.map(job => renderJobCard(job)).join('');
+  }
+}

@@ -294,4 +294,2769 @@ async function loadDashboard(term) {
                 }).join('')
               : '<p class="text-gray-600 text-xs text-center py-4">ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</p>'
             }
-          </div>ãôöÚ$z{-®éÜj×n8ş88^8N8#Â÷âr¢rwĞĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&w&–Bw&–BÖ6öÇ2Ó"vÓB#àĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îŠzK®šcÂöÆ&VÃàĞ¢Æ–çWBG—SÒ&çVÖ&W""æÖSÒ&F—7Æ•ö÷&FW""fÇVSÒ"G¶fVGW&VBæF—7Æ•ö÷&FW'Ò"Ö–ãÒ# Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FR&÷&FW"&÷&FW"Öw&’Ó3&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡BÖw&’Ó“#àĞ¢ÂöF—càĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îXZÎ™h¾ŠŠŞZé£ÂöÆ&VÃàĞ¢Ç6VÆV7BæÖSÒ&—5÷f—6–&ÆR"6Æ73Ò&fVGW&VBÖ¦ö"Ö6öçG&öÂrÖgVÆÂ&r×v†—FR&÷&FW"&÷&FW"Öw&’Ó3&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡BÖw&’Ó“#àĞ¢Æ÷F–öâfÇVSÒ#"7G–ÆSÒ&&6¶w&÷VæC¢6ffc¶6öÆ÷#¢3ƒ#r"G¶fVGW&VBæ—5÷f—6–&ÆSòw6VÆV7FVBs¢rwÓîXZÎ™h³Âö÷F–öãàĞ¢Æ÷F–öâfÇVSÒ#"7G–ÆSÒ&&6¶w&÷VæC¢6ffc¶6öÆ÷#¢3ƒ#r"G²fVGW&VBæ—5÷f—6–&ÆSòw6VÆV7FVBs¢rwÓî™ÙîXZÎ™h³Âö÷F–öãàĞ¢Â÷6VÆV7CàĞ¢ÂöF—càĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&fÆW‚§W7F–g’ÖVæBvÓ2BÓB#àĞ¢Æ'WGFöâG—SÒ&'WGFöâ"öæ6Æ–6³Ò&6Æ÷6TÖöFÂ‚’"6Æ73Ò'‚ÓB’Ó"FW‡B×6ÒFW‡BÖw&’ÓC†÷fW#§FW‡B×v†—FRG&ç6—F–öâÖ6öÆ÷'2#àĞ¢8*Ş8:>8;>8+¾8:°Ğ¢Âö'WGFöãàĞ¢Æ'WGFöâG—SÒ'7V&Ö—B"G·6VÆV7F&ÆT¦ö'2æÆVæwF‚ÓÓÒòvF—6&ÆVBr¢rwÒ6Æ73Ò&&r×&–Ö'’ÓS†÷fW#¦&r×&–Ö'’ÓcF—6&ÆVC¦÷6—G’ÓCF—6&ÆVC¦7W'6÷"Öæ÷BÖÆÆ÷vVBFW‡B×v†—FRFW‡B×6Ò‚Ób’Ó"&÷VæFVBÖÆrG&ç6—F–öâÖ6öÆ÷'2#àĞ¢G¶–Bò~i»Nikr¢~‹ûŞXªwĞĞ¢Âö'WGFöãàĞ¢ÂöF—càĞ¢Âöf÷&ÓàĞ¢ÂöF—càĞ¢ÂöF—càĞ¢°Ğ¢ÖöFÂæ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ§ĞĞ Ğ¦gVæ7F–öâf–ÇFW$fVGW&VD¦ö$6†ö–6W2‡VW'’’°Ğ¢6öç7B¦ö$–D–çWBÒFö7VÖVçBçVW'•6VÆV7F÷"‚r6ÖöFÂÖ6öçFVçB–çWE¶æÖSÒ&¦ö%ö–B%Òr“°Ğ¢–b†¦ö$–D–çWB’¦ö$–D–çWBçfÇVRÒrs°Ğ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚vfVGW&VBÖ¦ö"×6VÆV7FVBr“òæ6Æ74Æ—7BæFB‚v†–FFVâr“°Ğ¢&VæFW$fVGW&VD¦ö$6†ö–6W2‡VW'’“°Ğ§ĞĞ Ğ¦gVæ7F–öâ&VæFW$fVGW&VD¦ö$6†ö–6W2‡VW'’Òrr’°Ğ¢6öç7B&W7VÇG2ÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vfVGW&VBÖ¦ö"×&W7VÇG2r“°Ğ¢–b‚&W7VÇG2’&WGW&ã°Ğ Ğ¢6öç7Bæ÷&ÖÆ—¦VEVW'’Ò7G&–ær‡VW'’’çG&–Ò‚’çFôÆ÷vW$66R‚“°Ğ¢6öç7BÖF6†W2ÒfVGW&VD¦ö$6†ö–6W2æf–ÇFW"†¦ö"ÓàĞ¢G¶¦ö"çF—FÆWÒG¶¦ö"æ6ö×ç•öæÖWÖçFôÆ÷vW$66R‚’æ–æ6ÇVFW2†æ÷&ÖÆ—¦VEVW'’Ğ¢“°Ğ Ğ¢&W7VÇG2æ–ææW$…DÔÂÒÖF6†W2æÆVæwF€Ğ¢òÖF6†W2æÖ†¦ö"Óâ Ğ¢Æ'WGFöâG—SÒ&'WGFöâ"öæ6Æ–6³Ò'6VÆV7DfVGW&VD¦ö$6†ö–6R‚G´çVÖ&W"†¦ö"æ–B—Ò’ Ğ¢6Æ73Ò&&Æö6²rÖgVÆÂ‚ÓB’Ó2FW‡BÖÆVgB&r×v†—FRFW‡BÖw&’Ó“†÷fW#¦&rÖw&’Ófö7W3¦&rÖw&’Ófö7W3¦÷WFÆ–æRÖæöæR&÷&FW"Ö"&÷&FW"Öw&’ÓÆ7C¦&÷&FW"Ö"Ó#àĞ¢Ç7â6Æ73Ò&&Æö6²FW‡B×6ÒföçBÖÖVF—VÒFW‡BÖw&’Ó“#âG¶W66TFÖ–ä‡FÖÂ†¦ö"çF—FÆR—ÓÂ÷7ãàĞ¢Ç7â6Æ73Ò&&Æö6²×BÓãRFW‡B×‡2FW‡BÖw&’Óc#âG¶W66TFÖ–ä‡FÖÂ†¦ö"æ6ö×ç•öæÖR—ÓÂ÷7ãàĞ¢Âö'WGFöãàĞ¢’æ¦ö–â‚rrĞ¢¢sÇ6Æ73Ò'‚ÓB’ÓBFW‡B×6ÒFW‡BÖw&’Óc&r×v†—FR#îiÚK»n8¾Kˆˆ{N88(¾k.K«®8Î8.8(®8î8¾8)3Â÷âs°Ğ¢&W7VÇG2æ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ§ĞĞ Ğ¦gVæ7F–öâ6VÆV7DfVGW&VD¦ö$6†ö–6R†¦ö$–B’°Ğ¢6öç7B¦ö"ÒfVGW&VD¦ö$6†ö–6W2æf–æB†—FVÒÓâçVÖ&W"†—FVÒæ–B’ÓÓÒçVÖ&W"†¦ö$–B’“°Ğ¢–b‚¦ö"’&WGW&ã°Ğ Ğ¢6öç7BÆ&VÂÒG¶¦ö"çF—FÆWÒ‚G¶¦ö"æ6ö×ç•öæÖWÒ–°Ğ¢6öç7B¦ö$–D–çWBÒFö7VÖVçBçVW'•6VÆV7F÷"‚r6ÖöFÂÖ6öçFVçB–çWE¶æÖSÒ&¦ö%ö–B%Òr“°Ğ¢6öç7B6V&6„–çWBÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vfVGW&VBÖ¦ö"×6V&6‚r“°Ğ¢6öç7B6VÆV7FVBÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vfVGW&VBÖ¦ö"×6VÆV7FVBr“°Ğ¢–b†¦ö$–D–çWB’¦ö$–D–çWBçfÇVRÒ7G&–ær†¦ö"æ–B“°Ğ¢–b‡6V&6„–çWB’6V&6„–çWBçfÇVRÒÆ&VÃ°Ğ¢–b‡6VÆV7FVB’°Ğ¢6VÆV7FVBçVW'•6VÆV7F÷"‚w7âr’çFW‡D6öçFVçBÒ˜h©îKŠÓ¢G¶Æ&VÇÖ°Ğ¢6VÆV7FVBæ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ¢ĞĞ¢Fö7VÖVçBævWDVÆVÖVçD'”–B‚vfVGW&VBÖ¦ö"×&W7VÇG2r“òæ6Æ74Æ—7BæFB‚v†–FFVâr“°Ğ§ĞĞ Ğ¦7–æ2gVæ7F–öâ7V&Ö—D7&VFTfVGW&VD¦ö"†R’°Ğ¢Rç&WfVçDFVfVÇB‚“°Ğ¢6öç7Bf÷&ÒÒRçF&vWC°Ğ¢–b‚f÷&Òæ¦ö%ö–BçfÇVR’°Ğ¢ÆW'B‚~‹ûŞXª88(¾k.K«®8).jIÎ{J.{YiéÎ8¾8(˜h©î8~8n8ş88^8Br“°Ğ¢&WGW&ã°Ğ¢ĞĞ¢6öç7BFFÒ°Ğ¢¦ö%ö–C¢çVÖ&W"†f÷&Òæ¦ö%ö–BçfÇVR’ÀĞ¢—5÷f—6–&ÆS¢çVÖ&W"†f÷&Òæ—5÷f—6–&ÆRçfÇVR’ÀĞ¢F—7Æ•ö÷&FW#¢çVÖ&W"†f÷&ÒæF—7Æ•ö÷&FW"çfÇVRĞ¢Ó°Ğ¢G'’°Ğ¢v—B’ç÷7B‚rö†öÖWvRöfVGW&VBÖ¦ö'2öFÖ–ârÂFF“°Ğ¢6Æ÷6TÖöFÂ‚“°Ğ¢v—BÆöDfVGW&VD¦ö'2‚“°Ğ¢6†÷u6fT×6r‚vfVGW&VB×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~‹ûŞXªZKiYs¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢ĞĞ§ĞĞ Ğ¦7–æ2gVæ7F–öâ7V&Ö—EWFFTfVGW&VD¦ö"†RÂ–B’°Ğ¢Rç&WfVçDFVfVÇB‚“°Ğ¢6öç7Bf÷&ÒÒRçF&vWC°Ğ¢–b‚f÷&Òæ¦ö%ö–BçfÇVR’°Ğ¢ÆW'B‚~i»Nik88(¾k.K«®8).jIÎ{J.{YiéÎ8¾8(˜h©î8~8n8ş88^8Br“°Ğ¢&WGW&ã°Ğ¢ĞĞ¢6öç7BFFÒ°Ğ¢¦ö%ö–C¢çVÖ&W"†f÷&Òæ¦ö%ö–BçfÇVR’ÀĞ¢—5÷f—6–&ÆS¢çVÖ&W"†f÷&Òæ—5÷f—6–&ÆRçfÇVR’ÀĞ¢F—7Æ•ö÷&FW#¢çVÖ&W"†f÷&ÒæF—7Æ•ö÷&FW"çfÇVRĞ¢Ó°Ğ¢G'’°Ğ¢v—B’çWB†ö†öÖWvRöfVGW&VBÖ¦ö'2öFÖ–âòG¶–GÖÂFF“°Ğ¢6Æ÷6TÖöFÂ‚“°Ğ¢v—BÆöDfVGW&VD¦ö'2‚“°Ğ¢6†÷u6fT×6r‚vfVGW&VB×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~i»NikZKiYs¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢ĞĞ§ĞĞ Ğ¦7–æ2gVæ7F–öâFVÆWFTfVGW&VD¦ö"†–B’°Ğ¢–b‚6öæf—&Ò‚~8>8î89N88>8*ş8*.88>89~k.K«®8).X˜®™šN8~8î88¾ûÉòr’’&WGW&ã°Ğ¢G'’°Ğ¢v—B’æFVÆWFR†ö†öÖWvRöfVGW&VBÖ¦ö'2öFÖ–âòG¶–GÖ“°Ğ¢ÆöDfVGW&VD¦ö'2‚“°Ğ¢6†÷u6fT×6r‚vfVGW&VB×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~X˜®™šNZKiYs¢r²RæÖW76vR“°Ğ¢ĞĞ§ĞĞ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¢òòZJ~ZÚn8+ş8+zêyn89®8;Î8+€Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¦7–æ2gVæ7F–öâÆöEVæ—fW'6—G•Fw2‚’°Ğ¢6öç7B6öçFVçBÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vFÖ–âÖ6öçFVçBr“°Ğ¢6öçFVçBæ–ææW$…DÔÂÒÆF—b6Æ73Ò&æ–ÖFR×VÇ6R‚ÓcB&r×v†—FRóR&÷VæFVB×†Â#ãÂöF—cæ°Ğ Ğ¢G'’°Ğ¢6öç7B&W2Òv—B’ævWB‚rö†öÖWvR÷Væ—fW'6—G’×Fw2öFÖ–âr“°Ğ¢6öç7BFw2Ò&W2æFFæFF°Ğ Ğ¢6öçFVçBæ–ææW$…DÔÂÒ Ğ¢ÆF—b6Æ73Ò&fÆW‚—FV×2Ö6VçFW"§W7F–g’Ö&WGvVVâÖ"ÓR#àĞ¢Æƒ"6Æ73Ò'FW‡BÖÆrföçBÖ&öÆB#îZJ~ZÚn8+ş8+zêycÂöƒ#àĞ¢Æ'WGFöâöæ6Æ–6³Ò'6†÷uVæ—fW'6—G•FtÖöFÂ‚’"6Æ73Ò&&r×&–Ö'’ÓS†÷fW#¦&r×&–Ö'’ÓcFW‡B×v†—FRFW‡B×6Ò‚ÓR’Ó"&÷VæFVBÖÆrG&ç6—F–öâÖ6öÆ÷'2#àĞ¢Æ’6Æ73Ò&f2f×ÇW2×"Ó#ãÂö“îikŠhş‹ûŞXª Ğ¢Âö'WGFöãàĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&&rÖ&ÇVRÓSó&÷&FW"&÷&FW"Ö&ÇVRÓSó#&÷VæFVB×†ÂÓBÖ"ÓRFW‡B×6Ò#àĞ¢Ç6Æ73Ò'FW‡BÖ&ÇVRÓ3Ö"Ó"#ãÆ’6Æ73Ò&f2fÖ–æfòÖ6—&6ÆR×"Ó#ãÂö“îZJ~ZÚn8+ş8+8şk.K«®8¾{IK¹88n8Î8~8~ZJ~ZÚnY	88®888(k.K«®8Ş88~8nŠzK®8~8Ş8î88#Â÷àĞ¢Ç6Æ73Ò'FW‡BÖw&’ÓCFW‡B×‡2#îk.K«®{z™¸n89®8;Î8+8~ZJ~ZÚn8+ş8+8).˜h©î8~8n{IK¹88n8ş88^8N8#Â÷àĞ¢ÂöF—càĞ¢ÆF—b–CÒ'Fr×6fRÖ×6r"6Æ73Ò&†–FFVâÖ"ÓBÓ2&rÖw&VVâÓSó&÷&FW"&÷&FW"Öw&VVâÓSó3&÷VæFVBÖÆrFW‡BÖw&VVâÓCFW‡B×6Ò#àĞ¢Æ’6Æ73Ò&f2fÖ6†V6²Ö6—&6ÆR×"Ó#ãÂö“îKùŞZÙ8~8î8~8ğĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&vÆ72&÷VæFVB×†Â÷fW&fÆ÷rÖ†–FFVâ#àĞ¢ÇF&ÆR6Æ73Ò'rÖgVÆÂFW‡B×6Ò#àĞ¢ÇF†VB6Æ73Ò&&r×v†—FRóRFW‡BÖÆVgBFW‡B×‡2FW‡BÖw&’ÓC#àĞ¢ÇG#àĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2#îZJ~ZÚnYÓÂ÷FƒàĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2#î8+8:88>8+Â÷FƒàĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2#îŠªÎiˆîihsÂ÷FƒàĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2#îŠzK®šcÂ÷FƒàĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2#îXZÎ™h³Â÷FƒàĞ¢ÇF‚6Æ73Ò'‚ÓB’Ó2FW‡B×&–v‡B#îi8ŞKÙÃÂ÷FƒàĞ¢Â÷G#àĞ¢Â÷F†VCàĞ¢ÇF&öG’6Æ73Ò&F—f–FR×’F—f–FR×v†—FRóR#àĞ¢G·Fw2æÆVæwF‚òFw2æÖ‡BÓâ Ğ¢ÇG"6Æ73Ò&†÷fW#¦&r×v†—FRóR#àĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2FW‡B×v†—FR#âG·BææÖWÓÂ÷FCàĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2FW‡BÖw&’ÓCföçBÖÖöæòFW‡B×‡2#âG·Bç6ÇVwÓÂ÷FCàĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2FW‡BÖw&’ÓCFW‡B×‡2Ö‚×r×‡2G'Væ6FR#âG·BæFW67&—F–öâÇÂrÒwÓÂ÷FCàĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2FW‡BÖw&’ÓC#âG·BæF—7Æ•ö÷&FW'ÓÂ÷FCàĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2#àĞ¢Ç7â6Æ73Ò'‚Ó"’Ó&÷VæFVBFW‡B×‡2G·Bæ—5÷f—6–&ÆRòv&rÖw&VVâÓSó#FW‡BÖw&VVâÓCr¢v&rÖw&’ÓSó#FW‡BÖw&’ÓCwÒ#àĞ¢G·Bæ—5÷f—6–&ÆRò~XZÎ™h²r¢~™ÙîXZÎ™h²wĞĞ¢Â÷7ãàĞ¢Â÷FCàĞ¢ÇFB6Æ73Ò'‚ÓB’Ó2FW‡B×&–v‡B76R×‚Ó"#àĞ¢Æ'WGFöâöæ6Æ–6³Ò'6†÷uVæ—fW'6—G•FtÖöFÂ‚G·Bæ–GÒ’"6Æ73Ò'FW‡BÖ&ÇVRÓC†÷fW#§FW‡BÖ&ÇVRÓ3FW‡B×‡2#àĞ¢Æ’6Æ73Ò&f2fÖVF—B#ãÂö“â{z™¸`Ğ¢Âö'WGFöãàĞ¢Æ'WGFöâöæ6Æ–6³Ò&FVÆWFUVæ—fW'6—G•Fr‚G·Bæ–GÒ’"6Æ73Ò'FW‡B×&VBÓC†÷fW#§FW‡B×&VBÓ3FW‡B×‡2#àĞ¢Æ’6Æ73Ò&f2f×G&6‚#ãÂö“âX˜®™š@Ğ¢Âö'WGFöãàĞ¢Â÷FCàĞ¢Â÷G#àĞ¢’æ¦ö–â‚rr’¢sÇG#ãÇFB6öÇ7ãÒ#b"6Æ73Ò'‚ÓB’Ó‚FW‡BÖ6VçFW"FW‡BÖw&’ÓS#îZJ~ZÚn8+ş8+8Î8.8(®8î8¾8)3Â÷FCãÂ÷G#âwĞĞ¢Â÷F&öG“àĞ¢Â÷F&ÆSàĞ¢ÂöF—càĞ¢°Ğ¢Ò6F6‚†R’°Ğ¢6öçFVçBæ–ææW$…DÔÂÒÆF—b6Æ73Ò'FW‡B×&VBÓCÓB#îXùn[é~ZKiYs¢G¶RæÖW76vWÓÂöF—cæ°Ğ¢ĞĞ§ĞĞ Ğ¦7–æ2gVæ7F–öâ6†÷uVæ—fW'6—G•FtÖöFÂ†–BÒçVÆÂ’°Ğ¢ÆWBFrÒ²æÖS¢rrÂ6ÇVs¢rrÂFW67&—F–öã¢rrÂ—5÷f—6–&ÆS¢ÂF—7Æ•ö÷&FW#¢Ó°Ğ¢6öç7BÖöFÂÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vÖöFÂr“°Ğ¢6öç7BÖöFÄ6öçFVçBÒFö7VÖVçBævWDVÆVÖVçD'”–B‚vÖöFÂÖ6öçFVçBr“°Ğ¢–b‚ÖöFÂÇÂÖöFÄ6öçFVçB’°Ğ¢ÆW'B‚~8:.8;Î888:¾8).™h¾88î8¾8)>8~8~8ş8.yK¾™Ú.8).XhŞŠªŞ8ş‹ëÎ8ş8~8nXhŞ[ªn8®Ššn8~8ş88^8N8"r“°Ğ¢&WGW&ã°Ğ¢ĞĞ Ğ¢–b†–B’°Ğ¢G'’°Ğ¢6öç7B&W2Òv—B’ævWB‚rö†öÖWvR÷Væ—fW'6—G’×Fw2öFÖ–âr“°Ğ¢FrÒ&W2æFFæFFæf–æB‡BÓâçVÖ&W"‡Bæ–B’ÓÓÒçVÖ&W"†–B’’ÇÂFs°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~ZJ~ZÚn8+ş8+8).Xùn[é~8~8Ş8î8¾8)>8~8~8ó¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢&WGW&ã°Ğ¢ĞĞ¢ĞĞ Ğ¢ÖöFÄ6öçFVçBæ–ææW$…DÔÂÒ Ğ¢ÆF—b6Æ73Ò'Ób#àĞ¢Æƒ26Æ73Ò'FW‡BÖÆrföçBÖ&öÆBÖ"ÓB#âG¶–Bò~ZJ~ZÚn8+ş8+{z™¸br¢~ZJ~ZÚn8+ş8+‹ûŞXªwÓÂöƒ3àĞ¢Æf÷&Òöç7V&Ö—CÒ"G¶–Bò7V&Ö—EWFFUVæ—fW'6—G•Fr†WfVçBÂG¶–GÒ–¢w7V&Ö—D7&VFUVæ—fW'6—G•Fr†WfVçB’wÒ"6Æ73Ò'76R×’ÓB#àĞ¢ÆF—b6Æ73Ò&w&–Bw&–BÖ6öÇ2Ó"vÓB#àĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îZJ~ZÚnYÓÇ7â6Æ73Ò'FW‡B×&VBÓC#â£Â÷7ããÂöÆ&VÃàĞ¢Æ–çWBG—SÒ'FW‡B"æÖSÒ&æÖR"fÇVSÒ"G¶W66TFÖ–ä‡FÖÂ‡FrææÖRÇÂrr—Ò"&WV—&V@Ğ¢Æ6V†öÆFW#Ò.Kè³¢iÛKªÎZJ~ZÚb Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡B×v†—FR#àĞ¢ÂöF—càĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#î8+8:88>8+ûÈ…U$ÎyJûÈ“Ç7â6Æ73Ò'FW‡B×&VBÓC#â£Â÷7ããÂöÆ&VÃàĞ¢Æ–çWBG—SÒ'FW‡B"æÖSÒ'6ÇVr"fÇVSÒ"G¶W66TFÖ–ä‡FÖÂ‡Frç6ÇVrÇÂrr—Ò"&WV—&V@Ğ¢Æ6V†öÆFW#Ò.Kè³¢FöF’ Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡B×v†—FRföçBÖÖöæò#àĞ¢ÂöF—càĞ¢ÂöF—càĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îŠªÎiˆîihsÂöÆ&VÃàĞ¢ÇFW‡F&VæÖSÒ&FW67&—F–öâ"&÷w3Ò#" Ğ¢Æ6V†öÆFW#Ò.Kè³¢iz^iÊÎiÈš¹[;8îZÚn[©Î8.8888>89~KÈjZŞ88îXh^Zé®Zéş{‹îZI®i[8" Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡B×v†—FR&W6—¦RÖæöæR#âG¶W66TFÖ–ä‡FÖÂ‡FræFW67&—F–öâÇÂrr—ÓÂ÷FW‡F&VàĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&w&–Bw&–BÖ6öÇ2Ó"vÓB#àĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îŠzK®šcÂöÆ&VÃàĞ¢Æ–çWBG—SÒ&çVÖ&W""æÖSÒ&F—7Æ•ö÷&FW""fÇVSÒ"G·FræF—7Æ•ö÷&FW'Ò"Ö–ãÒ# Ğ¢6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡B×v†—FR#àĞ¢ÂöF—càĞ¢ÆF—càĞ¢ÆÆ&VÂ6Æ73Ò&&Æö6²FW‡B×‡2FW‡BÖw&’ÓCÖ"ÓãR#îXZÎ™h¾ŠŠŞZé£ÂöÆ&VÃàĞ¢Ç6VÆV7BæÖSÒ&—5÷f—6–&ÆR"6Æ73Ò'rÖgVÆÂ&r×v†—FRóR&÷&FW"&÷&FW"×v†—FRó&÷VæFVBÖÆr‚Ó2’Ó"FW‡B×6ÒFW‡B×v†—FR#àĞ¢Æ÷F–öâfÇVSÒ#"G·Fræ—5÷f—6–&ÆSòw6VÆV7FVBs¢rwÓîXZÎ™h³Âö÷F–öãàĞ¢Æ÷F–öâfÇVSÒ#"G²Fræ—5÷f—6–&ÆSòw6VÆV7FVBs¢rwÓî™ÙîXZÎ™h³Âö÷F–öãàĞ¢Â÷6VÆV7CàĞ¢ÂöF—càĞ¢ÂöF—càĞ¢ÆF—b6Æ73Ò&fÆW‚§W7F–g’ÖVæBvÓ2BÓB#àĞ¢Æ'WGFöâG—SÒ&'WGFöâ"öæ6Æ–6³Ò&6Æ÷6TÖöFÂ‚’"6Æ73Ò'‚ÓB’Ó"FW‡B×6ÒFW‡BÖw&’ÓC†÷fW#§FW‡B×v†—FRG&ç6—F–öâÖ6öÆ÷'2#àĞ¢8*Ş8:>8;>8+¾8:°Ğ¢Âö'WGFöãàĞ¢Æ'WGFöâG—SÒ'7V&Ö—B"6Æ73Ò&&r×&–Ö'’ÓS†÷fW#¦&r×&–Ö'’ÓcFW‡B×v†—FRFW‡B×6Ò‚Ób’Ó"&÷VæFVBÖÆrG&ç6—F–öâÖ6öÆ÷'2#àĞ¢G¶–Bò~i»Nikr¢~‹ûŞXªwĞĞ¢Âö'WGFöãàĞ¢ÂöF—càĞ¢Âöf÷&ÓàĞ¢ÂöF—càĞ¢°Ğ¢ÖöFÂæ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ§ĞĞ Ğ¦7–æ2gVæ7F–öâ7V&Ö—D7&VFUVæ—fW'6—G•Fr†R’°Ğ¢Rç&WfVçDFVfVÇB‚“°Ğ¢6öç7Bf÷&ÒÒRçF&vWC°Ğ¢6öç7BFFÒ°Ğ¢æÖS¢f÷&ÒææÖRçfÇVRÀĞ¢6ÇVs¢f÷&Òç6ÇVrçfÇVRÀĞ¢FW67&—F–öã¢f÷&ÒæFW67&—F–öâçfÇVRÀĞ¢—5÷f—6–&ÆS¢çVÖ&W"†f÷&Òæ—5÷f—6–&ÆRçfÇVR’ÀĞ¢F—7Æ•ö÷&FW#¢çVÖ&W"†f÷&ÒæF—7Æ•ö÷&FW"çfÇVRĞ¢Ó°Ğ¢G'’°Ğ¢v—B’ç÷7B‚rö†öÖWvR÷Væ—fW'6—G’×Fw2öFÖ–ârÂFF“°Ğ¢6Æ÷6TÖöFÂ‚“°Ğ¢v—BÆöEVæ—fW'6—G•Fw2‚“°Ğ¢6†÷u6fT×6r‚wFr×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~‹ûŞXªZKiYs¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢ĞĞ§ĞĞ Ğ¦7–æ2gVæ7F–öâ7V&Ö—EWFFUVæ—fW'6—G•Fr†RÂ–B’°Ğ¢Rç&WfVçDFVfVÇB‚“°Ğ¢6öç7Bf÷&ÒÒRçF&vWC°Ğ¢6öç7BFFÒ°Ğ¢æÖS¢f÷&ÒææÖRçfÇVRÀĞ¢6ÇVs¢f÷&Òç6ÇVrçfÇVRÀĞ¢FW67&—F–öã¢f÷&ÒæFW67&—F–öâçfÇVRÀĞ¢—5÷f—6–&ÆS¢çVÖ&W"†f÷&Òæ—5÷f—6–&ÆRçfÇVR’ÀĞ¢F—7Æ•ö÷&FW#¢çVÖ&W"†f÷&ÒæF—7Æ•ö÷&FW"çfÇVRĞ¢Ó°Ğ¢G'’°Ğ¢v—B’çWB†ö†öÖWvR÷Væ—fW'6—G’×Fw2öFÖ–âòG¶–GÖÂFF“°Ğ¢6Æ÷6TÖöFÂ‚“°Ğ¢v—BÆöEVæ—fW'6—G•Fw2‚“°Ğ¢6†÷u6fT×6r‚wFr×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~i»NikZKiYs¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢ĞĞ§ĞĞ Ğ¦7–æ2gVæ7F–öâFVÆWFUVæ—fW'6—G•Fr†–B’°Ğ¢–b‚6öæf—&Ò‚~8>8îZJ~ZÚn8+ş8+8).X˜®™šN8~8î88¾ûÉş{IK¹8N8n8N8(¾k.K«®8¾8(8(.Šz>™šN8^8(Î8î88"r’’&WGW&ã°Ğ¢G'’°Ğ¢v—B’æFVÆWFR†ö†öÖWvR÷Væ—fW'6—G’×Fw2öFÖ–âòG¶–GÖ“°Ğ¢v—BÆöEVæ—fW'6—G•Fw2‚“°Ğ¢6†÷u6fT×6r‚wFr×6fRÖ×6rr“°Ğ¢Ò6F6‚†R’°Ğ¢ÆW'B‚~X˜®™šNZKiYs¢r²vWD”W'&÷$ÖW76vR†R’“°Ğ¢ĞĞ§ĞĞ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¢òòX[˜	®898:¾898;Î™j.i[ Ğ¢òòÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓÓĞĞ¦gVæ7F–öâ6†÷u6fT×6r†–B’°Ğ¢6öç7B×6rÒFö7VÖVçBævWDVÆVÖVçD'”–B†–B“°Ğ¢–b†×6r’°Ğ¢×6ræ6Æ74Æ—7Bç&VÖ÷fR‚v†–FFVâr“°Ğ¢6WEF–ÖV÷WB‚‚’Óâ×6ræ6Æ74Æ—7BæFB‚v†–FFVâr’Â3“°Ğ¢ĞĞ§ĞĞ Ğ¦gVæ7F–öâvWD”W'&÷$ÖW76vR†W'&÷"’°Ğ¢&WGW&âW'&÷#òç&W7öç6SòæFFòæW'&÷"ÇÂW'&÷#òæÖW76vRÇÂ~KˆŞiˆî8®8*8:8;Âs°Ğ§ĞĞ Ğ¦gVæ7F–öâW66TFÖ–ä‡FÖÂ‡fÇVR’°Ğ¢&WGW&â7G&–ær‡fÇVR’ç&WÆ6R‚õ²cÃâr%ÒörÂ6†&7FW"Óâ‡°Ğ¢rbs¢rf×²rÂsÂs¢rfÇC²rÂsâs¢rfwC²rÂ"r#¢rb33“²rÂr"s¢rgV÷C²pĞ¢Ò•¶6†&7FW%Ò“°Ğ§ĞĞ Ğ¢òòX‰ŞiÉşXÉ`Ğ§v–æF÷ræFDWfVçDÆ—7FVæW"‚tDôÔ6öçFVçDÆöFVBrÂ7–æ2‚’Óâ°Ğ¢6öç7BWF†VçF–6FVBÒv—B6†V6´WF‚‚“°Ğ¢–b‚WF†VçF–6FVB’&WGW&ã°Ğ¢æf–vFR‚vF6†&ö&Br“°Ğ§Ò“°Ğ 
+          </div>
+        </div>
+      </div>
+
+      <!-- æµå…¥åª’ä½“åˆ¥ã‚°ãƒ©ãƒ• -->
+      <div class="glass rounded-xl p-5 mb-6">
+        <h3 class="font-bold text-sm mb-4">æµå…¥åª’ä½“åˆ¥ ç™»éŒ²å­¦ç”Ÿæ•° <span class="text-gray-500 font-normal text-xs">ï¼ˆç´¯è¨ˆï¼‰</span></h3>
+        ${d.source_breakdown && d.source_breakdown.length > 0 ? (() => {
+          const sourceLabels = {
+            sunconnect: 'SUNCONNECT',
+            valueup: 'ãƒãƒªãƒ¥ãƒ¼ã‚¢ãƒƒãƒ—',
+            genki_intern: 'å…ƒæ°—ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³',
+            sokei_intern_compass: 'æ—©æ…¶ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚³ãƒ³ãƒ‘ã‚¹',
+            careersourcing: 'CareerSourcing',
+            other: 'ãã®ä»–'
+          };
+          const sourceColors = [
+            '#4f6ef7','#a855f7','#22c55e','#f59e0b','#ef4444','#06b6d4','#8b5cf6'
+          ];
+          const total = d.source_breakdown.reduce((s, r) => s + (r.count || 0), 0) || 1;
+          return `
+          <div class="space-y-2.5">
+            ${d.source_breakdown.map((row, i) => {
+              const label = sourceLabels[row.source_media] || row.source_media || 'ãã®ä»–';
+              const pct = Math.round((row.count / total) * 100);
+              const color = sourceColors[i % sourceColors.length];
+              return `
+              <div>
+                <div class="flex justify-between text-xs mb-1">
+                  <span class="text-gray-400">${label}</span>
+                  <span class="font-bold">${row.count}å <span class="text-gray-600 font-normal">(${pct}%)</span></span>
+                </div>
+                <div class="h-2 bg-white/5 rounded-full overflow-hidden">
+                  <div class="h-full rounded-full transition-all" style="width:${pct}%; background:${color}"></div>
+                </div>
+              </div>`;
+            }).join('')}
+          </div>
+          <p class="text-xs text-gray-600 mt-3 text-right">åˆè¨ˆ ${total}å</p>`;
+        })() : '<p class="text-gray-600 text-xs text-center py-4">ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</p>'}
+      </div>
+
+      <!-- ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å†…è¨³ + æœ€è¿‘ã®å¿œå‹Ÿ -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <!-- å¿œå‹Ÿã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å†…è¨³ -->
+        <div class="lg:col-span-2 glass rounded-xl p-5">
+          <h3 class="font-bold text-sm mb-4">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹å†…è¨³ <span class="text-gray-500 font-normal text-xs">ï¼ˆ${termLabel[_dashTerm]}ï¼‰</span></h3>
+          <div class="space-y-2.5">
+            ${Object.entries(STATUS_LABELS).map(([k, label]) => {
+              const count = statusBreakdown[k] || 0;
+              const total = d.term_applications || d.total_applications || 1;
+              const pct = Math.round((count/total)*100);
+              return `
+                <div>
+                  <div class="flex justify-between text-xs mb-1">
+                    <span class="text-gray-400">${label}</span>
+                    <span class="font-bold">${count}ä»¶</span>
+                  </div>
+                  <div class="h-1.5 bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-primary-500 rounded-full transition-all" style="width:${pct}%"></div>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        </div>
+
+        <!-- æœ€è¿‘ã®å¿œå‹Ÿ -->
+        <div class="lg:col-span-3 glass rounded-xl p-5">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-sm">æœ€è¿‘ã®å¿œå‹Ÿ</h3>
+            <button onclick="navigate('applications')" class="text-xs text-primary-400 hover:text-primary-300">å…¨ã¦è¦‹ã‚‹</button>
+          </div>
+          <div class="space-y-2">
+            ${d.recent_applications.slice(0,8).map(a => `
+              <div class="flex items-center gap-3 py-2 border-b border-white/5 last:border-0">
+                <div class="w-7 h-7 bg-primary-500/20 rounded-full flex items-center justify-center flex-shrink-0 text-xs font-bold text-primary-400">
+                  ${(a.student_name||'?')[0]}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <p class="text-xs font-medium truncate">${a.student_name}</p>
+                  <p class="text-xs text-gray-500 truncate">${a.job_title} / ${a.company_name}</p>
+                </div>
+                <span class="status-badge ${STATUS_COLORS[a.status] || 'bg-gray-500/20 text-gray-400'} text-xs">
+                  ${STATUS_LABELS[a.status] || a.status}
+                </span>
+              </div>
+            `).join('') || '<p class="text-gray-600 text-xs text-center py-4">å¿œå‹Ÿãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</p>'}
+          </div>
+        </div>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 text-sm">ãƒ‡ãƒ¼ã‚¿å–å¾—ã«å¤±æ•—ã—ã¾ã—ãŸ: ${e.message}</div>`;
+  }
+}
+
+// ==========================================
+// ä¼æ¥­ç®¡ç†
+// ==========================================
+async function loadCompanies() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/companies/admin/all');
+    const companies = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">ä¼æ¥­ä¸€è¦§ <span class="text-gray-500 font-normal text-sm">(${companies.length}ç¤¾)</span></h2>
+        <button onclick="showCompanyModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>ä¼æ¥­ã‚’è¿½åŠ 
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left text-xs text-gray-500 font-medium px-4 py-3">ä¼æ¥­å</th>
+              <th class="text-left text-xs text-gray-500 font-medium px-4 py-3 hidden md:table-cell">æ¥­ç¨®</th>
+              <th class="text-left text-xs text-gray-500 font-medium px-4 py-3 hidden lg:table-cell">æ±‚äººæ•°</th>
+              <th class="text-left text-xs text-gray-500 font-medium px-4 py-3">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</th>
+              <th class="text-left text-xs text-gray-500 font-medium px-4 py-3">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${companies.map(c => `
+              <tr class="table-row border-b border-white/5 last:border-0">
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-primary-500/20 rounded-lg flex items-center justify-center text-xs font-bold text-primary-400 flex-shrink-0">
+                      ${(c.name||'?')[0]}
+                    </div>
+                    <div>
+                      <p class="text-sm font-medium">${c.name}</p>
+                      <p class="text-xs text-gray-500">/${c.slug}</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3 hidden md:table-cell">
+                  <span class="text-xs text-gray-400">${c.industry}</span>
+                </td>
+                <td class="px-4 py-3 hidden lg:table-cell">
+                  <span class="text-xs text-gray-400">${c.job_count}ä»¶</span>
+                </td>
+                <td class="px-4 py-3">
+                  <span class="status-badge ${c.status==='published' ? 'bg-green-500/20 text-green-400' : 'bg-gray-600/20 text-gray-400'}">
+                    ${c.status==='published' ? 'å…¬é–‹ä¸­' : c.status==='draft' ? 'ä¸‹æ›¸ã' : 'ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–'}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex gap-2">
+                    <button onclick="showCompanyModal(${JSON.stringify(c).replace(/"/g, '&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">ç·¨é›†</button>
+                    <button onclick="deleteCompany(${c.id})" class="text-xs text-red-400 hover:text-red-300">å‰Šé™¤</button>
+                  </div>
+                </td>
+              </tr>
+            `).join('') || '<tr><td colspan="5" class="text-center text-gray-600 py-8 text-sm">ä¼æ¥­ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+function showCompanyModal(company = null) {
+  const isEdit = !!company;
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+
+  modalContent.innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'ä¼æ¥­ã‚’ç·¨é›†' : 'ä¼æ¥­ã‚’è¿½åŠ '}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateCompany(event, ${company.id})` : 'submitCreateCompany(event)'}">
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ä¼æ¥­å *</label>
+              <input name="name" required value="${company?.name||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¹ãƒ©ãƒƒã‚° * (URLã«ä½¿ç”¨)</label>
+              <input name="slug" required value="${company?.slug||''}" placeholder="company-name" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æ¥­ç¨® *</label>
+              <input name="industry" required value="${company?.industry||''}" placeholder="ITãƒ»SaaS" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å¾“æ¥­å“¡è¦æ¨¡</label>
+              <input name="size" value="${company?.size||''}" placeholder="11-50å" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ä¼æ¥­èª¬æ˜ *</label>
+            <textarea name="description" required rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${company?.description||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãƒŸãƒƒã‚·ãƒ§ãƒ³</label>
+            <input name="mission" value="${company?.mission||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å‹¤å‹™åœ°</label>
+              <input name="office_location" value="${company?.office_location||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¢ã‚¯ã‚»ã‚¹</label>
+              <input name="office_access" value="${company?.office_access||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ä¼æ¥­ã‚µã‚¤ãƒˆ</label>
+              <input name="website_url" type="url" value="${company?.website_url||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</label>
+              <select name="status" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+                <option value="published" ${company?.status==='published'?'selected':''}>å…¬é–‹</option>
+                <option value="draft" ${company?.status==='draft'?'selected':''}>ä¸‹æ›¸ã</option>
+                <option value="archived" ${company?.status==='archived'?'selected':''}>ã‚¢ãƒ¼ã‚«ã‚¤ãƒ–</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãƒ­ã‚´ URL</label>
+            <input name="logo_url" type="url" value="${company?.logo_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãƒ’ãƒ¼ãƒ­ãƒ¼ç”»åƒ URL <span class="text-gray-600 font-normal">ï¼ˆæ±‚äººè©³ç´°ã®ä¼šç¤¾æ¦‚è¦ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«è¡¨ç¤ºï¼‰</span></label>
+            <input name="hero_image_url" type="url" value="${company?.hero_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã‚µãƒ¼ãƒ“ã‚¹ / äº‹æ¥­å†…å®¹ <span class="text-gray-600 font-normal">ï¼ˆæ±‚äººè©³ç´°ã®Â§5ã«è¡¨ç¤ºï¼‰</span></label>
+            <textarea name="service_description" rows="3" placeholder="æä¾›ã—ã¦ã„ã‚‹ã‚µãƒ¼ãƒ“ã‚¹ãƒ»äº‹æ¥­ã®æ¦‚è¦ã‚’è¨˜è¼‰..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${company?.service_description||''}</textarea>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="button" onclick="closeModal()" class="flex-1 glass text-white text-sm py-2.5 rounded-lg hover:bg-white/10 transition-colors">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</button>
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2.5 rounded-lg transition-colors">${isEdit ? 'æ›´æ–°ã™ã‚‹' : 'è¿½åŠ ã™ã‚‹'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateCompany(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  try {
+    await API.post('/companies/admin', data);
+    closeModal(); loadCompanies();
+  } catch(err) { alert(err.response?.data?.error || 'ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function submitUpdateCompany(e, id) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  try {
+    await API.put(`/companies/admin/${id}`, data);
+    closeModal(); loadCompanies();
+  } catch(err) { alert(err.response?.data?.error || 'æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function deleteCompany(id) {
+  if (!confirm('ã“ã®ä¼æ¥­ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿé–¢é€£ã™ã‚‹æ±‚äººã‚‚å‰Šé™¤ã•ã‚Œã¾ã™ã€‚')) return;
+  await API.delete(`/companies/admin/${id}`);
+  loadCompanies();
+}
+
+// ==========================================
+// æ±‚äººç®¡ç†
+// ==========================================
+async function loadJobs() {
+  const content = document.getElementById('admin-content');
+  try {
+    const [jobsRes, companiesRes, uniTagsRes] = await Promise.all([
+      API.get('/jobs/admin/all'),
+      API.get('/companies/admin/all'),
+      API.get('/homepage/university-tags')
+    ]);
+    const jobs = jobsRes.data.data;
+    const companies = companiesRes.data.data;
+    const universityTags = uniTagsRes.data.data || [];
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">æ±‚äººä¸€è¦§ <span class="text-gray-500 font-normal text-sm">(${jobs.length}ä»¶)</span></h2>
+        <button onclick="showJobModal(null, ${JSON.stringify(companies).replace(/"/g,'&quot;')}, ${JSON.stringify(universityTags).replace(/"/g,'&quot;')})" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>æ±‚äººã‚’è¿½åŠ 
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left text-xs text-gray-500 px-4 py-3">æ±‚äººå</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden md:table-cell">ä¼æ¥­</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden lg:table-cell">æ™‚çµ¦</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden lg:table-cell">å¿œå‹Ÿæ•°</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${jobs.map(j => `
+              <tr class="table-row border-b border-white/5 last:border-0">
+                <td class="px-4 py-3">
+                  <p class="text-sm font-medium">${j.title}</p>
+                  <p class="text-xs text-gray-500">/${j.slug}</p>
+                  ${j.occupation ? `<p class="text-xs text-primary-300 mt-1"><i class="fas fa-briefcase mr-1"></i>${j.occupation}</p>` : ''}
+                </td>
+                <td class="px-4 py-3 hidden md:table-cell text-xs text-gray-400">${j.company_name}</td>
+                <td class="px-4 py-3 hidden lg:table-cell text-xs text-gray-400">
+                  ${j.hourly_wage_min ? 'Â¥'+j.hourly_wage_min.toLocaleString()+'ã€œ' : 'å¿œç›¸è«‡'}
+                </td>
+                <td class="px-4 py-3 hidden lg:table-cell text-xs text-gray-400">${j.applicant_count}å</td>
+                <td class="px-4 py-3">
+                  <div class="flex flex-col gap-1">
+                    <span class="status-badge ${j.status==='published' ? 'bg-green-500/20 text-green-400' : j.status==='draft' ? 'bg-yellow-500/20 text-yellow-400' : 'bg-red-500/20 text-red-400'}">
+                      ${j.status==='published' ? 'å…¬é–‹ä¸­' : j.status==='draft' ? 'ä¸‹æ›¸ã' : 'ã‚¯ãƒ­ãƒ¼ã‚º'}
+                    </span>
+                    ${j.visibility==='members' ? '<span class="status-badge bg-yellow-500/20 text-yellow-400"><i class="fas fa-lock mr-0.5 text-xs"></i>ä¼šå“¡é™å®š</span>' : '<span class="status-badge bg-gray-600/20 text-gray-400"><i class="fas fa-globe mr-0.5 text-xs"></i>å…¨å…¬é–‹</span>'}
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex gap-2">
+                    <button onclick="showJobModal(${JSON.stringify(j).replace(/"/g,'&quot;')}, ${JSON.stringify(companies).replace(/"/g,'&quot;')}, ${JSON.stringify(universityTags).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">ç·¨é›†</button>
+                    <a href="/jobs/${j.slug}" target="_blank" class="text-xs text-gray-400 hover:text-white">è¡¨ç¤º</a>
+                    <button onclick="deleteJob(${j.id})" class="text-xs text-red-400 hover:text-red-300">å‰Šé™¤</button>
+                  </div>
+                </td>
+              </tr>
+            `).join('') || '<tr><td colspan="6" class="text-center text-gray-600 py-8 text-sm">æ±‚äººãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) { content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`; }
+}
+
+async function showJobModal(job = null, companies = [], universityTags = []) {
+  const isEdit = !!job;
+  const modal = document.getElementById('modal');
+  const mc = document.getElementById('modal-content');
+
+  // æ±‚äººã®å¤§å­¦ã‚¿ã‚°ã‚’å–å¾—
+  let selectedTagIds = [];
+  if (isEdit && job.id) {
+    try {
+      const tagsRes = await API.get(`/homepage/jobs/${job.id}/university-tags`);
+      selectedTagIds = tagsRes.data.data.map(t => t.id);
+    } catch (e) {
+      console.error('Failed to load job university tags:', e);
+    }
+  }
+
+  mc.innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'æ±‚äººã‚’ç·¨é›†' : 'æ±‚äººã‚’è¿½åŠ '}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateJob(event, ${job.id})` : 'submitCreateJob(event)'}">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ä¼æ¥­ *</label>
+            <select name="company_id" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+              ${companies.map(c => `<option value="${c.id}" ${job?.company_id==c.id?'selected':''}>${c.name}</option>`).join('')}
+            </select>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æ±‚äººã‚¿ã‚¤ãƒˆãƒ« *</label>
+              <input name="title" required value="${job?.title||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¹ãƒ©ãƒƒã‚° *</label>
+              <input name="slug" required value="${job?.slug||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">è·ç¨® *</label>
+            <select name="occupation" required class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+              ${renderAdminOccupationOptions(job?.occupation || 'ãã®ä»–')}
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã‚­ãƒ£ãƒƒãƒã‚³ãƒ”ãƒ¼</label>
+            <input name="catch_copy" value="${job?.catch_copy||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">æ¦‚è¦èª¬æ˜ *</label>
+            <textarea name="description" required rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.description||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">æ¥­å‹™å†…å®¹ *</label>
+            <textarea name="work_content" required rows="4" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.work_content||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">æ±‚ã‚ã‚‹äººæ</label>
+            <textarea name="requirements" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.requirements||''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å‹¤å‹™æ™‚é–“</label>
+              <input name="work_hours" value="${job?.work_hours||''}" placeholder="10:00ã€œ18:00" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å‹¤å‹™åœ°</label>
+              <input name="work_location" value="${job?.work_location||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æ™‚çµ¦(æœ€ä½)</label>
+              <input name="hourly_wage_min" type="number" value="${job?.hourly_wage_min||''}" placeholder="1200" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æ™‚çµ¦(æœ€é«˜)</label>
+              <input name="hourly_wage_max" type="number" value="${job?.hourly_wage_max||''}" placeholder="1500" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å‹¤å‹™å½¢æ…‹</label>
+              <select name="work_style" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+                <option value="onsite" ${job?.work_style==='onsite'?'selected':''}>å‡ºç¤¾</option>
+                <option value="remote" ${job?.work_style==='remote'?'selected':''}>ãƒªãƒ¢ãƒ¼ãƒˆ</option>
+                <option value="hybrid" ${job?.work_style==='hybrid'?'selected':''}>ãƒã‚¤ãƒ–ãƒªãƒƒãƒ‰</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">é¸è€ƒãƒ•ãƒ­ãƒ¼</label>
+            <input name="selection_flow" value="${job?.selection_flow||''}" placeholder="æ›¸é¡é¸è€ƒ â†’ ä¸€æ¬¡é¢æ¥ â†’ æœ€çµ‚é¢æ¥ â†’ å†…å®š" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">å¯¾è±¡å­¦å¹´</label>
+              <input name="target_grade" value="${job?.target_grade||''}" placeholder="å¤§å­¦1ã€œ3å¹´ç”Ÿ" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</label>
+              <select name="status" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+                <option value="published" ${job?.status==='published'?'selected':''}>å…¬é–‹</option>
+                <option value="draft" ${job?.status==='draft'?'selected':''}>ä¸‹æ›¸ã</option>
+                <option value="closed" ${job?.status==='closed'?'selected':''}>ã‚¯ãƒ­ãƒ¼ã‚º</option>
+              </select>
+            </div>
+          </div>
+          <!-- Phase1 ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ -->
+          <div class="border-t border-white/10 pt-4">
+            <p class="text-xs text-primary-400 font-bold mb-3"><i class="fas fa-star mr-1"></i>è©³ç´°ãƒšãƒ¼ã‚¸ç”¨ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ï¼ˆPhase1ï¼‰</p>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãƒ’ãƒ¼ãƒ­ãƒ¼ç”»åƒ URL <span class="text-gray-600 font-normal">ï¼ˆFVã«è¡¨ç¤ºï¼‰</span></label>
+            <input name="hero_image_url" type="url" value="${job?.hero_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã‚«ãƒ¼ãƒ‰ç”»åƒ URL <span class="text-gray-600 font-normal">ï¼ˆä¸€è¦§ã‚«ãƒ¼ãƒ‰ã«è¡¨ç¤ºï¼‰</span></label>
+            <input name="card_image_url" type="url" value="${job?.card_image_url||''}" placeholder="https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <!-- Â§2 é­…åŠ›3ç‚¹ (appeal_points) -->
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">
+              ã“ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã®é­…åŠ› <span class="text-gray-600 font-normal">ï¼ˆÂ§2ãƒ»æœ€å¤§3ç‚¹ã€JSONä¿å­˜ï¼‰</span>
+            </label>
+            <div id="appeal-points-list" class="space-y-2 mb-2">
+              ${(() => {
+                let pts = parseAdminJsonArray(job?.appeal_points);
+                if (!Array.isArray(pts) || pts.length === 0) pts = [{ icon: 'ğŸš€', title: '', body: '' }];
+                return pts.slice(0,3).map((p, i) => `
+                  <div class="flex gap-2 items-start appeal-point-row">
+                    <input type="text" placeholder="ğŸš€" value="${p.icon||''}" maxlength="4"
+                      class="appeal-icon w-14 bg-white/5 border border-white/10 rounded-lg px-2 py-2 text-sm text-white text-center focus:outline-none focus:border-primary-500">
+                    <div class="flex-1 space-y-1">
+                      <input type="text" placeholder="ã‚¿ã‚¤ãƒˆãƒ«ï¼ˆä¾‹: åœ§å€’çš„ãªæˆé•·ï¼‰" value="${(p.title||'').replace(/"/g,'&quot;')}"
+                        class="appeal-title w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+                      <input type="text" placeholder="èª¬æ˜æ–‡ï¼ˆ2ã€œ3è¡Œï¼‰" value="${(p.body||p.description||'').replace(/"/g,'&quot;')}"
+                        class="appeal-body w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+                    </div>
+                    <button type="button" onclick="this.closest('.appeal-point-row').remove()" class="text-gray-600 hover:text-red-400 mt-1 text-xs px-1">âœ•</button>
+                  </div>
+                `).join('');
+              })()}
+            </div>
+            <button type="button" onclick="addAppealPoint()" class="text-xs text-primary-400 hover:text-primary-300 border border-primary-500/20 rounded-lg px-3 py-1.5 transition-colors">
+              <i class="fas fa-plus mr-1"></i>é­…åŠ›ãƒã‚¤ãƒ³ãƒˆã‚’è¿½åŠ ï¼ˆæœ€å¤§3ç‚¹ï¼‰
+            </button>
+          </div>
+          <!-- Â§10 ã‚¹ã‚­ãƒ«ã‚»ãƒƒãƒˆ (skill_set) -->
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">
+              ç¿’å¾—ã§ãã‚‹ã‚¹ã‚­ãƒ«ã‚»ãƒƒãƒˆ <span class="text-gray-600 font-normal">ï¼ˆÂ§10ãƒ»ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§å…¥åŠ›ï¼‰</span>
+            </label>
+            <input id="skill-set-input" type="text"
+              value="${(() => { const s = parseAdminJsonArray(job?.skill_set); return s.map(x => typeof x==='string'?x:(x.name||'')).join(', '); })()}"
+              placeholder="ä¾‹: Python, ãƒ‡ãƒ¼ã‚¿åˆ†æ, ãƒãƒ¼ã‚±ãƒ†ã‚£ãƒ³ã‚°æˆ¦ç•¥, SQLite"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            <p class="text-xs text-gray-600 mt-1">ã‚¹ã‚­ãƒ«åã‚’ã‚«ãƒ³ãƒåŒºåˆ‡ã‚Šã§å…¥åŠ›ã€‚ä¿å­˜æ™‚ã«è‡ªå‹•ã§JSONé…åˆ—ã«å¤‰æ›ã•ã‚Œã¾ã™ã€‚</p>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãƒã‚¸ã‚·ãƒ§ãƒ³ã®ç‰¹å¾´ <span class="text-gray-600 font-normal">ï¼ˆÂ§6ï¼‰</span></label>
+            <textarea name="position_features" rows="3" placeholder="ã“ã®ãƒã‚¸ã‚·ãƒ§ãƒ³ã®ç‰¹å¾´ãƒ»é­…åŠ›ã‚’è¨˜è¼‰..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.position_features||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">å…¥ç¤¾å¾Œã®æµã‚Œ <span class="text-gray-600 font-normal">ï¼ˆÂ§8ï¼‰</span></label>
+            <textarea name="onboarding_flow" rows="3" placeholder="å…¥ç¤¾å¾Œã€œ3ãƒ¶æœˆã®æµã‚Œã‚’è¨˜è¼‰..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.onboarding_flow||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ä¸»ãªæ¥­å‹™ / æ¡ˆä»¶ä¾‹ <span class="text-gray-600 font-normal">ï¼ˆÂ§9ï¼‰</span></label>
+            <textarea name="task_examples" rows="3" placeholder="å…·ä½“çš„ãªæ¥­å‹™å†…å®¹ãƒ»æ¡ˆä»¶ä¾‹ã‚’è¨˜è¼‰..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.task_examples||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã‚­ãƒ£ãƒªã‚¢ãƒ‘ã‚¹ <span class="text-gray-600 font-normal">ï¼ˆÂ§11ï¼‰</span></label>
+            <textarea name="career_path" rows="2" placeholder="å’æ¥­å¾Œã®ã‚­ãƒ£ãƒªã‚¢ãƒ‘ã‚¹ã‚„å®Ÿç¸¾äº‹ä¾‹..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.career_path||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã“ã‚“ãªäººã«ãŠã™ã™ã‚ <span class="text-gray-600 font-normal">ï¼ˆÂ§12ï¼‰</span></label>
+            <textarea name="recommended_for" rows="2" placeholder="å‘ã„ã¦ã„ã‚‹äººç‰©åƒãƒ»æ¨å¥¨ã‚¹ã‚­ãƒ«..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${job?.recommended_for||''}</textarea>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ãŠã™ã™ã‚å¤§å­¦ã‚¿ã‚°
+              <span class="text-gray-600 font-normal">ï¼ˆè¤‡æ•°é¸æŠå¯èƒ½ï¼‰</span>
+            </label>
+            <div id="university-tags-container" class="max-h-48 overflow-y-auto bg-white/5 border border-white/10 rounded-lg p-3">
+              ${universityTags.length > 0 ? universityTags.map(tag => `
+                <label class="flex items-center gap-2 py-1.5 hover:bg-white/5 rounded px-2 cursor-pointer">
+                  <input type="checkbox" name="university_tag_ids" value="${tag.id}" ${selectedTagIds.includes(tag.id) ? 'checked' : ''} class="w-4 h-4 text-primary-500 rounded border-white/20 bg-white/5 focus:ring-primary-500">
+                  <span class="text-sm text-gray-300">${tag.name}</span>
+                </label>
+              `).join('') : '<p class="text-sm text-gray-500">å¤§å­¦ã‚¿ã‚°ãŒã‚ã‚Šã¾ã›ã‚“</p>'}
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1 flex items-center gap-1">
+              å…¬é–‹ç¯„å›²
+              <span class="text-gray-600 font-normal">ï¼ˆèª°ãŒé–²è¦§ã§ãã‚‹ã‹ï¼‰</span>
+            </label>
+            <div class="grid grid-cols-2 gap-2">
+              <label class="flex items-center gap-2 glass rounded-lg px-3 py-2.5 cursor-pointer hover:bg-white/5 transition-colors border-2 ${job?.visibility==='members' ? 'border-yellow-500/50' : 'border-transparent'}" id="vis-public-label">
+                <input type="radio" name="visibility" value="public" ${!job || job?.visibility==='public'?'checked':''} onchange="updateVisibilityUI(this)" class="hidden">
+                <div class="w-8 h-8 rounded-lg bg-green-500/15 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-globe text-green-400 text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">å…¨å“¡ã«å…¬é–‹</p>
+                  <p class="text-xs text-gray-500">æœªç™»éŒ²ã§ã‚‚é–²è¦§å¯</p>
+                </div>
+              </label>
+              <label class="flex items-center gap-2 glass rounded-lg px-3 py-2.5 cursor-pointer hover:bg-white/5 transition-colors border-2 ${job?.visibility==='members' ? 'border-yellow-500/50' : 'border-transparent'}" id="vis-members-label">
+                <input type="radio" name="visibility" value="members" ${job?.visibility==='members'?'checked':''} onchange="updateVisibilityUI(this)" class="hidden">
+                <div class="w-8 h-8 rounded-lg bg-yellow-500/15 flex items-center justify-center flex-shrink-0">
+                  <i class="fas fa-lock text-yellow-400 text-sm"></i>
+                </div>
+                <div>
+                  <p class="text-xs font-bold text-white">ä¼šå“¡é™å®š</p>
+                  <p class="text-xs text-gray-500">ç™»éŒ²å­¦ç”Ÿã®ã¿é–²è¦§</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="button" onclick="closeModal()" class="flex-1 glass text-white text-sm py-2.5 rounded-lg hover:bg-white/10">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</button>
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2.5 rounded-lg">${isEdit ? 'æ›´æ–°ã™ã‚‹' : 'è¿½åŠ ã™ã‚‹'}</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+function addAppealPoint() {
+  const list = document.getElementById('appeal-points-list');
+  if (!list) return;
+  const rows = list.querySelectorAll('.appeal-point-row');
+  if (rows.length >= 3) { alert('é­…åŠ›ãƒã‚¤ãƒ³ãƒˆã¯æœ€å¤§3ç‚¹ã¾ã§è¿½åŠ ã§ãã¾ã™'); return; }
+  const div = document.createElement('div');
+  div.className = 'flex gap-2 items-start appeal-point-row';
+  div.innerHTML = `
+    <input type="text" placeholder="âœ¨" maxlength="4"
+      class="appeal-icon w-14 bg-white/5 border border-white/10 rounded-lg px-2 py-2 text-sm text-white text-center focus:outline-none focus:border-primary-500">
+    <div class="flex-1 space-y-1">
+      <input type="text" placeholder="ã‚¿ã‚¤ãƒˆãƒ«ï¼ˆä¾‹: åœ§å€’çš„ãªæˆé•·ï¼‰"
+        class="appeal-title w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+      <input type="text" placeholder="èª¬æ˜æ–‡ï¼ˆ2ã€œ3è¡Œï¼‰"
+        class="appeal-body w-full bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-primary-500">
+    </div>
+    <button type="button" onclick="this.closest('.appeal-point-row').remove()" class="text-gray-600 hover:text-red-400 mt-1 text-xs px-1">âœ•</button>
+  `;
+  list.appendChild(div);
+}
+
+function collectAppealPoints() {
+  const rows = document.querySelectorAll('.appeal-point-row');
+  const points = [];
+  rows.forEach(row => {
+    const icon = row.querySelector('.appeal-icon')?.value?.trim() || '';
+    const title = row.querySelector('.appeal-title')?.value?.trim() || '';
+    const body = row.querySelector('.appeal-body')?.value?.trim() || '';
+    if (title || body) points.push({ icon: icon || 'âœ¨', title, body });
+  });
+  return points;
+}
+
+function collectSkillSet() {
+  const raw = document.getElementById('skill-set-input')?.value || '';
+  if (!raw.trim()) return [];
+  return raw.split(',').map(s => s.trim()).filter(Boolean);
+}
+
+function updateVisibilityUI(radio) {
+  const pubLabel = document.getElementById('vis-public-label');
+  const memLabel = document.getElementById('vis-members-label');
+  if (!pubLabel || !memLabel) return;
+  if (radio.value === 'public') {
+    pubLabel.classList.add('border-green-500/50');
+    pubLabel.classList.remove('border-transparent');
+    memLabel.classList.remove('border-yellow-500/50');
+    memLabel.classList.add('border-transparent');
+  } else {
+    memLabel.classList.add('border-yellow-500/50');
+    memLabel.classList.remove('border-transparent');
+    pubLabel.classList.remove('border-green-500/50');
+    pubLabel.classList.add('border-transparent');
+  }
+}
+
+async function submitCreateJob(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
+  data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
+  
+  // appeal_points / skill_set ã‚’å‹•çš„UIã‹ã‚‰åé›†ã—ã¦JSONåŒ–
+  const appealPoints = collectAppealPoints();
+  if (appealPoints.length > 0) data.appeal_points = appealPoints;
+  const skillSet = collectSkillSet();
+  if (skillSet.length > 0) data.skill_set = skillSet;
+
+  // å¤§å­¦ã‚¿ã‚°IDã‚’é…åˆ—ã¨ã—ã¦å–å¾—
+  const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
+  data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
+  
+  try { 
+    const res = await API.post('/jobs/admin', data);
+    const jobId = res.data.data.id;
+    
+    // å¤§å­¦ã‚¿ã‚°ã‚’é–¢é€£ä»˜ã‘
+    if (data.university_tag_ids.length > 0) {
+      await API.post(`/homepage/jobs/${jobId}/university-tags`, {
+        university_tag_ids: data.university_tag_ids
+      });
+    }
+    
+    closeModal(); 
+    loadJobs(); 
+  }
+  catch(err) { alert(err.response?.data?.error || 'ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function submitUpdateJob(e, id) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  data.hourly_wage_min = data.hourly_wage_min ? parseInt(data.hourly_wage_min) : null;
+  data.hourly_wage_max = data.hourly_wage_max ? parseInt(data.hourly_wage_max) : null;
+
+  // appeal_points / skill_set ã‚’å‹•çš„UIã‹ã‚‰åé›†ã—ã¦JSONåŒ–
+  const appealPoints = collectAppealPoints();
+  data.appeal_points = appealPoints;
+  const skillSet = collectSkillSet();
+  data.skill_set = skillSet;
+
+  // å¤§å­¦ã‚¿ã‚°IDã‚’é…åˆ—ã¨ã—ã¦å–å¾—
+  const tagCheckboxes = e.target.querySelectorAll('input[name="university_tag_ids"]:checked');
+  data.university_tag_ids = Array.from(tagCheckboxes).map(cb => parseInt(cb.value));
+  
+  try { 
+    await API.put(`/jobs/admin/${id}`, data);
+    
+    // å¤§å­¦ã‚¿ã‚°ã‚’æ›´æ–°ï¼ˆå‰Šé™¤â†’å†è¿½åŠ ï¼‰
+    if (data.university_tag_ids.length > 0) {
+      await API.post(`/homepage/jobs/${id}/university-tags`, {
+        university_tag_ids: data.university_tag_ids
+      });
+    } else {
+      // ã‚¿ã‚°ãŒ0ä»¶ã®å ´åˆã¯å…¨å‰Šé™¤ã®ã¿ï¼ˆAPIã®POSTã§è‡ªå‹•å‰Šé™¤ã•ã‚Œã‚‹ï¼‰
+      await API.post(`/homepage/jobs/${id}/university-tags`, {
+        university_tag_ids: []
+      });
+    }
+    
+    closeModal(); 
+    loadJobs(); 
+  }
+  catch(err) { alert(err.response?.data?.error || 'æ›´æ–°ã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function deleteJob(id) {
+  if (!confirm('ã“ã®æ±‚äººã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  await API.delete(`/jobs/admin/${id}`); loadJobs();
+}
+
+// ==========================================
+// å­¦ç”Ÿç®¡ç†
+// ==========================================
+async function loadStudents() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+  try {
+    const res = await API.get('/students/admin');
+    const students = res.data.data;
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">å­¦ç”Ÿä¸€è¦§ <span class="text-gray-500 font-normal text-sm">(${students.length}å)</span></h2>
+        <div class="flex gap-3">
+          <input id="student-search" type="text" placeholder="åå‰ãƒ»ãƒ¡ãƒ¼ãƒ«æ¤œç´¢..." onkeydown="if(event.key==='Enter') searchStudents()"
+            class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 w-48">
+          <button onclick="searchStudents()" class="bg-primary-500/20 border border-primary-500/30 text-primary-400 text-sm px-3 py-1.5 rounded-lg">æ¤œç´¢</button>
+        </div>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left text-xs text-gray-500 px-4 py-3">æ°å</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden md:table-cell">å¤§å­¦ãƒ»å­¦å¹´</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden lg:table-cell">é€£çµ¡å…ˆ</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden lg:table-cell">æ‹›å¾…ã‚³ãƒ¼ãƒ‰</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">ç™»éŒ²æ—¥</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody id="students-tbody">
+            ${renderStudentRows(students)}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) { content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`; }
+}
+
+function renderStudentRows(students) {
+  if (!students.length) return '<tr><td colspan="6" class="text-center text-gray-600 py-8 text-sm">å­¦ç”Ÿãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>';
+  return students.map(s => `
+    <tr class="table-row border-b border-white/5 last:border-0">
+      <td class="px-4 py-3">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 bg-primary-500/20 rounded-full flex items-center justify-center text-xs font-bold text-primary-400">${(s.last_name||'?')[0]}</div>
+          <div>
+            <p class="text-sm font-medium">${s.last_name} ${s.first_name}</p>
+            ${s.last_name_kana ? `<p class="text-xs text-gray-500">${s.last_name_kana} ${s.first_name_kana||''}</p>` : ''}
+          </div>
+        </div>
+      </td>
+      <td class="px-4 py-3 hidden md:table-cell">
+        <p class="text-xs text-gray-300">${s.university}</p>
+        <p class="text-xs text-gray-500">${s.grade}å¹´ç”Ÿ${s.faculty ? ' / '+s.faculty : ''}</p>
+      </td>
+      <td class="px-4 py-3 hidden lg:table-cell">
+        <p class="text-xs text-gray-400">${s.email}</p>
+        ${s.phone ? `<p class="text-xs text-gray-500">${s.phone}</p>` : ''}
+      </td>
+      <td class="px-4 py-3 hidden lg:table-cell">
+        <span class="text-xs ${s.invite_code_used ? 'text-primary-400' : 'text-gray-600'}">${s.invite_code_used || 'ãªã—'}</span>
+      </td>
+      <td class="px-4 py-3 text-xs text-gray-500">${s.created_at?.split('T')[0]||''}</td>
+      <td class="px-4 py-3">
+        <button onclick="showStudentDetail(${s.id})" class="text-xs text-primary-400 hover:text-primary-300">è©³ç´°</button>
+      </td>
+    </tr>
+  `).join('');
+}
+
+async function searchStudents() {
+  const q = document.getElementById('student-search')?.value;
+  const res = await API.get(`/students/admin?q=${encodeURIComponent(q||'')}`);
+  document.getElementById('students-tbody').innerHTML = renderStudentRows(res.data.data);
+}
+
+async function showStudentDetail(id) {
+  const res = await API.get(`/students/admin/${id}`);
+  const s = res.data.data;
+  const modal = document.getElementById('modal');
+  const mc = document.getElementById('modal-content');
+
+  mc.innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${s.last_name} ${s.first_name}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+          <div class="glass rounded-lg p-3">
+            <p class="text-xs text-gray-500 mb-1">ãƒ¡ãƒ¼ãƒ«</p>
+            <p class="text-sm">${s.email}</p>
+          </div>
+          <div class="glass rounded-lg p-3">
+            <p class="text-xs text-gray-500 mb-1">é›»è©±</p>
+            <p class="text-sm">${s.phone||'æœªç™»éŒ²'}</p>
+          </div>
+          <div class="glass rounded-lg p-3">
+            <p class="text-xs text-gray-500 mb-1">å¤§å­¦ãƒ»å­¦å¹´</p>
+            <p class="text-sm">${s.university} ${s.grade}å¹´</p>
+            ${s.faculty ? `<p class="text-xs text-gray-500">${s.faculty}</p>` : ''}
+          </div>
+          <div class="glass rounded-lg p-3">
+            <p class="text-xs text-gray-500 mb-1">æ‹›å¾…ã‚³ãƒ¼ãƒ‰</p>
+            <p class="text-sm">${s.invite_code_used||'ãªã—'}</p>
+          </div>
+          ${s.source_media ? `
+          <div class="glass rounded-lg p-3 col-span-2">
+            <p class="text-xs text-gray-500 mb-1">æµå…¥åª’ä½“</p>
+            <span class="text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-1 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[s.source_media]||s.source_media}</span>
+          </div>` : ''}
+        </div>
+        ${s.pr_text ? `
+        <div class="glass rounded-lg p-3">
+          <p class="text-xs text-gray-500 mb-1">è‡ªå·±PR</p>
+          <p class="text-sm text-gray-300">${s.pr_text}</p>
+        </div>` : ''}
+        <!-- ç®¡ç†ãƒ¡ãƒ¢ -->
+        <div>
+          <label class="block text-xs text-gray-400 mb-1">ç®¡ç†ãƒ¡ãƒ¢</label>
+          <textarea id="student-memo-${s.id}" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${s.admin_memo||''}</textarea>
+        </div>
+        <!-- å¿œå‹Ÿå±¥æ­´ -->
+        ${s.applications?.length > 0 ? `
+        <div>
+          <h4 class="text-xs text-gray-500 mb-2">å¿œå‹Ÿå±¥æ­´ (${s.applications.length}ä»¶)</h4>
+          <div class="space-y-2">
+            ${s.applications.map(a => `
+              <div class="flex items-center gap-3 glass rounded-lg px-3 py-2">
+                <span class="status-badge ${STATUS_COLORS[a.status]||'bg-gray-500/20 text-gray-400'}">${STATUS_LABELS[a.status]||a.status}</span>
+                <div>
+                  <p class="text-xs font-medium">${a.job_title}</p>
+                  <p class="text-xs text-gray-500">${a.company_name} / ${a.created_at?.split('T')[0]}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>` : ''}
+        <div class="flex gap-3">
+          <button onclick="closeModal()" class="flex-1 glass text-sm py-2 rounded-lg">é–‰ã˜ã‚‹</button>
+          <button onclick="updateStudentMemo(${s.id})" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2 rounded-lg">ãƒ¡ãƒ¢ã‚’ä¿å­˜</button>
+        </div>
+      </div>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function updateStudentMemo(id) {
+  const memo = document.getElementById(`student-memo-${id}`)?.value;
+  const res = await API.get(`/students/admin/${id}`);
+  const s = res.data.data;
+  await API.put(`/students/admin/${id}`, { ...s, admin_memo: memo });
+  alert('ä¿å­˜ã—ã¾ã—ãŸ');
+}
+
+// ==========================================
+// å¿œå‹Ÿç®¡ç†
+// ==========================================
+async function loadApplications() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+  try {
+    const res = await API.get('/applications/admin');
+    const applications = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">å¿œå‹Ÿç®¡ç† <span class="text-gray-500 font-normal text-sm">(${applications.length}ä»¶)</span></h2>
+        <div class="flex gap-2">
+          <select id="app-filter-status" onchange="filterApplications()" class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-gray-300 focus:outline-none">
+            <option value="">å…¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</option>
+            ${Object.entries(STATUS_LABELS).map(([k,v]) => `<option value="${k}">${v}</option>`).join('')}
+          </select>
+        </div>
+      </div>
+      <!-- ã‚«ãƒ³ãƒãƒ³ãƒœãƒ¼ãƒ‰é¢¨ä¸€è¦§ -->
+      <div class="space-y-2" id="applications-list">
+        ${renderApplicationRows(applications)}
+      </div>
+    `;
+  } catch(e) { content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`; }
+}
+
+function renderApplicationRows(applications) {
+  if (!applications.length) return '<div class="text-center text-gray-600 text-sm py-8">å¿œå‹Ÿãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</div>';
+  return applications.map(a => `
+    <div class="glass rounded-xl p-4 flex items-center gap-4 hover:bg-white/5 transition-colors cursor-pointer" onclick="showApplicationDetail(${a.id})">
+      <div class="w-9 h-9 bg-primary-500/20 rounded-full flex items-center justify-center text-sm font-bold text-primary-400 flex-shrink-0">
+        ${(a.student_name||'?')[0]}
+      </div>
+      <div class="flex-1 min-w-0">
+        <div class="flex items-center gap-2 mb-0.5">
+          <p class="text-sm font-medium">${a.student_name}</p>
+          <span class="text-xs text-gray-500">${a.student_university} ${a.student_grade}å¹´</span>
+        </div>
+        <p class="text-xs text-gray-500">${a.job_title} / <span class="text-gray-400">${a.company_name}</span></p>
+        ${a.source_media ? `<span class="inline-flex items-center mt-1 text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span>` : ''}
+      </div>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        ${a.next_action ? `<span class="text-xs text-yellow-400"><i class="fas fa-exclamation-circle mr-1"></i>${a.next_action}</span>` : ''}
+        <span class="status-badge ${STATUS_COLORS[a.status]||'bg-gray-500/20 text-gray-400'}">${STATUS_LABELS[a.status]||a.status}</span>
+        <span class="text-xs text-gray-600 hidden lg:block">${a.created_at?.split('T')[0]||''}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function filterApplications() {
+  const status = document.getElementById('app-filter-status')?.value;
+  const res = await API.get(`/applications/admin?status=${status}`);
+  document.getElementById('applications-list').innerHTML = renderApplicationRows(res.data.data);
+}
+
+async function showApplicationDetail(id) {
+  const res = await API.get(`/applications/admin/${id}`);
+  const a = res.data.data;
+  const modal = document.getElementById('modal');
+  const mc = document.getElementById('modal-content');
+
+  mc.innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">å¿œå‹Ÿè©³ç´°</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="space-y-4">
+        <!-- å­¦ç”Ÿæƒ…å ± -->
+        <div class="glass rounded-lg p-4">
+          <h4 class="text-xs text-gray-500 mb-2">å­¦ç”Ÿæƒ…å ±</h4>
+          <div class="grid grid-cols-2 gap-3 text-sm">
+            <div><span class="text-gray-500 text-xs">æ°å</span><p>${a.last_name} ${a.first_name}</p></div>
+            <div><span class="text-gray-500 text-xs">å¤§å­¦ãƒ»å­¦å¹´</span><p>${a.student_university} ${a.student_grade}å¹´</p></div>
+            <div><span class="text-gray-500 text-xs">ãƒ¡ãƒ¼ãƒ«</span><p class="text-xs">${a.student_email}</p></div>
+            <div><span class="text-gray-500 text-xs">é›»è©±</span><p class="text-xs">${a.student_phone||'æœªç™»éŒ²'}</p></div>
+            ${a.source_media ? `<div><span class="text-gray-500 text-xs">å¿œå‹Ÿæ™‚åª’ä½“</span><p class="text-xs mt-0.5"><span class="bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span></p></div>` : ''}
+            ${a.student_source_media ? `<div><span class="text-gray-500 text-xs">ç™»éŒ²æ™‚åª’ä½“</span><p class="text-xs mt-0.5"><span class="bg-blue-500/15 border border-blue-500/25 text-blue-300 px-2 py-0.5 rounded-full"><i class="fas fa-user-plus mr-1"></i>${SOURCE_MEDIA_LABEL[a.student_source_media]||a.student_source_media}</span></p></div>` : ''}
+          </div>
+        </div>
+        <!-- æ±‚äººæƒ…å ± -->
+        <div class="glass rounded-lg p-4">
+          <h4 class="text-xs text-gray-500 mb-2">å¿œå‹Ÿæ±‚äºº</h4>
+          <p class="text-sm font-medium">${a.job_title}</p>
+          <p class="text-xs text-gray-400">${a.company_name}</p>
+        </div>
+        <!-- å¿œå‹Ÿå†…å®¹ -->
+        ${a.motivation ? `
+        <div class="glass rounded-lg p-4">
+          <h4 class="text-xs text-gray-500 mb-2">å¿œå‹Ÿå‹•æ©Ÿ</h4>
+          <p class="text-sm text-gray-300 whitespace-pre-line">${a.motivation}</p>
+        </div>` : ''}
+        <!-- ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹æ›´æ–°ãƒ•ã‚©ãƒ¼ãƒ  -->
+        <form onsubmit="submitUpdateApplication(event, ${a.id})">
+          <div class="space-y-3">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</label>
+              <select name="status" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+                ${Object.entries(STATUS_LABELS).map(([k,v]) => `<option value="${k}" ${a.status===k?'selected':''}>${v}</option>`).join('')}
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æ¬¡ã®ã‚¢ã‚¯ã‚·ãƒ§ãƒ³</label>
+              <input name="next_action" value="${a.next_action||''}" placeholder="ä¾‹: é¢æ¥æ—¥ç¨‹ã‚’èª¿æ•´ã™ã‚‹" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">é¢æ¥æ—¥æ™‚</label>
+              <input name="interview_date" type="datetime-local" value="${a.interview_date?.replace('Z','')||''}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ç®¡ç†ãƒ¡ãƒ¢</label>
+              <textarea name="admin_memo" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${a.admin_memo||''}</textarea>
+            </div>
+          </div>
+          <div class="flex gap-3 mt-5">
+            <button type="button" onclick="closeModal()" class="flex-1 glass text-sm py-2 rounded-lg">é–‰ã˜ã‚‹</button>
+            <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2 rounded-lg">æ›´æ–°ã™ã‚‹</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitUpdateApplication(e, id) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  await API.put(`/applications/admin/${id}`, data);
+  closeModal(); loadApplications();
+}
+
+// ==========================================
+// æ‹›å¾…ã‚³ãƒ¼ãƒ‰ç®¡ç†
+// ==========================================
+async function loadInvites() {
+  const content = document.getElementById('admin-content');
+  try {
+    const res = await API.get('/invite/admin');
+    const codes = res.data.data;
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ <span class="text-gray-500 font-normal text-sm">(${codes.length}ä»¶)</span></h2>
+        <div class="flex gap-2">
+          <button onclick="showBulkCreateInvite()" class="glass border border-white/10 text-white text-sm px-3 py-1.5 rounded-lg hover:bg-white/10">
+            <i class="fas fa-layer-group mr-1"></i>ä¸€æ‹¬ç”Ÿæˆ
+          </button>
+          <button onclick="showCreateInvite()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-1.5 rounded-lg">
+            <i class="fas fa-plus mr-1"></i>ã‚³ãƒ¼ãƒ‰ä½œæˆ
+          </button>
+        </div>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full">
+          <thead>
+            <tr class="border-b border-white/10">
+              <th class="text-left text-xs text-gray-500 px-4 py-3">ã‚³ãƒ¼ãƒ‰</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">èª¬æ˜</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">ä½¿ç”¨æ•°</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3 hidden md:table-cell">æœ‰åŠ¹æœŸé™</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">çŠ¶æ…‹</th>
+              <th class="text-left text-xs text-gray-500 px-4 py-3">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${codes.map(c => `
+              <tr class="table-row border-b border-white/5 last:border-0">
+                <td class="px-4 py-3">
+                  <code class="bg-white/5 px-2 py-0.5 rounded text-sm font-mono text-primary-400">${c.code}</code>
+                  <button onclick="navigator.clipboard.writeText('${c.code}')" class="ml-1 text-gray-600 hover:text-gray-300 text-xs">
+                    <i class="fas fa-copy"></i>
+                  </button>
+                </td>
+                <td class="px-4 py-3 text-xs text-gray-400">${c.description||'-'}</td>
+                <td class="px-4 py-3 text-xs">
+                  <span class="${c.current_uses >= c.max_uses ? 'text-red-400' : 'text-green-400'}">${c.current_uses}</span>
+                  <span class="text-gray-600">/${c.max_uses}</span>
+                </td>
+                <td class="px-4 py-3 hidden md:table-cell text-xs text-gray-400">${c.expires_at?.split('T')[0]||'ç„¡æœŸé™'}</td>
+                <td class="px-4 py-3">
+                  <span class="status-badge ${c.is_active ? 'bg-green-500/20 text-green-400' : 'bg-gray-600/20 text-gray-500'}">
+                    ${c.is_active ? 'æœ‰åŠ¹' : 'ç„¡åŠ¹'}
+                  </span>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex gap-2">
+                    ${c.is_active ? `<button onclick="deactivateInvite(${c.id})" class="text-xs text-yellow-400 hover:text-yellow-300">ç„¡åŠ¹åŒ–</button>` : ''}
+                    <button onclick="deleteInvite(${c.id})" class="text-xs text-red-400 hover:text-red-300">å‰Šé™¤</button>
+                  </div>
+                </td>
+              </tr>
+            `).join('') || '<tr><td colspan="6" class="text-center text-gray-600 py-8 text-sm">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) { content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`; }
+}
+
+function showCreateInvite() {
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ã‚’ä½œæˆ</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="submitCreateInvite(event)">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">ã‚³ãƒ¼ãƒ‰ï¼ˆç©ºæ¬„ã§è‡ªå‹•ç”Ÿæˆï¼‰</label>
+            <input name="code" placeholder="FRIEND001 ã¾ãŸã¯ç©ºæ¬„" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 uppercase">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">èª¬æ˜ï¼ˆç®¡ç†ç”¨ï¼‰</label>
+            <input name="description" placeholder="å‹äººç´¹ä»‹ã‚³ãƒ¼ãƒ‰" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ä½¿ç”¨ä¸Šé™</label>
+              <input name="max_uses" type="number" value="1" min="1" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">æœ‰åŠ¹æœŸé™</label>
+              <input name="expires_at" type="date" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="button" onclick="closeModal()" class="flex-1 glass text-sm py-2 rounded-lg">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</button>
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2 rounded-lg">ä½œæˆã™ã‚‹</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+function showBulkCreateInvite() {
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">æ‹›å¾…ã‚³ãƒ¼ãƒ‰ã‚’ä¸€æ‹¬ç”Ÿæˆ</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="submitBulkCreateInvite(event)">
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ç”Ÿæˆæ•°</label>
+              <input name="count" type="number" value="10" min="1" max="100" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ãƒ—ãƒ¬ãƒ•ã‚£ãƒƒã‚¯ã‚¹ï¼ˆä»»æ„ï¼‰</label>
+              <input name="prefix" placeholder="INTERN" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 uppercase">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">èª¬æ˜</label>
+            <input name="description" placeholder="2024å¹´åº¦ã‚­ãƒ£ãƒ³ãƒšãƒ¼ãƒ³" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">æœ‰åŠ¹æœŸé™</label>
+            <input name="expires_at" type="date" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+          </div>
+        </div>
+        <div id="bulk-result" class="hidden mt-4 p-3 bg-green-500/10 border border-green-500/20 rounded-lg text-xs text-green-400 max-h-32 overflow-y-auto"></div>
+        <div class="flex gap-3 mt-6">
+          <button type="button" onclick="closeModal()" class="flex-1 glass text-sm py-2 rounded-lg">é–‰ã˜ã‚‹</button>
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white text-sm py-2 rounded-lg">ä¸€æ‹¬ç”Ÿæˆ</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateInvite(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  data.code = data.code || 'auto';
+  try {
+    const res = await API.post('/invite/admin', data);
+    closeModal(); loadInvites();
+    alert(`ã‚³ãƒ¼ãƒ‰ã€Œ${res.data.data.code}ã€ã‚’ä½œæˆã—ã¾ã—ãŸ`);
+  } catch(err) { alert(err.response?.data?.error || 'ä½œæˆã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function submitBulkCreateInvite(e) {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+  try {
+    const res = await API.post('/invite/admin/bulk', { ...data, count: parseInt(data.count), max_uses: 1 });
+    const codes = res.data.data.codes;
+    document.getElementById('bulk-result').innerHTML = codes.join('  ');
+    document.getElementById('bulk-result').classList.remove('hidden');
+    loadInvites();
+  } catch(err) { alert(err.response?.data?.error || 'ç”Ÿæˆã«å¤±æ•—ã—ã¾ã—ãŸ'); }
+}
+
+async function deactivateInvite(id) {
+  if (!confirm('ã“ã®ã‚³ãƒ¼ãƒ‰ã‚’ç„¡åŠ¹åŒ–ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  await API.put(`/invite/admin/${id}/deactivate`); loadInvites();
+}
+async function deleteInvite(id) {
+  if (!confirm('ã“ã®ã‚³ãƒ¼ãƒ‰ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  await API.delete(`/invite/admin/${id}`); loadInvites();
+}
+
+// ==========================================
+// ç„¡æ–™ç›¸è«‡ç®¡ç†
+// ==========================================
+async function loadConsultations() {
+  const content = document.getElementById('admin-content');
+  try {
+    const res = await API.get('/consultation/admin');
+    const cons = res.data.data;
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">ç„¡æ–™ç›¸è«‡ä¸€è¦§ <span class="text-gray-500 font-normal text-sm">(${cons.length}ä»¶)</span></h2>
+        <select onchange="filterConsultations(this.value)" class="bg-white/5 border border-white/10 rounded-lg px-3 py-1.5 text-sm text-gray-300">
+          <option value="">å…¨ã‚¹ãƒ†ãƒ¼ã‚¿ã‚¹</option>
+          <option value="pending">æœªå¯¾å¿œ</option>
+          <option value="contacted">é€£çµ¡æ¸ˆã¿</option>
+          <option value="completed">å¯¾å¿œå®Œäº†</option>
+          <option value="cancelled">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</option>
+        </select>
+      </div>
+      <div class="space-y-3" id="consultations-list">
+        ${renderConsultationRows(cons)}
+      </div>
+    `;
+  } catch(e) { content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—</div>`; }
+}
+
+const SOURCE_MEDIA_LABEL = {
+  sunconnect: 'SUNCONNECT',
+  valueup: 'ãƒãƒªãƒ¥ãƒ¼ã‚¢ãƒƒãƒ—',
+  genki_intern: 'å…ƒæ°—ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³',
+  sokei_intern_compass: 'æ—©æ…¶ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚³ãƒ³ãƒ‘ã‚¹',
+  careersourcing: 'CareerSourcing',
+  other: 'ãã®ä»–'
+};
+
+function renderConsultationRows(cons) {
+  const statusMap = { pending: { label: 'æœªå¯¾å¿œ', cls: 'bg-yellow-500/20 text-yellow-400' }, contacted: { label: 'é€£çµ¡æ¸ˆã¿', cls: 'bg-blue-500/20 text-blue-400' }, completed: { label: 'å¯¾å¿œå®Œäº†', cls: 'bg-green-500/20 text-green-400' }, cancelled: { label: 'ã‚­ãƒ£ãƒ³ã‚»ãƒ«', cls: 'bg-gray-600/20 text-gray-500' } };
+  if (!cons.length) return '<div class="text-center text-gray-600 text-sm py-8">ç›¸è«‡ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</div>';
+  return cons.map(c => `
+    <div class="glass rounded-xl p-4">
+      <div class="flex items-start gap-4">
+        <div class="flex-1">
+          <div class="flex items-center gap-2 mb-1 flex-wrap">
+            <p class="font-medium text-sm">${c.name}</p>
+            <span class="status-badge ${(statusMap[c.status]||{cls:'bg-gray-500/20 text-gray-400'}).cls}">${(statusMap[c.status]||{label:c.status}).label}</span>
+            ${c.source_media ? `<span class="text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[c.source_media]||c.source_media}</span>` : ''}
+          </div>
+          <p class="text-xs text-gray-400">${c.email} ${c.university ? '/ '+c.university : ''} ${c.grade ? c.grade+'å¹´' : ''}</p>
+          ${c.concern ? `<p class="text-xs text-gray-500 mt-1">${c.concern}</p>` : ''}
+          ${c.message ? `<p class="text-sm text-gray-300 mt-2">${c.message}</p>` : ''}
+          <p class="text-xs text-gray-600 mt-1">${c.created_at?.split('T')[0]||''}</p>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <select onchange="updateConsultationStatus(${c.id}, this.value)" class="bg-white/5 border border-white/10 rounded-lg px-2 py-1 text-xs text-gray-300">
+            <option value="pending" ${c.status==='pending'?'selected':''}>æœªå¯¾å¿œ</option>
+            <option value="contacted" ${c.status==='contacted'?'selected':''}>é€£çµ¡æ¸ˆã¿</option>
+            <option value="completed" ${c.status==='completed'?'selected':''}>å®Œäº†</option>
+            <option value="cancelled" ${c.status==='cancelled'?'selected':''}>ã‚­ãƒ£ãƒ³ã‚»ãƒ«</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function filterConsultations(status) {
+  const res = await API.get(`/consultation/admin?status=${status}`);
+  document.getElementById('consultations-list').innerHTML = renderConsultationRows(res.data.data);
+}
+
+async function updateConsultationStatus(id, status) {
+  await API.put(`/consultation/admin/${id}`, { status });
+}
+
+// ==========================================
+// ã‚µã‚¤ãƒˆè¨­å®šãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadSiteSettings() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/admin/all');
+    const settings = res.data.data;
+
+    // ã‚°ãƒ«ãƒ¼ãƒ—åˆ¥ã«ã¾ã¨ã‚ã‚‹
+    const groups = {};
+    settings.forEach(s => {
+      if (!groups[s.group_name]) groups[s.group_name] = [];
+      groups[s.group_name].push(s);
+    });
+
+    // LPé–¢é€£ã‚°ãƒ«ãƒ¼ãƒ—ã¯LPç·¨é›†ãƒšãƒ¼ã‚¸ã§ç®¡ç†ã™ã‚‹ãŸã‚ã€ã‚µã‚¤ãƒˆè¨­å®šã‹ã‚‰é™¤å¤–
+    const LP_GROUPS = ['hero', 'stats', 'cta', 'members', 'features'];
+
+    const groupLabels = {
+      site: 'ã‚µã‚¤ãƒˆåŸºæœ¬æƒ…å ±', general: 'ã‚µã‚¤ãƒˆåŸºæœ¬æƒ…å ±',
+      line: 'LINEãƒ»SNSè¨­å®š',
+      footer: 'ãƒ•ãƒƒã‚¿ãƒ¼è¨­å®š',
+      referral: 'å­¦ç”Ÿæ‹›å¾…ã‚³ãƒ¼ãƒ‰è¨­å®š',
+      operator: 'é‹å–¶è€…ãƒ»æ³•å‹™æƒ…å ±',
+    };
+
+    const settingLabels = {
+      line_url: 'å…¬å¼LINE URLï¼ˆãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ»æ—§å°ç·šï¼‰',
+      line_id: 'å…¬å¼LINE ID',
+      line_url_default: 'LINE URLï¼ˆãã®ä»–ãƒ»ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆï¼‰',
+      line_url_sunconnect: 'SUNCONNECTå…¬å¼LINE URL',
+      line_url_valueup: 'ãƒãƒªãƒ¥ãƒ¼ã‚¢ãƒƒãƒ—å…¬å¼LINE URL',
+      line_url_genki_intern: 'å…ƒæ°—ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³å…¬å¼LINE URL',
+      line_url_sokei_intern_compass: 'æ—©æ…¶ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚³ãƒ³ãƒ‘ã‚¹å…¬å¼LINE URL',
+      line_url_careersourcing: 'CareerSourcingå…¬å¼LINE URL',
+      twitter_url: 'Twitter/X URL',
+      instagram_url: 'Instagram URL',
+      contact_email: 'é€£çµ¡å…ˆãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹',
+      site_name: 'ã‚µã‚¤ãƒˆå',
+      site_mode: 'å…¬é–‹ãƒ¢ãƒ¼ãƒ‰',
+      coming_soon_title: 'Coming Soonè¦‹å‡ºã—',
+      coming_soon_subtitle: 'Coming Soonèª¬æ˜æ–‡',
+      coming_soon_date: 'Coming Soonå…¬é–‹äºˆå®šæ—¥',
+      student_referral_enabled: 'å­¦ç”Ÿç´¹ä»‹æ©Ÿèƒ½',
+      operator_name: 'é‹å–¶è€…å',
+      operator_representative: 'ä»£è¡¨è€…å',
+      operator_address: 'æ‰€åœ¨åœ°',
+      operator_business: 'äº‹æ¥­å†…å®¹',
+      operator_contact_email: 'å…¬é–‹ãŠå•ã„åˆã‚ã›ãƒ¡ãƒ¼ãƒ«',
+      legal_updated_at: 'è¦ç´„æœ€çµ‚æ›´æ–°æ—¥',
+    };
+
+    const inputField = (s) => {
+      if (s.setting_type === 'boolean') {
+        return `<select id="setting-${s.setting_key}" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+          <option value="1" ${s.setting_value==='1'?'selected':''}>æœ‰åŠ¹</option>
+          <option value="0" ${s.setting_value!=='1'?'selected':''}>ç„¡åŠ¹</option>
+        </select>`;
+      }
+      if (s.setting_type === 'text' || (s.setting_value && s.setting_value.length > 60)) {
+        return `<textarea id="setting-${s.setting_key}" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${s.setting_value||''}</textarea>`;
+      }
+      return `<input id="setting-${s.setting_key}" type="text" value="${(s.setting_value||'').replace(/"/g,'&quot;')}"
+        class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">`;
+    };
+
+    // site_mode ã®ç¾åœ¨å€¤ã‚’å–å¾—
+    const siteModeSetting = settings.find(s => s.setting_key === 'site_mode');
+    const currentSiteMode = siteModeSetting?.setting_value || 'coming_soon';
+    const isPublic = currentSiteMode === 'public';
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">ã‚µã‚¤ãƒˆè¨­å®š</h2>
+        <button onclick="saveAllSettings()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-save mr-1"></i>ã™ã¹ã¦ä¿å­˜
+        </button>
+      </div>
+
+      <!-- â˜… å…¬é–‹ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿ -->
+      <div class="glass rounded-xl p-5 mb-5 border ${isPublic ? 'border-green-500/30' : 'border-yellow-500/30'}">
+        <div class="flex items-center justify-between">
+          <div>
+            <h3 class="font-bold mb-1 flex items-center gap-2">
+              <i class="fas fa-toggle-${isPublic ? 'on text-green-400' : 'off text-yellow-400'}"></i>
+              å…¬é–‹ãƒ¢ãƒ¼ãƒ‰åˆ‡æ›¿
+            </h3>
+            <p class="text-xs text-gray-400">ç¾åœ¨: <span id="site-mode-label" class="font-bold ${isPublic ? 'text-green-400' : 'text-yellow-400'}">${isPublic ? 'âœ… å…¬é–‹ä¸­' : 'ğŸ”’ Coming Soon'}</span></p>
+            <p class="text-xs text-gray-500 mt-1">${isPublic ? 'ç¾åœ¨ã€å…¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒæ±‚äººä¸€è¦§ãƒ»è©³ç´°ã‚’é–²è¦§ã§ãã¾ã™ã€‚' : 'ç¾åœ¨ã€Coming Soonãƒšãƒ¼ã‚¸ãŒè¡¨ç¤ºã•ã‚Œã¦ã„ã¾ã™ã€‚/register ã¨ /consultation ã¯å¼•ãç¶šãåˆ©ç”¨å¯èƒ½ã§ã™ã€‚'}</p>
+          </div>
+          <div class="flex flex-col gap-2 items-end">
+            <button onclick="toggleSiteMode('public')" ${isPublic ? 'disabled' : ''}
+              class="px-4 py-2 text-sm rounded-lg font-bold transition-colors ${isPublic ? 'bg-green-500/10 text-green-500 cursor-not-allowed border border-green-500/20' : 'bg-green-500 hover:bg-green-600 text-white'}">
+              <i class="fas fa-globe mr-1"></i>å…¬é–‹ã«åˆ‡ã‚Šæ›¿ãˆã‚‹
+            </button>
+            <button onclick="toggleSiteMode('coming_soon')" ${!isPublic ? 'disabled' : ''}
+              class="px-4 py-2 text-sm rounded-lg font-bold transition-colors ${!isPublic ? 'bg-yellow-500/10 text-yellow-500 cursor-not-allowed border border-yellow-500/20' : 'bg-yellow-500 hover:bg-yellow-600 text-white'}">
+              <i class="fas fa-lock mr-1"></i>Coming Soon ã«å¤‰æ›´
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-start gap-3 bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <i class="fas fa-info-circle text-blue-400 mt-0.5 shrink-0"></i>
+        <div>
+          <p class="text-blue-300 font-medium mb-1">ã“ã®ãƒšãƒ¼ã‚¸ã«ã¤ã„ã¦</p>
+          <p class="text-gray-400 text-xs leading-relaxed">ã‚µãƒ¼ãƒ“ã‚¹åãƒ»LINE URLãƒ»ãƒ•ãƒƒã‚¿ãƒ¼ãªã©ã®<strong class="text-white">é‹å–¶è¨­å®š</strong>ã‚’ç®¡ç†ã—ã¾ã™ã€‚<br>
+          ãƒ’ãƒ¼ãƒ­ãƒ¼è¦‹å‡ºã—ãƒ»ç‰¹å¾´ã‚«ãƒ¼ãƒ‰ãƒ»CTAãªã©ã®<strong class="text-white">LPè¡¨ç¤ºè¨­å®š</strong>ã¯
+          <button onclick="navigate('lp-edit')" class="text-primary-400 underline hover:text-primary-300">LPç·¨é›†ãƒšãƒ¼ã‚¸</button>ã§ç®¡ç†ã—ã¦ãã ã•ã„ã€‚</p>
+        </div>
+      </div>
+      <div id="settings-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>ä¿å­˜ã—ã¾ã—ãŸ
+      </div>
+      ${Object.entries(groups).filter(([groupName]) => !LP_GROUPS.includes(groupName)).map(([groupName, items]) => {
+        // site_mode ã¯ãƒˆã‚°ãƒ«UIã§ç®¡ç†ã™ã‚‹ã®ã§é€šå¸¸ã®ãƒ•ã‚©ãƒ¼ãƒ ã‹ã‚‰é™¤å¤–
+        const filteredItems = items.filter(s => s.setting_key !== 'site_mode');
+        if (filteredItems.length === 0) return '';
+        return `
+        <div class="glass rounded-xl p-5 mb-4">
+          <h3 class="font-semibold text-sm mb-4 text-primary-400">
+            <i class="fas fa-layer-group mr-2"></i>${groupLabels[groupName] || groupName}
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${filteredItems.map(s => `
+              <div>
+                <label class="block text-xs text-gray-400 mb-1.5">${settingLabels[s.setting_key] || s.setting_key.replace(/_/g,' ')}</label>
+                ${inputField(s)}
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `;}).join('')}
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+async function saveAllSettings() {
+  const inputs = document.querySelectorAll('[id^="setting-"]');
+  const data = {};
+  inputs.forEach(el => {
+    const key = el.id.replace('setting-', '');
+    data[key] = el.value;
+  });
+  try {
+    await API.put('/settings/admin/bulk/update', data);
+    const msg = document.getElementById('settings-save-msg');
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+  } catch(e) {
+    alert('ä¿å­˜ã«å¤±æ•—ã—ã¾ã—ãŸ: ' + e.message);
+  }
+}
+
+async function toggleSiteMode(mode) {
+  const confirmMsg = mode === 'public'
+    ? 'âš ï¸ å…¬é–‹ã«åˆ‡ã‚Šæ›¿ãˆã‚‹ã¨ã€å…¨ãƒ¦ãƒ¼ã‚¶ãƒ¼ãŒæ±‚äººä¸€è¦§ãƒ»è©³ç´°ã‚’é–²è¦§ã§ãã¾ã™ã€‚\nå…ƒã«æˆ»ã™ã“ã¨ã‚‚å¯èƒ½ã§ã™ã€‚\n\nå…¬é–‹ã«åˆ‡ã‚Šæ›¿ãˆã¾ã™ã‹ï¼Ÿ'
+    : 'Coming Soonãƒšãƒ¼ã‚¸ã«åˆ‡ã‚Šæ›¿ãˆã¾ã™ã‹ï¼Ÿ\nï¼ˆ/register ã¨ /consultation ã¯å¼•ãç¶šãåˆ©ç”¨å¯èƒ½ã§ã™ï¼‰';
+  if (!confirm(confirmMsg)) return;
+
+  try {
+    await API.put('/settings/admin/site-mode', { site_mode: mode });
+    // ãƒšãƒ¼ã‚¸ã‚’å†èª­ã¿è¾¼ã¿ã—ã¦çŠ¶æ…‹ã‚’åæ˜ 
+    loadSiteSettings();
+  } catch(e) {
+    alert('åˆ‡ã‚Šæ›¿ãˆã«å¤±æ•—ã—ã¾ã—ãŸ: ' + (e.response?.data?.error || e.message));
+  }
+}
+
+// ==========================================
+// LPç·¨é›†ãƒšãƒ¼ã‚¸
+// ==========================================
+
+// LPè¨­å®šã‚°ãƒ«ãƒ¼ãƒ—å®šç¾©ï¼ˆsite_settingsã®group_nameãƒ™ãƒ¼ã‚¹ï¼‰
+const LP_SETTING_GROUPS = [
+  {
+    key: 'hero',
+    label: 'ãƒ’ãƒ¼ãƒ­ãƒ¼ã‚»ã‚¯ã‚·ãƒ§ãƒ³',
+    icon: 'fas fa-star',
+    description: 'ãƒšãƒ¼ã‚¸æœ€ä¸Šéƒ¨ã®å¤§è¦‹å‡ºã—ãƒ»ã‚µãƒ–ãƒ†ã‚­ã‚¹ãƒˆãƒ»CTAãƒœã‚¿ãƒ³',
+    fields: [
+      { key: 'hero_badge_text',  label: 'ãƒãƒƒã‚¸ãƒ†ã‚­ã‚¹ãƒˆï¼ˆä¸Šéƒ¨å°ãƒãƒƒã‚¸ï¼‰', example: 'é«˜å­¦æ­´å¤§å­¦ç”Ÿå‘ã‘ãƒ»å³é¸æ±‚äººã®ã¿æ²è¼‰' },
+      { key: 'site_tagline',     label: 'ãƒ¡ã‚¤ãƒ³è¦‹å‡ºã—', example: 'åœ§å€’çš„ãªå®Ÿå‹™çµŒé¨“ã‚’ã€\nä»Šã™ãå§‹ã‚ã‚ˆã†ã€‚', textarea: true },
+      { key: 'hero_subtitle',    label: 'ã‚µãƒ–ãƒ†ã‚­ã‚¹ãƒˆ', example: 'ã‚¹ã‚¿ãƒ¼ãƒˆã‚¢ãƒƒãƒ—ãƒ»æˆé•·ä¼æ¥­ã§ã®é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã§ã€å°±æ´»ã§å·®ãŒã¤ãæœ¬ç‰©ã®ã‚¹ã‚­ãƒ«ã‚’ã€‚', textarea: true },
+      { key: 'hero_cta1_text',   label: 'CTAãƒœã‚¿ãƒ³1ï¼ˆæ±‚äººä¸€è¦§ï¼‰', example: 'æ±‚äººã‚’è¦‹ã‚‹' },
+      { key: 'hero_cta2_text',   label: 'CTAãƒœã‚¿ãƒ³2ï¼ˆLINEç›¸è«‡ï¼‰', example: 'LINEã§ç„¡æ–™ç›¸è«‡' },
+    ]
+  },
+  {
+    key: 'stats',
+    label: 'æ•°å­—ãƒ»å®Ÿç¸¾ã‚»ã‚¯ã‚·ãƒ§ãƒ³',
+    icon: 'fas fa-chart-bar',
+    description: 'æ²è¼‰ä¼æ¥­æ•°ãƒ»æ±‚äººæ•°ãƒ»ç™»éŒ²å­¦ç”Ÿæ•°ã€‚å…¬é–‹ç”»é¢ã§ã¯æ²è¼‰ä¸­ãƒ‡ãƒ¼ã‚¿ã‚’å„ªå…ˆã—ã¦è¡¨ç¤ºã—ã¾ã™ã€‚',
+    fields: [
+      { key: 'stat_companies',    label: 'æ²è¼‰ä¼æ¥­æ•°', example: '50' },
+      { key: 'stat_jobs',         label: 'æ±‚äººæ•°',     example: '200' },
+      { key: 'stat_students',     label: 'ç™»éŒ²å­¦ç”Ÿæ•°', example: '1000' },
+    ]
+  },
+  {
+    key: 'features',
+    label: 'ç‰¹å¾´ã‚»ã‚¯ã‚·ãƒ§ãƒ³ï¼ˆã‚¿ã‚¤ãƒˆãƒ«ï¼‰',
+    icon: 'fas fa-th-large',
+    description: 'ã€Œé¸ã°ã‚Œã‚‹ç†ç”±ã€ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã®è¦‹å‡ºã—ã¨ã‚«ãƒ¼ãƒ‰3æšï¼ˆä¸‹ã®ã‚«ãƒ¼ãƒ‰ç·¨é›†ã¨é€£å‹•ï¼‰',
+    fields: [
+      { key: 'feature_section_title',    label: 'ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‚¿ã‚¤ãƒˆãƒ«', example: 'é¸ã°ã‚Œã‚‹ç†ç”±' },
+      { key: 'feature_section_subtitle', label: 'ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã‚µãƒ–ã‚¿ã‚¤ãƒˆãƒ«', example: 'å°±æ´»ã§å·®ã‚’ã¤ã‘ã‚‹ã€æœ¬è³ªçš„ãªæˆé•·ç’°å¢ƒã‚’æä¾›ã—ã¾ã™', textarea: true },
+    ]
+  },
+  {
+    key: 'cta',
+    label: 'CTAã‚»ã‚¯ã‚·ãƒ§ãƒ³ï¼ˆä¸‹éƒ¨ï¼‰',
+    icon: 'fas fa-bullhorn',
+    description: 'ãƒšãƒ¼ã‚¸ä¸‹éƒ¨ã®ç„¡æ–™ç›¸è«‡èª˜å°ã‚¨ãƒªã‚¢',
+    fields: [
+      { key: 'cta_title',    label: 'ã‚¿ã‚¤ãƒˆãƒ«',     example: 'ã¾ãšã¯ç„¡æ–™ç›¸è«‡ã‹ã‚‰å§‹ã‚ã¦ã¿ã¾ã›ã‚“ã‹ï¼Ÿ' },
+      { key: 'cta_subtitle', label: 'èª¬æ˜æ–‡',       example: 'è‡ªåˆ†ã«åˆã£ãŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ãŒè¦‹ã¤ã‹ã‚‹ã‹ä¸å®‰ãªæ–¹ã‚‚ã€ãŠæ°—è»½ã«ã”ç›¸è«‡ãã ã•ã„ã€‚', textarea: true },
+      { key: 'cta_btn_text', label: 'ãƒœã‚¿ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ', example: 'ç„¡æ–™ç›¸è«‡ã‚’ç”³ã—è¾¼ã‚€' },
+    ]
+  },
+  {
+    key: 'members',
+    label: 'ä¼šå“¡é™å®šãƒãƒŠãƒ¼',
+    icon: 'fas fa-lock',
+    description: 'æœªç™»éŒ²ãƒ¦ãƒ¼ã‚¶ãƒ¼ã¸ã®ä¼šå“¡é™å®šæ±‚äººèª˜å°ãƒãƒŠãƒ¼',
+    fields: [
+      { key: 'members_banner_enabled', label: 'è¡¨ç¤ºã™ã‚‹ï¼ˆ1=ON / 0=OFFï¼‰', example: '1' },
+      { key: 'members_banner_title',   label: 'ãƒãƒŠãƒ¼ã‚¿ã‚¤ãƒˆãƒ«', example: 'ğŸ”’ ç™»éŒ²è€…é™å®šï¼éå…¬é–‹æ±‚äººã‚ã‚Š' },
+      { key: 'members_banner_text',    label: 'ãƒãƒŠãƒ¼ãƒ†ã‚­ã‚¹ãƒˆ', example: 'ç™»éŒ²ã™ã‚‹ã ã‘ã§è¦‹ã‚‰ã‚Œã‚‹ç‰¹åˆ¥æ±‚äººã‚’ãƒã‚§ãƒƒã‚¯ã—ã‚ˆã†', textarea: true },
+      { key: 'members_banner_btn',     label: 'ãƒœã‚¿ãƒ³ãƒ†ã‚­ã‚¹ãƒˆ', example: 'ä»Šã™ãç™»éŒ²ã—ã¦ç¢ºèªã™ã‚‹' },
+    ]
+  },
+];
+
+async function loadLpEdit() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    // site_settings ã¨ lp_sections ã‚’ä¸¦åˆ—å–å¾—
+    const [settingsRes, lpRes] = await Promise.all([
+      API.get('/settings/admin/all'),
+      API.get('/settings/lp-sections/admin'),
+    ]);
+
+    // site_settings ã‚’ã‚­ãƒ¼ãƒãƒƒãƒ—ã«å¤‰æ›
+    const settingsMap = {};
+    (settingsRes.data.data || []).forEach(s => { settingsMap[s.setting_key] = s.setting_value; });
+
+    // lp_sections ã® features ã‚’å–å¾—
+    const featuresSection = (lpRes.data.data || []).find(s => s.section_key === 'features');
+    let featureItems = [];
+    try { featureItems = JSON.parse(featuresSection?.content || '[]'); } catch(e) {}
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">LPç·¨é›†</h2>
+        <a href="/" target="_blank" class="text-xs text-gray-400 hover:text-white border border-white/10 rounded-lg px-3 py-2 transition-colors">
+          <i class="fas fa-external-link-alt mr-1"></i>å…¬é–‹ç”»é¢ã‚’ç¢ºèª
+        </a>
+      </div>
+
+      <!-- ç·¨é›†ã‚¬ã‚¤ãƒ‰ãƒ‘ãƒãƒ« -->
+      <div class="glass rounded-xl p-5 mb-6 border border-primary-500/20">
+        <div class="flex items-center gap-2 mb-3">
+          <i class="fas fa-info-circle text-primary-400"></i>
+          <h3 class="font-semibold text-sm text-primary-400">LPç·¨é›†ã®ä½¿ã„æ–¹</h3>
+          <button onclick="document.getElementById('lp-guide-body').classList.toggle('hidden')" class="ml-auto text-xs text-gray-500 hover:text-white">
+            <i class="fas fa-chevron-down"></i> æŠ˜ã‚ŠãŸãŸã‚€
+          </button>
+        </div>
+        <div id="lp-guide-body">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-edit text-blue-400 mr-1"></i>â‘  ãƒ†ã‚­ã‚¹ãƒˆã‚’ç·¨é›†</p>
+              <p class="text-xs text-gray-400 leading-relaxed">å„ãƒ•ã‚£ãƒ¼ãƒ«ãƒ‰ã«ç›´æ¥ãƒ†ã‚­ã‚¹ãƒˆã‚’å…¥åŠ›ã€‚ç·¨é›†å¾Œã¯å¿…ãšã€Œä¿å­˜ã€ãƒœã‚¿ãƒ³ã‚’æŠ¼ã—ã¦ãã ã•ã„ã€‚</p>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-save text-green-400 mr-1"></i>â‘¡ ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã”ã¨ã«ä¿å­˜</p>
+              <p class="text-xs text-gray-400 leading-relaxed">å„ã‚»ã‚¯ã‚·ãƒ§ãƒ³ä¸‹éƒ¨ã®ã€Œä¿å­˜ã€ãƒœã‚¿ãƒ³ã§å€‹åˆ¥ä¿å­˜ã€‚ãƒšãƒ¼ã‚¸å…¨ä½“ã‚’ä¸€æ‹¬ä¿å­˜ã™ã‚‹å¿…è¦ã¯ã‚ã‚Šã¾ã›ã‚“ã€‚</p>
+            </div>
+            <div class="bg-white/5 rounded-lg p-3">
+              <p class="text-xs font-bold text-white mb-1"><i class="fas fa-external-link-alt text-purple-400 mr-1"></i>â‘¢ å…¬é–‹ç”»é¢ã§ç¢ºèª</p>
+              <p class="text-xs text-gray-400 leading-relaxed">ä¿å­˜å¾Œã€å³ä¸Šã€Œå…¬é–‹ç”»é¢ã‚’ç¢ºèªã€ã‹ã‚‰åæ˜ çµæœã‚’ãƒªã‚¢ãƒ«ã‚¿ã‚¤ãƒ ã§ç¢ºèªã§ãã¾ã™ã€‚</p>
+            </div>
+          </div>
+          <div class="border-t border-white/10 pt-3">
+            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>æ¨å¥¨ãƒ†ã‚­ã‚¹ãƒˆäº‹ä¾‹</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">ãƒ’ãƒ¼ãƒ­ãƒ¼è¦‹å‡ºã—</p>
+                <p class="text-gray-500 text-xs mb-1">ãƒ‘ã‚¿ãƒ¼ãƒ³Aï¼ˆã‚¤ãƒ³ãƒ‘ã‚¯ãƒˆé‡è¦–ï¼‰</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">1è¡Œç›®: é¸ã°ã‚ŒãŸå­¦ç”Ÿã ã‘ãŒ<br>2è¡Œç›®: æ‰‹ã«ã§ãã‚‹ã€<br>3è¡Œç›®: æœ¬ç‰©ã®ã‚­ãƒ£ãƒªã‚¢ã€‚</p>
+                <p class="text-gray-500 text-xs mb-1">ãƒ‘ã‚¿ãƒ¼ãƒ³Bï¼ˆè¡Œå‹•å–šèµ·å‹ï¼‰</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">1è¡Œç›®: 3ãƒ¶æœˆã§å¤‰ã‚ã‚‹ã€<br>2è¡Œç›®: å°±æ´»ã®çµæœãŒ<br>3è¡Œç›®: å¤‰ã‚ã‚‹ã€‚</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">ã‚µãƒ–ãƒ†ã‚­ã‚¹ãƒˆ</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">å³é¸ã•ã‚ŒãŸæˆé•·ä¼æ¥­ã§ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã§ã€å°±æ´»ã§èªã‚Œã‚‹æœ¬ç‰©ã®çµŒé¨“ã‚’ç©ã‚‚ã†ã€‚å¤§å­¦1ã€œ4å¹´ç”Ÿã€éšæ™‚å‹Ÿé›†ä¸­ã€‚</p>
+                <p class="text-white font-medium mb-1 mt-2">CTAãƒœã‚¿ãƒ³</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">æ±‚äººã‚’è¦‹ã‚‹ / ç„¡æ–™ã§ç™»éŒ² / ä»Šã™ãå¿œå‹Ÿ</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">ä¼šå“¡é™å®šãƒãƒŠãƒ¼</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">ã‚¿ã‚¤ãƒˆãƒ«: ğŸ”’ ç™»éŒ²è€…é™å®šï¼éå…¬é–‹æ±‚äººã‚ã‚Š<br>ãƒ†ã‚­ã‚¹ãƒˆ: ç¾åœ¨XXä»¶ã®éå…¬é–‹æ±‚äººã‚’æ²è¼‰ä¸­ã€‚<br>ç™»éŒ²ã™ã‚‹ã ã‘ã§å…¨ã¦é–²è¦§å¯èƒ½ï¼</p>
+              </div>
+              <div class="bg-white/5 rounded-lg p-3">
+                <p class="text-white font-medium mb-1">æ•°å­—ã‚»ã‚¯ã‚·ãƒ§ãƒ³ï¼ˆç›®å®‰ï¼‰</p>
+                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">æ²è¼‰ä¼æ¥­æ•°: å®Ÿéš›ã®æ²è¼‰æ•°<br>æ±‚äººæ•°: æ²è¼‰æ±‚äººã®ç·æ•°<br>ç™»éŒ²å­¦ç”Ÿæ•°: ç´¯è¨ˆç™»éŒ²æ•°</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="lp-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>ä¿å­˜ã—ã¾ã—ãŸ
+      </div>
+
+      <!-- site_settings ãƒ™ãƒ¼ã‚¹ã®ã‚»ã‚¯ã‚·ãƒ§ãƒ³ -->
+      ${LP_SETTING_GROUPS.map(group => `
+        <div class="glass rounded-xl p-5 mb-4" id="lp-group-${group.key}">
+          <div class="flex items-center justify-between mb-1">
+            <h3 class="font-semibold text-sm text-primary-400">
+              <i class="${group.icon} mr-2"></i>${group.label}
+            </h3>
+          </div>
+          <p class="text-xs text-gray-500 mb-4">${group.description}</p>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            ${group.fields.map(f => `
+              <div>
+                <label class="block text-xs text-gray-400 mb-1">${f.label}</label>
+                ${f.textarea
+                  ? `<textarea id="lpset-${f.key}" rows="3" placeholder="${f.example}"
+                       class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none focus:border-primary-500/50 outline-none">${settingsMap[f.key] || ''}</textarea>`
+                  : `<input type="text" id="lpset-${f.key}" value="${(settingsMap[f.key] || '').replace(/"/g,'&quot;')}" placeholder="${f.example}"
+                       class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:border-primary-500/50 outline-none">`
+                }
+              </div>
+            `).join('')}
+          </div>
+          <button onclick="saveLpGroupSettings('${group.key}')"
+            class="mt-4 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
+            <i class="fas fa-save mr-1"></i>${group.label}ã‚’ä¿å­˜
+          </button>
+        </div>
+      `).join('')}
+
+      <!-- ç‰¹å¾´ã‚«ãƒ¼ãƒ‰ï¼ˆlp_sections features é…åˆ—ï¼‰ -->
+      <div class="glass rounded-xl p-5 mb-4">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-semibold text-sm text-primary-400">
+            <i class="fas fa-layer-group mr-2"></i>ç‰¹å¾´ã‚«ãƒ¼ãƒ‰ï¼ˆ3æšï¼‰
+          </h3>
+          <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer">
+            <input type="checkbox" id="lp-features-visible" ${featuresSection?.is_visible ? 'checked' : ''}
+              onchange="toggleLpSection('features', this.checked)" class="rounded">
+            è¡¨ç¤ºã™ã‚‹
+          </label>
+        </div>
+        <p class="text-xs text-gray-500 mb-4">ãƒ›ãƒ¼ãƒ ãƒšãƒ¼ã‚¸ã®ã€Œé¸ã°ã‚Œã‚‹ç†ç”±ã€ã‚»ã‚¯ã‚·ãƒ§ãƒ³ã«è¡¨ç¤ºã•ã‚Œã‚‹ã‚«ãƒ¼ãƒ‰ã€‚ã‚¢ã‚¤ã‚³ãƒ³ã¯Font Awesomeã®ã‚¯ãƒ©ã‚¹åï¼ˆä¾‹: star, check, boltï¼‰ã‚’å…¥åŠ›ã€‚</p>
+        <div id="lp-feature-cards">
+          ${featureItems.map((item, i) => `
+            <div class="bg-white/5 rounded-lg p-4 mb-3 border border-white/5">
+              <p class="text-xs font-bold text-gray-300 mb-3">ã‚«ãƒ¼ãƒ‰ ${i + 1}</p>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">ã‚¿ã‚¤ãƒˆãƒ«</label>
+                  <input type="text" id="feat-${i}-title" value="${(item.title||'').replace(/"/g,'&quot;')}"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">ã‚¢ã‚¤ã‚³ãƒ³ï¼ˆFont Awesomeã€ä¾‹: filter / user-tie / boltï¼‰</label>
+                  <input type="text" id="feat-${i}-icon" value="${(item.icon||'').replace(/"/g,'&quot;')}"
+                    placeholder="filter"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">ã‚«ãƒ©ãƒ¼ï¼ˆprimary / purple / green / blue / yellowï¼‰</label>
+                  <input type="text" id="feat-${i}-color" value="${(item.color||'').replace(/"/g,'&quot;')}"
+                    placeholder="primary"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none">
+                </div>
+                <div>
+                  <label class="block text-xs text-gray-400 mb-1">èª¬æ˜æ–‡</label>
+                  <textarea id="feat-${i}-body" rows="2"
+                    class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none outline-none">${item.body||''}</textarea>
+                </div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <p class="text-xs text-gray-500 mb-2">â€» ã‚«ãƒ¼ãƒ‰æšæ•°: ${featureItems.length}æšï¼ˆç¾åœ¨å›ºå®šã€‚å¢—æ¸›ã¯é–‹ç™ºè€…ã¸ä¾é ¼ï¼‰</p>
+        <button onclick="saveLpFeatureCards(${featureItems.length})"
+          class="mt-2 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
+          <i class="fas fa-save mr-1"></i>ç‰¹å¾´ã‚«ãƒ¼ãƒ‰ã‚’ä¿å­˜
+        </button>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+// site_settings ã‚°ãƒ«ãƒ¼ãƒ—ä¸€æ‹¬ä¿å­˜
+async function saveLpGroupSettings(groupKey) {
+  const group = LP_SETTING_GROUPS.find(g => g.key === groupKey);
+  if (!group) return;
+  const updates = {};
+  group.fields.forEach(f => {
+    const el = document.getElementById(`lpset-${f.key}`);
+    if (el) updates[f.key] = el.value;
+  });
+  try {
+    await API.put('/settings/admin/bulk/update', updates);
+    const msg = document.getElementById('lp-save-msg');
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+  } catch(e) {
+    alert('ä¿å­˜å¤±æ•—: ' + e.message);
+  }
+}
+
+// ç‰¹å¾´ã‚«ãƒ¼ãƒ‰ï¼ˆé…åˆ—ï¼‰ã‚’ä¿å­˜
+async function saveLpFeatureCards(count) {
+  const items = [];
+  for (let i = 0; i < count; i++) {
+    items.push({
+      title: document.getElementById(`feat-${i}-title`)?.value || '',
+      icon:  document.getElementById(`feat-${i}-icon`)?.value  || '',
+      color: document.getElementById(`feat-${i}-color`)?.value || '',
+      body:  document.getElementById(`feat-${i}-body`)?.value  || '',
+    });
+  }
+  const isVisible = document.getElementById('lp-features-visible')?.checked ?? true;
+  try {
+    await API.put('/settings/lp-sections/admin/features', { content: items, is_visible: isVisible });
+    const msg = document.getElementById('lp-save-msg');
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+  } catch(e) {
+    alert('ä¿å­˜å¤±æ•—: ' + e.message);
+  }
+}
+
+async function saveLpSection(sectionKey, fieldKeys) {
+  const keys = typeof fieldKeys === 'string' ? JSON.parse(fieldKeys) : fieldKeys;
+  const contentObj = {};
+  keys.forEach(k => {
+    const el = document.getElementById(`lp-${sectionKey}-${k}`);
+    if (el) contentObj[k] = el.value;
+  });
+  const isVisible = document.getElementById(`lp-visible-${sectionKey}`)?.checked ?? true;
+  try {
+    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { content: contentObj, is_visible: isVisible });
+    const msg = document.getElementById('lp-save-msg');
+    if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); }
+  } catch(e) {
+    alert('ä¿å­˜å¤±æ•—: ' + e.message);
+  }
+}
+
+async function toggleLpSection(sectionKey, isVisible) {
+  try {
+    await API.put(`/settings/lp-sections/admin/${sectionKey}`, { is_visible: isVisible });
+  } catch(e) { console.error(e); }
+}
+
+// ==========================================
+// FAQç®¡ç†ãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadFaqs() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/faqs/admin');
+    const faqs = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">FAQç®¡ç† <span class="text-gray-500 font-normal text-sm">(${faqs.length}ä»¶)</span></h2>
+        <button onclick="showFaqModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>FAQã‚’è¿½åŠ 
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden" id="faq-list">
+        ${faqs.length ? faqs.map(f => renderFaqRow(f)).join('') :
+          '<div class="text-center text-gray-600 py-10 text-sm">FAQãŒã‚ã‚Šã¾ã›ã‚“ã€‚è¿½åŠ ã—ã¦ãã ã•ã„ã€‚</div>'
+        }
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+function renderFaqRow(f) {
+  return `
+    <div class="border-b border-white/5 last:border-0 p-4" id="faq-row-${f.id}">
+      <div class="flex items-start justify-between gap-4">
+        <div class="flex-1 min-w-0">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs px-2 py-0.5 rounded-full ${f.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-600/20 text-gray-500'}">
+              ${f.is_visible ? 'è¡¨ç¤º' : 'éè¡¨ç¤º'}
+            </span>
+            <span class="text-xs text-gray-500">${f.category || 'general'}</span>
+            <span class="text-xs text-gray-600">é †: ${f.display_order}</span>
+          </div>
+          <p class="text-sm font-medium mb-1">Q. ${f.question}</p>
+          <p class="text-xs text-gray-400 line-clamp-2">A. ${f.answer}</p>
+        </div>
+        <div class="flex gap-2 flex-shrink-0">
+          <button onclick="showFaqModal(${JSON.stringify(f).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">ç·¨é›†</button>
+          <button onclick="deleteFaq(${f.id})" class="text-xs text-red-400 hover:text-red-300">å‰Šé™¤</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function showFaqModal(faq = null) {
+  const isEdit = !!faq;
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'FAQç·¨é›†' : 'FAQè¿½åŠ '}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateFaq(event,${faq.id})` : 'submitCreateFaq(event)'}">
+        <div class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">è³ªå• *</label>
+            <input id="faq-question" type="text" required value="${(faq?.question||'').replace(/"/g,'&quot;')}"
+              placeholder="ä¾‹: é•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã¨ã¯ä½•ã§ã™ã‹ï¼Ÿ"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">å›ç­” *</label>
+            <textarea id="faq-answer" rows="4" required
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500 resize-none"
+              >${faq?.answer||''}</textarea>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚«ãƒ†ã‚´ãƒª</label>
+              <select id="faq-category" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="general" ${faq?.category==='general'?'selected':''}>ä¸€èˆ¬</option>
+                <option value="registration" ${faq?.category==='registration'?'selected':''}>ç™»éŒ²</option>
+                <option value="application" ${faq?.category==='application'?'selected':''}>å¿œå‹Ÿ</option>
+                <option value="job" ${faq?.category==='job'?'selected':''}>æ±‚äºº</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">è¡¨ç¤ºé †</label>
+              <input id="faq-order" type="number" value="${faq?.display_order||0}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">è¡¨ç¤º</label>
+              <select id="faq-visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${faq?.is_visible!==0?'selected':''}>è¡¨ç¤º</option>
+                <option value="0" ${faq?.is_visible===0?'selected':''}>éè¡¨ç¤º</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <i class="fas fa-save mr-1"></i>${isEdit ? 'æ›´æ–°' : 'è¿½åŠ '}
+          </button>
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white transition-colors">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateFaq(e) {
+  e.preventDefault();
+  try {
+    await API.post('/settings/faqs/admin', {
+      question: document.getElementById('faq-question').value,
+      answer: document.getElementById('faq-answer').value,
+      category: document.getElementById('faq-category').value,
+      display_order: parseInt(document.getElementById('faq-order').value) || 0,
+      is_visible: document.getElementById('faq-visible').value === '1'
+    });
+    closeModal();
+    loadFaqs();
+  } catch(e) { alert('ä½œæˆå¤±æ•—: ' + e.message); }
+}
+
+async function submitUpdateFaq(e, id) {
+  e.preventDefault();
+  try {
+    await API.put(`/settings/faqs/admin/${id}`, {
+      question: document.getElementById('faq-question').value,
+      answer: document.getElementById('faq-answer').value,
+      category: document.getElementById('faq-category').value,
+      display_order: parseInt(document.getElementById('faq-order').value) || 0,
+      is_visible: document.getElementById('faq-visible').value === '1'
+    });
+    closeModal();
+    loadFaqs();
+  } catch(e) { alert('æ›´æ–°å¤±æ•—: ' + e.message); }
+}
+
+async function deleteFaq(id) {
+  if (!confirm('ã“ã®FAQã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  try {
+    await API.delete(`/settings/faqs/admin/${id}`);
+    loadFaqs();
+  } catch(e) { alert('å‰Šé™¤å¤±æ•—: ' + e.message); }
+}
+
+// ==========================================
+// ãŠçŸ¥ã‚‰ã›ç®¡ç†ãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadAnnouncements() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/settings/announcements/admin');
+    const items = res.data.data;
+
+    const typeColors = {
+      info: 'bg-blue-500/20 text-blue-400', warning: 'bg-yellow-500/20 text-yellow-400',
+      success: 'bg-green-500/20 text-green-400', campaign: 'bg-purple-500/20 text-purple-400'
+    };
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="font-bold">ãŠçŸ¥ã‚‰ã›ç®¡ç† <span class="text-gray-500 font-normal text-sm">(${items.length}ä»¶)</span></h2>
+        <button onclick="showAnnouncementModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>ãŠçŸ¥ã‚‰ã›ã‚’è¿½åŠ 
+        </button>
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        ${items.length ? items.map(a => `
+          <div class="border-b border-white/5 last:border-0 p-4">
+            <div class="flex items-start justify-between gap-4">
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="status-badge ${typeColors[a.type]||typeColors.info}">${a.type}</span>
+                  <span class="text-xs ${a.is_visible ? 'text-green-400' : 'text-gray-500'}">${a.is_visible ? 'è¡¨ç¤ºä¸­' : 'éè¡¨ç¤º'}</span>
+                  ${a.starts_at ? `<span class="text-xs text-gray-600">${a.starts_at?.split('T')[0]} ï½</span>` : ''}
+                  ${a.ends_at ? `<span class="text-xs text-gray-600">ï½ ${a.ends_at?.split('T')[0]}</span>` : ''}
+                </div>
+                <p class="text-sm font-medium">${a.title}</p>
+                ${a.body ? `<p class="text-xs text-gray-400 mt-0.5">${a.body}</p>` : ''}
+                ${a.link_url ? `<p class="text-xs text-primary-400 mt-0.5"><i class="fas fa-link mr-1"></i>${a.link_url}</p>` : ''}
+              </div>
+              <div class="flex gap-2 flex-shrink-0">
+                <button onclick="showAnnouncementModal(${JSON.stringify(a).replace(/"/g,'&quot;')})" class="text-xs text-primary-400 hover:text-primary-300">ç·¨é›†</button>
+                <button onclick="deleteAnnouncement(${a.id})" class="text-xs text-red-400 hover:text-red-300">å‰Šé™¤</button>
+              </div>
+            </div>
+          </div>
+        `).join('') : '<div class="text-center text-gray-600 py-10 text-sm">ãŠçŸ¥ã‚‰ã›ãŒã‚ã‚Šã¾ã›ã‚“ã€‚</div>'}
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+function showAnnouncementModal(item = null) {
+  const isEdit = !!item;
+  const modal = document.getElementById('modal');
+  document.getElementById('modal-content').innerHTML = `
+    <div class="p-6">
+      <div class="flex items-center justify-between mb-5">
+        <h3 class="text-lg font-bold">${isEdit ? 'ãŠçŸ¥ã‚‰ã›ç·¨é›†' : 'ãŠçŸ¥ã‚‰ã›è¿½åŠ '}</h3>
+        <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
+      </div>
+      <form onsubmit="${isEdit ? `submitUpdateAnnouncement(event,${item.id})` : 'submitCreateAnnouncement(event)'}">
+        <div class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ã‚¿ã‚¤ãƒˆãƒ« *</label>
+              <input id="ann-title" type="text" required value="${(item?.title||'').replace(/"/g,'&quot;')}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ç¨®é¡</label>
+              <select id="ann-type" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="info" ${item?.type==='info'?'selected':''}>infoï¼ˆé’ï¼‰</option>
+                <option value="warning" ${item?.type==='warning'?'selected':''}>warningï¼ˆé»„ï¼‰</option>
+                <option value="success" ${item?.type==='success'?'selected':''}>successï¼ˆç·‘ï¼‰</option>
+                <option value="campaign" ${item?.type==='campaign'?'selected':''}>campaignï¼ˆç´«ï¼‰</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1">æœ¬æ–‡ï¼ˆä»»æ„ï¼‰</label>
+            <textarea id="ann-body" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white resize-none focus:outline-none focus:border-primary-500">${item?.body||''}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ãƒªãƒ³ã‚¯URLï¼ˆä»»æ„ï¼‰</label>
+              <input id="ann-link-url" type="text" value="${(item?.link_url||'').replace(/"/g,'&quot;')}"
+                placeholder="https://..."
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">ãƒªãƒ³ã‚¯ãƒ†ã‚­ã‚¹ãƒˆ</label>
+              <input id="ann-link-text" type="text" value="${(item?.link_text||'').replace(/"/g,'&quot;')}"
+                placeholder="è©³ç´°ã¯ã“ã¡ã‚‰"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+            </div>
+          </div>
+          <div class="grid grid-cols-3 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">è¡¨ç¤º</label>
+              <select id="ann-visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${item?.is_visible!==0?'selected':''}>è¡¨ç¤º</option>
+                <option value="0" ${item?.is_visible===0?'selected':''}>éè¡¨ç¤º</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">é–‹å§‹æ—¥</label>
+              <input id="ann-starts" type="date" value="${item?.starts_at?.split('T')[0]||''}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1">çµ‚äº†æ—¥</label>
+              <input id="ann-ends" type="date" value="${item?.ends_at?.split('T')[0]||''}"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+          </div>
+        </div>
+        <div class="flex gap-3 mt-6">
+          <button type="submit" class="flex-1 bg-primary-500 hover:bg-primary-600 text-white py-2.5 rounded-xl text-sm font-bold transition-colors">
+            <i class="fas fa-save mr-1"></i>${isEdit ? 'æ›´æ–°' : 'è¿½åŠ '}
+          </button>
+          <button type="button" onclick="closeModal()" class="px-5 py-2.5 border border-white/10 rounded-xl text-sm text-gray-400 hover:text-white transition-colors">ã‚­ãƒ£ãƒ³ã‚»ãƒ«</button>
+        </div>
+      </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateAnnouncement(e) {
+  e.preventDefault();
+  try {
+    await API.post('/settings/announcements/admin', {
+      title: document.getElementById('ann-title').value,
+      body: document.getElementById('ann-body').value || null,
+      type: document.getElementById('ann-type').value,
+      link_url: document.getElementById('ann-link-url').value || null,
+      link_text: document.getElementById('ann-link-text').value || null,
+      is_visible: document.getElementById('ann-visible').value === '1',
+      starts_at: document.getElementById('ann-starts').value || null,
+      ends_at: document.getElementById('ann-ends').value || null,
+    });
+    closeModal();
+    loadAnnouncements();
+  } catch(e) { alert('ä½œæˆå¤±æ•—: ' + e.message); }
+}
+
+async function submitUpdateAnnouncement(e, id) {
+  e.preventDefault();
+  try {
+    await API.put(`/settings/announcements/admin/${id}`, {
+      title: document.getElementById('ann-title').value,
+      body: document.getElementById('ann-body').value || null,
+      type: document.getElementById('ann-type').value,
+      link_url: document.getElementById('ann-link-url').value || null,
+      link_text: document.getElementById('ann-link-text').value || null,
+      is_visible: document.getElementById('ann-visible').value === '1',
+      starts_at: document.getElementById('ann-starts').value || null,
+      ends_at: document.getElementById('ann-ends').value || null,
+    });
+    closeModal();
+    loadAnnouncements();
+  } catch(e) { alert('æ›´æ–°å¤±æ•—: ' + e.message); }
+}
+
+async function deleteAnnouncement(id) {
+  if (!confirm('ã“ã®ãŠçŸ¥ã‚‰ã›ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  try {
+    await API.delete(`/settings/announcements/admin/${id}`);
+    loadAnnouncements();
+  } catch(e) { alert('å‰Šé™¤å¤±æ•—: ' + e.message); }
+}
+
+// ==========================================
+// ãƒ¦ãƒ¼ãƒ†ã‚£ãƒªãƒ†ã‚£
+// ==========================================
+function closeModal() {
+  document.getElementById('modal').classList.add('hidden');
+}
+
+document.getElementById('modal')?.addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ==========================================
+// å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ç®¡ç†ãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadSuccessStories() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/homepage/success-stories/admin');
+    const stories = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ç®¡ç†</h2>
+        <button onclick="showSuccessStoryModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>æ–°è¦è¿½åŠ 
+        </button>
+      </div>
+      <div id="story-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>ä¿å­˜ã—ã¾ã—ãŸ
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">å­¦ç”Ÿå</th>
+              <th class="px-4 py-3">å¤§å­¦</th>
+              <th class="px-4 py-3">å†…å®šå…ˆ</th>
+              <th class="px-4 py-3">æ‰€æ„Ÿ</th>
+              <th class="px-4 py-3">è¡¨ç¤ºé †</th>
+              <th class="px-4 py-3">å…¬é–‹</th>
+              <th class="px-4 py-3 text-right">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${stories.length ? stories.map(s => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${s.student_name}</td>
+                <td class="px-4 py-3 text-gray-400">${s.university}</td>
+                <td class="px-4 py-3 text-gray-300">${s.company_name}</td>
+                <td class="px-4 py-3 text-gray-400 text-xs max-w-xs truncate">${s.comment || '-'}</td>
+                <td class="px-4 py-3 text-gray-400">${s.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${s.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${s.is_visible ? 'å…¬é–‹' : 'éå…¬é–‹'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showSuccessStoryModal(${s.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> ç·¨é›†
+                  </button>
+                  <button onclick="deleteSuccessStory(${s.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> å‰Šé™¤
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="7" class="px-4 py-8 text-center text-gray-500">ãƒ‡ãƒ¼ã‚¿ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+async function showSuccessStoryModal(id = null) {
+  let story = { student_name: '', university: '', company_name: '', comment: '', is_visible: 1, display_order: 0 };
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚ç”»é¢ã‚’å†èª­ã¿è¾¼ã¿ã—ã¦å†åº¦ãŠè©¦ã—ãã ã•ã„ã€‚');
+    return;
+  }
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/success-stories/admin');
+      story = res.data.data.find(s => Number(s.id) === Number(id)) || story;
+    } catch(e) {
+      alert('å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
+        <h3 class="text-lg font-bold mb-4">${id ? 'å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ç·¨é›†' : 'å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³è¿½åŠ '}</h3>
+        <form onsubmit="${id ? `submitUpdateSuccessStory(event, ${id})` : 'submitCreateSuccessStory(event)'}" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å­¦ç”Ÿåï¼ˆä¾‹: å±±ç”° å¤ªéƒã•ã‚“ï¼‰<span class="text-red-400">*</span></label>
+              <input type="text" name="student_name" value="${escapeAdminHtml(story.student_name || '')}" required
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å¤§å­¦å<span class="text-red-400">*</span></label>
+              <input type="text" name="university" value="${escapeAdminHtml(story.university || '')}" required
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">å†…å®šå…ˆä¼æ¥­å<span class="text-red-400">*</span></label>
+            <input type="text" name="company_name" value="${escapeAdminHtml(story.company_name || '')}" required
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">æ‰€æ„Ÿï¼ˆ1-2è¡Œï¼‰</label>
+            <textarea name="comment" rows="2"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(story.comment || '')}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">è¡¨ç¤ºé †ï¼ˆæ˜‡é †ï¼‰</label>
+              <input type="number" name="display_order" value="${story.display_order}" min="0"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å…¬é–‹è¨­å®š</label>
+              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${story.is_visible?'selected':''}>å…¬é–‹</option>
+                <option value="0" ${!story.is_visible?'selected':''}>éå…¬é–‹</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+            </button>
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? 'æ›´æ–°' : 'è¿½åŠ '}
+            </button>
+          </div>
+        </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateSuccessStory(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    student_name: form.student_name.value,
+    university: form.university.value,
+    company_name: form.company_name.value,
+    comment: form.comment.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/success-stories/admin', data);
+    closeModal();
+    await loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('è¿½åŠ å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function submitUpdateSuccessStory(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    student_name: form.student_name.value,
+    university: form.university.value,
+    company_name: form.company_name.value,
+    comment: form.comment.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/success-stories/admin/${id}`, data);
+    closeModal();
+    await loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('æ›´æ–°å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function deleteSuccessStory(id) {
+  if (!confirm('ã“ã®å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  try {
+    await API.delete(`/homepage/success-stories/admin/${id}`);
+    await loadSuccessStories();
+    showSaveMsg('story-save-msg');
+  } catch(e) {
+    alert('å‰Šé™¤å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+// ==========================================
+// ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººè¨­å®šãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadFeaturedJobs() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const [featuredRes, allJobsRes] = await Promise.all([
+      API.get('/homepage/featured-jobs/admin'),
+      API.get('/jobs/admin/all')
+    ]);
+    const featured = featuredRes.data.data;
+    const allJobs = allJobsRes.data.data;
+    const availableJobCount = allJobs.filter(job =>
+      !featured.some(item => Number(item.job_id) === Number(job.id))
+    ).length;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººè¨­å®š</h2>
+        <button onclick="showFeaturedJobModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>æ±‚äººã‚’è¿½åŠ 
+        </button>
+      </div>
+      <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <p class="text-blue-300 mb-2"><i class="fas fa-info-circle mr-1"></i>ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸ã€Œäººæ°—ã®æ±‚äºº5é¸ã€ã«è¡¨ç¤ºã•ã‚Œã‚‹æ±‚äººã‚’ç®¡ç†ã—ã¾ã™ã€‚</p>
+        <p class="text-gray-400 text-xs">è¡¨ç¤ºé †ãŒå°ã•ã„é †ã«æœ€å¤§5ä»¶ã¾ã§å…¬é–‹ã•ã‚Œã¾ã™ã€‚ç™»éŒ²æ±‚äºº ${allJobs.length}ä»¶ï¼è¨­å®šæ¸ˆã¿ ${featured.length}ä»¶ï¼è¿½åŠ å¯èƒ½ ${availableJobCount}ä»¶</p>
+        ${availableJobCount === 0 ? `
+          <p class="text-yellow-300 text-xs mt-2">
+            <i class="fas fa-exclamation-triangle mr-1"></i>è¿½åŠ ã§ãã‚‹æ±‚äººãŒã‚ã‚Šã¾ã›ã‚“ã€‚æ–°ã—ã„æ±‚äººã‚’è¿½åŠ ã™ã‚‹å ´åˆã¯ã€å…ˆã«
+            <button type="button" onclick="navigate('jobs')" class="underline hover:text-yellow-200">æ±‚äººç®¡ç†</button>
+            ã§æ±‚äººã‚’ç™»éŒ²ã—ã¦ãã ã•ã„ã€‚è¨­å®šæ¸ˆã¿æ±‚äººã®å†…å®¹ã¯ã€ä¸‹è¡¨ã®ã€Œç·¨é›†ã€ã‹ã‚‰å¤‰æ›´ã§ãã¾ã™ã€‚
+          </p>
+        ` : ''}
+      </div>
+      <div id="featured-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>ä¿å­˜ã—ã¾ã—ãŸ
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">æ±‚äººå</th>
+              <th class="px-4 py-3">ä¼æ¥­å</th>
+              <th class="px-4 py-3">è¡¨ç¤ºé †</th>
+              <th class="px-4 py-3">å…¬é–‹</th>
+              <th class="px-4 py-3 text-right">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${featured.length ? featured.map(f => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${f.job_title}</td>
+                <td class="px-4 py-3 text-gray-400">${f.company_name}</td>
+                <td class="px-4 py-3 text-gray-400">${f.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${f.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${f.is_visible ? 'å…¬é–‹' : 'éå…¬é–‹'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showFeaturedJobModal(${f.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> ç·¨é›†
+                  </button>
+                  <button onclick="deleteFeaturedJob(${f.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> å‰Šé™¤
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="5" class="px-4 py-8 text-center text-gray-500">ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººãŒè¨­å®šã•ã‚Œã¦ã„ã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+async function showFeaturedJobModal(id = null) {
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚ç”»é¢ã‚’å†èª­ã¿è¾¼ã¿ã—ã¦å†åº¦ãŠè©¦ã—ãã ã•ã„ã€‚');
+    return;
+  }
+
+  // é€šä¿¡å®Œäº†å‰ã«ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’è¡¨ç¤ºã—ã€ã‚¯ãƒªãƒƒã‚¯ãŒåå¿œã—ã¦ã„ã‚‹ã“ã¨ã‚’æ˜ç¢ºã«ã™ã‚‹ã€‚
+  modalContent.innerHTML = `
+    <div class="p-8 text-center">
+      <i class="fas fa-spinner fa-spin text-primary-400 text-2xl mb-3"></i>
+      <p class="text-sm text-gray-400">æ±‚äººæƒ…å ±ã‚’èª­ã¿è¾¼ã‚“ã§ã„ã¾ã™...</p>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+
+  let featuredRes;
+  let allJobsRes;
+  try {
+    [featuredRes, allJobsRes] = await Promise.all([
+      API.get('/homepage/featured-jobs/admin'),
+      API.get('/jobs/admin/all')
+    ]);
+  } catch(e) {
+    modalContent.innerHTML = `
+      <div class="p-6">
+        <h3 class="text-lg font-bold mb-3">æ±‚äººæƒ…å ±ã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ</h3>
+        <p class="text-sm text-red-400 mb-5">${escapeAdminHtml(getApiErrorMessage(e))}</p>
+        <div class="flex justify-end gap-3">
+          <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white">é–‰ã˜ã‚‹</button>
+          <button type="button" onclick="showFeaturedJobModal(${id === null ? 'null' : Number(id)})" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg">å†è©¦è¡Œ</button>
+        </div>
+      </div>
+    `;
+    return;
+  }
+  const allJobs = allJobsRes.data.data;
+  const featuredJobs = featuredRes.data.data;
+  let featured = { job_id: '', is_visible: 1, display_order: 0 };
+  
+  if (id) {
+    featured = featuredJobs.find(f => f.id === id) || featured;
+  }
+
+  const selectableJobs = allJobs.filter(job =>
+    Number(job.id) === Number(featured.job_id) ||
+    !featuredJobs.some(item => Number(item.job_id) === Number(job.id))
+  );
+  featuredJobChoices = selectableJobs;
+  const selectedJob = selectableJobs.find(job => Number(job.id) === Number(featured.job_id));
+  const selectedJobLabel = selectedJob ? `${selectedJob.title} (${selectedJob.company_name})` : '';
+
+  modalContent.innerHTML = `
+    <div class="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-4" onclick="if(event.target===this) closeModal()">
+      <div class="bg-dark-800 rounded-2xl w-full max-w-lg p-6">
+        <h3 class="text-lg font-bold mb-4">${id ? 'ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººç·¨é›†' : 'ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººè¿½åŠ '}</h3>
+        <form onsubmit="${id ? `submitUpdateFeaturedJob(event, ${id})` : 'submitCreateFeaturedJob(event)'}" class="space-y-4">
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">æ±‚äººã‚’æ¤œç´¢ã—ã¦é¸æŠ<span class="text-red-400">*</span></label>
+            <input type="hidden" name="job_id" value="${featured.job_id}">
+            <div class="relative">
+              <div class="relative">
+                <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+                <input id="featured-job-search" type="search" value="${escapeAdminHtml(selectedJobLabel)}"
+                  placeholder="æ±‚äººåãƒ»ä¼æ¥­åã§æ¤œç´¢"
+                  oninput="filterFeaturedJobChoices(this.value)" onfocus="renderFeaturedJobChoices(this.value)"
+                  autocomplete="off"
+                  class="w-full bg-white border border-gray-300 rounded-lg pl-9 pr-3 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary-500">
+              </div>
+              <div id="featured-job-results" class="hidden absolute z-[60] left-0 right-0 mt-1 max-h-56 overflow-y-auto bg-white border border-gray-300 rounded-lg shadow-xl"></div>
+            </div>
+            <p id="featured-job-selected" class="${selectedJob ? '' : 'hidden'} mt-2 text-xs text-green-400">
+              <i class="fas fa-check-circle mr-1"></i><span>${selectedJob ? `é¸æŠä¸­: ${escapeAdminHtml(selectedJobLabel)}` : ''}</span>
+            </p>
+            ${selectableJobs.length === 0 ? '<p class="mt-2 text-xs text-yellow-400">è¿½åŠ å¯èƒ½ãªæ±‚äººãŒã‚ã‚Šã¾ã›ã‚“ã€‚å…ˆã«æ±‚äººç®¡ç†ã§æ–°ã—ã„æ±‚äººã‚’ç™»éŒ²ã™ã‚‹ã‹ã€è¨­å®šæ¸ˆã¿æ±‚äººã‚’ç·¨é›†ã—ã¦ãã ã•ã„ã€‚</p>' : ''}
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">è¡¨ç¤ºé †</label>
+              <input type="number" name="display_order" value="${featured.display_order}" min="0"
+                class="w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å…¬é–‹è¨­å®š</label>
+              <select name="is_visible" class="featured-job-control w-full bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900">
+                <option value="1" style="background:#fff;color:#111827" ${featured.is_visible?'selected':''}>å…¬é–‹</option>
+                <option value="0" style="background:#fff;color:#111827" ${!featured.is_visible?'selected':''}>éå…¬é–‹</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+            </button>
+            <button type="submit" ${selectableJobs.length === 0 ? 'disabled' : ''} class="bg-primary-500 hover:bg-primary-600 disabled:opacity-40 disabled:cursor-not-allowed text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? 'æ›´æ–°' : 'è¿½åŠ '}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+function filterFeaturedJobChoices(query) {
+  const jobIdInput = document.querySelector('#modal-content input[name="job_id"]');
+  if (jobIdInput) jobIdInput.value = '';
+  document.getElementById('featured-job-selected')?.classList.add('hidden');
+  renderFeaturedJobChoices(query);
+}
+
+function renderFeaturedJobChoices(query = '') {
+  const results = document.getElementById('featured-job-results');
+  if (!results) return;
+
+  const normalizedQuery = String(query).trim().toLowerCase();
+  const matches = featuredJobChoices.filter(job =>
+    `${job.title} ${job.company_name}`.toLowerCase().includes(normalizedQuery)
+  );
+
+  results.innerHTML = matches.length
+    ? matches.map(job => `
+        <button type="button" onclick="selectFeaturedJobChoice(${Number(job.id)})"
+          class="block w-full px-4 py-3 text-left bg-white text-gray-900 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none border-b border-gray-100 last:border-b-0">
+          <span class="block text-sm font-medium text-gray-900">${escapeAdminHtml(job.title)}</span>
+          <span class="block mt-0.5 text-xs text-gray-600">${escapeAdminHtml(job.company_name)}</span>
+        </button>
+      `).join('')
+    : '<p class="px-4 py-4 text-sm text-gray-600 bg-white">æ¡ä»¶ã«ä¸€è‡´ã™ã‚‹æ±‚äººãŒã‚ã‚Šã¾ã›ã‚“</p>';
+  results.classList.remove('hidden');
+}
+
+function selectFeaturedJobChoice(jobId) {
+  const job = featuredJobChoices.find(item => Number(item.id) === Number(jobId));
+  if (!job) return;
+
+  const label = `${job.title} (${job.company_name})`;
+  const jobIdInput = document.querySelector('#modal-content input[name="job_id"]');
+  const searchInput = document.getElementById('featured-job-search');
+  const selected = document.getElementById('featured-job-selected');
+  if (jobIdInput) jobIdInput.value = String(job.id);
+  if (searchInput) searchInput.value = label;
+  if (selected) {
+    selected.querySelector('span').textContent = `é¸æŠä¸­: ${label}`;
+    selected.classList.remove('hidden');
+  }
+  document.getElementById('featured-job-results')?.classList.add('hidden');
+}
+
+async function submitCreateFeaturedJob(e) {
+  e.preventDefault();
+  const form = e.target;
+  if (!form.job_id.value) {
+    alert('è¿½åŠ ã™ã‚‹æ±‚äººã‚’æ¤œç´¢çµæœã‹ã‚‰é¸æŠã—ã¦ãã ã•ã„');
+    return;
+  }
+  const data = {
+    job_id: Number(form.job_id.value),
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/featured-jobs/admin', data);
+    closeModal();
+    await loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('è¿½åŠ å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function submitUpdateFeaturedJob(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  if (!form.job_id.value) {
+    alert('æ›´æ–°ã™ã‚‹æ±‚äººã‚’æ¤œç´¢çµæœã‹ã‚‰é¸æŠã—ã¦ãã ã•ã„');
+    return;
+  }
+  const data = {
+    job_id: Number(form.job_id.value),
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/featured-jobs/admin/${id}`, data);
+    closeModal();
+    await loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('æ›´æ–°å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function deleteFeaturedJob(id) {
+  if (!confirm('ã“ã®ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äººã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿ')) return;
+  try {
+    await API.delete(`/homepage/featured-jobs/admin/${id}`);
+    loadFeaturedJobs();
+    showSaveMsg('featured-save-msg');
+  } catch(e) {
+    alert('å‰Šé™¤å¤±æ•—: ' + e.message);
+  }
+}
+
+// ==========================================
+// å¤§å­¦ã‚¿ã‚°ç®¡ç†ãƒšãƒ¼ã‚¸
+// ==========================================
+async function loadUniversityTags() {
+  const content = document.getElementById('admin-content');
+  content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
+
+  try {
+    const res = await API.get('/homepage/university-tags/admin');
+    const tags = res.data.data;
+
+    content.innerHTML = `
+      <div class="flex items-center justify-between mb-5">
+        <h2 class="text-lg font-bold">å¤§å­¦ã‚¿ã‚°ç®¡ç†</h2>
+        <button onclick="showUniversityTagModal()" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
+          <i class="fas fa-plus mr-1"></i>æ–°è¦è¿½åŠ 
+        </button>
+      </div>
+      <div class="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5 text-sm">
+        <p class="text-blue-300 mb-2"><i class="fas fa-info-circle mr-1"></i>å¤§å­¦ã‚¿ã‚°ã¯æ±‚äººã«ç´ä»˜ã‘ã¦ã€Œã€‡ã€‡å¤§å­¦å‘ã‘ãŠã™ã™ã‚æ±‚äººã€ã¨ã—ã¦è¡¨ç¤ºã§ãã¾ã™ã€‚</p>
+        <p class="text-gray-400 text-xs">æ±‚äººç·¨é›†ãƒšãƒ¼ã‚¸ã§å¤§å­¦ã‚¿ã‚°ã‚’é¸æŠã—ã¦ç´ä»˜ã‘ã¦ãã ã•ã„ã€‚</p>
+      </div>
+      <div id="tag-save-msg" class="hidden mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-400 text-sm">
+        <i class="fas fa-check-circle mr-1"></i>ä¿å­˜ã—ã¾ã—ãŸ
+      </div>
+      <div class="glass rounded-xl overflow-hidden">
+        <table class="w-full text-sm">
+          <thead class="bg-white/5 text-left text-xs text-gray-400">
+            <tr>
+              <th class="px-4 py-3">å¤§å­¦å</th>
+              <th class="px-4 py-3">ã‚¹ãƒ©ãƒƒã‚°</th>
+              <th class="px-4 py-3">èª¬æ˜æ–‡</th>
+              <th class="px-4 py-3">è¡¨ç¤ºé †</th>
+              <th class="px-4 py-3">å…¬é–‹</th>
+              <th class="px-4 py-3 text-right">æ“ä½œ</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/5">
+            ${tags.length ? tags.map(t => `
+              <tr class="hover:bg-white/5">
+                <td class="px-4 py-3 text-white">${t.name}</td>
+                <td class="px-4 py-3 text-gray-400 font-mono text-xs">${t.slug}</td>
+                <td class="px-4 py-3 text-gray-400 text-xs max-w-xs truncate">${t.description || '-'}</td>
+                <td class="px-4 py-3 text-gray-400">${t.display_order}</td>
+                <td class="px-4 py-3">
+                  <span class="px-2 py-1 rounded text-xs ${t.is_visible ? 'bg-green-500/20 text-green-400' : 'bg-gray-500/20 text-gray-400'}">
+                    ${t.is_visible ? 'å…¬é–‹' : 'éå…¬é–‹'}
+                  </span>
+                </td>
+                <td class="px-4 py-3 text-right space-x-2">
+                  <button onclick="showUniversityTagModal(${t.id})" class="text-blue-400 hover:text-blue-300 text-xs">
+                    <i class="fas fa-edit"></i> ç·¨é›†
+                  </button>
+                  <button onclick="deleteUniversityTag(${t.id})" class="text-red-400 hover:text-red-300 text-xs">
+                    <i class="fas fa-trash"></i> å‰Šé™¤
+                  </button>
+                </td>
+              </tr>
+            `).join('') : '<tr><td colspan="6" class="px-4 py-8 text-center text-gray-500">å¤§å­¦ã‚¿ã‚°ãŒã‚ã‚Šã¾ã›ã‚“</td></tr>'}
+          </tbody>
+        </table>
+      </div>
+    `;
+  } catch(e) {
+    content.innerHTML = `<div class="text-red-400 p-4">å–å¾—å¤±æ•—: ${e.message}</div>`;
+  }
+}
+
+async function showUniversityTagModal(id = null) {
+  let tag = { name: '', slug: '', description: '', is_visible: 1, display_order: 0 };
+  const modal = document.getElementById('modal');
+  const modalContent = document.getElementById('modal-content');
+  if (!modal || !modalContent) {
+    alert('ãƒ¢ãƒ¼ãƒ€ãƒ«ã‚’é–‹ã‘ã¾ã›ã‚“ã§ã—ãŸã€‚ç”»é¢ã‚’å†èª­ã¿è¾¼ã¿ã—ã¦å†åº¦ãŠè©¦ã—ãã ã•ã„ã€‚');
+    return;
+  }
+
+  if (id) {
+    try {
+      const res = await API.get('/homepage/university-tags/admin');
+      tag = res.data.data.find(t => Number(t.id) === Number(id)) || tag;
+    } catch(e) {
+      alert('å¤§å­¦ã‚¿ã‚°ã‚’å–å¾—ã§ãã¾ã›ã‚“ã§ã—ãŸ: ' + getApiErrorMessage(e));
+      return;
+    }
+  }
+
+  modalContent.innerHTML = `
+    <div class="p-6">
+        <h3 class="text-lg font-bold mb-4">${id ? 'å¤§å­¦ã‚¿ã‚°ç·¨é›†' : 'å¤§å­¦ã‚¿ã‚°è¿½åŠ '}</h3>
+        <form onsubmit="${id ? `submitUpdateUniversityTag(event, ${id})` : 'submitCreateUniversityTag(event)'}" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å¤§å­¦å<span class="text-red-400">*</span></label>
+              <input type="text" name="name" value="${escapeAdminHtml(tag.name || '')}" required
+                placeholder="ä¾‹: æ±äº¬å¤§å­¦"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">ã‚¹ãƒ©ãƒƒã‚°ï¼ˆURLç”¨ï¼‰<span class="text-red-400">*</span></label>
+              <input type="text" name="slug" value="${escapeAdminHtml(tag.slug || '')}" required
+                placeholder="ä¾‹: todai"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white font-mono">
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs text-gray-400 mb-1.5">èª¬æ˜æ–‡</label>
+            <textarea name="description" rows="2"
+              placeholder="ä¾‹: æ—¥æœ¬æœ€é«˜å³°ã®å­¦åºœã€‚ãƒˆãƒƒãƒ—ä¼æ¥­ã¸ã®å†…å®šå®Ÿç¸¾å¤šæ•°ã€‚"
+              class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none">${escapeAdminHtml(tag.description || '')}</textarea>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">è¡¨ç¤ºé †</label>
+              <input type="number" name="display_order" value="${tag.display_order}" min="0"
+                class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+            </div>
+            <div>
+              <label class="block text-xs text-gray-400 mb-1.5">å…¬é–‹è¨­å®š</label>
+              <select name="is_visible" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white">
+                <option value="1" ${tag.is_visible?'selected':''}>å…¬é–‹</option>
+                <option value="0" ${!tag.is_visible?'selected':''}>éå…¬é–‹</option>
+              </select>
+            </div>
+          </div>
+          <div class="flex justify-end gap-3 pt-4">
+            <button type="button" onclick="closeModal()" class="px-4 py-2 text-sm text-gray-400 hover:text-white transition-colors">
+              ã‚­ãƒ£ãƒ³ã‚»ãƒ«
+            </button>
+            <button type="submit" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-6 py-2 rounded-lg transition-colors">
+              ${id ? 'æ›´æ–°' : 'è¿½åŠ '}
+            </button>
+          </div>
+        </form>
+    </div>
+  `;
+  modal.classList.remove('hidden');
+}
+
+async function submitCreateUniversityTag(e) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    slug: form.slug.value,
+    description: form.description.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.post('/homepage/university-tags/admin', data);
+    closeModal();
+    await loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('è¿½åŠ å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function submitUpdateUniversityTag(e, id) {
+  e.preventDefault();
+  const form = e.target;
+  const data = {
+    name: form.name.value,
+    slug: form.slug.value,
+    description: form.description.value,
+    is_visible: Number(form.is_visible.value),
+    display_order: Number(form.display_order.value)
+  };
+  try {
+    await API.put(`/homepage/university-tags/admin/${id}`, data);
+    closeModal();
+    await loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('æ›´æ–°å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+async function deleteUniversityTag(id) {
+  if (!confirm('ã“ã®å¤§å­¦ã‚¿ã‚°ã‚’å‰Šé™¤ã—ã¾ã™ã‹ï¼Ÿç´ä»˜ã„ã¦ã„ã‚‹æ±‚äººã‹ã‚‰ã‚‚è§£é™¤ã•ã‚Œã¾ã™ã€‚')) return;
+  try {
+    await API.delete(`/homepage/university-tags/admin/${id}`);
+    await loadUniversityTags();
+    showSaveMsg('tag-save-msg');
+  } catch(e) {
+    alert('å‰Šé™¤å¤±æ•—: ' + getApiErrorMessage(e));
+  }
+}
+
+// ==========================================
+// å…±é€šãƒ˜ãƒ«ãƒ‘ãƒ¼é–¢æ•°
+// ==========================================
+function showSaveMsg(id) {
+  const msg = document.getElementById(id);
+  if (msg) {
+    msg.classList.remove('hidden');
+    setTimeout(() => msg.classList.add('hidden'), 3000);
+  }
+}
+
+function getApiErrorMessage(error) {
+  return error?.response?.data?.error || error?.message || 'ä¸æ˜ãªã‚¨ãƒ©ãƒ¼';
+}
+
+function escapeAdminHtml(value) {
+  return String(value).replace(/[&<>'"]/g, character => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;'
+  })[character]);
+}
+
+// åˆæœŸåŒ–
+window.addEventListener('DOMContentLoaded', async () => {
+  const authenticated = await checkAuth();
+  if (!authenticated) return;
+  navigate('dashboard');
+});
