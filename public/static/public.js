@@ -1209,6 +1209,9 @@ async function initLoginPage() {
               <label class="block text-xs text-gray-400 mb-1.5">パスワード <span class="text-red-400">*</span></label>
               <input id="login-password" type="password" required autocomplete="current-password" placeholder="パスワード">
             </div>
+            <div class="text-right mb-4">
+              <a href="/forgot-password" class="text-xs text-primary-500 hover:text-primary-600 font-bold">パスワードを忘れた方</a>
+            </div>
             <div id="login-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
             <button type="submit" id="login-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
               <i class="fas fa-right-to-bracket mr-2"></i>ログイン
@@ -1245,6 +1248,140 @@ async function submitStudentLogin(e) {
     errDiv.classList.remove('hidden');
     btn.disabled = false;
     btn.innerHTML = '<i class="fas fa-right-to-bracket mr-2"></i>ログイン';
+  }
+}
+
+function initForgotPasswordPage() {
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-key text-white text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-2">パスワードを忘れた方</h1>
+          <p class="text-gray-500 text-sm leading-relaxed">登録したメールアドレスを入力してください。<br>再設定用リンクをメールでお送りします。</p>
+        </div>
+        <div class="glass rounded-2xl p-6 sm:p-8">
+          <form id="forgot-password-form" onsubmit="submitForgotPassword(event)">
+            <div class="mb-5">
+              <label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label>
+              <input id="forgot-password-email" type="email" required maxlength="254" autocomplete="email" placeholder="example@univ.ac.jp">
+            </div>
+            <div id="forgot-password-message" class="hidden mb-4 p-3 rounded-lg text-sm leading-relaxed"></div>
+            <button type="submit" id="forgot-password-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+              <i class="fas fa-paper-plane mr-2"></i>再設定メールを送る
+            </button>
+          </form>
+          <p class="text-center text-xs mt-5">
+            <a href="/login" class="text-primary-500 hover:text-primary-600 font-bold"><i class="fas fa-arrow-left mr-1"></i>ログインへ戻る</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitForgotPassword(e) {
+  e.preventDefault();
+  const btn = document.getElementById('forgot-password-btn');
+  const message = document.getElementById('forgot-password-message');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>送信中...';
+  message.classList.add('hidden');
+
+  try {
+    const res = await API.post('/students/password-reset/request', {
+      email: document.getElementById('forgot-password-email').value
+    });
+    message.textContent = res.data.message;
+    message.className = 'mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-700 text-sm leading-relaxed';
+    document.getElementById('forgot-password-email').disabled = true;
+    btn.classList.add('hidden');
+  } catch(error) {
+    message.textContent = error.response?.data?.error || '送信に失敗しました。時間をおいて再度お試しください。';
+    message.className = 'mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm leading-relaxed';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>再設定メールを送る';
+  }
+}
+
+function initResetPasswordPage() {
+  const app = document.getElementById('app');
+  const token = new URLSearchParams(window.location.search).get('token') || '';
+  const validToken = /^[a-f0-9]{64}$/i.test(token);
+
+  app.innerHTML = `
+    <div class="min-h-screen flex items-center justify-center py-12 px-4">
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8">
+          <div class="w-16 h-16 bg-primary-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <i class="fas fa-lock text-white text-xl"></i>
+          </div>
+          <h1 class="text-2xl font-black mb-2">新しいパスワードを設定</h1>
+          <p class="text-gray-500 text-sm">8文字以上128文字以内で入力してください。</p>
+        </div>
+        <div class="glass rounded-2xl p-6 sm:p-8">
+          ${validToken ? `
+            <form id="reset-password-form" onsubmit="submitPasswordReset(event)">
+              <input id="reset-password-token" type="hidden" value="${escapePublicHtml(token)}">
+              <div class="mb-4">
+                <label class="block text-xs text-gray-400 mb-1.5">新しいパスワード <span class="text-red-400">*</span></label>
+                <input id="reset-password-value" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+              </div>
+              <div class="mb-5">
+                <label class="block text-xs text-gray-400 mb-1.5">新しいパスワード（確認） <span class="text-red-400">*</span></label>
+                <input id="reset-password-confirm" type="password" required minlength="8" maxlength="128" autocomplete="new-password">
+              </div>
+              <div id="reset-password-message" class="hidden mb-4 p-3 rounded-lg text-sm leading-relaxed"></div>
+              <button type="submit" id="reset-password-btn" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">
+                <i class="fas fa-lock mr-2"></i>パスワードを再設定
+              </button>
+            </form>
+          ` : `
+            <div class="p-4 bg-red-500/10 border border-red-500/30 rounded-xl text-red-500 text-sm leading-relaxed text-center">
+              再設定リンクが無効です。再度メール送信からお試しください。
+            </div>
+            <a href="/forgot-password" class="block text-center mt-5 text-sm text-primary-500 hover:text-primary-600 font-bold">再設定メールを送る</a>
+          `}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+async function submitPasswordReset(e) {
+  e.preventDefault();
+  const password = document.getElementById('reset-password-value').value;
+  const confirmation = document.getElementById('reset-password-confirm').value;
+  const btn = document.getElementById('reset-password-btn');
+  const message = document.getElementById('reset-password-message');
+
+  if (password.length < 8 || password.length > 128 || password !== confirmation) {
+    message.textContent = password !== confirmation ? 'パスワードが一致しません。' : 'パスワードは8〜128文字で入力してください。';
+    message.className = 'mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>再設定中...';
+  message.classList.add('hidden');
+  try {
+    const res = await API.post('/students/password-reset/confirm', {
+      token: document.getElementById('reset-password-token').value,
+      password
+    });
+    clearStudentAuth();
+    message.textContent = res.data.message;
+    message.className = 'mb-4 p-3 bg-green-500/10 border border-green-500/30 rounded-lg text-green-700 text-sm leading-relaxed';
+    document.getElementById('reset-password-form').querySelectorAll('input, button').forEach(element => { element.disabled = true; });
+    message.insertAdjacentHTML('afterend', '<a href="/login" class="block w-full text-center bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl transition-colors">ログインへ</a>');
+  } catch(error) {
+    message.textContent = error.response?.data?.error || '再設定に失敗しました。再度メール送信からお試しください。';
+    message.className = 'mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm leading-relaxed';
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-lock mr-2"></i>パスワードを再設定';
   }
 }
 

@@ -6,6 +6,8 @@ const publicPages = [
   ['/universities', '大学'],
   ['/register', '登録'],
   ['/login', 'ログイン'],
+  ['/forgot-password', 'パスワードを忘れた方'],
+  ['/reset-password', '再設定リンクが無効です'],
   ['/privacy', 'プライバシーポリシー'],
   ['/terms', '利用規約'],
   ['/company', '運営者情報']
@@ -130,6 +132,22 @@ test.describe('Preview public site', () => {
     await expect(consent).toHaveAttribute('required', '');
     await expect(registrationForm.getByRole('link', { name: '利用規約' })).toHaveAttribute('href', '/terms');
     await expect(registrationForm.getByRole('link', { name: 'プライバシーポリシー' })).toHaveAttribute('href', '/privacy');
+  });
+
+  test('password reset request does not reveal whether an account exists', async ({ request }) => {
+    const response = await request.post('/api/students/password-reset/request', {
+      data: { email: 'not-registered-password-reset-e2e@example.com' }
+    });
+    expect(response.status()).toBe(200);
+    const payload = await response.json();
+    expect(payload.success).toBe(true);
+    expect(payload.message).toContain('登録状況にかかわらず');
+
+    const invalidReset = await request.post('/api/students/password-reset/confirm', {
+      data: { token: 'invalid', password: 'new-password-123' }
+    });
+    expect(invalidReset.status()).toBe(400);
+    expect((await invalidReset.json()).error).toContain('無効か、期限切れ');
   });
 
   test('unknown routes return the custom 404 page', async ({ page }) => {

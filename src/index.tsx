@@ -193,6 +193,14 @@ app.get('/login', (c) => {
   return c.html(getPublicHTML('login', getPublicOrigin(c), { path: '/login', title: 'ログイン | ガクチカインターン', description: '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。', robots: 'noindex, nofollow' }))
 })
 
+app.get('/forgot-password', (c) => {
+  return c.html(getPublicHTML('forgot-password', getPublicOrigin(c), { path: '/forgot-password', title: 'パスワードを忘れた方 | ガクチカインターン', description: '学生アカウントのパスワード再設定ページです。', robots: 'noindex, nofollow' }))
+})
+
+app.get('/reset-password', (c) => {
+  return c.html(getPublicHTML('reset-password', getPublicOrigin(c), { path: '/reset-password', title: 'パスワード再設定 | ガクチカインターン', description: '学生アカウントの新しいパスワードを設定します。', robots: 'noindex, nofollow' }))
+})
+
 app.get('/consultation', (c) => {
   return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
 })
@@ -737,7 +745,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260804-gakuchika-timeline"></script>
+  <script src="/static/public.js?v=20260902-password-reset"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
@@ -751,6 +759,8 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     }
     else if (path === '/register') initRegisterPage();
     else if (path === '/login') initLoginPage();
+    else if (path === '/forgot-password') initForgotPasswordPage();
+    else if (path === '/reset-password') initResetPasswordPage();
     else if (path === '/consultation') initConsultationPage();
     else if (path === '/mypage') initMyPage();
     else if (path === '/privacy') initPrivacyPage();
