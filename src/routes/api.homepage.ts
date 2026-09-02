@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { getStudentFromSession } from '../utils/studentAuth'
+import { getAuthenticatedStudentId } from '../utils/studentAccess'
 
 const homepage = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -195,6 +197,8 @@ homepage.get('/university-tags', async (c) => {
 // 公開用：特定大学の求人一覧取得
 homepage.get('/universities/:slug/jobs', async (c) => {
   const slug = c.req.param('slug')
+  const sessionStudent = await getStudentFromSession(c)
+  const studentId = getAuthenticatedStudentId(sessionStudent)
   
   // 大学タグを取得
   const tag = await c.env.DB.prepare(`
@@ -217,7 +221,10 @@ homepage.get('/universities/:slug/jobs', async (c) => {
     FROM jobs j
     JOIN companies comp ON j.company_id = comp.id
     JOIN job_university_tags jut ON j.id = jut.job_id
-    WHERE jut.university_tag_id = ? AND j.status = 'published' AND comp.status = 'published'
+    WHERE jut.university_tag_id = ?
+      AND j.status = 'published'
+      AND comp.status = 'published'
+      AND j.visibility ${studentId ? "IN ('public', 'members')" : "= 'public'"}
     ORDER BY j.display_order ASC, j.created_at DESC
   `).bind(tag.id).all()
   

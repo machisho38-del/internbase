@@ -101,6 +101,36 @@ test.describe('Preview public site', () => {
     expect((await universitiesResponse.json()).data || []).toEqual([]);
   });
 
+  test('signed-out visitors cannot forge student access with ids in requests', async ({ request }) => {
+    const mypage = await request.get('/api/students/mypage/1');
+    expect(mypage.status()).toBe(401);
+
+    const application = await request.post('/api/applications', {
+      data: { student_id: 1, job_id: 1, motivation: 'authorization check' }
+    });
+    expect(application.status()).toBe(401);
+
+    const members = await request.get('/api/jobs?members=1&student_id=1');
+    expect(members.status()).toBe(401);
+
+    const publicJobs = await request.get('/api/jobs?student_id=1');
+    expect(publicJobs.status()).toBe(200);
+    const payload = await publicJobs.json();
+    expect((payload.data || []).every(job => job.visibility === 'public')).toBe(true);
+  });
+
+  test('registration requires explicit terms and privacy consent', async ({ page }) => {
+    await page.goto('/register');
+    await page.getByRole('radio', { name: 'その他' }).check();
+    await page.getByRole('button', { name: '登録フォームへ進む' }).click();
+
+    const consent = page.locator('#reg-terms-consent');
+    await expect(consent).toBeVisible();
+    await expect(consent).toHaveAttribute('required', '');
+    await expect(page.getByRole('link', { name: '利用規約' })).toHaveAttribute('href', '/terms');
+    await expect(page.getByRole('link', { name: 'プライバシーポリシー' })).toHaveAttribute('href', '/privacy');
+  });
+
   test('unknown routes return the custom 404 page', async ({ page }) => {
     const response = await page.goto('/__e2e_not_found__');
     expect(response?.status()).toBe(404);
@@ -171,6 +201,62 @@ test.describe('Preview admin', () => {
       await expect(page.locator('#modal-content')).toContainText(heading);
       await page.locator('#modal-content').getByRole('button', { name: 'キャンセル' }).click();
       await expect(page.locator('#modal')).toBeHidden();
+    }
+  });
+
+  test('hidden homepage content can be created, updated, and deleted safely', async ({ page }) => {
+    const marker = `E2E-${Date.now()}`;
+    let storyId;
+    let tagId;
+
+    try {
+      const storyResponse = await page.context().request.post('/api/homepage/success-stories/admin', {
+        data: {
+          student_name: marker,
+          university: 'E2E大学',
+          company_name: 'E2E株式会社',
+          comment: '非公開CRUD確認',
+          is_visible: 0,
+          display_order: 9999
+        }
+      });
+      expect(storyResponse.status()).toBe(200);
+      storyId = (await storyResponse.json()).id;
+
+      const storyUpdate = await page.context().request.put(`/api/homepage/success-stories/admin/${storyId}`, {
+        data: {
+          student_name: `${marker}-updated`,
+          university: 'E2E大学',
+          company_name: 'E2E株式会社',
+          comment: '更新済み',
+          is_visible: 0,
+          display_order: 9999
+        }
+      });
+      expect(storyUpdate.status()).toBe(200);
+
+      const storiesAdmin = await page.context().request.get('/api/homepage/success-stories/admin');
+      expect((await storiesAdmin.json()).data.some(story => story.id === storyId && story.is_visible === 0)).toBe(true);
+      const storiesPublic = await page.context().request.get('/api/homepage/success-stories');
+      expect((await storiesPublic.json()).data.some(story => story.id === storyId)).toBe(false);
+
+      const tagResponse = await page.context().request.post('/api/homepage/university-tags/admin', {
+        data: {
+          name: marker,
+          slug: `e2e-${Date.now()}`,
+          description: '非公開CRUD確認',
+          is_visible: 0,
+          display_order: 9999
+        }
+      });
+      expect(tagResponse.status()).toBe(200);
+      tagId = (await tagResponse.json()).id;
+
+      const tagsPublic = await page.context().request.get('/api/homepage/university-tags');
+      expect((await tagsPublic.json()).data.some(tag => tag.id === tagId)).toBe(false);
+    } finally {
+      if (storyId) await page.context().request.delete(`/api/homepage/success-stories/admin/${storyId}`);
+      if (tagId) await page.context().request.delete(`/api/homepage/university-tags/admin/${tagId}`);
     }
   });
 });

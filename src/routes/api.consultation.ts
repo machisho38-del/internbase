@@ -9,8 +9,18 @@ consultation.post('/', async (c) => {
   const body = await c.req.json()
   const { name, email, phone, university, grade, concern, message, preferred_datetime, source_media } = body
 
-  if (!name || !email) {
+  const normalizedName = String(name ?? '').trim()
+  const normalizedEmail = String(email ?? '').trim().toLowerCase()
+
+  if (!normalizedName || !normalizedEmail) {
     return c.json({ success: false, error: '氏名とメールアドレスは必須です' }, 400)
+  }
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254 ||
+      normalizedName.length > 100 || String(phone ?? '').length > 50 ||
+      String(university ?? '').length > 200 || String(concern ?? '').length > 500 ||
+      String(message ?? '').length > 5000) {
+    return c.json({ success: false, error: '入力内容を確認してください' }, 400)
   }
 
   const validSourceMedia = ['sunconnect','valueup','genki_intern','sokei_intern_compass','careersourcing','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
@@ -20,7 +30,7 @@ consultation.post('/', async (c) => {
     INSERT INTO consultations (name, email, phone, university, grade, concern, message, preferred_datetime, source_media)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
-    name, email, phone || null, university || null, grade || null,
+    normalizedName, normalizedEmail, phone || null, university || null, grade || null,
     concern || null, message || null, preferred_datetime || null, validatedSourceMedia
   ).run()
 
