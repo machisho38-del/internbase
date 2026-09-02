@@ -324,78 +324,598 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
           fontFamily: {
             sans: ['Noto Sans JP', 'sans-serif'],
             display: ['Zen Kaku Gothic New', 'Noto Sans JP', 'sans-serif']
-   çÎı¶‰Ëkºwµç]tñğÍl±¥¹•}ÕÉ°tñğ€œœ¤ì4(€€€€€€€½¹ÍĞÕÉ°€ô¥ÍUÍ…‰±•1¥¹•UÉ°¡É…İUÉ°¤€üÉ…İUÉ°€è€œœì4(€€€€€€€¥˜€ …ÕÉ°¤ì4(€€€€€€€€€É•ÑÕÉ¸q€4(€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´ĞÀ´ĞÉ½Õ¹‘•µá°‰½É‘•È‰½É‘•ÈµÉ…ä´ÄÀÀ‰œµÉ…ä´ÔÀ½Á…¥Ñä´ÜÀˆø4(€€€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ü´ÄÈ ´ÄÈ‰œµÉ…ä´ÈÀÀÉ½Õ¹‘•µ™Õ±°™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ•¹Ñ•È™±•àµÍ¡É¥¹¬´Àˆø4(€€€€€€€€€€€€€€€€ñ¤±…ÍÌô‰™…ˆ™„µ±¥¹”Ñ•áĞµÉ…ä´ĞÀÀÑ•áĞµá°ˆøğ½¤ø4(€€€€€€€€€€€€€€ğ½‘¥Øø4(€€€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à´Äµ¥¸µÜ´Àˆø4(€€€€€€€€€€€€€€€€ñÀ±…ÍÌô‰™½¹ĞµÍ•µ¥‰½±Ñ•áĞµÉ…ä´ÜÀÀÑ•áĞµÍ´±•…‘¥¹œµÍ¹Õœˆùp‘í½ÁĞ¹±…‰•±ôğ½Àø4(€€€€€€€€€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ĞÀÀµĞ´À¸Ôˆù1%9UI3šr«¢¢·–ºhğ½Àø4(€€€€€€€€€€€€€€ğ½‘¥Øø4(€€€€€€€€€€€€ğ½‘¥Øø4(€€€€€€€€€q€ì4(€€€€€€€ô4(€€€€€€€É•ÑÕÉ¸q€4(€€€€€€€€€€ñ„¡É•˜ô‰p‘íÕÉ±ôˆÑ…É•Ğô‰}‰±…¹¬ˆÉ•°ô‰¹½½Á•¹•Èˆ4(€€€€€€€€€€€€½¹±¥¬ô‰±½Í•1¥¹•5½‘…° ¤ˆ4(€€€€€€€€€€€€±…ÍÌô‰É½ÕÀ™±•à¥Ñ•µÌµ•¹Ñ•È…À´ĞÀ´ĞÉ½Õ¹‘•µá°‰½É‘•È‰½É‘•ÈµÉ…ä´ÄÀÀ¡½Ù•Èé‰½É‘•ÈµÉ••¸´ÌÀÀ¡½Ù•Èé‰œµÉ••¸´ÔÀÑÉ…¹Í¥Ñ¥½¸µ…±°ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ü´ÄÈ ´ÄÈ‰œµÉ••¸´ÔÀÀ¼ÄÀÉ½ÕÀµ¡½Ù•Èé‰œµÉ••¸´ÔÀÀ¼ÈÀÉ½Õ¹‘•µ™Õ±°™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ•¹Ñ•È™±•àµÍ¡É¥¹¬´ÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆø4(€€€€€€€€€€€€€€ñ¤±…ÍÌô‰™…ˆ™„µ±¥¹”Ñ•áĞµÉ••¸´ØÀÀÑ•áĞµá°ˆøğ½¤ø4(€€€€€€€€€€€€ğ½‘¥Øø4(€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à´Äµ¥¸µÜ´Àˆø4(€€€€€€€€€€€€€€ñÀ±…ÍÌô‰™½¹ĞµÍ•µ¥‰½±Ñ•áĞµÉ…ä´àÀÀÉ½ÕÀµ¡½Ù•ÈéÑ•áĞµÉ••¸´ÜÀÀÑ•áĞµÍ´±•…‘¥¹œµÍ¹Õœˆùp‘í½ÁĞ¹±…‰•±ôğ½Àø4(€€€€€€€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ĞÀÀµĞ´À¸Ôˆû–ÂR¡1%9–³–ò?
-‹
-¯
-›Ï#àğ½Àø4(€€€€€€€€€€€€ğ½‘¥Øø4(€€€€€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ¡•ÙÉ½¸µÉ¥¡ĞÑ•áĞµÉ…ä´ÌÀÀÉ½ÕÀµ¡½Ù•ÈéÑ•áĞµÉ••¸´ĞÀÀÑ•áĞµáÌ™±•àµÍ¡É¥¹¬´Àˆøğ½¤ø4(€€€€€€€€€€ğ½„ø4(€€€€€€€q€ì4(€€€€€ô¤¹©½¥¸ œœ¤ì4(€€€ô4(4(€€€™Õ¹Ñ¥½¸±½Í•1¥¹•5½‘…° ¤ì4(€€€€€‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ±¥¹”µµ½‘…°œ¤¹±…ÍÍ1¥ÍĞ¹…‘ ¡¥‘‘•¸œ¤ì4(€€€€€‘½Õµ•¹Ğ¹‰½‘ä¹ÍÑå±”¹½Ù•É™±½Ü€ô€œœì4(€€€ô4(4(€€€™Õ¹Ñ¥½¸¡…¹‘±•1¥¹•5½‘…±=ÕÑÍ¥‘•±¥¬¡”¤ì4(€€€€€¥˜€¡”¹Ñ…É•Ğ€ôôô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% ±¥¹”µµ½‘…°œ¤¤ì4(€€€€€€€±½Í•1¥¹•5½‘…° ¤ì4(€€€€€ô4(€€€ô4(€€ğ½ÍÉ¥ÁĞø4(4(€€ğ„´´ƒ‡
-“Ï
-ÏÏÏ€´´ø4(€€ñµ…¥¸¥ô‰…ÁÀˆ±…ÍÌô‰ÁĞµlÜÉÁátˆøğ½µ…¥¸ø(4(€€ğ„´´ƒW
-ÿğ€´´ø4(€€ñ™½½Ñ•È±…ÍÌô‰µĞ´ÈĞÁä´ÄĞ‰œµÍ±…Ñ”´äÔÀÑ•áĞµİ¡¥Ñ”ˆø(€€€€ñ‘¥Ø±…ÍÌô‰µ…àµÜ´İá°µàµ…ÕÑ¼Áà´ĞÍ´éÁà´Ø±œéÁà´àˆø4(€€€€€€ñ‘¥Ø±…ÍÌô‰É¥É¥µ½±Ì´ÈµéÉ¥µ½±Ì´Ğ…À´àµˆ´àˆø4(€€€€€€€€ñ‘¥Øø4(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´Èµˆ´Ğˆø4(€€€€€€€€€€€€ñ¥µœ±…ÍÌô‰©ÌµÍ¥Ñ”µ±½¼µ¥µœ¡¥‘‘•¸Ü´Ü ´Ü½‰©•Ğµ½¹Ñ…¥¸É½Õ¹‘•µ±œˆÍÉŒôˆˆ…±Ğô‹
-³
-¿
-¯
-“Ï
-ÿóÌˆø4(€€€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰©ÌµÍ¥Ñ”µ±½¼µ¥½¸Ü´à ´à‰œµÁÉ¥µ…Éä´ØÀÀÉ½Õ¹‘•µ±œ™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ•¹Ñ•Èˆø(€€€€€€€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ…ÉÉ½ÜµÑÉ•¹µÕÀÑ•áĞµİ¡¥Ñ”Ñ•áĞµáÌˆøğ½¤ø(€€€€€€€€€€€€ğ½‘¥Øø(€€€€€€€€€€€€ñÍÁ…¸±…ÍÌô‰©ÌµÍ¥Ñ”µ¹…µ”™½¹Ğµ‰½±Ñ•áĞµİ¡¥Ñ”ˆû
-³
-¿
-¯
-“Ï
-ÿóÌğ½ÍÁ…¸ø(€€€€€€€€€€ğ½‘¥Øø(€€€€€€€€€€ñÀ¥ô‰™½½Ñ•ÈµÍ¥Ñ”µ‘•ÍÉ¥ÁÑ¥½¸ˆ±…ÍÌô‰Ñ•áĞµÍ±…Ñ”´ĞÀÀÑ•áĞµáÌ±•…‘¥¹œµÉ•±…á•ˆû–:Ï¦ãW
-3¦Vßšr
-“Ï
-ÿóÏšÆ’êëŸ«»
-·«
-‹
-K–*ƒ¦Wo
-#ğ½Àø(€€€€€€€€ğ½‘¥Øø4(€€€€€€€€ñ‘¥Øø4(€€€€€€€€€€ñ Ğ±…ÍÌô‰Ñ•áĞµÍ´™½¹ĞµÍ•µ¥‰½±µˆ´ÌÑ•áĞµİ¡¥Ñ”ˆûšÆ’êë
-Kš:‹dğ½ Ğø(€€€€€€€€€€ñÕ°±…ÍÌô‰ÍÁ…”µä´ÈÑ•áĞµÍ±…Ñ”´ĞÀÀÑ•áĞµÍ´ˆø(€€€€€€€€€€€€ñ±¤øñ„¡É•˜ôˆ½©½‰Ìˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû–£›»šÆ’êèğ½„øğ½±¤ø4(€€€€€€€€€€€€ñ±¤øñ„¡É•˜ôˆ½©½‰Ìıİ½É­}ÍÑå±”õÉ•µ½Ñ”ˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû–.“–.g–ö‹š,ğ½„øğ½±¤ø4(€€€€€€€€€€€€ñ±¤øñ„¡É•˜ôˆ½©½‰Ìı¥¹‘ÕÍÑÉäõ%SíM……Lˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆûš–·V0ğ½„øğ½±¤ø4(€€€€€€€€€€ğ½Õ°ø4(€€€€€€€€ğ½‘¥Øø4(€€€€€€€€ñ‘¥Øø4(€€€€€€€€€€ñ Ğ±…ÍÌô‰Ñ•áĞµÍ´™½¹ĞµÍ•µ¥‰½±µˆ´ÌÑ•áĞµİ¡¥Ñ”ˆû
-×óO
-äğ½ Ğø(€€€€€€€€€€ñÕ°±…ÍÌô‰ÍÁ…”µä´ÈÑ•áĞµÍ±…Ñ”´ĞÀÀÑ•áĞµÍ´ˆø(€€€€€€€€€€€€ñ±¤øñ„¡É•˜ôˆ½É•¥ÍÑ•Èˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆûšZÃ¢š?fï¦2Èğ½„øğ½±¤ø4(€€€€€€€€€€€€ñ±¤øñ„¡É•˜ôˆ½½¹ÍÕ±Ñ…Ñ¥½¸ˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû‡šZgnã¢®ğ½„øğ½±¤ø4(€€€€€€€€€€ğ½Õ°ø4(€€€€€€€€ğ½‘¥Øø4(€€€€€€€€ñ‘¥Øø4(€€€€€€€€€€ñ Ğ±…ÍÌô‰Ñ•áĞµÍ´™½¹ĞµÍ•µ¥‰½±µˆ´ÌÑ•áĞµİ¡¥Ñ”ˆû–³–ò=1%9ğ½ Ğø(€€€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµÍ±…Ñ”´ĞÀÀÑ•áĞµáÌµˆ´Ìˆû–şs–.–ú3»¦Ö‡¿–³–ò=1%9Ÿ¢†3ûgğ½Àø(€€€€€€€€€€ñ‰ÕÑÑ½¸½¹±¥¬ô‰½Á•¹1¥¹•5½‘…° ¤ˆ±…ÍÌô‰¥¹±¥¹”µ™±•à¥Ñ•µÌµ•¹Ñ•È…À´È‰œµÉ••¸´ÔÀÀ¡½Ù•Èé‰œµÉ••¸´ØÀÀÑ•áĞµİ¡¥Ñ”Ñ•áĞµáÌÁà´ÌÁä´ÈÉ½Õ¹‘•µ±œÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌ‰½É‘•Èµ¹½¹”ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€€€€€ñ¤±…ÍÌô‰™…ˆ™„µ±¥¹”ˆøğ½¤ù1%9
-K¢ş÷–*€4(€€€€€€€€€€ğ½‰ÕÑÑ½¸ø4(€€€€€€€€ğ½‘¥Øø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ‘¥Ø±…ÍÌô‰‰½É‘•ÈµĞ‰½É‘•Èµİ¡¥Ñ”¼ÄÀÁĞ´Ø™±•à™±•àµ½°Í´é™±•àµÉ½Ü©ÕÍÑ¥™äµ‰•Ñİ••¸¥Ñ•µÌµ•¹Ñ•È…À´Èˆø(€€€€€€€€ñÀ¥ô‰™½½Ñ•Èµ½ÁåÉ¥¡Ğˆ±…ÍÌô‰Ñ•áĞµÍ±…Ñ”´ÔÀÀÑ•áĞµáÌˆû
-¤€ÈÀÈØƒ
-³
-¿
-¯
-“Ï
-ÿóÌ¸±°É¥¡ÑÌÉ•Í•ÉÙ•¸ğ½Àø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à…À´ĞÑ•áĞµÍ±…Ñ”´ÔÀÀÑ•áĞµáÌˆø(€€€€€€€€€€ñ„¡É•˜ôˆ½½µÁ…¹äˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû¦/–ZÛ¢š–‚Äğ½„ø4(€€€€€€€€€€ñ„¥ô‰™½½Ñ•ÈµÁÉ¥Ù…äµ±¥¹¬ˆ¡É•˜ôˆ½ÁÉ¥Ù…äˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû_§
-“C
-ßów«
-ßğğ½„ø4(€€€€€€€€€€ñ„¥ô‰™½½Ñ•ÈµÑ•ÉµÌµ±¥¹¬ˆ¡É•˜ôˆ½Ñ•ÉµÌˆ±…ÍÌô‰¡½Ù•ÈéÑ•áĞµÁÉ¥µ…Éä´ØÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆû–"§R£¢š?Òğ½„ø4(€€€€€€€€ğ½‘¥Øø4(€€€€€€ğ½‘¥Øø4(€€€€ğ½‘¥Øø4(€€ğ½™½½Ñ•Èø4(4(€€ñÍÉ¥ÁĞÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ğ½¹Á´½…á¥½Í Ä¸Ø¸À½‘¥ÍĞ½…á¥½Ì¹µ¥¸¹©Ìˆøğ½ÍÉ¥ÁĞø4(€€ñÍÉ¥ÁĞÍÉŒôˆ½ÍÑ…Ñ¥Œ½ÁÕ‰±¥Œ¹©ÌıØôÈÀÈØÀàÀĞµ…­Õ¡¥­„µÑ¥µ•±¥¹”ˆøğ½ÍÉ¥ÁĞø4(€€ñÍÉ¥ÁĞø4(€€€€¼¼ƒ>û–r£»kó
-ã
-K–"“–ºk_›¯ó
-Ï
-À4(€€€½¹ÍĞÁ…Ñ €ôİ¥¹‘½Ü¹±½…Ñ¥½¸¹Á…Ñ¡¹…µ”ì4(€€€¥˜€¡Á…Ñ €ôôô€œ¼œñğÁ…Ñ €ôôô€œœ¤¥¹¥Ñ!½µ•A…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½©½‰Ìœ¤¥¹¥Ñ)½‰ÍA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ ¹ÍÑ…ÉÑÍ]¥Ñ  œ½©½‰Ì¼œ¤¤¥¹¥Ñ)½‰•Ñ…¥±A…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½Õ¹¥Ù•ÉÍ¥Ñ¥•Ìœ¤¥¹¥ÑU¹¥Ù•ÉÍ¥Ñ¥•ÍA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ ¹ÍÑ…ÉÑÍ]¥Ñ  œ½Õ¹¥Ù•ÉÍ¥Ñ¥•Ì¼œ¤¤ì4(€€€€€½¹ÍĞÍ±Õœ€ôÁ…Ñ ¹ÍÁ±¥Ğ œ¼œ¥lÉtì4(€€€€€¥¹¥ÑU¹¥Ù•ÉÍ¥Ñå)½‰ÍA…”¡Í±Õœ¤ì4(€€€ô4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½É•¥ÍÑ•Èœ¤¥¹¥ÑI•¥ÍÑ•ÉA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½±½¥¸œ¤¥¹¥Ñ1½¥¹A…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½½¹ÍÕ±Ñ…Ñ¥½¸œ¤¥¹¥Ñ½¹ÍÕ±Ñ…Ñ¥½¹A…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½µåÁ…”œ¤¥¹¥Ñ5åA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½ÁÉ¥Ù…äœ¤¥¹¥ÑAÉ¥Ù…åA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½Ñ•ÉµÌœ¤¥¹¥ÑQ•ÉµÍA…” ¤ì4(€€€•±Í”¥˜€¡Á…Ñ €ôôô€œ½½µÁ…¹äœ¤¥¹¥Ñ½µÁ…¹åA…” ¤ì4(€€€•±Í”¥¹¥Ñ9½Ñ½Õ¹‘A…” ¤ì4(€€ğ½ÍÉ¥ÁĞø4(ğ½‰½‘äø4(ğ½¡Ñµ°ù€4)ô4(4)™Õ¹Ñ¥½¸•Ñ‘µ¥¹!Q50 ¤èÍÑÉ¥¹œì4(€É•ÑÕÉ¸€ğ…=QeA¡Ñµ°ø4(ñ¡Ñµ°±…¹œô‰©„ˆø4(ñ¡•…ø4(€€ñµ•Ñ„¡…ÉÍ•Ğô‰UQ´àˆø4(€€ñµ•Ñ„¹…µ”ô‰Ù¥•İÁ½ÉĞˆ½¹Ñ•¹Ğô‰İ¥‘Ñ õ‘•Ù¥”µİ¥‘Ñ °¥¹¥Ñ¥…°µÍ…±”ôÄ¸Àˆø4(€€ñÑ¥Ñ±”ûº‡BRï¦vˆ€´ƒ
-³
-¿
-¯
-“Ï
-ÿóÌğ½Ñ¥Ñ±”ø4(€€ñ±¥¹¬É•°ô‰¥½¸ˆÑåÁ”ô‰¥µ…”½ÍÙœ­áµ°ˆ¡É•˜ôˆ½™…Ù¥½¸¹ÍÙœˆø4(€€ñÍÉ¥ÁĞÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹Ñ…¥±İ¥¹‘ÍÌ¹½´ˆøğ½ÍÉ¥ÁĞø4(€€ñ±¥¹¬¡É•˜ô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ğ½¹Á´½™½ÉÑ…İ•Í½µ”½™½¹Ñ…İ•Í½µ”µ™É•• Ø¸Ğ¸À½ÍÌ½…±°¹µ¥¸¹ÍÌˆÉ•°ô‰ÍÑå±•Í¡••Ğˆø4(€€ñÍÉ¥ÁĞø4(€€€Ñ…¥±İ¥¹¹½¹™¥œ€ôì4(€€€€€Ñ¡•µ”èì4(€€€€€€€•áÑ•¹èì4(€€€€€€€€€½±½ÉÌèì4(€€€€€€€€€€€ÁÉ¥µ…Éäèì€ÔÀÀè€œŒÑ˜Ù•˜Üœ°€ØÀÀè€œŒÍˆÕ”Øœ°€ÜÀÀè€œŒÈäĞÕĞœô°4(€€€€€€€€€€€‘…É¬èì€ÜÀÀè€œŒÅ„ÈÈÌÔœ°€àÀÀè€œŒÁ˜ÄØÈäœ°€äÀÀè€œŒÀàÁÅ„œô4(€€€€€€€€€ô4(€€€€€€€ô4(€€€€€ô4(€€€ô4(€€ğ½ÍÉ¥ÁĞø4(€€ñ±¥¹¬¡É•˜ô‰¡ÑÑÁÌè¼½™½¹ÑÌ¹½½±•…Á¥Ì¹½´½ÍÌÈı™…µ¥±äõ9½Ñ¼­M…¹Ì­)@éİ¡Ñ ÌÀÀìĞÀÀìÔÀÀìÜÀÀ™‘¥ÍÁ±…äõÍİ…ÀˆÉ•°ô‰ÍÑå±•Í¡••Ğˆø4(€€ñÍÑå±”ø4(€€€‰½‘äì™½¹Ğµ™…µ¥±äè€9½Ñ¼M…¹Ì)@œ°Í…¹ÌµÍ•É¥˜ìô4(€€€€¹Í¥‘•‰…Èµ¥Ñ•´ìÑÉ…¹Í¥Ñ¥½¸è…±°€À¸ÉÌìô4(€€€€¹Í¥‘•‰…Èµ¥Ñ•´é¡½Ù•È°€¹Í¥‘•‰…Èµ¥Ñ•´¹…Ñ¥Ù”ì‰…­É½Õ¹èÉ‰„ Üä°ÄÄÀ°ÈĞÜ°À¸ÄÔ¤ì½±½Èè€ŒàÄá˜àìô4(€€€€¹ÍÑ…ÑÕÌµ‰…‘”ì™½¹ĞµÍ¥é”è€À¸İÉ•´ìÁ…‘‘¥¹œè€ÉÁà€áÁàì‰½É‘•ÈµÉ…‘¥ÕÌè€äääåÁàì™½¹Ğµİ•¥¡Ğè€ÔÀÀìô4(€€€€¹±…ÍÌì‰…­É½Õ¹èÉ‰„ ÈÔÔ°ÈÔÔ°ÈÔÔ°À¸ÀÌ¤ì‰½É‘•Èè€ÅÁàÍ½±¥É‰„ ÈÔÔ°ÈÔÔ°ÈÔÔ°À¸Àà¤ìô4(€€€€¹Ñ…‰±”µÉ½Üé¡½Ù•Èì‰…­É½Õ¹èÉ‰„ Üä°ÄÄÀ°ÈĞÜ°À¸ÀÔ¤ìô4(€€€€èèµİ•‰­¥ĞµÍÉ½±±‰…Èìİ¥‘Ñ è€ÑÁàìô€èèµİ•‰­¥ĞµÍÉ½±±‰…ÈµÑÉ…¬ì‰…­É½Õ¹è€ŒÀàÁÅ„ìô€èèµİ•‰­¥ĞµÍÉ½±±‰…ÈµÑ¡Õµˆì‰…­É½Õ¹è€ŒÈäĞÕĞìô4(€€€€¹™…‘”µ¥¸ì…¹¥µ…Ñ¥½¸è™…‘•%¸€À¸ÍÌ•…Í”ìô4(€€€­•å™É…µ•Ì™…‘•%¸ì™É½´ì½Á…¥ÑäèÀìôÑ¼ì½Á…¥ÑäèÄìôô4(€€€€¹µ½‘…°µ½Ù•É±…äì‰…­É½Õ¹èÉ‰„ À°À°À°À¸Ü¤ì‰…­‘É½Àµ™¥±Ñ•Èè‰±ÕÈ ÑÁà¤ìô4(€€€€¹™•…ÑÕÉ•µ©½ˆµ½¹ÑÉ½°°4(€€€€¹™•…ÑÕÉ•µ©½ˆµ½¹ÑÉ½°½ÁÑ¥½¸ì4(€€€€€‰…­É½Õ¹µ½±½Èè€™™™™™˜€…¥µÁ½ÉÑ…¹Ğì4(€€€€€½±½Èè€ŒÄÄÄàÈÜ€…¥µÁ½ÉÑ…¹Ğì4(€€€€€½±½ÈµÍ¡•µ”è±¥¡Ğì4(€€€ô4(€€€€¹™•…ÑÕÉ•µ©½ˆµ½¹ÑÉ½°½ÁÑ¥½¸é¡•­•ì4(€€€€€‰…­É½Õ¹µ½±½Èè€”Õ”İ•ˆ€…¥µÁ½ÉÑ…¹Ğì4(€€€€€½±½Èè€ŒÄÄÄàÈÜ€…¥µÁ½ÉÑ…¹Ğì4(€€€ô4(€€ğ½ÍÑå±”ø4(ğ½¡•…ø4(ñ‰½‘ä±…ÍÌô‰‰œµ‘…É¬´äÀÀÑ•áĞµİ¡¥Ñ”µ¥¸µ µÍÉ••¸™±•àˆø4(4(€€ğ„´´ƒ
-×
-“'Cğ€´´ø4(€€ñ…Í¥‘”¥ô‰Í¥‘•‰…Èˆ±…ÍÌô‰Ü´ØĞµ¥¸µ µÍÉ••¸‰œµ‘…É¬´àÀÀ‰½É‘•ÈµÈ‰½É‘•Èµİ¡¥Ñ”¼ÄÀ™±•à™±•àµ½°™¥á•±•™Ğ´ÀÑ½À´Àè´ĞÀˆø4(€€€€ñ‘¥Ø±…ÍÌô‰À´Ô‰½É‘•Èµˆ‰½É‘•Èµİ¡¥Ñ”¼ÄÀˆø4(€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´Èˆø4(€€€€€€€€ñ‘¥Ø±…ÍÌô‰Ü´Ü ´Ü‰œµÁÉ¥µ…Éä´ÔÀÀÉ½Õ¹‘•µ±œ™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ•¹Ñ•Èˆø4(€€€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÉ½­•ĞÑ•áĞµİ¡¥Ñ”Ñ•áĞµáÌˆøğ½¤ø4(€€€€€€€€ğ½‘¥Øø4(€€€€€€€€ñÍÁ…¸±…ÍÌô‰™½¹Ğµ‰½±Ñ•áĞµÍ´ˆû
-³
-¿
-¯
-“Ï
-ÿóÌğ½ÍÁ…¸ø4(€€€€€€€€ñÍÁ…¸±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ÔÀÀµ°´Äˆûº‡Bğ½ÍÁ…¸ø4(€€€€€€ğ½‘¥Øø4(€€€€ğ½‘¥Øø4(4(€€€€ñ¹…Ø±…ÍÌô‰™±•à´ÄÀ´ĞÍÁ…”µä´Äˆø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ‘…Í¡‰½…Éœ¤ˆ‘…Ñ„µÁ…”ô‰‘…Í¡‰½…Éˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ¡…ÉĞµÁ¥”Ü´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û
-ß—só$4(€€€€€€ğ½„ø4(€€€€€€ñ‘¥Ø±…ÍÌô‰ÁĞ´ÌÁˆ´Äˆø4(€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀÁà´ÌÕÁÁ•É…Í”ÑÉ…­¥¹œµİ¥‘•ÈˆûšÆ’êëº‡Bğ½Àø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ½µÁ…¹¥•Ìœ¤ˆ‘…Ñ„µÁ…”ô‰½µÁ…¹¥•Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ‰Õ¥±‘¥¹œÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û’òš–·º‡B4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ©½‰Ìœ¤ˆ‘…Ñ„µÁ…”ô‰©½‰Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ‰É¥•™…Í”Ü´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤ûšÆ’êëº‡B4(€€€€€€ğ½„ø4(€€€€€€ñ‘¥Ø±…ÍÌô‰ÁĞ´ÌÁˆ´Äˆø4(€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀÁà´ÌÕÁÁ•É…Í”ÑÉ…­¥¹œµİ¥‘•Èˆû–¶›Rº‡Bğ½Àø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ÍÑÕ‘•¹ÑÌœ¤ˆ‘…Ñ„µÁ…”ô‰ÍÑÕ‘•¹ÑÌˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÕÍ•ÈµÉ…‘Õ…Ñ”Ü´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û–¶›R’â¢šœ4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” …ÁÁ±¥…Ñ¥½¹Ìœ¤ˆ‘…Ñ„µÁ…”ô‰…ÁÁ±¥…Ñ¥½¹Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ™¥±”µ…±ĞÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û–şs–.º‡B4(€€€€€€ğ½„ø4(€€€€€€ñ‘¥Ø±…ÍÌô‰ÁĞ´ÌÁˆ´Äˆø4(€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀÁà´ÌÕÁÁ•É…Í”ÑÉ…­¥¹œµİ¥‘•Èˆû¢¢·–ºhğ½Àø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ¥¹Ù¥Ñ•Ìœ¤ˆ‘…Ñ„µÁ…”ô‰¥¹Ù¥Ñ•Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÑ¥­•Ğµ…±ĞÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤ûš.o–ú
-Ïó$4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ½¹ÍÕ±Ñ…Ñ¥½¹Ìœ¤ˆ‘…Ñ„µÁ…”ô‰½¹ÍÕ±Ñ…Ñ¥½¹Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ½µµ•¹ÑÌÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û‡šZgnã¢®4(€€€€€€ğ½„ø4(€€€€€€ñ‘¥Ø±…ÍÌô‰ÁĞ´ÌÁˆ´Äˆø4(€€€€€€€€ñÀ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀÁà´ÌÕÁÁ•É…Í”ÑÉ…­¥¹œµİ¥‘•Èˆû
-ÏÏÏº‡Bğ½Àø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” Í¥Ñ”µÍ•ÑÑ¥¹Ìœ¤ˆ‘…Ñ„µÁ…”ô‰Í¥Ñ”µÍ•ÑÑ¥¹Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ½œÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û
-×
-“#¢¢·–ºh4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ±Àµ•‘¥Ğœ¤ˆ‘…Ñ„µÁ…”ô‰±Àµ•‘¥Ğˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ•‘¥ĞÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤ù1CŞ£¦n4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ™…ÅÌœ¤ˆ‘…Ñ„µÁ…”ô‰™…ÅÌˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÅÕ•ÍÑ¥½¸µ¥É±”Ü´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤ùGº‡B4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” …¹¹½Õ¹•µ•¹ÑÌœ¤ˆ‘…Ñ„µÁ…”ô‰…¹¹½Õ¹•µ•¹ÑÌˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ‰Õ±±¡½É¸Ü´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û+~—
-'oº‡B4(€€€€€€ğ½„ø4(€€€€€€ñ‘¥Ø±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀÁà´ÌÁä´ÈµĞ´Ğˆû#_kó
-ãº‡Bğ½‘¥Øø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ÍÕ•ÍÌµÍÑ½É¥•Ìœ¤ˆ‘…Ñ„µÁ…”ô‰ÍÕ•ÍÌµÍÑ½É¥•Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÑÉ½Á¡äÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û––ºk¢
-ÿ
-“ƒ§
-“Ì4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” ™•…ÑÕÉ•µ©½‰Ìœ¤ˆ‘…Ñ„µÁ…”ô‰™•…ÑÕÉ•µ©½‰Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÍÑ…ÈÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤ûS
-¿
-‹_šÆ’êè4(€€€€€€ğ½„ø4(€€€€€€ñ„¡É•˜ôˆŒˆ½¹±¥¬ô‰¹…Ù¥…Ñ” Õ¹¥Ù•ÉÍ¥ÑäµÑ…Ìœ¤ˆ‘…Ñ„µÁ…”ô‰Õ¹¥Ù•ÉÍ¥ÑäµÑ…Ìˆ±…ÍÌô‰Í¥‘•‰…Èµ¥Ñ•´™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÌÁà´ÌÁä´È¸ÔÉ½Õ¹‘•µ±œÑ•áĞµÉ…ä´ĞÀÀÑ•áĞµÍ´ÕÉÍ½ÈµÁ½¥¹Ñ•Èˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÕ¹¥Ù•ÉÍ¥ÑäÜ´ĞÑ•áĞµ•¹Ñ•Èˆøğ½¤û–’Ÿ–¶›
-ÿ
-Ãº‡B4(€€€€€€ğ½„ø4(€€€€ğ½¹…Øø4(4(€€€€ñ‘¥Ø±…ÍÌô‰À´Ğ‰½É‘•ÈµĞ‰½É‘•Èµİ¡¥Ñ”¼ÄÀˆø4(€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´ÈÑ•áĞµáÌÑ•áĞµÉ…ä´ÔÀÀˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ¥É±”Ñ•áĞµÉ••¸´ĞÀÀÑ•áĞµáÌˆøğ½¤ø4(€€€€€€€€ñÍÁ…¸¥ô‰…‘µ¥¸µ¹…µ”ˆûº‡B¢ğ½ÍÁ…¸ø4(€€€€€€ğ½‘¥Øø4(€€€€€€ñ‰ÕÑÑ½¸½¹±¥¬ô‰…‘µ¥¹1½½ÕĞ ¤ˆ±…ÍÌô‰µĞ´ÈÑ•áĞµáÌÑ•áĞµÉ…ä´ØÀÀ¡½Ù•ÈéÑ•áĞµÉ•´ĞÀÀÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌÜµ™Õ±°Ñ•áĞµ±•™Ğˆø4(€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µÍ¥¸µ½ÕĞµ…±ĞµÈ´Äˆøğ½¤û·
-Ã
-‹
-› 4(€€€€€€ğ½‰ÕÑÑ½¸ø4(€€€€ğ½‘¥Øø4(€€ğ½…Í¥‘”ø4(4(€€ğ„´´ƒ‡
-“Ï
-ÏÏÏ€´´ø4(€€ñ‘¥Ø±…ÍÌô‰µ°´ØĞ™±•à´Ä™±•à™±•àµ½°µ¥¸µ µÍÉ••¸ˆø4(€€€€ğ„´´ƒcğ€´´ø4(€€€€ñ¡•…‘•È±…ÍÌô‰ ´ÄĞ‰½É‘•Èµˆ‰½É‘•Èµİ¡¥Ñ”¼ÄÀ™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ‰•Ñİ••¸Áà´Ø‰œµ‘…É¬´àÀÀ¼ÔÀÍÑ¥­äÑ½À´Àè´ÌÀˆø4(€€€€€€ñ‘¥Ø¥ô‰Á…”µÑ¥Ñ±”ˆ±…ÍÌô‰Ñ•áĞµÍ´™½¹Ğµµ•‘¥Õ´Ñ•áĞµÉ…ä´ÌÀÀˆû
-ß—só$ğ½‘¥Øø4(€€€€€€ñ‘¥Ø±…ÍÌô‰™±•à¥Ñ•µÌµ•¹Ñ•È…À´Ìˆø4(€€€€€€€€ñ„¡É•˜ôˆ¼ˆÑ…É•Ğô‰}‰±…¹¬ˆ±…ÍÌô‰Ñ•áĞµáÌÑ•áĞµÉ…ä´ÔÀÀ¡½Ù•ÈéÑ•áĞµİ¡¥Ñ”ÑÉ…¹Í¥Ñ¥½¸µ½±½ÉÌˆø4(€€€€€€€€€€ñ¤±…ÍÌô‰™…Ì™„µ•áÑ•É¹…°µ±¥¹¬µ…±ĞµÈ´Äˆøğ½¤û–³¦Z/Rï¦vˆ4(€€€€€€€€ğ½„ø4(€€€€€€ğ½‘¥Øø4(€€€€ğ½¡•…‘•Èø4(4(€€€€ğ„´´ƒkó
-ã
-ÏÏÏ€´´ø4(€€€€ñµ…¥¸¥ô‰…‘µ¥¸µ½¹Ñ•¹Ğˆ±…ÍÌô‰™±•à´ÄÀ´Ø½Ù•É™±½Üµ…ÕÑ¼ˆøğ½µ…¥¸ø4(€€ğ½‘¥Øø4(4(€€ğ„´´ƒ‹ó¬€´´ø4(€€ñ‘¥Ø¥ô‰µ½‘…°ˆ±…ÍÌô‰¡¥‘‘•¸™¥á•¥¹Í•Ğ´Àè´ÔÀ™±•à¥Ñ•µÌµ•¹Ñ•È©ÕÍÑ¥™äµ•¹Ñ•Èµ½‘…°µ½Ù•É±…äˆø4(€€€€ñ‘¥Ø¥ô‰µ½‘…°µ½¹Ñ•¹Ğˆ±…ÍÌô‰‰œµ‘…É¬´àÀÀÉ½Õ¹‘•µá°‰½É‘•È‰½É‘•Èµİ¡¥Ñ”¼ÄÀÜµ™Õ±°µ…àµÜ´Éá°µà´Ğµ…àµ µläÁÙ¡t½Ù•É™±½Üµäµ…ÕÑ¼ˆøğ½‘¥Øø4(€€ğ½‘¥Øø4(4(€€ñÍÉ¥ÁĞÍÉŒô‰¡ÑÑÁÌè¼½‘¸¹©Í‘•±¥ÙÈ¹¹•Ğ½¹Á´½…á¥½Í Ä¸Ø¸À½‘¥ÍĞ½…á¥½Ì¹µ¥¸¹©Ìˆøğ½ÍÉ¥ÁĞø4(€€ñÍÉ¥ÁĞÍÉŒôˆ½ÍÑ…Ñ¥Œ½…‘µ¥¸¹©ÌıØôÈÀÈØÀàÀĞµ…­Õ¡¥­„µ‰É…¹ˆøğ½ÍÉ¥ÁĞø4(ğ½‰½‘äø4(ğ½¡Ñµ°ù€4)ô4(4)•áÁ½ÉĞ‘•™…Õ±Ğ…ÁÀ4(
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    .glass { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border: 1px solid #dfe6f2; box-shadow: 0 8px 30px rgba(23,43,103,0.07); }
+    .gradient-text { background: linear-gradient(120deg, #244bd1, #315eea 55%, #ff7337); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-gradient { background: radial-gradient(circle at 8% 12%, rgba(49,94,234,.16), transparent 25%), radial-gradient(circle at 48% 88%, rgba(255,115,55,.13), transparent 30%), linear-gradient(135deg, #f9fbff 0%, #edf3ff 62%, #fff4ec 100%); }
+    .hero-copy-zone { position: relative; isolation: isolate; }
+    .hero-copy-zone::before { content: ''; position: absolute; z-index: -1; left: -2.5rem; top: 1rem; width: 8rem; height: 8rem; border: 1px solid rgba(49,94,234,.14); border-radius: 999px; }
+    .hero-title { font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif; letter-spacing: -.055em; text-wrap: balance; }
+    .hero-title-line { display: block; }
+    .hero-title-mobile { font-size: clamp(2rem, 10vw, 2.45rem); }
+    .hero-title-mobile .hero-title-line, .cta-title-line { white-space: nowrap; }
+    .mobile-cta-title { font-size: clamp(1.45rem, 7vw, 1.85rem); line-height: 1.35; }
+    .hero-title-accent { position: relative; display: inline-block; color: #172b67; z-index: 0; }
+    .hero-title-accent::after { content: ''; position: absolute; z-index: -1; height: .24em; left: -.03em; right: -.05em; bottom: .06em; background: linear-gradient(90deg, #ff7337, #ffad6f); border-radius: 999px; opacity: .72; }
+    .home-hero-photo { background: linear-gradient(90deg, rgba(16,32,74,.18), rgba(16,32,74,0)), url('/images/hero-internship-team.webp') 62% 42%/cover no-repeat; }
+    .search-panel { background: #fff; border: 1px solid #dfe6f2; box-shadow: 0 22px 55px rgba(23,43,103,.15); }
+    .search-field { min-width: 0; background: #f8faff; border: 1px solid #d8e1ef; color: #14213d; transition: border-color .2s, box-shadow .2s, background .2s; }
+    .search-field:focus { outline: none; background: #fff; border-color: #315eea; box-shadow: 0 0 0 3px rgba(49,94,234,.12); }
+    .section-kicker { display: inline-flex; align-items: center; gap: .55rem; color: #315eea; font-size: .75rem; letter-spacing: .15em; font-weight: 900; text-transform: uppercase; }
+    .section-kicker::before { content: ''; width: 1.75rem; height: 3px; background: #ff7337; border-radius: 999px; }
+    .job-card-media { aspect-ratio: 16 / 8.7; background: linear-gradient(135deg, #eaf0ff, #fff2e8); overflow: hidden; }
+    @media (min-width: 640px) {
+      .home-hero-photo { background-position: center 42%; }
+      .mobile-cta-title { font-size: 2.25rem; }
+    }
+    @media (min-width: 1280px) {
+      .home-hero-photo { min-height: 34rem; background-position: center; }
+    }
+    @media (min-width: 1536px) {
+      .hero-title-line { white-space: nowrap; }
+    }
+    .card-hover { transition: all 0.3s ease; }
+    .card-hover:hover { transform: translateY(-5px); border-color: rgba(49,94,234,.45); box-shadow: 0 20px 40px rgba(23,43,103,.13); }
+    .tag { background: #eef4ff; border: 1px solid #d4e0ff; color: #1f3fae; font-weight: 600; }
+    .fade-in { animation: fadeIn 0.6s ease-out; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
+    .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    #source-media-step label,
+    #con-source-step label,
+    #consultation-form label:has(.concern-check) {
+      background: #ffffff;
+      border-color: #d1d5db;
+    }
+    #source-media-step label.border-primary-500 { border-color: #4f6ef7 !important; background: rgba(79,110,247,0.08); }
+    #con-source-step label.border-purple-500 { border-color: #a855f7 !important; background: rgba(168,85,247,0.08); }
+    #source-media-step span,
+    #con-source-step span,
+    #consultation-form .concern-check + span {
+      color: #374151 !important;
+    }
+    #invite-code-step input,
+    #login-form input,
+    #register-form input:not([type="hidden"]),
+    #register-form select,
+    #consultation-form input:not([type="hidden"]):not([type="checkbox"]),
+    #consultation-form select,
+    #consultation-form textarea {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border-color: #d1d5db !important;
+    }
+    #search-q,
+    #home-search-q,
+    #home-filter-occupation,
+    #home-filter-style,
+    #uni-search,
+    #filter-occupation,
+    #filter-industry,
+    #filter-style {
+      background: #ffffff !important;
+      color: #111827 !important;
+      border-color: #d1d5db !important;
+    }
+    #invite-code-step input::placeholder,
+    #login-form input::placeholder,
+    #register-form input::placeholder,
+    #consultation-form input::placeholder,
+    #consultation-form textarea::placeholder,
+    #search-q::placeholder,
+    #uni-search::placeholder {
+      color: #9ca3af !important;
+      opacity: 1;
+    }
+    #filter-industry option,
+    #filter-occupation option,
+    #filter-style option {
+      background: #ffffff;
+      color: #111827;
+    }
+    #register-form input:focus,
+    #login-form input:focus,
+    #register-form select:focus,
+    #consultation-form input:focus,
+    #consultation-form select:focus,
+    #consultation-form textarea:focus,
+    #invite-code-step input:focus {
+      border-color: #4f6ef7 !important;
+      box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 min-h-screen">
+
+  <!-- ãƒŠãƒ“ã‚²ãƒ¼ã‚·ãƒ§ãƒ³ -->
+  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-[0_4px_20px_rgba(23,43,103,0.06)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-[72px]">
+        <a href="/" class="flex items-center gap-2">
+          <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³">
+          <div class="js-site-logo-icon w-9 h-9 bg-primary-600 rounded-xl flex items-center justify-center shadow-md shadow-primary-500/20">
+            <i class="fas fa-arrow-trend-up text-white text-sm"></i>
+          </div>
+          <span class="js-site-name text-xl font-bold gradient-text">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</span>
+        </a>
+        <div class="hidden md:flex items-center gap-6">
+          <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">æ±‚äººã‚’æ¢ã™</a>
+          <button onclick="openUniversityModal()" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium cursor-pointer bg-transparent border-none">å¤§å­¦åˆ¥æ±‚äºº</button>
+          <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">ç„¡æ–™ç›¸è«‡</a>
+        </div>
+        <div class="flex items-center gap-3">
+          <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 text-gray-600 hover:text-primary-600 text-sm px-2 py-2 rounded-lg transition-colors font-medium">
+            <i class="fas fa-right-to-bracket text-base"></i>ãƒ­ã‚°ã‚¤ãƒ³
+          </a>
+          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-sm px-4 py-2.5 rounded-xl transition-all font-bold shadow-md shadow-primary-500/20">
+            <i class="fas fa-user-plus text-base"></i>ç„¡æ–™ç™»éŒ²
+          </a>
+          <button onclick="openLineModal()" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium cursor-pointer border-none">
+            <i class="fab fa-line text-base"></i>LINEç›¸è«‡
+          </button>
+          <!-- ãƒ¢ãƒã‚¤ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ãƒœã‚¿ãƒ³ -->
+          <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-600 hover:text-gray-900 flex-shrink-0" onclick="toggleMobileMenu()" aria-label="ãƒ¡ãƒ‹ãƒ¥ãƒ¼ã‚’é–‹ã">
+            <i class="fas fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ãƒ¢ãƒã‚¤ãƒ«ãƒ¡ãƒ‹ãƒ¥ãƒ¼ -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 shadow-lg">
+      <div class="px-4 py-3 space-y-1">
+        <a href="/jobs" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-search text-primary-500 w-4"></i>æ±‚äººã‚’æ¢ã™
+        </a>
+        <button onclick="openUniversityModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm bg-transparent border-none cursor-pointer">
+          <i class="fas fa-university text-primary-500 w-4"></i>å¤§å­¦åˆ¥æ±‚äºº
+        </button>
+        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-comments text-primary-500 w-4"></i>ç„¡æ–™ç›¸è«‡
+        </a>
+        <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-user-plus text-primary-500 w-4"></i>ç„¡æ–™ç™»éŒ²ã™ã‚‹
+        </a>
+        <a href="/login" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
+          <i class="fas fa-right-to-bracket text-primary-500 w-4"></i>ãƒ­ã‚°ã‚¤ãƒ³
+        </a>
+        <button onclick="openLineModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1 border-none cursor-pointer">
+          <i class="fab fa-line text-white w-4"></i>LINEã§ç„¡æ–™ç›¸è«‡
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- LINEåª’ä½“é¸æŠãƒ¢ãƒ¼ãƒ€ãƒ« -->
+  <div id="line-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 hidden" onclick="handleLineModalOutsideClick(event)">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full" onclick="event.stopPropagation()">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-gray-900">ã©ã“ã§çŸ¥ã‚Šã¾ã—ãŸã‹ï¼Ÿ</h2>
+          <p class="text-sm text-gray-500 mt-1">ã‚ãªãŸã«åˆã£ãŸLINEå…¬å¼ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã¸ã”æ¡ˆå†…ã—ã¾ã™</p>
+        </div>
+        <button onclick="closeLineModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="line-modal-options" class="p-6 flex flex-col gap-3">
+        <!-- JS ã§ç”Ÿæˆ -->
+      </div>
+    </div>
+  </div>
+
+  <!-- å¤§å­¦é¸æŠãƒ¢ãƒ¼ãƒ€ãƒ« -->
+  <div id="university-modal" class="fixed inset-0 z-[200] flex items-center justify-center p-4 hidden" onclick="handleUniversityModalOutsideClick(event)">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-lg w-full max-h-[80vh] overflow-y-auto" onclick="event.stopPropagation()">
+      <div class="p-6 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h2 class="text-xl font-black text-gray-900">ã©ã®å¤§å­¦ã§ã™ã‹ï¼Ÿ</h2>
+          <p class="text-sm text-gray-500 mt-1">å¤§å­¦ã‚’é¸ã¶ã¨ã€ãã®å¤§å­¦å‘ã‘ã®æ±‚äººä¸€è¦§ã‚’è¡¨ç¤ºã—ã¾ã™</p>
+        </div>
+        <button onclick="closeUniversityModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div id="university-modal-grid" class="p-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
+        <div class="col-span-2 sm:col-span-3 text-center text-gray-400 py-8">
+          <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+          <p class="text-sm">èª­ã¿è¾¼ã¿ä¸­...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      const btn = document.getElementById('mobile-menu-btn');
+      menu.classList.toggle('hidden');
+      btn.innerHTML = menu.classList.contains('hidden')
+        ? '<i class="fas fa-bars text-lg"></i>'
+        : '<i class="fas fa-times text-lg"></i>';
+    }
+
+    // å¤§å­¦é¸æŠãƒ¢ãƒ¼ãƒ€ãƒ«
+    let _universityDataCache = null;
+
+    async function openUniversityModal() {
+      const modal = document.getElementById('university-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      if (_universityDataCache) {
+        renderUniversityModalGrid(_universityDataCache);
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/homepage/university-tags');
+        const json = await res.json();
+        _universityDataCache = json.data || [];
+        renderUniversityModalGrid(_universityDataCache);
+      } catch(e) {
+        document.getElementById('university-modal-grid').innerHTML =
+          '<p class="col-span-3 text-center text-red-500 text-sm py-6">èª­ã¿è¾¼ã¿ã«å¤±æ•—ã—ã¾ã—ãŸ</p>';
+      }
+    }
+
+    function renderUniversityModalGrid(universities) {
+      const grid = document.getElementById('university-modal-grid');
+      if (!universities.length) {
+        grid.innerHTML = '<p class="col-span-3 text-center text-gray-500 text-sm py-6">å¤§å­¦æƒ…å ±ãŒã‚ã‚Šã¾ã›ã‚“</p>';
+        return;
+      }
+      grid.innerHTML = universities.map(uni => \`
+        <a href="/universities/\${uni.slug}" onclick="closeUniversityModal()"
+           class="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all text-center cursor-pointer">
+          <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center transition-colors">
+            <i class="fas fa-university text-primary-600 text-lg"></i>
+          </div>
+          <p class="text-sm font-semibold text-gray-800 group-hover:text-primary-700 leading-tight">\${uni.name}</p>
+        </a>
+      \`).join('');
+    }
+
+    function closeUniversityModal() {
+      document.getElementById('university-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function handleUniversityModalOutsideClick(e) {
+      if (e.target === document.getElementById('university-modal')) {
+        closeUniversityModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') { closeUniversityModal(); closeLineModal(); }
+    });
+
+    // ============================================================
+    // LINEåª’ä½“é¸æŠãƒ¢ãƒ¼ãƒ€ãƒ«
+    // ============================================================
+    // SOURCE_MEDIA_OPTIONS ã¨åŒã˜å®šç¾©ï¼ˆpublic.js ã¨åŒæœŸã•ã›ã‚‹ã“ã¨ï¼‰
+    const LINE_MEDIA_OPTIONS = [
+      { value: 'sunconnect', label: 'SUNCONNECT',        line_key: 'line_url_sunconnect' },
+      { value: 'valueup',    label: 'ãƒãƒªãƒ¥ãƒ¼ã‚¢ãƒƒãƒ—',       line_key: 'line_url_valueup' },
+      { value: 'genki_intern', label: 'å…ƒæ°—ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³',       line_key: 'line_url_genki_intern', fallback_to_default: false },
+      { value: 'sokei_intern_compass', label: 'æ—©æ…¶ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³ã‚³ãƒ³ãƒ‘ã‚¹', line_key: 'line_url_sokei_intern_compass', fallback_to_default: false },
+      { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_careersourcing', fallback_to_default: false },
+      { value: 'other',      label: 'ãã®ä»–',             line_key: 'line_url_default' },
+    ];
+
+    function isUsableLineUrl(url) {
+      return !!url && url !== '#' && !String(url).includes('xxxx');
+    }
+
+    // ã‚µã‚¤ãƒˆè¨­å®šï¼ˆLINE URLãªã©ï¼‰ã‚’ã‚­ãƒ£ãƒƒã‚·ãƒ¥
+    let _siteSettingsCache = null;
+
+    async function getSiteSettingsForModal() {
+      if (_siteSettingsCache) return _siteSettingsCache;
+      try {
+        const res = await fetch('/api/settings');
+        const json = await res.json();
+        _siteSettingsCache = json.data || {};
+      } catch(e) {
+        _siteSettingsCache = {};
+      }
+      return _siteSettingsCache;
+    }
+
+    async function openLineModal() {
+      const modal = document.getElementById('line-modal');
+      modal.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+
+      const s = await getSiteSettingsForModal();
+      const container = document.getElementById('line-modal-options');
+
+      container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
+        const rawUrl = s[opt.line_key] ||
+          (opt.fallback_to_default === false ? '' : s['line_url_default'] || s['line_url'] || '');
+        const url = isUsableLineUrl(rawUrl) ? rawUrl : '';
+        if (!url) {
+          return \`
+            <div class="flex items-center gap-4 p-4 rounded-xl border border-gray-100 bg-gray-50 opacity-70">
+              <div class="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center flex-shrink-0">
+                <i class="fab fa-line text-gray-400 text-xl"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-700 text-sm leading-snug">\${opt.label}</p>
+                <p class="text-xs text-gray-400 mt-0.5">LINE URLæœªè¨­å®š</p>
+              </div>
+            </div>
+          \`;
+        }
+        return \`
+          <a href="\${url}" target="_blank" rel="noopener"
+             onclick="closeLineModal()"
+             class="group flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-green-300 hover:bg-green-50 transition-all cursor-pointer">
+            <div class="w-12 h-12 bg-green-500/10 group-hover:bg-green-500/20 rounded-full flex items-center justify-center flex-shrink-0 transition-colors">
+              <i class="fab fa-line text-green-600 text-xl"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+              <p class="font-semibold text-gray-800 group-hover:text-green-700 text-sm leading-snug">\${opt.label}</p>
+              <p class="text-xs text-gray-400 mt-0.5">å°‚ç”¨LINEå…¬å¼ã‚¢ã‚«ã‚¦ãƒ³ãƒˆã¸</p>
+            </div>
+            <i class="fas fa-chevron-right text-gray-300 group-hover:text-green-400 text-xs flex-shrink-0"></i>
+          </a>
+        \`;
+      }).join('');
+    }
+
+    function closeLineModal() {
+      document.getElementById('line-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function handleLineModalOutsideClick(e) {
+      if (e.target === document.getElementById('line-modal')) {
+        closeLineModal();
+      }
+    }
+  </script>
+
+  <!-- ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
+  <main id="app" class="pt-[72px]"></main>
+
+  <!-- ãƒ•ãƒƒã‚¿ãƒ¼ -->
+  <footer class="mt-24 py-14 bg-slate-950 text-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³">
+            <div class="js-site-logo-icon w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-arrow-trend-up text-white text-xs"></i>
+            </div>
+            <span class="js-site-name font-bold text-white">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</span>
+          </div>
+          <p id="footer-site-description" class="text-slate-400 text-xs leading-relaxed">å³é¸ã•ã‚ŒãŸé•·æœŸã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³æ±‚äººã§ã€ã‚ãªãŸã®ã‚­ãƒ£ãƒªã‚¢ã‚’åŠ é€Ÿã•ã›ã‚ˆã†ã€‚</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-3 text-white">æ±‚äººã‚’æ¢ã™</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
+            <li><a href="/jobs" class="hover:text-primary-600 transition-colors">å…¨ã¦ã®æ±‚äºº</a></li>
+            <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">å‹¤å‹™å½¢æ…‹</a></li>
+            <li><a href="/jobs?industry=ITãƒ»SaaS" class="hover:text-primary-600 transition-colors">æ¥­ç•Œ</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-3 text-white">ã‚µãƒ¼ãƒ“ã‚¹</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
+            <li><a href="/register" class="hover:text-primary-600 transition-colors">æ–°è¦ç™»éŒ²</a></li>
+            <li><a href="/consultation" class="hover:text-primary-600 transition-colors">ç„¡æ–™ç›¸è«‡</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-3 text-white">å…¬å¼LINE</h4>
+          <p class="text-slate-400 text-xs mb-3">å¿œå‹Ÿå¾Œã®é€£çµ¡ã¯å…¬å¼LINEã§è¡Œã„ã¾ã™ã€‚</p>
+          <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors border-none cursor-pointer">
+            <i class="fab fa-line"></i>LINEã‚’è¿½åŠ 
+          </button>
+        </div>
+      </div>
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p id="footer-copyright" class="text-slate-500 text-xs">Â© 2026 ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³. All rights reserved.</p>
+        <div class="flex gap-4 text-slate-500 text-xs">
+          <a href="/company" class="hover:text-primary-600 transition-colors">é‹å–¶è€…æƒ…å ±</a>
+          <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">ãƒ—ãƒ©ã‚¤ãƒã‚·ãƒ¼ãƒãƒªã‚·ãƒ¼</a>
+          <a id="footer-terms-link" href="/terms" class="hover:text-primary-600 transition-colors">åˆ©ç”¨è¦ç´„</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+  <script src="/static/public.js?v=20260804-gakuchika-timeline"></script>
+  <script>
+    // ç¾åœ¨ã®ãƒšãƒ¼ã‚¸ã‚’åˆ¤å®šã—ã¦ãƒ«ãƒ¼ãƒ†ã‚£ãƒ³ã‚°
+    const path = window.location.pathname;
+    if (path === '/' || path === '') initHomePage();
+    else if (path === '/jobs') initJobsPage();
+    else if (path.startsWith('/jobs/')) initJobDetailPage();
+    else if (path === '/universities') initUniversitiesPage();
+    else if (path.startsWith('/universities/')) {
+      const slug = path.split('/')[2];
+      initUniversityJobsPage(slug);
+    }
+    else if (path === '/register') initRegisterPage();
+    else if (path === '/login') initLoginPage();
+    else if (path === '/consultation') initConsultationPage();
+    else if (path === '/mypage') initMyPage();
+    else if (path === '/privacy') initPrivacyPage();
+    else if (path === '/terms') initTermsPage();
+    else if (path === '/company') initCompanyPage();
+    else initNotFoundPage();
+  </script>
+</body>
+</html>`
+}
+
+function getAdminHTML(): string {
+  return `<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ç®¡ç†ç”»é¢ - ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: { 500: '#4f6ef7', 600: '#3b5ce6', 700: '#2945d4' },
+            dark: { 700: '#1a2235', 800: '#0f1629', 900: '#080d1a' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Noto Sans JP', sans-serif; }
+    .sidebar-item { transition: all 0.2s; }
+    .sidebar-item:hover, .sidebar-item.active { background: rgba(79,110,247,0.15); color: #818cf8; }
+    .status-badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 9999px; font-weight: 500; }
+    .glass { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+    .table-row:hover { background: rgba(79,110,247,0.05); }
+    ::-webkit-scrollbar { width: 4px; } ::-webkit-scrollbar-track { background: #080d1a; } ::-webkit-scrollbar-thumb { background: #2945d4; }
+    .fade-in { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+    .modal-overlay { background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+    .featured-job-control,
+    .featured-job-control option {
+      background-color: #ffffff !important;
+      color: #111827 !important;
+      color-scheme: light;
+    }
+    .featured-job-control option:checked {
+      background-color: #e5e7eb !important;
+      color: #111827 !important;
+    }
+  </style>
+</head>
+<body class="bg-dark-900 text-white min-h-screen flex">
+
+  <!-- ã‚µã‚¤ãƒ‰ãƒãƒ¼ -->
+  <aside id="sidebar" class="w-64 min-h-screen bg-dark-800 border-r border-white/10 flex flex-col fixed left-0 top-0 z-40">
+    <div class="p-5 border-b border-white/10">
+      <div class="flex items-center gap-2">
+        <div class="w-7 h-7 bg-primary-500 rounded-lg flex items-center justify-center">
+          <i class="fas fa-rocket text-white text-xs"></i>
+        </div>
+        <span class="font-bold text-sm">ã‚¬ã‚¯ãƒã‚«ã‚¤ãƒ³ã‚¿ãƒ¼ãƒ³</span>
+        <span class="text-xs text-gray-500 ml-1">ç®¡ç†</span>
+      </div>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-1">
+      <a href="#" onclick="navigate('dashboard')" data-page="dashboard" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-chart-pie w-4 text-center"></i>ãƒ€ãƒƒã‚·ãƒ¥ãƒœãƒ¼ãƒ‰
+      </a>
+      <div class="pt-3 pb-1">
+        <p class="text-xs text-gray-600 px-3 uppercase tracking-wider">æ±‚äººç®¡ç†</p>
+      </div>
+      <a href="#" onclick="navigate('companies')" data-page="companies" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-building w-4 text-center"></i>ä¼æ¥­ç®¡ç†
+      </a>
+      <a href="#" onclick="navigate('jobs')" data-page="jobs" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-briefcase w-4 text-center"></i>æ±‚äººç®¡ç†
+      </a>
+      <div class="pt-3 pb-1">
+        <p class="text-xs text-gray-600 px-3 uppercase tracking-wider">å­¦ç”Ÿç®¡ç†</p>
+      </div>
+      <a href="#" onclick="navigate('students')" data-page="students" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-user-graduate w-4 text-center"></i>å­¦ç”Ÿä¸€è¦§
+      </a>
+      <a href="#" onclick="navigate('applications')" data-page="applications" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-file-alt w-4 text-center"></i>å¿œå‹Ÿç®¡ç†
+      </a>
+      <div class="pt-3 pb-1">
+        <p class="text-xs text-gray-600 px-3 uppercase tracking-wider">è¨­å®š</p>
+      </div>
+      <a href="#" onclick="navigate('invites')" data-page="invites" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-ticket-alt w-4 text-center"></i>æ‹›å¾…ã‚³ãƒ¼ãƒ‰
+      </a>
+      <a href="#" onclick="navigate('consultations')" data-page="consultations" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-comments w-4 text-center"></i>ç„¡æ–™ç›¸è«‡
+      </a>
+      <div class="pt-3 pb-1">
+        <p class="text-xs text-gray-600 px-3 uppercase tracking-wider">ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ç®¡ç†</p>
+      </div>
+      <a href="#" onclick="navigate('site-settings')" data-page="site-settings" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-cog w-4 text-center"></i>ã‚µã‚¤ãƒˆè¨­å®š
+      </a>
+      <a href="#" onclick="navigate('lp-edit')" data-page="lp-edit" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-edit w-4 text-center"></i>LPç·¨é›†
+      </a>
+      <a href="#" onclick="navigate('faqs')" data-page="faqs" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-question-circle w-4 text-center"></i>FAQç®¡ç†
+      </a>
+      <a href="#" onclick="navigate('announcements')" data-page="announcements" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-bullhorn w-4 text-center"></i>ãŠçŸ¥ã‚‰ã›ç®¡ç†
+      </a>
+      <div class="text-xs text-gray-600 px-3 py-2 mt-4">ãƒˆãƒƒãƒ—ãƒšãƒ¼ã‚¸ç®¡ç†</div>
+      <a href="#" onclick="navigate('success-stories')" data-page="success-stories" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-trophy w-4 text-center"></i>å†…å®šè€…ã‚¿ã‚¤ãƒ ãƒ©ã‚¤ãƒ³
+      </a>
+      <a href="#" onclick="navigate('featured-jobs')" data-page="featured-jobs" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-star w-4 text-center"></i>ãƒ”ãƒƒã‚¯ã‚¢ãƒƒãƒ—æ±‚äºº
+      </a>
+      <a href="#" onclick="navigate('university-tags')" data-page="university-tags" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
+        <i class="fas fa-university w-4 text-center"></i>å¤§å­¦ã‚¿ã‚°ç®¡ç†
+      </a>
+    </nav>
+
+    <div class="p-4 border-t border-white/10">
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <i class="fas fa-circle text-green-400 text-xs"></i>
+        <span id="admin-name">ç®¡ç†è€…</span>
+      </div>
+      <button onclick="adminLogout()" class="mt-2 text-xs text-gray-600 hover:text-red-400 transition-colors w-full text-left">
+        <i class="fas fa-sign-out-alt mr-1"></i>ãƒ­ã‚°ã‚¢ã‚¦ãƒˆ
+      </button>
+    </div>
+  </aside>
+
+  <!-- ãƒ¡ã‚¤ãƒ³ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
+  <div class="ml-64 flex-1 flex flex-col min-h-screen">
+    <!-- ãƒ˜ãƒƒãƒ€ãƒ¼ -->
+    <header class="h-14 border-b border-white/10 flex items-center justify-between px-6 bg-dark-800/50 sticky top-0 z-30">
+      <div id="page-title" class="text-sm font-medium text-gray-300">ãƒ€ãƒƒã‚·ãƒ¥ãƒœãƒ¼ãƒ‰</div>
+      <div class="flex items-center gap-3">
+        <a href="/" target="_blank" class="text-xs text-gray-500 hover:text-white transition-colors">
+          <i class="fas fa-external-link-alt mr-1"></i>å…¬é–‹ç”»é¢
+        </a>
+      </div>
+    </header>
+
+    <!-- ãƒšãƒ¼ã‚¸ã‚³ãƒ³ãƒ†ãƒ³ãƒ„ -->
+    <main id="admin-content" class="flex-1 p-6 overflow-auto"></main>
+  </div>
+
+  <!-- ãƒ¢ãƒ¼ãƒ€ãƒ« -->
+  <div id="modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-overlay">
+    <div id="modal-content" class="bg-dark-800 rounded-xl border border-white/10 w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+  <script src="/static/admin.js?v=20260804-gakuchika-brand"></script>
+</body>
+</html>`
+}
+
+export default app
