@@ -42,7 +42,7 @@ test.describe('Preview public site', () => {
     await expect(page.locator('.hero-title-mobile')).toBeVisible();
     await expect(page.locator('.home-hero-photo')).toHaveCSS('height', '190px');
     await expect(page.locator('.mobile-cta-title .cta-title-line')).toHaveCount(2);
-    await expect(page.getByRole('button', { name: 'LINEで無料相談する' })).toHaveCSS('white-space', 'nowrap');
+    await expect(page.locator('.mobile-cta-title + p + button')).toHaveCSS('white-space', 'nowrap');
 
     await page.setViewportSize({ width: 1600, height: 1000 });
     await expect(page.locator('.home-hero-photo')).toHaveCSS('height', '544px');
