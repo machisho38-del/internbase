@@ -35,12 +35,16 @@ test.describe('Preview public site', () => {
   test('home hero stays compact on mobile and expands into two columns on desktop', async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.goto('/');
-    await expect(page.locator('.hero-title-line')).toHaveCount(2);
+    await expect(page.locator('.hero-title-mobile .hero-title-line')).toHaveCount(3);
+    await expect(page.locator('.hero-title-mobile')).toBeVisible();
     await expect(page.locator('.home-hero-photo')).toHaveCSS('height', '190px');
+    await expect(page.locator('.mobile-cta-title .cta-title-line')).toHaveCount(2);
+    await expect(page.getByRole('button', { name: 'LINEで無料相談する' })).toHaveCSS('white-space', 'nowrap');
 
     await page.setViewportSize({ width: 1600, height: 1000 });
     await expect(page.locator('.home-hero-photo')).toHaveCSS('height', '544px');
-    await expect(page.locator('.hero-title-line').first()).toHaveCSS('white-space', 'nowrap');
+    await expect(page.locator('.hero-title-desktop')).toBeVisible();
+    await expect(page.locator('.hero-title-desktop .hero-title-line').first()).toHaveCSS('white-space', 'nowrap');
   });
 
   test('robots and sitemap prevent Preview indexing', async ({ request }) => {

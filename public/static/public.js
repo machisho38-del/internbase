@@ -314,6 +314,15 @@ async function initHomePage() {
   const heroTitleHtml = heroDisplayLines.map((line, index) =>
     `<span class="hero-title-line"><span class="${index === heroDisplayLines.length - 1 ? 'hero-title-accent' : 'text-slate-950'}">${escapeHtml(line)}</span></span>`
   ).join('');
+  const heroMobileLines = heroDisplayLines.flatMap((line, index) => {
+    const phraseBoundary = index === 0 ? line.indexOf('実務経験') : -1;
+    return phraseBoundary > 0
+      ? [line.slice(0, phraseBoundary), line.slice(phraseBoundary)]
+      : [line];
+  });
+  const heroMobileTitleHtml = heroMobileLines.map((line, index) =>
+    `<span class="hero-title-line"><span class="${index === heroMobileLines.length - 1 ? 'hero-title-accent' : 'text-slate-950'}">${escapeHtml(line)}</span></span>`
+  ).join('');
   const heroPrimaryCta = asSettingText(s.hero_cta1_text) === '求人を探す'
     ? '求人を見る'
     : asSettingText(s.hero_cta1_text) || '求人を見る';
@@ -354,7 +363,7 @@ async function initHomePage() {
             <div class="inline-flex items-center gap-2 bg-white border border-primary-100 rounded-full px-4 py-2 text-xs text-primary-700 font-bold mb-5 shadow-sm">
               <i class="fas fa-bolt text-orange-500"></i>${escapeHtml(s.hero_badge_text || '大学生の挑戦に、実務という選択肢を。')}
             </div>
-            <h1 class="hero-title text-[2.45rem] sm:text-[3.2rem] lg:text-[3.65rem] xl:text-[3.55rem] 2xl:text-[4.65rem] font-black leading-[1.12] mb-6">${heroTitleHtml}</h1>
+            <h1 class="hero-title font-black leading-[1.12] mb-6"><span class="hero-title-mobile block sm:hidden">${heroMobileTitleHtml}</span><span class="hero-title-desktop hidden sm:block sm:text-[3.2rem] lg:text-[3.65rem] xl:text-[3.55rem] 2xl:text-[4.65rem]">${heroTitleHtml}</span></h1>
             <p class="text-slate-600 text-sm sm:text-lg leading-relaxed max-w-2xl mb-7">${escapeHtml(heroDescription)}</p>
             <div class="flex flex-wrap gap-3">
               <a href="/jobs" class="inline-flex items-center justify-center gap-2 bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-3.5 rounded-xl shadow-lg shadow-primary-600/20 transition-all">
@@ -554,16 +563,16 @@ async function initHomePage() {
     <!-- CTA セクション（無料相談・LINE誘導・下段） -->
     <section class="py-20">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div class="glass rounded-3xl p-12 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), rgba(79,110,247,0.05));">
+        <div class="glass rounded-3xl p-6 sm:p-12 relative overflow-hidden" style="background: linear-gradient(135deg, rgba(6,198,85,0.05), rgba(79,110,247,0.05));">
           <div class="absolute inset-0 bg-gradient-to-br from-green-500/10 to-primary-500/5 rounded-3xl"></div>
           <div class="relative">
             <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <i class="fab fa-line text-green-400 text-3xl"></i>
             </div>
-            <h2 class="text-3xl sm:text-4xl font-black mb-4">まずは無料相談から<br>始めてみませんか？</h2>
-            <p class="text-gray-700 mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br>キャリアのプロがLINEでサポートします。</p>
-            <button onclick="openLineModal()" class="inline-flex items-center justify-center bg-green-500 hover:bg-green-400 text-white font-bold px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer">
-              <i class="fab fa-line mr-2"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm"></i>
+            <h2 class="mobile-cta-title font-black mb-4"><span class="cta-title-line">まずは無料相談から</span><span class="cta-title-line">始めてみませんか？</span></h2>
+            <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br class="hidden sm:block">キャリアのプロがLINEでサポートします。</p>
+            <button onclick="openLineModal()" class="w-full sm:w-auto inline-flex items-center justify-center bg-green-500 hover:bg-green-400 text-white text-base sm:text-lg font-bold px-4 sm:px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer whitespace-nowrap">
+              <i class="fab fa-line mr-2 flex-shrink-0"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm flex-shrink-0"></i>
             </button>
           </div>
         </div>

@@ -332,6 +332,9 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     .hero-copy-zone::before { content: ''; position: absolute; z-index: -1; left: -2.5rem; top: 1rem; width: 8rem; height: 8rem; border: 1px solid rgba(49,94,234,.14); border-radius: 999px; }
     .hero-title { font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif; letter-spacing: -.055em; text-wrap: balance; }
     .hero-title-line { display: block; }
+    .hero-title-mobile { font-size: clamp(2rem, 10vw, 2.45rem); }
+    .hero-title-mobile .hero-title-line, .cta-title-line { white-space: nowrap; }
+    .mobile-cta-title { font-size: clamp(1.45rem, 7vw, 1.85rem); line-height: 1.35; }
     .hero-title-accent { position: relative; display: inline-block; color: #172b67; z-index: 0; }
     .hero-title-accent::after { content: ''; position: absolute; z-index: -1; height: .24em; left: -.03em; right: -.05em; bottom: .06em; background: linear-gradient(90deg, #ff7337, #ffad6f); border-radius: 999px; opacity: .72; }
     .home-hero-photo { background: linear-gradient(90deg, rgba(16,32,74,.18), rgba(16,32,74,0)), url('/images/hero-internship-team.webp') 62% 42%/cover no-repeat; }
@@ -341,7 +344,10 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     .section-kicker { display: inline-flex; align-items: center; gap: .55rem; color: #315eea; font-size: .75rem; letter-spacing: .15em; font-weight: 900; text-transform: uppercase; }
     .section-kicker::before { content: ''; width: 1.75rem; height: 3px; background: #ff7337; border-radius: 999px; }
     .job-card-media { aspect-ratio: 16 / 8.7; background: linear-gradient(135deg, #eaf0ff, #fff2e8); overflow: hidden; }
-    @media (min-width: 640px) { .home-hero-photo { background-position: center 42%; } }
+    @media (min-width: 640px) {
+      .home-hero-photo { background-position: center 42%; }
+      .mobile-cta-title { font-size: 2.25rem; }
+    }
     @media (min-width: 1280px) {
       .home-hero-photo { min-height: 34rem; background-position: center; }
     }
