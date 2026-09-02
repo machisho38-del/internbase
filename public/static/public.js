@@ -332,9 +332,7 @@ async function initHomePage() {
   const heroPrimaryCta = asSettingText(s.hero_cta1_text) === '求人を探す'
     ? '求人を見る'
     : asSettingText(s.hero_cta1_text) || '求人を見る';
-  const heroSecondaryCta = asSettingText(s.hero_cta2_text) === '招待コードで登録'
-    ? 'LINEで無料相談'
-    : asSettingText(s.hero_cta2_text) || 'LINEで無料相談';
+  const heroSecondaryCta = 'LINE相談';
 
   const typeColors = {
     info: 'bg-blue-50 border-blue-200 text-blue-700',
@@ -575,10 +573,10 @@ async function initHomePage() {
             <div class="w-16 h-16 bg-green-500/15 rounded-2xl flex items-center justify-center mx-auto mb-6">
               <i class="fab fa-line text-green-400 text-3xl"></i>
             </div>
-            <h2 class="mobile-cta-title font-black mb-4"><span class="cta-title-line">まずは無料相談から</span><span class="cta-title-line">始めてみませんか？</span></h2>
-            <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-8 max-w-2xl mx-auto">自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。<br class="hidden sm:block">キャリアのプロがLINEでサポートします。</p>
+            <h2 class="mobile-cta-title font-black mb-4"><span class="cta-title-line">LINE相談から</span><span class="cta-title-line">始めてみませんか？</span></h2>
+            <p class="text-gray-700 text-sm sm:text-base leading-relaxed mb-8 max-w-2xl mx-auto">媒体専用LINEまたは無料相談フォームから、気軽にご相談いただけます。</p>
             <button onclick="openLineModal()" class="w-full sm:w-auto inline-flex items-center justify-center bg-green-500 hover:bg-green-400 text-white text-base sm:text-lg font-bold px-4 sm:px-10 py-4 rounded-xl transition-all shadow-lg shadow-green-500/25 border-none cursor-pointer whitespace-nowrap">
-              <i class="fab fa-line mr-2 flex-shrink-0"></i>LINEで無料相談する <i class="fas fa-external-link-alt ml-1 text-sm flex-shrink-0"></i>
+              <i class="fab fa-line mr-2 flex-shrink-0"></i>LINE相談 <i class="fas fa-chevron-right ml-2 text-sm flex-shrink-0"></i>
             </button>
           </div>
         </div>
@@ -836,9 +834,9 @@ function renderJobDetail(job) {
     <button onclick="openApplyModal(${job.id}, '${job.title.replace(/'/g,"\\'")}')" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary-500/25 mb-3">
       <i class="fas fa-paper-plane mr-2"></i>この求人に応募する
     </button>
-    <a href="/consultation" class="block w-full glass text-gray-800 hover:text-primary-600 text-center font-bold py-3 rounded-xl transition-all text-sm">
-      <i class="fas fa-comments mr-1"></i>まず相談してみる
-    </a>
+    <button onclick="openLineModal()" class="block w-full glass text-gray-800 hover:text-primary-600 text-center font-bold py-3 rounded-xl transition-all text-sm">
+      <i class="fab fa-line mr-1"></i>LINE相談
+    </button>
     <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、公式LINEにてご連絡します</p>
   `;
 
@@ -1602,43 +1600,31 @@ async function showRegisterSuccess(data, myCode, sourceMedia) {
 }
 
 // ==========================================
-// 無料相談ページ
+// 無料相談フォーム（Webサイト・その他流入向け）
 // ==========================================
 async function initConsultationPage() {
   const app = document.getElementById('app');
+  const requestedSource = new URLSearchParams(window.location.search).get('source');
+  const sourceMedia = ['web', 'other'].includes(requestedSource) ? requestedSource : 'web';
   app.innerHTML = `
     <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div class="text-center mb-8">
         <div class="w-16 h-16 bg-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
           <i class="fas fa-comments text-purple-400 text-xl"></i>
         </div>
-        <h1 class="text-2xl font-black mb-2">無料相談</h1>
+        <h1 class="text-2xl font-black mb-2">無料相談フォーム</h1>
         <p class="text-gray-500 text-sm">キャリアのプロが、インターン選びを無料でサポートします</p>
       </div>
-      <!-- STEP 1: 流入媒体選択 -->
-      <div class="glass rounded-2xl p-8 mb-4" id="con-source-step">
-        <h3 class="font-bold mb-4 text-sm">どこでガクチカインターンを知りましたか？ <span class="text-red-400">*</span></h3>
-        <div class="grid grid-cols-1 gap-2">
-          ${SOURCE_MEDIA_OPTIONS.map(opt => `
-            <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-purple-500/10 hover:border-purple-500/30 transition-all" id="con-source-opt-${opt.value}">
-              <input type="radio" name="con_source_media" value="${opt.value}" onchange="onConSourceMediaChange('${opt.value}')"
-                class="accent-purple-500 w-4 h-4">
-              <span class="text-sm text-gray-200">${opt.label}</span>
-            </label>
-          `).join('')}
-        </div>
-        <div id="con-source-error" class="hidden mt-3 text-xs text-red-400">流入媒体を選択してください</div>
-        <button onclick="proceedToConsultationForm()" class="w-full mt-5 bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
-          相談フォームへ進む
-        </button>
-      </div>
-      <!-- STEP 2: 相談フォーム（初期非表示） -->
-      <div class="glass rounded-2xl p-8 hidden" id="con-form-step">
+      <div class="glass rounded-2xl p-6 sm:p-8" id="con-form-step">
         <form id="consultation-form" onsubmit="submitConsultation(event)">
-          <input type="hidden" id="con-source-media" value="">
+          <input type="hidden" id="con-source-media" value="${sourceMedia}">
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">お名前 <span class="text-red-400">*</span></label><input id="con-name" type="text" required placeholder="山田 太郎" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
             <div class="col-span-2 sm:col-span-1"><label class="block text-xs text-gray-400 mb-1.5">メールアドレス <span class="text-red-400">*</span></label><input id="con-email" type="email" required placeholder="example@univ.ac.jp" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
+          </div>
+          <div class="mb-4">
+            <label class="block text-xs text-gray-400 mb-1.5">電話番号 <span class="text-red-400">*</span></label>
+            <input id="con-phone" type="tel" required minlength="8" maxlength="30" autocomplete="tel" inputmode="tel" placeholder="090-1234-5678" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500">
           </div>
           <div class="grid grid-cols-2 gap-4 mb-4">
             <div><label class="block text-xs text-gray-400 mb-1.5">大学名</label><input id="con-university" type="text" placeholder="○○大学" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
@@ -1654,36 +1640,12 @@ async function initConsultationPage() {
           <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">ご希望の日時（任意）</label><input id="con-datetime" type="text" placeholder="平日の午後など" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500"></div>
           <div id="consultation-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
           <button type="submit" class="w-full bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 rounded-xl transition-colors">
-            <i class="fas fa-calendar-alt mr-2"></i>無料相談を申し込む
+            <i class="fas fa-paper-plane mr-2"></i>相談を申し込む
           </button>
         </form>
       </div>
     </div>
   `;
-}
-
-function onConSourceMediaChange(value) {
-  SOURCE_MEDIA_OPTIONS.forEach(opt => {
-    const el = document.getElementById(`con-source-opt-${opt.value}`);
-    if (!el) return;
-    if (opt.value === value) {
-      el.classList.add('border-purple-500', 'bg-purple-500/10');
-    } else {
-      el.classList.remove('border-purple-500', 'bg-purple-500/10');
-    }
-  });
-}
-
-function proceedToConsultationForm() {
-  const selected = document.querySelector('input[name="con_source_media"]:checked');
-  if (!selected) {
-    document.getElementById('con-source-error')?.classList.remove('hidden');
-    return;
-  }
-  document.getElementById('con-source-error')?.classList.add('hidden');
-  document.getElementById('con-source-media').value = selected.value;
-  document.getElementById('con-source-step').classList.add('hidden');
-  document.getElementById('con-form-step').classList.remove('hidden');
 }
 
 async function submitConsultation(e) {
@@ -1696,6 +1658,7 @@ async function submitConsultation(e) {
     const res = await API.post('/consultation', {
       name: document.getElementById('con-name').value,
       email: document.getElementById('con-email').value,
+      phone: document.getElementById('con-phone').value,
       university: document.getElementById('con-university').value,
       grade: parseInt(document.getElementById('con-grade').value) || null,
       concern: concerns.join('、'),
@@ -1704,9 +1667,6 @@ async function submitConsultation(e) {
       source_media: sourceMedia,
     });
     if (res.data.success) {
-      const s = await getSiteSettings();
-      // source_mediaに対応したLINE URLを取得
-      const lineUrl = resolveLineUrl(s, sourceMedia);
       document.getElementById('app').innerHTML = `
         <div class="min-h-screen flex items-center justify-center px-4">
           <div class="text-center max-w-md">
@@ -1714,11 +1674,8 @@ async function submitConsultation(e) {
               <i class="fas fa-check text-purple-400 text-3xl"></i>
             </div>
             <h1 class="text-2xl font-black mb-3">お申し込みありがとうございます！</h1>
-            <p class="text-gray-400 mb-8 text-sm">担当者より2営業日以内にご連絡いたします。<br>公式LINEを追加いただくとより迅速にご連絡できます。</p>
-            <div class="space-y-3">
-              ${renderLineCta(lineUrl)}
-              <a href="/" class="block text-gray-400 hover:text-white text-sm py-2"><i class="fas fa-home mr-1"></i>トップに戻る</a>
-            </div>
+            <p class="text-gray-400 mb-8 text-sm">担当者より2営業日以内に、メールまたは電話でご連絡いたします。</p>
+            <a href="/" class="block text-primary-500 hover:text-primary-600 text-sm py-2"><i class="fas fa-home mr-1"></i>トップに戻る</a>
           </div>
         </div>
       `;
@@ -1728,7 +1685,7 @@ async function submitConsultation(e) {
     errDiv.textContent = e.response?.data?.error || '送信に失敗しました';
     errDiv.classList.remove('hidden');
     btn.disabled = false;
-    btn.innerHTML = '<i class="fas fa-calendar-alt mr-2"></i>無料相談を申し込む';
+    btn.innerHTML = '<i class="fas fa-paper-plane mr-2"></i>相談を申し込む';
   }
 }
 

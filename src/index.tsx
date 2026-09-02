@@ -202,7 +202,7 @@ app.get('/reset-password', (c) => {
 })
 
 app.get('/consultation', (c) => {
-  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
+  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談フォーム | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポートします。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - マイページ
@@ -456,7 +456,6 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
           <button onclick="openUniversityModal()" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium cursor-pointer bg-transparent border-none">大学別求人</button>
-          <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
           <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 text-gray-600 hover:text-primary-600 text-sm px-2 py-2 rounded-lg transition-colors font-medium">
@@ -484,9 +483,6 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         <button onclick="openUniversityModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm bg-transparent border-none cursor-pointer">
           <i class="fas fa-university text-primary-500 w-4"></i>大学別求人
         </button>
-        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fas fa-comments text-primary-500 w-4"></i>無料相談
-        </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-user-plus text-primary-500 w-4"></i>無料登録する
         </a>
@@ -494,7 +490,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
           <i class="fas fa-right-to-bracket text-primary-500 w-4"></i>ログイン
         </a>
         <button onclick="openLineModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1 border-none cursor-pointer">
-          <i class="fab fa-line text-white w-4"></i>LINEで無料相談
+          <i class="fab fa-line text-white w-4"></i>LINE相談
         </button>
       </div>
     </div>
@@ -506,8 +502,8 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full" onclick="event.stopPropagation()">
       <div class="p-6 border-b border-gray-100 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-black text-gray-900">どこで知りましたか？</h2>
-          <p class="text-sm text-gray-500 mt-1">あなたに合ったLINE公式アカウントへご案内します</p>
+          <h2 class="text-xl font-black text-gray-900">ご利用の窓口を選択</h2>
+          <p class="text-sm text-gray-500 mt-1">媒体専用LINEまたは相談フォームへご案内します</p>
         </div>
         <button onclick="closeLineModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
           <i class="fas fa-times"></i>
@@ -617,7 +613,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_genki_intern', fallback_to_default: false },
       { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_sokei_intern_compass', fallback_to_default: false },
       { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_careersourcing', fallback_to_default: false },
-      { value: 'other',      label: 'その他',             line_key: 'line_url_default' },
+      { value: 'web',        label: 'Webサイト・その他',   consultation_form: true },
     ];
 
     function isUsableLineUrl(url) {
@@ -648,6 +644,21 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       const container = document.getElementById('line-modal-options');
 
       container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
+        if (opt.consultation_form) {
+          return \`
+            <a href="/consultation?source=web" onclick="closeLineModal()"
+               class="group flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer">
+              <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center flex-shrink-0 transition-colors">
+                <i class="fas fa-envelope text-primary-600 text-lg"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 group-hover:text-primary-700 text-sm leading-snug">\${opt.label}</p>
+                <p class="text-xs text-gray-400 mt-0.5">無料相談フォームへ</p>
+              </div>
+              <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary-400 text-xs flex-shrink-0"></i>
+            </a>
+          \`;
+        }
         const rawUrl = s[opt.line_key] ||
           (opt.fallback_to_default === false ? '' : s['line_url_default'] || s['line_url'] || '');
         const url = isUsableLineUrl(rawUrl) ? rawUrl : '';
@@ -722,14 +733,13 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
           <h4 class="text-sm font-semibold mb-3 text-white">サービス</h4>
           <ul class="space-y-2 text-slate-400 text-sm">
             <li><a href="/register" class="hover:text-primary-600 transition-colors">新規登録</a></li>
-            <li><a href="/consultation" class="hover:text-primary-600 transition-colors">無料相談</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-white">公式LINE</h4>
-          <p class="text-slate-400 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
+          <h4 class="text-sm font-semibold mb-3 text-white">LINE相談</h4>
+          <p class="text-slate-400 text-xs mb-3">媒体に合った相談窓口をご案内します。</p>
           <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors border-none cursor-pointer">
-            <i class="fab fa-line"></i>LINEを追加
+            <i class="fab fa-line"></i>LINE相談
           </button>
         </div>
       </div>
@@ -745,7 +755,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260902-password-reset"></script>
+  <script src="/static/public.js?v=20260902-line-consultation"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;

@@ -8,6 +8,7 @@ const publicPages = [
   ['/login', 'ログイン'],
   ['/forgot-password', 'パスワードを忘れた方'],
   ['/reset-password', '再設定リンクが無効です'],
+  ['/consultation', '無料相談フォーム'],
   ['/privacy', 'プライバシーポリシー'],
   ['/terms', '利用規約'],
   ['/company', '運営者情報']
@@ -148,6 +149,30 @@ test.describe('Preview public site', () => {
     });
     expect(invalidReset.status()).toBe(400);
     expect((await invalidReset.json()).error).toContain('無効か、期限切れ');
+  });
+
+  test('LINE consultation is the single public consultation entry point', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('nav a[href="/consultation"]')).toHaveCount(0);
+
+    const lineConsultationButton = page.locator('nav button[onclick="openLineModal()"]');
+    await expect(lineConsultationButton).toHaveCount(1);
+    await lineConsultationButton.click();
+    await expect(page.locator('#line-modal')).toBeVisible();
+    await expect(page.getByRole('link', { name: 'Webサイト・その他' })).toHaveAttribute('href', '/consultation?source=web');
+  });
+
+  test('web consultation opens the form directly and requires a phone number', async ({ page, request }) => {
+    await page.goto('/consultation?source=web');
+    await expect(page.locator('#con-source-step')).toHaveCount(0);
+    await expect(page.locator('#consultation-form')).toBeVisible();
+    await expect(page.locator('#con-phone')).toHaveAttribute('required', '');
+
+    const missingPhone = await request.post('/api/consultation', {
+      data: { name: 'E2E確認', email: 'consultation-e2e@example.com', source_media: 'web' }
+    });
+    expect(missingPhone.status()).toBe(400);
+    expect((await missingPhone.json()).error).toContain('電話番号');
   });
 
   test('unknown routes return the custom 404 page', async ({ page }) => {

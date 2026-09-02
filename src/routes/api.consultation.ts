@@ -11,13 +11,14 @@ consultation.post('/', async (c) => {
 
   const normalizedName = String(name ?? '').trim()
   const normalizedEmail = String(email ?? '').trim().toLowerCase()
+  const normalizedPhone = String(phone ?? '').trim()
 
-  if (!normalizedName || !normalizedEmail) {
-    return c.json({ success: false, error: '氏名とメールアドレスは必須です' }, 400)
+  if (!normalizedName || !normalizedEmail || !normalizedPhone) {
+    return c.json({ success: false, error: '氏名・メールアドレス・電話番号は必須です' }, 400)
   }
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254 ||
-      normalizedName.length > 100 || String(phone ?? '').length > 50 ||
+      normalizedName.length > 100 || !/^[0-9０-９+＋()（）\-ー\s]{8,30}$/.test(normalizedPhone) ||
       String(university ?? '').length > 200 || String(concern ?? '').length > 500 ||
       String(message ?? '').length > 5000) {
     return c.json({ success: false, error: '入力内容を確認してください' }, 400)
@@ -30,7 +31,7 @@ consultation.post('/', async (c) => {
     INSERT INTO consultations (name, email, phone, university, grade, concern, message, preferred_datetime, source_media)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).bind(
-    normalizedName, normalizedEmail, phone || null, university || null, grade || null,
+    normalizedName, normalizedEmail, normalizedPhone, university || null, grade || null,
     concern || null, message || null, preferred_datetime || null, validatedSourceMedia
   ).run()
 
