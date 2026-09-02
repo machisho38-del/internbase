@@ -125,10 +125,11 @@ test.describe('Preview public site', () => {
     await page.getByRole('button', { name: '登録フォームへ進む' }).click();
 
     const consent = page.locator('#reg-terms-consent');
+    const registrationForm = page.locator('#register-form');
     await expect(consent).toBeVisible();
     await expect(consent).toHaveAttribute('required', '');
-    await expect(page.getByRole('link', { name: '利用規約' })).toHaveAttribute('href', '/terms');
-    await expect(page.getByRole('link', { name: 'プライバシーポリシー' })).toHaveAttribute('href', '/privacy');
+    await expect(registrationForm.getByRole('link', { name: '利用規約' })).toHaveAttribute('href', '/terms');
+    await expect(registrationForm.getByRole('link', { name: 'プライバシーポリシー' })).toHaveAttribute('href', '/privacy');
   });
 
   test('unknown routes return the custom 404 page', async ({ page }) => {
