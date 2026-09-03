@@ -83,6 +83,10 @@ function resolveLineUrl(settings, sourceMedia) {
   return isUsableUrl(rawLineUrl) ? rawLineUrl : '';
 }
 
+function usesEmailPhoneApplicationFollowUp(sourceMedia) {
+  return sourceMedia === 'other';
+}
+
 function renderLineCta(lineUrl, label = '公式LINEを友だち追加', className = 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-xl transition-colors') {
   if (!lineUrl) {
     return `
@@ -837,7 +841,7 @@ function renderJobDetail(job) {
     <button onclick="openLineModal()" class="block w-full glass text-gray-800 hover:text-primary-600 text-center font-bold py-3 rounded-xl transition-all text-sm">
       <i class="fab fa-line mr-1"></i>LINE相談
     </button>
-    <p class="text-xs text-gray-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、公式LINEにてご連絡します</p>
+    <p class="text-xs text-slate-600 text-center mt-3"><i class="fas fa-lock mr-1"></i>応募後、選択した流入経路に応じて担当者よりご連絡します</p>
   `;
 
   app.innerHTML = `
@@ -852,11 +856,11 @@ function renderJobDetail(job) {
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <!-- パンくず -->
           <nav class="text-sm text-gray-500 mb-5">
-            <a href="/" class="hover:text-white transition-colors">ホーム</a>
+            <a href="/" class="hover:text-primary-600 transition-colors">ホーム</a>
             <span class="mx-2">/</span>
-            <a href="/jobs" class="hover:text-white transition-colors">求人一覧</a>
+            <a href="/jobs" class="hover:text-primary-600 transition-colors">求人一覧</a>
             <span class="mx-2">/</span>
-            <span class="text-gray-300">${job.title}</span>
+            <span class="text-slate-700">${job.title}</span>
           </nav>
           <div class="glass rounded-2xl p-6 sm:p-8">
             <div class="flex items-start gap-4 mb-5">
@@ -877,7 +881,7 @@ function renderJobDetail(job) {
                 <p class="text-primary-400 font-semibold">${job.company_name}</p>
               </div>
             </div>
-            ${job.catch_copy ? `<p class="text-gray-300 text-base sm:text-lg leading-relaxed border-l-4 border-primary-500 pl-4 mb-5">${job.catch_copy}</p>` : ''}
+            ${job.catch_copy ? `<p class="text-slate-700 text-base sm:text-lg leading-relaxed border-l-4 border-primary-500 pl-4 mb-5">${job.catch_copy}</p>` : ''}
             <!-- 勤務条件サマリー（§3 先出し） -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
               <div class="bg-white/5 rounded-xl p-3 text-center">
@@ -929,7 +933,7 @@ function renderJobDetail(job) {
                       <span class="text-2xl flex-shrink-0">${h.icon || ['🚀','💡','🌟'][i] || '✨'}</span>
                       <div>
                         <h3 class="font-bold text-sm mb-1">${h.title || ''}</h3>
-                        <p class="text-gray-400 text-sm leading-relaxed">${h.body || h.description || ''}</p>
+                        <p class="text-slate-700 text-sm leading-relaxed">${h.body || h.description || ''}</p>
                       </div>
                     </div>
                   </div>
@@ -944,11 +948,11 @@ function renderJobDetail(job) {
                 <i class="fas fa-building text-primary-400"></i>会社概要
               </h2>
               ${job.company_hero_image_url ? `<img src="${job.company_hero_image_url}" class="w-full h-40 object-cover rounded-xl mb-4" alt="${job.company_name}">` : ''}
-              ${job.company_description ? `<p class="text-gray-300 text-sm leading-relaxed mb-3">${job.company_description}</p>` : ''}
+              ${job.company_description ? `<p class="text-slate-700 text-sm leading-relaxed mb-3">${job.company_description}</p>` : ''}
               ${job.company_mission ? `
               <div class="bg-primary-500/5 border border-primary-500/20 rounded-xl p-4 mt-3">
                 <p class="text-xs text-primary-400 font-bold mb-1"><i class="fas fa-flag mr-1"></i>ミッション</p>
-                <p class="text-gray-300 text-sm leading-relaxed">${job.company_mission}</p>
+                <p class="text-slate-700 text-sm leading-relaxed">${job.company_mission}</p>
               </div>` : ''}
             </section>` : ''}
 
@@ -958,7 +962,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-briefcase text-primary-400"></i>サービス / 事業内容
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.company_service_description}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.company_service_description}</p>
             </section>` : ''}
 
             <!-- §6 ポジションの特徴 -->
@@ -967,7 +971,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-star text-primary-400"></i>ポジションの特徴
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.position_features}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.position_features}</p>
             </section>` : ''}
 
             <!-- §7 業務概要 -->
@@ -975,7 +979,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-tasks text-primary-400"></i>業務概要
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.work_content}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.work_content}</p>
             </section>
 
             <!-- §8 入社後の流れ -->
@@ -984,7 +988,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-route text-primary-400"></i>入社後の流れ
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.onboarding_flow}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.onboarding_flow}</p>
             </section>` : ''}
 
             <!-- §9 主な業務 / 案件例 -->
@@ -993,7 +997,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-list-ul text-primary-400"></i>主な業務 / 案件例
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.task_examples}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.task_examples}</p>
             </section>` : ''}
 
             <!-- §10 習得できるスキルセット -->
@@ -1003,8 +1007,8 @@ function renderJobDetail(job) {
                 <i class="fas fa-graduation-cap text-primary-400"></i>習得できるスキルセット
               </h2>
               ${skillSet.length > 0
-                ? `<div class="flex flex-wrap gap-2">${skillSet.map(s => `<span class="bg-primary-500/10 border border-primary-500/20 text-primary-300 text-xs px-3 py-1.5 rounded-full font-medium">${typeof s === 'string' ? s : (s.name || s)}</span>`).join('')}</div>`
-                : `<p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.growth_points}</p>`
+                ? `<div class="flex flex-wrap gap-2">${skillSet.map(s => `<span class="bg-primary-500/10 border border-primary-500/20 text-primary-700 text-xs px-3 py-1.5 rounded-full font-medium">${typeof s === 'string' ? s : (s.name || s)}</span>`).join('')}</div>`
+                : `<p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.growth_points}</p>`
               }
             </section>` : ''}
 
@@ -1014,7 +1018,7 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-chart-line text-primary-400"></i>キャリアパス
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.career_path}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.career_path}</p>
             </section>` : ''}
 
             <!-- §12 こんな人におすすめ -->
@@ -1023,13 +1027,13 @@ function renderJobDetail(job) {
               <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
                 <i class="fas fa-user-check text-primary-400"></i>こんな人におすすめ
               </h2>
-              <p class="text-gray-300 text-sm leading-relaxed whitespace-pre-line">${job.recommended_for}</p>
+              <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.recommended_for}</p>
             </section>` : ''}
 
             <!-- §13 応募 / 相談 CTA（メインコンテンツ内） -->
             <section id="job-cta-main" class="glass rounded-2xl p-7 border border-primary-500/20">
               <h2 class="text-lg font-bold mb-2">応募 / 相談</h2>
-              <p class="text-gray-400 text-sm mb-5">少しでも興味があれば、まずは気軽にご応募ください。</p>
+              <p class="text-slate-600 text-sm mb-5">少しでも興味があれば、まずは気軽にご応募ください。</p>
               ${ctaHTML}
             </section>
 
@@ -1041,18 +1045,18 @@ function renderJobDetail(job) {
               </h2>
               ${job.requirements ? `
               <div class="mb-4">
-                <h3 class="text-sm font-bold text-gray-300 mb-2">求める人材</h3>
-                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.requirements}</p>
+                <h3 class="text-sm font-bold text-slate-900 mb-2">求める人材</h3>
+                <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.requirements}</p>
               </div>` : ''}
               ${job.preferred_requirements ? `
-              <div class="mb-4 pt-4 border-t border-white/10">
-                <h3 class="text-sm font-bold text-gray-300 mb-2">歓迎条件</h3>
-                <p class="text-gray-400 text-sm leading-relaxed whitespace-pre-line">${job.preferred_requirements}</p>
+              <div class="mb-4 pt-4 border-t border-slate-200">
+                <h3 class="text-sm font-bold text-slate-900 mb-2">歓迎条件</h3>
+                <p class="text-slate-700 text-sm leading-relaxed whitespace-pre-line">${job.preferred_requirements}</p>
               </div>` : ''}
               ${job.selection_flow ? `
-              <div class="${(job.requirements || job.preferred_requirements) ? 'pt-4 border-t border-white/10' : ''}">
-                <h3 class="text-sm font-bold text-gray-300 mb-2">選考フロー</h3>
-                <p class="text-gray-400 text-sm">${job.selection_flow}</p>
+              <div class="${(job.requirements || job.preferred_requirements) ? 'pt-4 border-t border-slate-200' : ''}">
+                <h3 class="text-sm font-bold text-slate-900 mb-2">選考フロー</h3>
+                <p class="text-slate-700 text-sm">${job.selection_flow}</p>
               </div>` : ''}
             </section>` : ''}
 
@@ -1075,11 +1079,11 @@ function renderJobDetail(job) {
                 ].filter(([,v]) => v).map(([l,v]) => `
                   <div class="flex gap-3">
                     <span class="text-gray-500 w-24 flex-shrink-0 text-xs leading-relaxed pt-0.5">${l}</span>
-                    <span class="text-gray-300 leading-relaxed text-sm">${v}</span>
+                    <span class="text-slate-700 leading-relaxed text-sm">${v}</span>
                   </div>
                 `).join('')}
                 ${tags.length > 0 ? `
-                <div class="flex gap-3 pt-3 border-t border-white/10">
+                <div class="flex gap-3 pt-3 border-t border-slate-200">
                   <span class="text-gray-500 w-24 flex-shrink-0 text-xs pt-0.5">関連タグ</span>
                   <div class="flex flex-wrap gap-1.5">${tags.map(t=>`<span class="tag text-xs px-2 py-1 rounded-full">#${t}</span>`).join('')}</div>
                 </div>` : ''}
@@ -1089,7 +1093,7 @@ function renderJobDetail(job) {
             <!-- §16 最終CTA -->
             <section id="job-cta-final" class="glass rounded-2xl p-7 text-center border border-primary-500/30 bg-gradient-to-br from-primary-900/20 to-purple-900/20">
               <h2 class="text-xl font-black mb-2">一緒に働きませんか？</h2>
-              <p class="text-gray-400 text-sm mb-6">まずは気軽にご応募を。選考フローもシンプルです。</p>
+              <p class="text-slate-600 text-sm mb-6">まずは気軽にご応募を。選考フローもシンプルです。</p>
               <div class="max-w-xs mx-auto">
                 ${ctaHTML}
               </div>
@@ -1121,7 +1125,7 @@ function renderJobDetail(job) {
                 ].filter(([,v]) => v).map(([l,v]) => `
                   <div class="flex gap-2">
                     <span class="text-gray-500 w-16 flex-shrink-0">${l}</span>
-                    <span class="text-gray-300 leading-relaxed">${v}</span>
+                    <span class="text-slate-700 leading-relaxed">${v}</span>
                   </div>
                 `).join('')}
               </div>
@@ -2044,7 +2048,7 @@ function renderApplySourceStep(jobTitle) {
     <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
       <p class="text-xs text-gray-400">応募求人</p><p class="font-bold text-sm">${jobTitle}</p>
     </div>
-    <p class="text-sm text-gray-400 mb-4">LINE連携のため、どの媒体から知ったか選択してください。</p>
+    <p class="text-sm text-gray-400 mb-4">応募後のご案内先を確認するため、どの媒体から知ったか選択してください。</p>
     <div class="space-y-2 mb-4">
       ${SOURCE_MEDIA_OPTIONS.map(opt => `
         <label class="flex items-center gap-3 cursor-pointer p-3 rounded-xl border border-white/10 hover:bg-primary-500/10 hover:border-primary-500/30 transition-all" id="apply-source-opt-${opt.value}">
@@ -2089,6 +2093,9 @@ function proceedToApplicationForm() {
 function renderApplicationForm(jobId, jobTitle, sourceMedia) {
   const studentName = localStorage.getItem('student_name');
   const sourceOption = SOURCE_MEDIA_OPTIONS.find(opt => opt.value === sourceMedia);
+  const followUpNote = usesEmailPhoneApplicationFollowUp(sourceMedia)
+    ? '<i class="fas fa-envelope mr-1 text-primary-400"></i>応募後、2〜3営業日以内に、メールまたはお電話にてご連絡いたします。'
+    : '<i class="fab fa-line mr-1 text-green-400"></i>応募後、公式LINEにてご連絡します';
   document.getElementById('apply-form-content').innerHTML = `
       <div class="mb-4 p-3 bg-primary-500/10 border border-primary-500/20 rounded-lg">
         <p class="text-xs text-gray-400">応募求人</p><p class="font-bold text-sm">${jobTitle}</p>
@@ -2101,7 +2108,7 @@ function renderApplicationForm(jobId, jobTitle, sourceMedia) {
         <div class="mb-6"><label class="block text-xs text-gray-400 mb-1.5">参加可能な時間帯</label><input id="apply-hours" type="text" placeholder="平日10-18時、週3日程度" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-primary-500"></div>
         <div id="apply-error" class="hidden mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-xs"></div>
         <button type="submit" class="w-full bg-primary-500 hover:bg-primary-600 text-white font-bold py-3 rounded-xl"><i class="fas fa-paper-plane mr-2"></i>応募を確定する</button>
-        <p class="text-xs text-gray-600 text-center mt-3"><i class="fab fa-line mr-1 text-green-400"></i>応募後、公式LINEにてご連絡します</p>
+        <p class="text-xs text-gray-600 text-center mt-3">${followUpNote}</p>
       </form>`;
 }
 
@@ -2122,17 +2129,20 @@ async function submitApplication(e, jobId) {
       source_media: document.getElementById('apply-source-media')?.value || 'other',
     });
     if (res.data.success) {
-      const s = await getSiteSettings();
       const sourceMedia = document.getElementById('apply-source-media')?.value || 'other';
-      const lineUrl = resolveLineUrl(s, sourceMedia);
+      const emailPhoneFollowUp = usesEmailPhoneApplicationFollowUp(sourceMedia);
+      const s = emailPhoneFollowUp ? null : await getSiteSettings();
+      const lineUrl = emailPhoneFollowUp ? '' : resolveLineUrl(s, sourceMedia);
+      const followUpContent = emailPhoneFollowUp
+        ? '<p class="text-gray-400 text-sm mb-2">2〜3営業日以内に、担当者よりメールまたはお電話にてご連絡いたします。</p><p class="text-gray-500 text-xs">公式LINEの追加は必要ありません。</p>'
+        : `<p class="text-gray-500 text-sm mb-5">公式LINEにてご連絡しますので、追加をお待ちください。</p>${renderLineCta(lineUrl, '公式LINEを追加する', 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm')}`;
       document.getElementById('apply-form-content').innerHTML = `
         <div class="text-center py-4">
           <div class="w-16 h-16 bg-green-500/20 border-2 border-green-500/40 rounded-full flex items-center justify-center mx-auto mb-4">
             <i class="fas fa-check text-green-400 text-2xl"></i>
           </div>
           <h3 class="font-bold mb-2">応募が完了しました！</h3>
-          <p class="text-gray-500 text-sm mb-5">公式LINEにてご連絡しますので、追加をお待ちください。</p>
-          ${renderLineCta(lineUrl, '公式LINEを追加する', 'flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-6 rounded-xl text-sm')}
+          ${followUpContent}
         </div>`;
     }
   } catch(e) {
