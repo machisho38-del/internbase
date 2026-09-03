@@ -86,6 +86,33 @@ test.describe('Preview public site', () => {
     expect(JSON.parse(jsonLd)['@type']).toBe('JobPosting');
   });
 
+  test('job detail copy has readable contrast on light cards', async ({ page, request }) => {
+    const jobsResponse = await request.get('/api/jobs?visibility=public');
+    const jobs = (await jobsResponse.json()).data || [];
+    test.skip(jobs.length === 0, 'Preview D1 has no public jobs');
+
+    await page.goto(`/jobs/${encodeURIComponent(jobs[0].slug)}`);
+    await expect(page.locator('#job-work p')).toHaveCSS('color', 'rgb(51, 65, 85)');
+    const companyDescription = page.locator('#job-company-about > p');
+    if (await companyDescription.count()) {
+      await expect(companyDescription).toHaveCSS('color', 'rgb(51, 65, 85)');
+    }
+  });
+
+  test('other-source applications use email or phone follow-up without LINE guidance', async ({ page, request }) => {
+    const jobsResponse = await request.get('/api/jobs?visibility=public');
+    const jobs = (await jobsResponse.json()).data || [];
+    test.skip(jobs.length === 0, 'Preview D1 has no public jobs');
+
+    await page.goto(`/jobs/${encodeURIComponent(jobs[0].slug)}`);
+    await page.evaluate(job => {
+      localStorage.setItem('student_name', 'E2E確認');
+      renderApplicationForm(job.id, job.title, 'other');
+    }, jobs[0]);
+    await expect(page.locator('#apply-form-content')).toContainText('2〜3営業日以内に、メールまたはお電話にてご連絡いたします。');
+    await expect(page.locator('#apply-form-content')).not.toContainText('公式LINEにてご連絡します');
+  });
+
   test('development seed content is not publicly exposed', async ({ request }) => {
     const jobsResponse = await request.get('/api/jobs?visibility=public');
     expect(jobsResponse.status()).toBe(200);
