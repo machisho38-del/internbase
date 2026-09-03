@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
 import { getStudentFromSession } from '../utils/studentAuth'
+import { getAuthenticatedStudentId, resolveStudentJobScope } from '../utils/studentAccess'
 
 const jobs = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -31,7 +32,11 @@ jobs.get('/', async (c) => {
   const q = c.req.query('q')?.trim()
   const membersOnly = c.req.query('members') === '1'
   const sessionStudent = await getStudentFromSession(c)
-  const studentId = sessionStudent?.id || c.req.query('student_id')
+  const scope = resolveStudentJobScope(sessionStudent, membersOnly)
+
+  if (scope === 'unauthorized') {
+    return c.json({ success: false, error: 'Unauthorized' }, 401)
+  }
 
   let query = `
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,
@@ -42,9 +47,7 @@ jobs.get('/', async (c) => {
   `
   const params: any[] = []
 
-  if (studentId) {
-    query += ` AND j.visibility IN ('public','members') AND j.status = 'published'`
-  } else if (membersOnly) {
+  if (scope === 'members') {
     query += ` AND j.visibility = 'members' AND j.status = 'published'`
   } else {
     query += ` AND j.visibility = 'public' AND j.status = 'published'`
@@ -94,7 +97,7 @@ jobs.get('/:slug', async (c) => {
   if (slug === 'admin') return c.json({ success: false, error: 'Not found' }, 404)
 
   const sessionStudent = await getStudentFromSession(c)
-  const studentId = sessionStudent?.id || c.req.query('student_id')
+  const studentId = getAuthenticatedStudentId(sessionStudent)
 
   const job = await c.env.DB.prepare(`
     SELECT j.*, c.name as company_name, c.logo_url as company_logo,

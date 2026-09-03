@@ -2,17 +2,9 @@ import { Hono } from 'hono'
 import { setCookie, deleteCookie } from 'hono/cookie'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { hashAdminPassword, verifyAdminPassword } from '../utils/adminPassword'
 
 const auth = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
-
-// パスワードハッシュ（Web Crypto API）
-async function hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(password + 'intern_salt_2024')
-  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
-}
 
 // セッショントークン生成
 function generateToken(): string {
@@ -30,18 +22,29 @@ auth.post('/admin/login', async (c) => {
     return c.json({ success: false, error: 'メールアドレスとパスワードを入力してください' }, 400)
   }
 
-  const passwordHash = await hashPassword(password)
-  const admin = await c.env.DB.prepare(
-    `SELECT * FROM admins WHERE email = ? AND password_hash = ? AND is_active = 1`
-  ).bind(email, passwordHash).first() as any
-
-  if (!admin) {
+  if (String(password).length > 128) {
     return c.json({ success: false, error: 'メールアドレスまたはパスワードが間違っています' }, 401)
+  }
+
+  const admin = await c.env.DB.prepare(
+    `SELECT * FROM admins WHERE lower(email) = ? AND is_active = 1`
+  ).bind(String(email).trim().toLowerCase()).first() as any
+
+  const verification = await verifyAdminPassword(String(password), admin?.password_hash)
+  if (!admin || !verification.valid) {
+    return c.json({ success: false, error: 'メールアドレスまたはパスワードが間違っています' }, 401)
+  }
+
+  if (verification.needsUpgrade) {
+    const upgradedHash = await hashAdminPassword(String(password))
+    await c.env.DB.prepare(`UPDATE admins SET password_hash = ? WHERE id = ?`)
+      .bind(upgradedHash, admin.id).run()
   }
 
   // セッション生成・DB保存
   const token = generateToken()
-  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+  const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000)
+    .toISOString().replace('T', ' ').slice(0, 19)
 
   await c.env.DB.prepare(
     `INSERT INTO admin_sessions (admin_id, token, expires_at) VALUES (?, ?, ?)`
@@ -103,15 +106,20 @@ auth.post('/admin/setup', async (c) => {
     return c.json({ success: false, error: 'セットアップキーが無効です' }, 403)
   }
 
-  const passwordHash = await hashPassword(password)
+  if (!email || !password || String(password).length < 12 || String(password).length > 128) {
+    return c.json({ success: false, error: 'メールアドレスと12〜128文字のパスワードを指定してください' }, 400)
+  }
 
-  const existing = await c.env.DB.prepare(`SELECT id FROM admins WHERE email = ?`).bind(email).first()
+  const normalizedEmail = String(email).trim().toLowerCase()
+  const passwordHash = await hashAdminPassword(String(password))
+
+  const existing = await c.env.DB.prepare(`SELECT id FROM admins WHERE lower(email) = ?`).bind(normalizedEmail).first()
   if (existing) {
-    await c.env.DB.prepare(`UPDATE admins SET password_hash = ?, name = ? WHERE email = ?`)
-      .bind(passwordHash, name || '管理者', email).run()
+    await c.env.DB.prepare(`UPDATE admins SET email = ?, password_hash = ?, name = ? WHERE id = ?`)
+      .bind(normalizedEmail, passwordHash, name || '管理者', (existing as any).id).run()
   } else {
     await c.env.DB.prepare(`INSERT INTO admins (email, password_hash, name, role) VALUES (?, ?, ?, 'super_admin')`)
-      .bind(email, passwordHash, name || '管理者').run()
+      .bind(normalizedEmail, passwordHash, name || '管理者').run()
   }
 
   return c.json({ success: true, message: 'パスワードを設定しました' })

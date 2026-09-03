@@ -1056,23 +1056,23 @@ function renderStudentRows(students) {
     <tr class="table-row border-b border-white/5 last:border-0">
       <td class="px-4 py-3">
         <div class="flex items-center gap-2">
-          <div class="w-7 h-7 bg-primary-500/20 rounded-full flex items-center justify-center text-xs font-bold text-primary-400">${(s.last_name||'?')[0]}</div>
+          <div class="w-7 h-7 bg-primary-500/20 rounded-full flex items-center justify-center text-xs font-bold text-primary-400">${escapeAdminHtml((s.last_name||'?')[0])}</div>
           <div>
-            <p class="text-sm font-medium">${s.last_name} ${s.first_name}</p>
-            ${s.last_name_kana ? `<p class="text-xs text-gray-500">${s.last_name_kana} ${s.first_name_kana||''}</p>` : ''}
+            <p class="text-sm font-medium">${escapeAdminHtml(s.last_name)} ${escapeAdminHtml(s.first_name)}</p>
+            ${s.last_name_kana ? `<p class="text-xs text-gray-500">${escapeAdminHtml(s.last_name_kana)} ${escapeAdminHtml(s.first_name_kana||'')}</p>` : ''}
           </div>
         </div>
       </td>
       <td class="px-4 py-3 hidden md:table-cell">
-        <p class="text-xs text-gray-300">${s.university}</p>
-        <p class="text-xs text-gray-500">${s.grade}年生${s.faculty ? ' / '+s.faculty : ''}</p>
+        <p class="text-xs text-gray-300">${escapeAdminHtml(s.university)}</p>
+        <p class="text-xs text-gray-500">${escapeAdminHtml(s.grade)}年生${s.faculty ? ' / '+escapeAdminHtml(s.faculty) : ''}</p>
       </td>
       <td class="px-4 py-3 hidden lg:table-cell">
-        <p class="text-xs text-gray-400">${s.email}</p>
-        ${s.phone ? `<p class="text-xs text-gray-500">${s.phone}</p>` : ''}
+        <p class="text-xs text-gray-400">${escapeAdminHtml(s.email)}</p>
+        ${s.phone ? `<p class="text-xs text-gray-500">${escapeAdminHtml(s.phone)}</p>` : ''}
       </td>
       <td class="px-4 py-3 hidden lg:table-cell">
-        <span class="text-xs ${s.invite_code_used ? 'text-primary-400' : 'text-gray-600'}">${s.invite_code_used || 'なし'}</span>
+        <span class="text-xs ${s.invite_code_used ? 'text-primary-400' : 'text-gray-600'}">${escapeAdminHtml(s.invite_code_used || 'なし')}</span>
       </td>
       <td class="px-4 py-3 text-xs text-gray-500">${s.created_at?.split('T')[0]||''}</td>
       <td class="px-4 py-3">
@@ -1097,27 +1097,27 @@ async function showStudentDetail(id) {
   mc.innerHTML = `
     <div class="p-6">
       <div class="flex items-center justify-between mb-5">
-        <h3 class="text-lg font-bold">${s.last_name} ${s.first_name}</h3>
+        <h3 class="text-lg font-bold">${escapeAdminHtml(s.last_name)} ${escapeAdminHtml(s.first_name)}</h3>
         <button onclick="closeModal()" class="text-gray-500 hover:text-white"><i class="fas fa-times"></i></button>
       </div>
       <div class="space-y-4">
         <div class="grid grid-cols-2 gap-4">
           <div class="glass rounded-lg p-3">
             <p class="text-xs text-gray-500 mb-1">メール</p>
-            <p class="text-sm">${s.email}</p>
+            <p class="text-sm">${escapeAdminHtml(s.email)}</p>
           </div>
           <div class="glass rounded-lg p-3">
             <p class="text-xs text-gray-500 mb-1">電話</p>
-            <p class="text-sm">${s.phone||'未登録'}</p>
+            <p class="text-sm">${escapeAdminHtml(s.phone||'未登録')}</p>
           </div>
           <div class="glass rounded-lg p-3">
             <p class="text-xs text-gray-500 mb-1">大学・学年</p>
-            <p class="text-sm">${s.university} ${s.grade}年</p>
-            ${s.faculty ? `<p class="text-xs text-gray-500">${s.faculty}</p>` : ''}
+            <p class="text-sm">${escapeAdminHtml(s.university)} ${escapeAdminHtml(s.grade)}年</p>
+            ${s.faculty ? `<p class="text-xs text-gray-500">${escapeAdminHtml(s.faculty)}</p>` : ''}
           </div>
           <div class="glass rounded-lg p-3">
             <p class="text-xs text-gray-500 mb-1">招待コード</p>
-            <p class="text-sm">${s.invite_code_used||'なし'}</p>
+            <p class="text-sm">${escapeAdminHtml(s.invite_code_used||'なし')}</p>
           </div>
           ${s.source_media ? `
           <div class="glass rounded-lg p-3 col-span-2">
@@ -1128,12 +1128,12 @@ async function showStudentDetail(id) {
         ${s.pr_text ? `
         <div class="glass rounded-lg p-3">
           <p class="text-xs text-gray-500 mb-1">自己PR</p>
-          <p class="text-sm text-gray-300">${s.pr_text}</p>
+          <p class="text-sm text-gray-300 whitespace-pre-line">${escapeAdminHtml(s.pr_text)}</p>
         </div>` : ''}
         <!-- 管理メモ -->
         <div>
           <label class="block text-xs text-gray-400 mb-1">管理メモ</label>
-          <textarea id="student-memo-${s.id}" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${s.admin_memo||''}</textarea>
+          <textarea id="student-memo-${s.id}" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${escapeAdminHtml(s.admin_memo||'')}</textarea>
         </div>
         <!-- 応募履歴 -->
         ${s.applications?.length > 0 ? `
@@ -1144,8 +1144,8 @@ async function showStudentDetail(id) {
               <div class="flex items-center gap-3 glass rounded-lg px-3 py-2">
                 <span class="status-badge ${STATUS_COLORS[a.status]||'bg-gray-500/20 text-gray-400'}">${STATUS_LABELS[a.status]||a.status}</span>
                 <div>
-                  <p class="text-xs font-medium">${a.job_title}</p>
-                  <p class="text-xs text-gray-500">${a.company_name} / ${a.created_at?.split('T')[0]}</p>
+                  <p class="text-xs font-medium">${escapeAdminHtml(a.job_title)}</p>
+                  <p class="text-xs text-gray-500">${escapeAdminHtml(a.company_name)} / ${escapeAdminHtml(a.created_at?.split('T')[0]||'')}</p>
                 </div>
               </div>
             `).join('')}
@@ -1202,18 +1202,18 @@ function renderApplicationRows(applications) {
   return applications.map(a => `
     <div class="glass rounded-xl p-4 flex items-center gap-4 hover:bg-white/5 transition-colors cursor-pointer" onclick="showApplicationDetail(${a.id})">
       <div class="w-9 h-9 bg-primary-500/20 rounded-full flex items-center justify-center text-sm font-bold text-primary-400 flex-shrink-0">
-        ${(a.student_name||'?')[0]}
+        ${escapeAdminHtml((a.student_name||'?')[0])}
       </div>
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2 mb-0.5">
-          <p class="text-sm font-medium">${a.student_name}</p>
-          <span class="text-xs text-gray-500">${a.student_university} ${a.student_grade}年</span>
+          <p class="text-sm font-medium">${escapeAdminHtml(a.student_name)}</p>
+          <span class="text-xs text-gray-500">${escapeAdminHtml(a.student_university)} ${escapeAdminHtml(a.student_grade)}年</span>
         </div>
-        <p class="text-xs text-gray-500">${a.job_title} / <span class="text-gray-400">${a.company_name}</span></p>
+        <p class="text-xs text-gray-500">${escapeAdminHtml(a.job_title)} / <span class="text-gray-400">${escapeAdminHtml(a.company_name)}</span></p>
         ${a.source_media ? `<span class="inline-flex items-center mt-1 text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span>` : ''}
       </div>
       <div class="flex items-center gap-3 flex-shrink-0">
-        ${a.next_action ? `<span class="text-xs text-yellow-400"><i class="fas fa-exclamation-circle mr-1"></i>${a.next_action}</span>` : ''}
+        ${a.next_action ? `<span class="text-xs text-yellow-400"><i class="fas fa-exclamation-circle mr-1"></i>${escapeAdminHtml(a.next_action)}</span>` : ''}
         <span class="status-badge ${STATUS_COLORS[a.status]||'bg-gray-500/20 text-gray-400'}">${STATUS_LABELS[a.status]||a.status}</span>
         <span class="text-xs text-gray-600 hidden lg:block">${a.created_at?.split('T')[0]||''}</span>
       </div>
@@ -1244,10 +1244,10 @@ async function showApplicationDetail(id) {
         <div class="glass rounded-lg p-4">
           <h4 class="text-xs text-gray-500 mb-2">学生情報</h4>
           <div class="grid grid-cols-2 gap-3 text-sm">
-            <div><span class="text-gray-500 text-xs">氏名</span><p>${a.last_name} ${a.first_name}</p></div>
-            <div><span class="text-gray-500 text-xs">大学・学年</span><p>${a.student_university} ${a.student_grade}年</p></div>
-            <div><span class="text-gray-500 text-xs">メール</span><p class="text-xs">${a.student_email}</p></div>
-            <div><span class="text-gray-500 text-xs">電話</span><p class="text-xs">${a.student_phone||'未登録'}</p></div>
+            <div><span class="text-gray-500 text-xs">氏名</span><p>${escapeAdminHtml(a.last_name)} ${escapeAdminHtml(a.first_name)}</p></div>
+            <div><span class="text-gray-500 text-xs">大学・学年</span><p>${escapeAdminHtml(a.student_university)} ${escapeAdminHtml(a.student_grade)}年</p></div>
+            <div><span class="text-gray-500 text-xs">メール</span><p class="text-xs">${escapeAdminHtml(a.student_email)}</p></div>
+            <div><span class="text-gray-500 text-xs">電話</span><p class="text-xs">${escapeAdminHtml(a.student_phone||'未登録')}</p></div>
             ${a.source_media ? `<div><span class="text-gray-500 text-xs">応募時媒体</span><p class="text-xs mt-0.5"><span class="bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[a.source_media]||a.source_media}</span></p></div>` : ''}
             ${a.student_source_media ? `<div><span class="text-gray-500 text-xs">登録時媒体</span><p class="text-xs mt-0.5"><span class="bg-blue-500/15 border border-blue-500/25 text-blue-300 px-2 py-0.5 rounded-full"><i class="fas fa-user-plus mr-1"></i>${SOURCE_MEDIA_LABEL[a.student_source_media]||a.student_source_media}</span></p></div>` : ''}
           </div>
@@ -1262,7 +1262,7 @@ async function showApplicationDetail(id) {
         ${a.motivation ? `
         <div class="glass rounded-lg p-4">
           <h4 class="text-xs text-gray-500 mb-2">応募動機</h4>
-          <p class="text-sm text-gray-300 whitespace-pre-line">${a.motivation}</p>
+          <p class="text-sm text-gray-300 whitespace-pre-line">${escapeAdminHtml(a.motivation)}</p>
         </div>` : ''}
         <!-- ステータス更新フォーム -->
         <form onsubmit="submitUpdateApplication(event, ${a.id})">
@@ -1275,7 +1275,7 @@ async function showApplicationDetail(id) {
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1">次のアクション</label>
-              <input name="next_action" value="${a.next_action||''}" placeholder="例: 面接日程を調整する" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
+              <input name="next_action" value="${escapeAdminHtml(a.next_action||'')}" placeholder="例: 面接日程を調整する" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500">
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1">面接日時</label>
@@ -1283,7 +1283,7 @@ async function showApplicationDetail(id) {
             </div>
             <div>
               <label class="block text-xs text-gray-400 mb-1">管理メモ</label>
-              <textarea name="admin_memo" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${a.admin_memo||''}</textarea>
+              <textarea name="admin_memo" rows="3" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-primary-500 resize-none">${escapeAdminHtml(a.admin_memo||'')}</textarea>
             </div>
           </div>
           <div class="flex gap-3 mt-5">
@@ -1528,13 +1528,13 @@ function renderConsultationRows(cons) {
       <div class="flex items-start gap-4">
         <div class="flex-1">
           <div class="flex items-center gap-2 mb-1 flex-wrap">
-            <p class="font-medium text-sm">${c.name}</p>
+            <p class="font-medium text-sm">${escapeAdminHtml(c.name)}</p>
             <span class="status-badge ${(statusMap[c.status]||{cls:'bg-gray-500/20 text-gray-400'}).cls}">${(statusMap[c.status]||{label:c.status}).label}</span>
             ${c.source_media ? `<span class="text-xs bg-purple-500/15 border border-purple-500/25 text-purple-300 px-2 py-0.5 rounded-full"><i class="fas fa-share-alt mr-1"></i>${SOURCE_MEDIA_LABEL[c.source_media]||c.source_media}</span>` : ''}
           </div>
-          <p class="text-xs text-gray-400">${c.email} ${c.university ? '/ '+c.university : ''} ${c.grade ? c.grade+'年' : ''}</p>
-          ${c.concern ? `<p class="text-xs text-gray-500 mt-1">${c.concern}</p>` : ''}
-          ${c.message ? `<p class="text-sm text-gray-300 mt-2">${c.message}</p>` : ''}
+          <p class="text-xs text-gray-400">${escapeAdminHtml(c.email)} ${c.university ? '/ '+escapeAdminHtml(c.university) : ''} ${c.grade ? escapeAdminHtml(c.grade)+'年' : ''}</p>
+          ${c.concern ? `<p class="text-xs text-gray-500 mt-1">${escapeAdminHtml(c.concern)}</p>` : ''}
+          ${c.message ? `<p class="text-sm text-gray-300 mt-2 whitespace-pre-line">${escapeAdminHtml(c.message)}</p>` : ''}
           <p class="text-xs text-gray-600 mt-1">${c.created_at?.split('T')[0]||''}</p>
         </div>
         <div class="flex gap-2 flex-shrink-0">
@@ -1670,7 +1670,7 @@ async function loadSiteSettings() {
         <div>
           <p class="text-blue-300 font-medium mb-1">このページについて</p>
           <p class="text-gray-400 text-xs leading-relaxed">サービス名・LINE URL・フッターなどの<strong class="text-white">運営設定</strong>を管理します。<br>
-          ヒーロー見出し・特徴カード・CTAなどの<strong class="text-white">LP表示設定</strong>は
+          ヒーロー見出し・特徴カード・会員限定バナーの<strong class="text-white">LP表示設定</strong>は
           <button onclick="navigate('lp-edit')" class="text-primary-400 underline hover:text-primary-300">LP編集ページ</button>で管理してください。</p>
         </div>
       </div>
@@ -1747,23 +1747,9 @@ const LP_SETTING_GROUPS = [
     description: 'ページ最上部の大見出し・サブテキスト・CTAボタン',
     fields: [
       { key: 'hero_badge_text',  label: 'バッジテキスト（上部小バッジ）', example: '高学歴大学生向け・厳選求人のみ掲載' },
-      { key: 'hero_title_line1', label: '見出し 1行目（グラデーション）', example: '圧倒的な' },
-      { key: 'hero_title_line2', label: '見出し 2行目', example: '実務経験を、' },
-      { key: 'hero_title_line3', label: '見出し 3行目', example: '今すぐ始めよう。' },
-      { key: 'hero_subtitle',    label: 'サブテキスト', example: 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルを。', textarea: true },
-      { key: 'hero_cta1_text',   label: 'CTAボタン1（メイン）', example: '求人を探す' },
-      { key: 'hero_cta2_text',   label: 'CTAボタン2（サブ）',  example: '招待コードで登録' },
-    ]
-  },
-  {
-    key: 'stats',
-    label: '数字・実績セクション',
-    icon: 'fas fa-chart-bar',
-    description: '掲載企業数・求人数・登録学生数。公開画面では掲載中データを優先して表示します。',
-    fields: [
-      { key: 'stat_companies',    label: '掲載企業数', example: '50' },
-      { key: 'stat_jobs',         label: '求人数',     example: '200' },
-      { key: 'stat_students',     label: '登録学生数', example: '1000' },
+      { key: 'site_tagline',     label: 'メイン見出し', example: '圧倒的な実務経験を、\n今すぐ始めよう。', textarea: true },
+      { key: 'site_description', label: '説明文', example: '厳選された長期インターン求人。あなたのキャリアをここから始めよう。', textarea: true },
+      { key: 'hero_cta1_text',   label: 'CTAボタン1（求人一覧）', example: '求人を見る' },
     ]
   },
   {
@@ -1774,17 +1760,6 @@ const LP_SETTING_GROUPS = [
     fields: [
       { key: 'feature_section_title',    label: 'セクションタイトル', example: '選ばれる理由' },
       { key: 'feature_section_subtitle', label: 'セクションサブタイトル', example: '就活で差をつける、本質的な成長環境を提供します', textarea: true },
-    ]
-  },
-  {
-    key: 'cta',
-    label: 'CTAセクション（下部）',
-    icon: 'fas fa-bullhorn',
-    description: 'ページ下部の無料相談誘導エリア',
-    fields: [
-      { key: 'cta_title',    label: 'タイトル',     example: 'まずは無料相談から始めてみませんか？' },
-      { key: 'cta_subtitle', label: '説明文',       example: '自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。', textarea: true },
-      { key: 'cta_btn_text', label: 'ボタンテキスト', example: '無料相談を申し込む' },
     ]
   },
   {
@@ -1854,30 +1829,11 @@ async function loadLpEdit() {
             </div>
           </div>
           <div class="border-t border-white/10 pt-3">
-            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>推奨テキスト事例</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">ヒーロー見出し</p>
-                <p class="text-gray-500 text-xs mb-1">パターンA（インパクト重視）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">1行目: 選ばれた学生だけが<br>2行目: 手にできる、<br>3行目: 本物のキャリア。</p>
-                <p class="text-gray-500 text-xs mb-1">パターンB（行動喚起型）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">1行目: 3ヶ月で変わる、<br>2行目: 就活の結果が<br>3行目: 変わる。</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">サブテキスト</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">厳選された成長企業でのインターンで、就活で語れる本物の経験を積もう。大学1〜4年生、随時募集中。</p>
-                <p class="text-white font-medium mb-1 mt-2">CTAボタン</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">求人を見る / 無料で登録 / 今すぐ応募</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">会員限定バナー</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">タイトル: 🔒 登録者限定！非公開求人あり<br>テキスト: 現在XX件の非公開求人を掲載中。<br>登録するだけで全て閲覧可能！</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">数字セクション（目安）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数</p>
-              </div>
-            </div>
+            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-check-circle text-green-400 mr-1"></i>現在の公開画面と連動する項目</p>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              この画面では、TOPページで実際に使用している「ヒーロー」「特徴」「会員限定バナー」だけを編集できます。
+              LINE相談先は「サイト設定」、求人・内定者実績・大学タグはそれぞれの専用管理ページで変更してください。
+            </p>
           </div>
         </div>
       </div>

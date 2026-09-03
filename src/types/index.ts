@@ -6,6 +6,12 @@ export type Bindings = {
   LEGACY_SITE_HOSTS?: string
   /** Cloudflare Pages が自動設定するデプロイ元ブランチ */
   CF_PAGES_BRANCH?: string
+  /** Resend APIキー（パスワード再設定メール送信用） */
+  RESEND_API_KEY?: string
+  /** パスワード再設定メールの送信元（Resendで認証済みのアドレス） */
+  PASSWORD_RESET_FROM_EMAIL?: string
+  /** パスワード再設定メールの返信先（任意） */
+  PASSWORD_RESET_REPLY_TO?: string
 }
 
 export type Company = {

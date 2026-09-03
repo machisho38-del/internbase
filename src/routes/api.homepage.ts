@@ -1,6 +1,8 @@
 import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
+import { getStudentFromSession } from '../utils/studentAuth'
+import { getAuthenticatedStudentId } from '../utils/studentAccess'
 
 const homepage = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -106,8 +108,11 @@ homepage.get('/featured-jobs', async (c) => {
     const { results } = await c.env.DB.prepare(`
       SELECT
         f.id as featured_id, f.display_order,
-        j.id, j.company_id, j.title, j.slug, j.catch_copy, j.work_style, j.hourly_wage_min, j.hourly_wage_max,
-        comp.name as company_name, comp.logo_url as company_logo
+        j.id, j.company_id, j.title, j.slug, j.catch_copy, j.occupation, j.tags,
+        j.work_style, j.remote_available, j.hourly_wage_min, j.hourly_wage_max,
+        j.work_days, j.work_location, j.card_image_url, j.hero_image_url,
+        comp.name as company_name, comp.logo_url as company_logo, comp.industry as company_industry,
+        comp.hero_image_url as company_hero_image_url
       FROM featured_jobs f
       JOIN jobs j ON f.job_id = j.id
       JOIN companies comp ON j.company_id = comp.id
@@ -192,6 +197,8 @@ homepage.get('/university-tags', async (c) => {
 // 公開用：特定大学の求人一覧取得
 homepage.get('/universities/:slug/jobs', async (c) => {
   const slug = c.req.param('slug')
+  const sessionStudent = await getStudentFromSession(c)
+  const studentId = getAuthenticatedStudentId(sessionStudent)
   
   // 大学タグを取得
   const tag = await c.env.DB.prepare(`
@@ -214,7 +221,10 @@ homepage.get('/universities/:slug/jobs', async (c) => {
     FROM jobs j
     JOIN companies comp ON j.company_id = comp.id
     JOIN job_university_tags jut ON j.id = jut.job_id
-    WHERE jut.university_tag_id = ? AND j.status = 'published' AND comp.status = 'published'
+    WHERE jut.university_tag_id = ?
+      AND j.status = 'published'
+      AND comp.status = 'published'
+      AND j.visibility ${studentId ? "IN ('public', 'members')" : "= 'public'"}
     ORDER BY j.display_order ASC, j.created_at DESC
   `).bind(tag.id).all()
   

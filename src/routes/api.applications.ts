@@ -2,18 +2,27 @@ import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
 import { getStudentFromSession } from '../utils/studentAuth'
+import { getAuthenticatedStudentId } from '../utils/studentAccess'
 
 const applications = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
 // 応募（公開）
 applications.post('/', async (c) => {
   const body = await c.req.json()
-  const { student_id, job_id, motivation, available_hours, source_media } = body
+  const { job_id, motivation, available_hours, source_media } = body
   const sessionStudent = await getStudentFromSession(c)
-  const effectiveStudentId = sessionStudent?.id || student_id
+  const effectiveStudentId = getAuthenticatedStudentId(sessionStudent)
+  if (!effectiveStudentId) {
+    return c.json({ success: false, error: 'Unauthorized' }, 401)
+  }
 
-  if (!effectiveStudentId || !job_id) {
+  const normalizedJobId = Number(job_id)
+  if (!effectiveStudentId || !Number.isInteger(normalizedJobId) || normalizedJobId < 1) {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
+  }
+
+  if (String(motivation ?? '').length > 5000 || String(available_hours ?? '').length > 500) {
+    return c.json({ success: false, error: '入力内容が長すぎます' }, 400)
   }
 
   const validSourceMedia = ['sunconnect','valueup','genki_intern','sokei_intern_compass','careersourcing','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
@@ -21,24 +30,27 @@ applications.post('/', async (c) => {
 
   const existing = await c.env.DB.prepare(
     `SELECT id FROM applications WHERE student_id = ? AND job_id = ?`
-  ).bind(effectiveStudentId, job_id).first()
+  ).bind(effectiveStudentId, normalizedJobId).first()
   if (existing) {
     return c.json({ success: false, error: 'この求人にはすでに応募済みです' }, 409)
   }
 
   const job = await c.env.DB.prepare(
-    `SELECT id, title FROM jobs WHERE id = ? AND status = 'published'`
-  ).bind(job_id).first()
+    `SELECT j.id, j.title
+     FROM jobs j
+     JOIN companies c ON c.id = j.company_id
+     WHERE j.id = ? AND j.status = 'published' AND c.status = 'published'`
+  ).bind(normalizedJobId).first()
   if (!job) return c.json({ success: false, error: '求人が見つかりません' }, 404)
 
   const result = await c.env.DB.prepare(`
     INSERT INTO applications (student_id, job_id, motivation, available_hours, source_media)
     VALUES (?, ?, ?, ?, ?)
-  `).bind(effectiveStudentId, job_id, motivation || null, available_hours || null, validatedSourceMedia).run()
+  `).bind(effectiveStudentId, normalizedJobId, motivation || null, available_hours || null, validatedSourceMedia).run()
 
   await c.env.DB.prepare(
     `UPDATE jobs SET applicant_count = applicant_count + 1 WHERE id = ?`
-  ).bind(job_id).run()
+  ).bind(normalizedJobId).run()
 
   return c.json({
     success: true,
