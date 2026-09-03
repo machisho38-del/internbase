@@ -107,6 +107,9 @@ test.describe('Preview public site', () => {
     await page.goto(`/jobs/${encodeURIComponent(jobs[0].slug)}`);
     await page.evaluate(job => {
       localStorage.setItem('student_name', 'E2E確認');
+      const container = document.createElement('div');
+      container.id = 'apply-form-content';
+      document.body.appendChild(container);
       renderApplicationForm(job.id, job.title, 'other');
     }, jobs[0]);
     await expect(page.locator('#apply-form-content')).toContainText('2〜3営業日以内に、メールまたはお電話にてご連絡いたします。');
