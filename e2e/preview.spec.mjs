@@ -218,6 +218,7 @@ test.describe('Preview admin', () => {
     ['applications', '応募管理'],
     ['invites', '招待コード'],
     ['site-settings', 'サイト設定'],
+    ['lp-edit', 'LP編集'],
     ['success-stories', '内定者タイムライン管理'],
     ['featured-jobs', 'ピックアップ求人設定'],
     ['university-tags', '大学タグ管理']
@@ -230,6 +231,20 @@ test.describe('Preview admin', () => {
       await expect(page.locator('#admin-content')).not.toContainText('データの取得に失敗しました');
     });
   }
+
+  test('LP editor only shows settings connected to the current homepage', async ({ page }) => {
+    await page.locator('[data-page="lp-edit"]').click();
+    await expect(page.locator('#lpset-site_tagline')).toBeVisible();
+    await expect(page.locator('#lpset-site_description')).toBeVisible();
+    await expect(page.locator('#lpset-hero_cta1_text')).toBeVisible();
+    await expect(page.locator('#lp-features-visible')).toBeVisible();
+    await expect(page.locator('#lpset-members_banner_title')).toBeVisible();
+
+    await expect(page.locator('#lp-group-stats')).toHaveCount(0);
+    await expect(page.locator('#lp-group-cta')).toHaveCount(0);
+    await expect(page.locator('#lpset-hero_subtitle')).toHaveCount(0);
+    await expect(page.locator('#lpset-hero_cta2_text')).toHaveCount(0);
+  });
 
   test('homepage management modals open and close', async ({ page }) => {
     const cases = [
