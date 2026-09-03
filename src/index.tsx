@@ -933,7 +933,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260804-gakuchika-brand"></script>
+  <script src="/static/admin.js?v=20260902-lp-settings-cleanup"></script>
 </body>
 </html>`
 }
