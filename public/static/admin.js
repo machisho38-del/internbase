@@ -1670,7 +1670,7 @@ async function loadSiteSettings() {
         <div>
           <p class="text-blue-300 font-medium mb-1">このページについて</p>
           <p class="text-gray-400 text-xs leading-relaxed">サービス名・LINE URL・フッターなどの<strong class="text-white">運営設定</strong>を管理します。<br>
-          ヒーロー見出し・特徴カード・CTAなどの<strong class="text-white">LP表示設定</strong>は
+          ヒーロー見出し・特徴カード・会員限定バナーの<strong class="text-white">LP表示設定</strong>は
           <button onclick="navigate('lp-edit')" class="text-primary-400 underline hover:text-primary-300">LP編集ページ</button>で管理してください。</p>
         </div>
       </div>
@@ -1748,20 +1748,8 @@ const LP_SETTING_GROUPS = [
     fields: [
       { key: 'hero_badge_text',  label: 'バッジテキスト（上部小バッジ）', example: '高学歴大学生向け・厳選求人のみ掲載' },
       { key: 'site_tagline',     label: 'メイン見出し', example: '圧倒的な実務経験を、\n今すぐ始めよう。', textarea: true },
-      { key: 'hero_subtitle',    label: 'サブテキスト', example: 'スタートアップ・成長企業での長期インターンで、就活で差がつく本物のスキルを。', textarea: true },
+      { key: 'site_description', label: '説明文', example: '厳選された長期インターン求人。あなたのキャリアをここから始めよう。', textarea: true },
       { key: 'hero_cta1_text',   label: 'CTAボタン1（求人一覧）', example: '求人を見る' },
-      { key: 'hero_cta2_text',   label: 'CTAボタン2（LINE相談）', example: 'LINEで無料相談' },
-    ]
-  },
-  {
-    key: 'stats',
-    label: '数字・実績セクション',
-    icon: 'fas fa-chart-bar',
-    description: '掲載企業数・求人数・登録学生数。公開画面では掲載中データを優先して表示します。',
-    fields: [
-      { key: 'stat_companies',    label: '掲載企業数', example: '50' },
-      { key: 'stat_jobs',         label: '求人数',     example: '200' },
-      { key: 'stat_students',     label: '登録学生数', example: '1000' },
     ]
   },
   {
@@ -1772,17 +1760,6 @@ const LP_SETTING_GROUPS = [
     fields: [
       { key: 'feature_section_title',    label: 'セクションタイトル', example: '選ばれる理由' },
       { key: 'feature_section_subtitle', label: 'セクションサブタイトル', example: '就活で差をつける、本質的な成長環境を提供します', textarea: true },
-    ]
-  },
-  {
-    key: 'cta',
-    label: 'CTAセクション（下部）',
-    icon: 'fas fa-bullhorn',
-    description: 'ページ下部の無料相談誘導エリア',
-    fields: [
-      { key: 'cta_title',    label: 'タイトル',     example: 'まずは無料相談から始めてみませんか？' },
-      { key: 'cta_subtitle', label: '説明文',       example: '自分に合ったインターンが見つかるか不安な方も、お気軽にご相談ください。', textarea: true },
-      { key: 'cta_btn_text', label: 'ボタンテキスト', example: '無料相談を申し込む' },
     ]
   },
   {
@@ -1852,30 +1829,11 @@ async function loadLpEdit() {
             </div>
           </div>
           <div class="border-t border-white/10 pt-3">
-            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-lightbulb text-yellow-400 mr-1"></i>推奨テキスト事例</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">ヒーロー見出し</p>
-                <p class="text-gray-500 text-xs mb-1">パターンA（インパクト重視）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">1行目: 選ばれた学生だけが<br>2行目: 手にできる、<br>3行目: 本物のキャリア。</p>
-                <p class="text-gray-500 text-xs mb-1">パターンB（行動喚起型）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">1行目: 3ヶ月で変わる、<br>2行目: 就活の結果が<br>3行目: 変わる。</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">サブテキスト</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs mb-2">厳選された成長企業でのインターンで、就活で語れる本物の経験を積もう。大学1〜4年生、随時募集中。</p>
-                <p class="text-white font-medium mb-1 mt-2">CTAボタン</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">求人を見る / 無料で登録 / 今すぐ応募</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">会員限定バナー</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">タイトル: 🔒 登録者限定！非公開求人あり<br>テキスト: 現在XX件の非公開求人を掲載中。<br>登録するだけで全て閲覧可能！</p>
-              </div>
-              <div class="bg-white/5 rounded-lg p-3">
-                <p class="text-white font-medium mb-1">数字セクション（目安）</p>
-                <p class="bg-black/30 rounded px-2 py-1 text-primary-300 font-mono text-xs">掲載企業数: 実際の掲載数<br>求人数: 掲載求人の総数<br>登録学生数: 累計登録数</p>
-              </div>
-            </div>
+            <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-check-circle text-green-400 mr-1"></i>現在の公開画面と連動する項目</p>
+            <p class="text-xs text-gray-400 leading-relaxed">
+              この画面では、TOPページで実際に使用している「ヒーロー」「特徴」「会員限定バナー」だけを編集できます。
+              LINE相談先は「サイト設定」、求人・内定者実績・大学タグはそれぞれの専用管理ページで変更してください。
+            </p>
           </div>
         </div>
       </div>
