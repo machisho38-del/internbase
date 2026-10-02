@@ -438,7 +438,30 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       border-color: #4f6ef7 !important;
       box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
     }
-  </style>
+  
+    /* 添付HTML（UT-Board準拠）に合わせたPreview用トップビジュアル */
+    .hero-gradient { background: #011827 !important; color: #fff; position: relative; overflow: hidden; }
+    .hero-gradient > .max-w-\\[1680px\\] { position: relative; display: block !important; max-width: 1080px; min-height: 500px; }
+    .hero-gradient > .max-w-\\[1680px\\] > div:first-child { position: relative; z-index: 2; display: flex; align-items: center; min-height: 500px; padding: 64px 20px; }
+    .hero-gradient .home-hero-photo { position: absolute; inset: 0; z-index: 0; min-height: 500px !important; height: 100% !important; opacity: .72; background-position: center !important; }
+    .hero-gradient .home-hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(1,24,39,.96), rgba(1,24,39,.76) 45%, rgba(1,24,39,.38)); }
+    .hero-gradient .hero-copy-zone { max-width: 760px; }
+    .hero-gradient .section-kicker { color: #a8c9ff; }
+    .hero-gradient .hero-title .text-slate-950 { color: #fff !important; }
+    .hero-gradient .hero-title-accent { color: #fff; }
+    .hero-gradient .text-slate-600 { color: rgba(255,255,255,.78) !important; }
+    .hero-gradient .hero-copy-zone > .inline-flex { background: rgba(255,255,255,.96); border-color: transparent; }
+    .hero-gradient .search-panel { position: relative; z-index: 3; max-width: 1080px; margin: -40px auto 0; border-radius: 1em; }
+    .hero-gradient .search-panel .bg-orange-500 { background: #0061ff !important; }
+    .hero-gradient .search-panel .bg-orange-500:hover { background: #004ecb !important; }
+    #app > .bg-gray-50.border-b { display: none; }
+    @media (max-width: 639px) {
+      .hero-gradient > .max-w-\\[1680px\\] { min-height: 520px; }
+      .hero-gradient > .max-w-\\[1680px\\] > div:first-child { min-height: 520px; padding: 48px 16px 92px; }
+      .hero-gradient .home-hero-photo { min-height: 520px !important; }
+      .hero-gradient .search-panel { margin: -48px 16px 0; }
+    }
+</style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
 
