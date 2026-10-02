@@ -439,27 +439,286 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
     }
   
-    /* 添付HTML（UT-Board準拠）に合わせたPreview用トップビジュアル */
-    .hero-gradient { background: #011827 !important; color: #fff; position: relative; overflow: hidden; }
-    .hero-gradient > .max-w-\\[1680px\\] { position: relative; display: block !important; max-width: 1080px; min-height: 500px; }
-    .hero-gradient > .max-w-\\[1680px\\] > div:first-child { position: relative; z-index: 2; display: flex; align-items: center; min-height: 500px; padding: 64px 20px; }
-    .hero-gradient .home-hero-photo { position: absolute; inset: 0; z-index: 0; min-height: 500px !important; height: 100% !important; opacity: .72; background-position: center !important; }
-    .hero-gradient .home-hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(1,24,39,.96), rgba(1,24,39,.76) 45%, rgba(1,24,39,.38)); }
-    .hero-gradient .hero-copy-zone { max-width: 760px; }
-    .hero-gradient .section-kicker { color: #a8c9ff; }
-    .hero-gradient .hero-title .text-slate-950 { color: #fff !important; }
-    .hero-gradient .hero-title-accent { color: #fff; }
-    .hero-gradient .text-slate-600 { color: rgba(255,255,255,.78) !important; }
-    .hero-gradient .hero-copy-zone > .inline-flex { background: rgba(255,255,255,.96); border-color: transparent; }
-    .hero-gradient .search-panel { position: relative; z-index: 3; max-width: 1080px; margin: -40px auto 0; border-radius: 1em; }
-    .hero-gradient .search-panel .bg-orange-500 { background: #0061ff !important; }
-    .hero-gradient .search-panel .bg-orange-500:hover { background: #004ecb !important; }
-    #app > .bg-gray-50.border-b { display: none; }
+    /* 添付HTML（UT-Board準拠）に合わせたPreview用トップページ全体スタイル v2 */
+    :root {
+      --lp-navy: #011827;
+      --lp-blue: #0061ff;
+      --lp-blue-dark: #004ecb;
+      --lp-sky: #0f83fd;
+      --lp-tint: #e6f2ff;
+      --lp-gray: #f7f7f7;
+      --lp-line: #e2e8f0;
+      --lp-text: #363636;
+      --lp-sub: #595959;
+    }
+
+    body {
+      background: #fff !important;
+      color: var(--lp-text) !important;
+    }
+
+    nav.fixed {
+      background: rgba(255,255,255,.98) !important;
+      border-bottom: 1px solid #e5e7eb !important;
+      box-shadow: none !important;
+    }
+    nav.fixed .js-site-name {
+      background: none !important;
+      color: var(--lp-navy) !important;
+      -webkit-text-fill-color: initial !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+    nav.fixed .js-site-logo-icon {
+      background: var(--lp-blue) !important;
+      border-radius: 50% !important;
+      box-shadow: none !important;
+    }
+    nav.fixed a,
+    nav.fixed button {
+      color: var(--lp-navy);
+    }
+    nav.fixed a.bg-primary-600 {
+      background: var(--lp-blue) !important;
+      border-radius: 999px !important;
+    }
+    nav.fixed button.bg-green-500 {
+      border-radius: 999px !important;
+    }
+
+    #app > .bg-gray-50.border-b {
+      display: none !important;
+    }
+
+    /* ヒーロー：添付モックアップのfv構成 */
+    .hero-gradient {
+      background: var(--lp-navy) !important;
+      color: #fff !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    .hero-gradient > div:first-child {
+      position: relative !important;
+      display: block !important;
+      width: 100%;
+      max-width: none !important;
+      min-height: 0 !important;
+    }
+    .hero-gradient > div:first-child > div:first-child {
+      position: relative;
+      z-index: 2;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 64px 20px 28px !important;
+      text-align: center;
+    }
+    .hero-gradient .home-hero-photo {
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: 0;
+      width: 100%;
+      height: 100% !important;
+      min-height: 470px !important;
+      opacity: .62;
+      background-position: center !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(1,24,39,.84), rgba(1,24,39,.91));
+    }
+    .hero-gradient .hero-copy-zone {
+      max-width: 900px !important;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero-gradient .section-kicker {
+      justify-content: center;
+      color: #c9dfff !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      letter-spacing: .14em;
+    }
+    .hero-gradient .hero-copy-zone > .inline-flex {
+      background: #fff !important;
+      color: var(--lp-navy) !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+    }
+    .hero-gradient .hero-title {
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.7rem) !important;
+      line-height: 1.6 !important;
+      letter-spacing: .02em !important;
+      text-align: center;
+    }
+    .hero-gradient .hero-title .text-slate-950,
+    .hero-gradient .hero-title-accent {
+      color: #fff !important;
+    }
+    .hero-gradient .hero-title-accent::after {
+      background: var(--lp-sky) !important;
+      opacity: .85 !important;
+    }
+    .hero-gradient .text-slate-600 {
+      color: #c9d4de !important;
+    }
+    .hero-gradient .hero-copy-zone > .flex {
+      justify-content: center;
+    }
+    .hero-gradient .hero-copy-zone a.bg-primary-600 {
+      background: var(--lp-blue) !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+    }
+    .hero-gradient .hero-copy-zone button {
+      border-radius: 999px !important;
+    }
+    .hero-gradient > div:nth-child(2) {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px 30px !important;
+    }
+    .hero-gradient .search-panel {
+      max-width: none !important;
+      margin: 0 !important;
+      border-radius: 14px !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,.24) !important;
+    }
+    .hero-gradient .search-panel .bg-orange-500 {
+      background: var(--lp-blue) !important;
+    }
+    .hero-gradient .search-panel .bg-orange-500:hover {
+      background: var(--lp-blue-dark) !important;
+    }
+    .hero-gradient > div:nth-child(2) > .grid:last-child > div {
+      color: #c9d4de !important;
+    }
+
+    /* 添付モックアップのセクションリズム */
+    #app > section:not(.hero-gradient) {
+      padding: 72px 0 !important;
+      border-color: var(--lp-line) !important;
+    }
+    #app > section:not(.hero-gradient) > div {
+      max-width: 1120px !important;
+    }
+    #app > section:nth-of-type(3),
+    #app > section:nth-of-type(7),
+    #app > section:nth-of-type(8) {
+      background: var(--lp-gray) !important;
+    }
+    #app > section:nth-of-type(5) {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(6) {
+      background: #fff !important;
+    }
+    #app h2 {
+      color: var(--lp-navy) !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      letter-spacing: .01em;
+    }
+    #app .section-kicker {
+      color: var(--lp-blue) !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+    #app .section-kicker::before {
+      background: #f0a36f !important;
+    }
+    #app .card-hover {
+      border: 1px solid var(--lp-line) !important;
+      border-radius: 14px !important;
+      box-shadow: none !important;
+      transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+    }
+    #app .card-hover:hover {
+      border-color: rgba(0,97,255,.42) !important;
+      box-shadow: 0 .8em 1.4em -.3em rgba(1,24,39,.22) !important;
+      transform: translateY(-3px);
+    }
+    #app .job-card-media {
+      aspect-ratio: 16 / 9.5;
+      background: linear-gradient(rgba(1,24,39,.26), rgba(1,24,39,.6)), url('/images/hero-internship-team.webp') center / cover no-repeat !important;
+    }
+    #app .glass {
+      background: #fff !important;
+      border: 1px solid var(--lp-line) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06) !important;
+      backdrop-filter: none !important;
+    }
+    #app .tag {
+      background: var(--lp-tint) !important;
+      border-color: #cfe3ff !important;
+      color: #064bb6 !important;
+      border-radius: 999px !important;
+    }
+    #app > section:nth-of-type(4) .rounded-2xl {
+      border-radius: 14px !important;
+    }
+    #app > section:nth-of-type(5) .text-white {
+      color: #fff !important;
+    }
+    #app > section:nth-of-type(5) .text-slate-400 {
+      color: #b7c7d4 !important;
+    }
+    #app > section:nth-of-type(5) .text-orange-400 {
+      color: #f5a56f !important;
+    }
+    #app > section:nth-of-type(5) .bg-slate-950 {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(6) {
+      background: #fff !important;
+    }
+    #app > section:nth-of-type(6) .bg-gradient-to-r {
+      background: #fff !important;
+    }
+    #app > section:nth-of-type(9) {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(9) h2,
+    #app > section:nth-of-type(9) p {
+      color: #fff !important;
+    }
+    #app > section:nth-of-type(9) .glass {
+      background: rgba(255,255,255,.06) !important;
+      border-color: rgba(255,255,255,.16) !important;
+      box-shadow: none !important;
+    }
+    body > footer {
+      margin-top: 0 !important;
+      background: var(--lp-navy) !important;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    body > footer > div {
+      max-width: 1120px !important;
+    }
+
     @media (max-width: 639px) {
-      .hero-gradient > .max-w-\\[1680px\\] { min-height: 520px; }
-      .hero-gradient > .max-w-\\[1680px\\] > div:first-child { min-height: 520px; padding: 48px 16px 92px; }
-      .hero-gradient .home-hero-photo { min-height: 520px !important; }
-      .hero-gradient .search-panel { margin: -48px 16px 0; }
+      .hero-gradient > div:first-child > div:first-child {
+        padding: 48px 16px 22px !important;
+      }
+      .hero-gradient .hero-title {
+        font-size: clamp(1.85rem, 9vw, 2.35rem) !important;
+      }
+      .hero-gradient > div:nth-child(2) {
+        padding: 10px 16px 24px !important;
+      }
+      #app > section:not(.hero-gradient) {
+        padding: 56px 0 !important;
+      }
     }
 </style>
 </head>
