@@ -720,6 +720,63 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         padding: 56px 0 !important;
       }
     }
+
+    /* 応募タイムライン・大学検索の微調整 */
+    .hero-gradient .home-hero-photo {
+      opacity: .50 !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      background: linear-gradient(rgba(1,24,39,.92), rgba(1,24,39,.97)) !important;
+    }
+    #app > section.campus-search-section {
+      padding: 24px 0 !important;
+      background: #fff !important;
+    }
+    #app > section.campus-search-section > div {
+      max-width: 1120px !important;
+    }
+    #app .campus-search-panel {
+      border-radius: 14px !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06);
+    }
+    #app .campus-search-panel .section-kicker {
+      justify-content: flex-start;
+      font-size: .68rem;
+      letter-spacing: .12em;
+    }
+    #app .campus-search-panel h2 {
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0;
+    }
+    #app #application-timeline {
+      padding: 56px 0 !important;
+      background: var(--lp-gray) !important;
+    }
+    #app #application-timeline h2,
+    #app #application-timeline p {
+      color: var(--lp-navy);
+    }
+    #app #application-timeline .section-kicker {
+      justify-content: flex-start;
+    }
+    #app .timeline-stat-card {
+      border-radius: 14px !important;
+      box-shadow: 0 8px 22px rgba(1,24,39,.05);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    #app .timeline-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(1,24,39,.10);
+    }
+    @media (max-width: 639px) {
+      #app > section.campus-search-section {
+        padding: 16px 0 !important;
+      }
+      #app #application-timeline {
+        padding: 44px 0 !important;
+      }
+    }
+
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
