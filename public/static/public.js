@@ -346,6 +346,12 @@ async function initHomePage() {
   };
   const typeIcons = { info: 'info-circle', warning: 'exclamation-triangle', success: 'check-circle', campaign: 'gift' };
 
+  const applicationCount = Math.max(0, Number.parseInt(s.stat_companies, 10) || 0);
+  const offerCount = Math.max(0, Number.parseInt(s.stat_jobs, 10) || 0);
+  const consultationCount = Math.max(0, Number.parseInt(s.stat_students, 10) || 0);
+  const successRate = Math.min(100, Math.max(0, Number.parseFloat(s.stat_success_rate) || 0));
+  const timelineMonth = new Intl.DateTimeFormat('ja-JP', { year: 'numeric', month: 'long' }).format(new Date());
+
   app.innerHTML = `
     <!-- お知らせバナー -->
     ${announcements.length > 0 ? `
@@ -429,10 +435,19 @@ async function initHomePage() {
     </section>
 
     ${universityTags.length > 0 ? `
-    <section class="py-10 bg-primary-50 border-y border-primary-100">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-5">
-        <div><p class="section-kicker mb-1">Campus search</p><h2 class="text-xl sm:text-2xl font-black text-slate-950">大学別のおすすめ求人から探す</h2></div>
-        <button onclick="openUniversityModal()" class="inline-flex items-center gap-2 bg-white hover:bg-primary-600 hover:text-white text-primary-700 border border-primary-200 font-bold px-6 py-3 rounded-xl transition-colors"><i class="fas fa-university"></i>大学を選択する</button>
+    <section class="campus-search-section py-5 bg-white border-y border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="campus-search-panel flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-11 h-11 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-university"></i></div>
+            <div class="min-w-0">
+              <p class="section-kicker mb-1">Campus search</p>
+              <h2 class="text-base sm:text-lg font-black text-slate-950">大学別のおすすめ求人から探す</h2>
+              <p class="text-xs text-slate-500 mt-0.5">在籍大学から、相性のよい求人を探せます。</p>
+            </div>
+          </div>
+          <button onclick="openUniversityModal()" class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-white hover:bg-primary-600 hover:text-white text-primary-700 border border-primary-200 font-bold px-5 py-3 rounded-xl transition-colors whitespace-nowrap"><i class="fas fa-search"></i>大学を選択する <i class="fas fa-arrow-right text-xs"></i></button>
+        </div>
       </div>
     </section>` : ''}
 
@@ -456,25 +471,34 @@ async function initHomePage() {
       </div>
     </section>` : ''}
 
-    <!-- サービスの安心材料（未検証の件数は表示しない） -->
-    <section class="py-14 border-y border-slate-200 bg-slate-950 text-white">
+    <!-- 今月の応募タイムライン（LP編集の数字設定と連動） -->
+    <section id="application-timeline" class="application-timeline-section py-14 border-y border-slate-200 bg-slate-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-white/15 rounded-2xl overflow-hidden border border-white/10">
-          <div class="bg-slate-950 p-6 sm:p-8">
-            <i class="fas fa-filter-circle-dollar text-orange-400 text-xl mb-4"></i>
-            <div class="font-black text-lg mb-1">厳選求人</div><div class="text-slate-400 text-xs leading-relaxed">仕事内容と成長環境から比較</div>
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3 mb-7">
+          <div>
+            <p class="section-kicker mb-2">Monthly application timeline</p>
+            <h2 class="text-2xl sm:text-3xl font-black text-slate-950">今月の応募タイムライン</h2>
+            <p class="text-slate-600 text-sm mt-2">ガクチカインターンを通じた今月の活動状況です。</p>
           </div>
-          <div class="bg-slate-950 p-6 sm:p-8">
-            <i class="fas fa-user-graduate text-orange-400 text-xl mb-4"></i>
-            <div class="font-black text-lg mb-1">学生目線</div><div class="text-slate-400 text-xs leading-relaxed">勤務日数やリモート条件も明確</div>
+          <span class="inline-flex items-center gap-2 self-start sm:self-auto rounded-full bg-white border border-slate-200 px-3 py-1.5 text-xs font-bold text-slate-600"><i class="far fa-calendar text-primary-500"></i>${timelineMonth}</span>
+        </div>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="timeline-stat-card rounded-2xl bg-white border border-slate-200 p-4 sm:p-5">
+            <p class="text-xs font-bold text-slate-500">応募数</p>
+            <p class="mt-3 text-2xl sm:text-3xl font-black text-slate-950">${applicationCount}<span class="ml-1 text-sm font-bold text-slate-500">件</span></p>
           </div>
-          <div class="bg-slate-950 p-6 sm:p-8">
-            <i class="fas fa-coins text-orange-400 text-xl mb-4"></i>
-            <div class="font-black text-lg mb-1">登録無料</div><div class="text-slate-400 text-xs leading-relaxed">求人閲覧から登録まで無料</div>
+          <div class="timeline-stat-card rounded-2xl bg-white border border-slate-200 p-4 sm:p-5">
+            <p class="text-xs font-bold text-slate-500">内定数</p>
+            <p class="mt-3 text-2xl sm:text-3xl font-black text-primary-600">${offerCount}<span class="ml-1 text-sm font-bold text-slate-500">件</span></p>
           </div>
-          <div class="bg-slate-950 p-6 sm:p-8">
-            <i class="fab fa-line text-green-400 text-xl mb-4"></i>
-            <div class="font-black text-lg mb-1">LINE相談</div><div class="text-slate-400 text-xs leading-relaxed">迷ったときも気軽に相談</div>
+          <div class="timeline-stat-card rounded-2xl bg-white border border-slate-200 p-4 sm:p-5">
+            <p class="text-xs font-bold text-slate-500">相談数</p>
+            <p class="mt-3 text-2xl sm:text-3xl font-black text-slate-950">${consultationCount}<span class="ml-1 text-sm font-bold text-slate-500">件</span></p>
+          </div>
+          <div class="timeline-stat-card rounded-2xl bg-white border border-slate-200 p-4 sm:p-5">
+            <p class="text-xs font-bold text-slate-500">内定率</p>
+            <p class="mt-3 text-2xl sm:text-3xl font-black text-primary-600">${successRate}<span class="ml-1 text-sm font-bold text-slate-500">%</span></p>
+            <div class="mt-3 h-1.5 rounded-full bg-slate-100 overflow-hidden"><div class="h-full rounded-full bg-primary-600" style="width:${successRate}%"></div></div>
           </div>
         </div>
       </div>
