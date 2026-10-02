@@ -1753,6 +1753,18 @@ const LP_SETTING_GROUPS = [
     ]
   },
   {
+    key: 'stats',
+    label: '今月の応募タイムライン',
+    icon: 'fas fa-chart-line',
+    description: 'トップページの応募数・内定数・相談数・内定率を更新します。',
+    fields: [
+      { key: 'stat_companies',     label: '応募数（件）', example: '50' },
+      { key: 'stat_jobs',          label: '内定数（件）', example: '12' },
+      { key: 'stat_students',      label: '相談数（件）', example: '80' },
+      { key: 'stat_success_rate',  label: '内定率（%）', example: '24' },
+    ]
+  },
+  {
     key: 'features',
     label: '特徴セクション（タイトル）',
     icon: 'fas fa-th-large',
