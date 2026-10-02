@@ -777,6 +777,24 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       }
     }
 
+
+    /* トップ検索に大学条件を統合／背景画像を見せる調整 */
+    .hero-gradient .home-hero-photo {
+      opacity: .82 !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      background: linear-gradient(rgba(1,24,39,.58), rgba(1,24,39,.72)) !important;
+    }
+    .hero-gradient .search-panel .search-field {
+      background: rgba(255,255,255,.98) !important;
+      color: #172b67 !important;
+    }
+    @media (max-width: 639px) {
+      .hero-gradient .home-hero-photo::after {
+        background: linear-gradient(rgba(1,24,39,.64), rgba(1,24,39,.78)) !important;
+      }
+    }
+
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
