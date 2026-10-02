@@ -393,7 +393,7 @@ async function initHomePage() {
       </div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-10">
         <form class="search-panel rounded-2xl p-3 sm:p-4" onsubmit="searchFromHome(event)">
-          <div class="grid sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_auto] gap-2.5">
+          <div class="grid sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_auto] gap-2.5">
             <label class="relative block">
               <span class="sr-only">キーワード</span><i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-primary-500"></i>
               <input id="home-search-q" class="search-field w-full rounded-xl pl-11 pr-4 py-3.5 text-sm" placeholder="職種・企業名・キーワード">
@@ -401,6 +401,9 @@ async function initHomePage() {
             <select id="home-filter-occupation" class="search-field w-full rounded-xl px-4 py-3.5 text-sm">${renderOccupationOptions()}</select>
             <select id="home-filter-style" class="search-field w-full rounded-xl px-4 py-3.5 text-sm">
               <option value="">勤務形態から選ぶ</option><option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
+            </select>
+            <select id="home-filter-university" class="search-field w-full rounded-xl px-4 py-3.5 text-sm">
+              <option value="">大学別</option>${universityTags.map(tag => '<option value="' + escapeHtml(tag.slug) + '">' + escapeHtml(tag.name) + '</option>').join('')}
             </select>
             <button type="submit" class="bg-orange-500 hover:bg-orange-600 text-white font-bold rounded-xl px-7 py-3.5 whitespace-nowrap shadow-md shadow-orange-500/20">この条件で探す</button>
           </div>
@@ -433,23 +436,6 @@ async function initHomePage() {
         <a href="/jobs" class="sm:hidden mt-7 inline-flex items-center gap-2 text-primary-600 font-bold text-sm">求人をすべて見る <i class="fas fa-arrow-right"></i></a>
       </div>
     </section>
-
-    ${universityTags.length > 0 ? `
-    <section class="campus-search-section py-5 bg-white border-y border-slate-200">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="campus-search-panel flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-slate-200 bg-slate-50 p-3 sm:p-4">
-          <div class="flex items-center gap-3 min-w-0">
-            <div class="w-11 h-11 rounded-xl bg-primary-100 text-primary-600 flex items-center justify-center flex-shrink-0"><i class="fas fa-university"></i></div>
-            <div class="min-w-0">
-              <p class="section-kicker mb-1">Campus search</p>
-              <h2 class="text-base sm:text-lg font-black text-slate-950">大学別のおすすめ求人から探す</h2>
-              <p class="text-xs text-slate-500 mt-0.5">在籍大学から、相性のよい求人を探せます。</p>
-            </div>
-          </div>
-          <button onclick="openUniversityModal()" class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-white hover:bg-primary-600 hover:text-white text-primary-700 border border-primary-200 font-bold px-5 py-3 rounded-xl transition-colors whitespace-nowrap"><i class="fas fa-search"></i>大学を選択する <i class="fas fa-arrow-right text-xs"></i></button>
-        </div>
-      </div>
-    </section>` : ''}
 
     <!-- 会員限定バナー（登録済みでない場合のみ） -->
     ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
@@ -652,9 +638,11 @@ function searchFromHome(event) {
   const q = document.getElementById('home-search-q')?.value.trim();
   const occupation = document.getElementById('home-filter-occupation')?.value;
   const workStyle = document.getElementById('home-filter-style')?.value;
+  const university = document.getElementById('home-filter-university')?.value;
   if (q) params.set('q', q);
   if (occupation) params.set('occupation', occupation);
   if (workStyle) params.set('work_style', workStyle);
+  if (university) params.set('university', university);
   window.location.href = `/jobs${params.toString() ? `?${params.toString()}` : ''}`;
 }
 
