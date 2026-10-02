@@ -29,6 +29,7 @@ jobs.get('/', async (c) => {
   const occupation = c.req.query('occupation')
   const industry = c.req.query('industry')
   const workStyle = c.req.query('work_style')
+  const university = c.req.query('university')
   const q = c.req.query('q')?.trim()
   const membersOnly = c.req.query('members') === '1'
   const sessionStudent = await getStudentFromSession(c)
@@ -56,6 +57,14 @@ jobs.get('/', async (c) => {
   if (occupation) { query += ` AND j.occupation = ?`; params.push(occupation) }
   if (industry) { query += ` AND c.industry = ?`; params.push(industry) }
   if (workStyle) { query += ` AND j.work_style = ?`; params.push(workStyle) }
+  if (university) {
+    query += ` AND EXISTS (
+      SELECT 1 FROM job_university_tags jut
+      JOIN university_tags ut ON ut.id = jut.university_tag_id
+      WHERE jut.job_id = j.id AND ut.slug = ? AND ut.is_visible = 1
+    )`
+    params.push(university)
+  }
   if (q) {
     const like = `%${q}%`
     query += ` AND (
