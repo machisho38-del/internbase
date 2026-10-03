@@ -26,17 +26,23 @@
 ## デプロイ前の必須作業
 
 1. Preview D1 にマイグレーションを適用し、動作確認する。
-2. 管理画面の「サイト設定」で次を入力する。
+2. `0023_hide_unverified_launch_content.sql` の適用後、管理画面で公開コンテンツを監査する。
+   - 開発シードまたはテスト入力の企業・求人を公開しない。
+   - 求人の会社情報、仕事内容、勤務条件、給与、応募条件、選考フロー、掲載許諾を確認してから `published` にする。
+   - 内定者ストーリーは本人・所属・内定先・文言・掲載許諾を確認してから個別に公開し、最後にタイムライン表示を有効化する。
+   - 大学タグは説明文の事実確認を行い、実際に対象求人があるものだけ個別に公開する。
+   - ピックアップ求人には、上記確認済みの公開求人だけを指定する。
+3. 管理画面の「サイト設定」で次を入力する。
    - 運営者名
    - 代表者名
    - 所在地
    - 事業内容
    - 問い合わせメールアドレス
    - 規約最終更新日
-3. プライバシーポリシーと利用規約を事業内容に合わせて専門家が確認する。
-4. Production D1 の Time Travel Bookmark ID を取得して安全な場所に保存する。
-5. GitHub の **Actions → Migrate production D1 → Run workflow** を開き、`main` を選択して確認欄へ `APPLY-PRODUCTION-MIGRATIONS` と入力する。`production` Environment には承認ルールを設定しておく。
-6. Workflow が成功し、Production の `site_mode` が `coming_soon` のままであることを確認する。
+4. プライバシーポリシーと利用規約を事業内容に合わせて専門家が確認する。
+5. Production D1 の Time Travel Bookmark ID を取得して安全な場所に保存する。
+6. GitHub の **Actions → Migrate production D1 → Run workflow** を開き、`main` を選択して確認欄へ `APPLY-PRODUCTION-MIGRATIONS` と入力する。`production` Environment には承認ルールを設定しておく。
+7. Workflow が成功し、Production の `site_mode` が `coming_soon` のままであることを確認する。
 
 ## Coming Soon 期間の確認
 
@@ -47,7 +53,7 @@
 - Production の `/sitemap.xml` に URL が含まれない。
 - Production の `/admin` へログインできる。
 - Preview の `/jobs`、求人詳細、大学別求人、登録、ログイン、管理画面を確認できる。
-- 公開設定の内定者タイムラインがトップページに表示され、ゆっくり横へ流れる。
+- 掲載許諾済みの内定者ストーリーがある場合のみ、タイムラインを有効化し、トップページでゆっくり横へ流れることを確認する。
 - Preview の登録・編集・削除が `internship-preview` のみに反映され、Production のデータが変化しない。
 
 ### Preview E2E 自動確認

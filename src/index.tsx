@@ -1,5 +1,5 @@
 import { Hono } from 'hono'
-import { cors } from 'hono/cors'
+import { secureHeaders } from 'hono/secure-headers'
 import { Bindings } from './types'
 
 import companiesApi from './routes/api.companies'
@@ -17,7 +17,14 @@ import { isPreviewDeployment } from './utils/deployment'
 
 const app = new Hono<{ Bindings: Bindings }>()
 
-app.use('/api/*', cors())
+app.use('/*', secureHeaders({
+  referrerPolicy: 'strict-origin-when-cross-origin',
+  permissionsPolicy: {
+    camera: [],
+    microphone: [],
+    geolocation: []
+  }
+}))
 
 // 独自ドメイン切替後、指定した旧ホストからcanonicalドメインへパスを保って恒久転送する。
 app.use('/*', async (c, next) => {
@@ -177,6 +184,26 @@ app.get('/universities/:slug', async (c) => {
 })
 
 // 公開画面 - 登録
+// 公開画面 - 特集詳細
+app.get('/features/:slug', async (c) => {
+  const slug = c.req.param('slug')
+  const section = await c.env.DB.prepare("SELECT content FROM lp_sections WHERE section_key = 'internship_features' AND is_visible = 1").first() as any
+  let card: any = null
+  try {
+    const content = JSON.parse(section?.content || '{}')
+    const cards = Array.isArray(content.cards) ? content.cards : []
+    card = cards.find((item: any) => item.slug === slug) || cards.find((item: any) => (String(item.title || '').includes('文系') ? 'humanities' : String(item.title || '').includes('理系') ? 'science' : '') === slug)
+  } catch(e) {}
+  const origin = getPublicOrigin(c)
+  const title = card?.title || (slug === 'humanities' ? '文系向けおすすめ特集' : slug === 'science' ? '理系向けおすすめ特集' : '長期インターン特集')
+  const description = truncateDescription(card?.body || card?.description || '長期インターン特集から、自分に合う求人を探そう。')
+  return c.html(getPublicHTML('feature-page', origin, {
+    path: '/features/' + encodeURIComponent(slug),
+    title: title + ' | ガクチカインターン',
+    description
+  }))
+})
+
 app.get('/register', (c) => {
   return c.html(getPublicHTML('register', getPublicOrigin(c), { path: '/register', title: '新規登録 | ガクチカインターン', description: '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。', robots: 'noindex, nofollow' }))
 })
@@ -186,8 +213,16 @@ app.get('/login', (c) => {
   return c.html(getPublicHTML('login', getPublicOrigin(c), { path: '/login', title: 'ログイン | ガクチカインターン', description: '登録済み学生向けログインページ。マイページや会員限定求人を確認できます。', robots: 'noindex, nofollow' }))
 })
 
+app.get('/forgot-password', (c) => {
+  return c.html(getPublicHTML('forgot-password', getPublicOrigin(c), { path: '/forgot-password', title: 'パスワードを忘れた方 | ガクチカインターン', description: '学生アカウントのパスワード再設定ページです。', robots: 'noindex, nofollow' }))
+})
+
+app.get('/reset-password', (c) => {
+  return c.html(getPublicHTML('reset-password', getPublicOrigin(c), { path: '/reset-password', title: 'パスワード再設定 | ガクチカインターン', description: '学生アカウントの新しいパスワードを設定します。', robots: 'noindex, nofollow' }))
+})
+
 app.get('/consultation', (c) => {
-  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談 | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポート。LINEで気軽にご相談ください。' }))
+  return c.html(getPublicHTML('consultation', getPublicOrigin(c), { path: '/consultation', title: '無料相談フォーム | ガクチカインターン', description: 'キャリアのプロが長期インターン選びを無料でサポートします。', robots: 'noindex, nofollow' }))
 })
 
 // 公開画面 - マイページ
@@ -292,13 +327,13 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         extend: {
           colors: {
             primary: {
-              50: '#f0f4ff',
-              100: '#e0e9ff',
-              400: '#6b8afd',
-              500: '#4f6ef7',
-              600: '#3b5ce6',
-              700: '#2945d4',
-              900: '#1a2f99'
+              50: '#eef4ff',
+              100: '#dbe8ff',
+              400: '#5b7df7',
+              500: '#315eea',
+              600: '#244bd1',
+              700: '#1f3fae',
+              900: '#172b67'
             },
             purple: {
               50: '#faf5ff',
@@ -315,21 +350,48 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
             }
           },
           fontFamily: {
-            sans: ['Noto Sans JP', 'sans-serif']
+            sans: ['Noto Sans JP', 'sans-serif'],
+            display: ['Zen Kaku Gothic New', 'Noto Sans JP', 'sans-serif']
           }
         }
       }
     }
   </script>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     body { font-family: 'Noto Sans JP', sans-serif; }
-    .glass { background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border: 1px solid rgba(79,110,247,0.2); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
-    .gradient-text { background: linear-gradient(135deg, #4f6ef7, #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-gradient { background: radial-gradient(ellipse at 20% 50%, rgba(79,110,247,0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(168,85,247,0.08) 0%, transparent 50%), linear-gradient(to bottom, #f8faff, #ffffff); }
+    .glass { background: rgba(255,255,255,0.97); backdrop-filter: blur(12px); border: 1px solid #dfe6f2; box-shadow: 0 8px 30px rgba(23,43,103,0.07); }
+    .gradient-text { background: linear-gradient(120deg, #244bd1, #315eea 55%, #ff7337); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-gradient { background: radial-gradient(circle at 8% 12%, rgba(49,94,234,.16), transparent 25%), radial-gradient(circle at 48% 88%, rgba(255,115,55,.13), transparent 30%), linear-gradient(135deg, #f9fbff 0%, #edf3ff 62%, #fff4ec 100%); }
+    .hero-copy-zone { position: relative; isolation: isolate; }
+    .hero-copy-zone::before { content: ''; position: absolute; z-index: -1; left: -2.5rem; top: 1rem; width: 8rem; height: 8rem; border: 1px solid rgba(49,94,234,.14); border-radius: 999px; }
+    .hero-title { font-family: 'Zen Kaku Gothic New', 'Noto Sans JP', sans-serif; letter-spacing: -.055em; text-wrap: balance; }
+    .hero-title-line { display: block; }
+    .hero-title-mobile { font-size: clamp(2rem, 10vw, 2.45rem); }
+    .hero-title-mobile .hero-title-line, .cta-title-line { white-space: nowrap; }
+    .mobile-cta-title { font-size: clamp(1.45rem, 7vw, 1.85rem); line-height: 1.35; }
+    .hero-title-accent { position: relative; display: inline-block; color: #172b67; z-index: 0; }
+    .hero-title-accent::after { content: ''; position: absolute; z-index: -1; height: .24em; left: -.03em; right: -.05em; bottom: .06em; background: linear-gradient(90deg, #ff7337, #ffad6f); border-radius: 999px; opacity: .72; }
+    .home-hero-photo { background: linear-gradient(90deg, rgba(16,32,74,.18), rgba(16,32,74,0)), url('/images/hero-internship-team.webp') 62% 42%/cover no-repeat; }
+    .search-panel { background: #fff; border: 1px solid #dfe6f2; box-shadow: 0 22px 55px rgba(23,43,103,.15); }
+    .search-field { min-width: 0; background: #f8faff; border: 1px solid #d8e1ef; color: #14213d; transition: border-color .2s, box-shadow .2s, background .2s; }
+    .search-field:focus { outline: none; background: #fff; border-color: #315eea; box-shadow: 0 0 0 3px rgba(49,94,234,.12); }
+    .section-kicker { display: inline-flex; align-items: center; gap: .55rem; color: #315eea; font-size: .75rem; letter-spacing: .15em; font-weight: 900; text-transform: uppercase; }
+    .section-kicker::before { content: ''; width: 1.75rem; height: 3px; background: #ff7337; border-radius: 999px; }
+    .job-card-media { aspect-ratio: 16 / 8.7; background: linear-gradient(135deg, #eaf0ff, #fff2e8); overflow: hidden; }
+    @media (min-width: 640px) {
+      .home-hero-photo { background-position: center 42%; }
+      .mobile-cta-title { font-size: 2.25rem; }
+    }
+    @media (min-width: 1280px) {
+      .home-hero-photo { min-height: 34rem; background-position: center; }
+    }
+    @media (min-width: 1536px) {
+      .hero-title-line { white-space: nowrap; }
+    }
     .card-hover { transition: all 0.3s ease; }
-    .card-hover:hover { transform: translateY(-4px); border-color: rgba(79,110,247,0.5); box-shadow: 0 12px 24px rgba(79,110,247,0.12); }
-    .tag { background: rgba(79,110,247,0.12); border: 1px solid rgba(79,110,247,0.3); color: #2945d4; font-weight: 500; }
+    .card-hover:hover { transform: translateY(-5px); border-color: rgba(49,94,234,.45); box-shadow: 0 20px 40px rgba(23,43,103,.13); }
+    .tag { background: #eef4ff; border: 1px solid #d4e0ff; color: #1f3fae; font-weight: 600; }
     .fade-in { animation: fadeIn 0.6s ease-out; }
     @keyframes fadeIn { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
     ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-track { background: #f0f4ff; } ::-webkit-scrollbar-thumb { background: #4f6ef7; border-radius: 3px; }
@@ -359,6 +421,9 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       border-color: #d1d5db !important;
     }
     #search-q,
+    #home-search-q,
+    #home-filter-occupation,
+    #home-filter-style,
     #uni-search,
     #filter-occupation,
     #filter-industry,
@@ -393,32 +458,449 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       border-color: #4f6ef7 !important;
       box-shadow: 0 0 0 3px rgba(79,110,247,0.12);
     }
-  </style>
+  
+    /* 添付HTML（UT-Board準拠）に合わせたPreview用トップページ全体スタイル v2 */
+    :root {
+      --lp-navy: #011827;
+      --lp-blue: #0061ff;
+      --lp-blue-dark: #004ecb;
+      --lp-sky: #0f83fd;
+      --lp-tint: #e6f2ff;
+      --lp-gray: #f7f7f7;
+      --lp-line: #e2e8f0;
+      --lp-text: #363636;
+      --lp-sub: #595959;
+    }
+
+    body {
+      background: #fff !important;
+      color: var(--lp-text) !important;
+    }
+
+    nav.fixed {
+      background: rgba(255,255,255,.98) !important;
+      border-bottom: 1px solid #e5e7eb !important;
+      box-shadow: none !important;
+    }
+    nav.fixed .js-site-name {
+      background: none !important;
+      color: var(--lp-navy) !important;
+      -webkit-text-fill-color: initial !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      letter-spacing: .02em;
+    }
+    nav.fixed .js-site-logo-icon {
+      background: var(--lp-blue) !important;
+      border-radius: 50% !important;
+      box-shadow: none !important;
+    }
+    nav.fixed a,
+    nav.fixed button {
+      color: var(--lp-navy);
+    }
+    nav.fixed a.bg-primary-600 {
+      background: var(--lp-blue) !important;
+      border-radius: 999px !important;
+    }
+    nav.fixed button.bg-green-500 {
+      border-radius: 999px !important;
+    }
+
+    #app > .bg-gray-50.border-b {
+      display: none !important;
+    }
+
+    /* ヒーロー：添付モックアップのfv構成 */
+    .hero-gradient {
+      background: var(--lp-navy) !important;
+      color: #fff !important;
+      padding: 0 !important;
+      overflow: hidden;
+    }
+    .hero-gradient > div:first-child {
+      position: relative !important;
+      display: block !important;
+      width: 100%;
+      max-width: none !important;
+      min-height: 0 !important;
+    }
+    .hero-gradient > div:first-child > div:first-child {
+      position: relative;
+      z-index: 2;
+      min-height: 0 !important;
+      display: flex !important;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 64px 20px 28px !important;
+      text-align: center;
+    }
+    .hero-gradient .home-hero-photo {
+      position: absolute !important;
+      inset: 0 !important;
+      z-index: 0;
+      width: 100%;
+      height: 100% !important;
+      min-height: 470px !important;
+      opacity: .62;
+      background-position: center !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(1,24,39,.84), rgba(1,24,39,.91));
+    }
+    .hero-gradient .hero-copy-zone {
+      max-width: 900px !important;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .hero-gradient .section-kicker {
+      justify-content: center;
+      color: #c9dfff !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      letter-spacing: .14em;
+    }
+    .hero-gradient .hero-copy-zone > .inline-flex {
+      background: #fff !important;
+      color: var(--lp-navy) !important;
+      border: 0 !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+    }
+    .hero-gradient .hero-title {
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-size: clamp(2rem, 4vw, 2.7rem) !important;
+      line-height: 1.6 !important;
+      letter-spacing: .02em !important;
+      text-align: center;
+    }
+    .hero-gradient .hero-title .text-slate-950,
+    .hero-gradient .hero-title-accent {
+      color: #fff !important;
+    }
+    .hero-gradient .hero-title-accent::after {
+      background: var(--lp-sky) !important;
+      opacity: .85 !important;
+    }
+    .hero-gradient .text-slate-600 {
+      color: #c9d4de !important;
+    }
+    .hero-gradient .hero-copy-zone > .flex {
+      justify-content: center;
+    }
+    .hero-gradient .hero-copy-zone a.bg-primary-600 {
+      background: var(--lp-blue) !important;
+      border-radius: 999px !important;
+      box-shadow: none !important;
+    }
+    .hero-gradient .hero-copy-zone button {
+      border-radius: 999px !important;
+    }
+    .hero-gradient > div:nth-child(2) {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 12px 20px 30px !important;
+    }
+    .hero-gradient .search-panel {
+      max-width: none !important;
+      margin: 0 !important;
+      border-radius: 14px !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,.24) !important;
+    }
+    .hero-gradient .search-panel .bg-orange-500 {
+      background: var(--lp-blue) !important;
+    }
+    .hero-gradient .search-panel .bg-orange-500:hover {
+      background: var(--lp-blue-dark) !important;
+    }
+    .hero-gradient > div:nth-child(2) > .grid:last-child > div {
+      color: #c9d4de !important;
+    }
+
+    /* 添付モックアップのセクションリズム */
+    #app > section:not(.hero-gradient) {
+      padding: 72px 0 !important;
+      border-color: var(--lp-line) !important;
+    }
+    #app > section:not(.hero-gradient) > div {
+      max-width: 1120px !important;
+    }
+    #app > section:nth-of-type(3),
+    #app > section:nth-of-type(7),
+    #app > section:nth-of-type(8) {
+      background: var(--lp-gray) !important;
+    }
+    #app > section:nth-of-type(5) {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(6) {
+      background: #fff !important;
+    }
+    #app h2 {
+      color: var(--lp-navy) !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      letter-spacing: .01em;
+    }
+    #app .section-kicker {
+      color: var(--lp-blue) !important;
+      font-family: Montserrat, 'Noto Sans JP', sans-serif;
+      font-weight: 900;
+      letter-spacing: .14em;
+    }
+    #app .section-kicker::before {
+      background: #f0a36f !important;
+    }
+    #app .card-hover {
+      border: 1px solid var(--lp-line) !important;
+      border-radius: 14px !important;
+      box-shadow: none !important;
+      transition: box-shadow .3s ease, transform .3s ease, border-color .3s ease;
+    }
+    #app .card-hover:hover {
+      border-color: rgba(0,97,255,.42) !important;
+      box-shadow: 0 .8em 1.4em -.3em rgba(1,24,39,.22) !important;
+      transform: translateY(-3px);
+    }
+    #app .job-card-media {
+      aspect-ratio: 16 / 9.5;
+      background: linear-gradient(rgba(1,24,39,.26), rgba(1,24,39,.6)), url('/images/hero-internship-team.webp') center / cover no-repeat !important;
+    }
+    #app .glass {
+      background: #fff !important;
+      border: 1px solid var(--lp-line) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06) !important;
+      backdrop-filter: none !important;
+    }
+    #app .tag {
+      background: var(--lp-tint) !important;
+      border-color: #cfe3ff !important;
+      color: #064bb6 !important;
+      border-radius: 999px !important;
+    }
+    #app > section:nth-of-type(4) .rounded-2xl {
+      border-radius: 14px !important;
+    }
+    #app > section:nth-of-type(5) .text-white {
+      color: #fff !important;
+    }
+    #app > section:nth-of-type(5) .text-slate-400 {
+      color: #b7c7d4 !important;
+    }
+    #app > section:nth-of-type(5) .text-orange-400 {
+      color: #f5a56f !important;
+    }
+    #app > section:nth-of-type(5) .bg-slate-950 {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(6) {
+      background: #fff !important;
+    }
+    #app > section:nth-of-type(6) .bg-gradient-to-r {
+      background: #fff !important;
+    }
+    #app > section:nth-of-type(9) {
+      background: var(--lp-navy) !important;
+    }
+    #app > section:nth-of-type(9) h2,
+    #app > section:nth-of-type(9) p {
+      color: #fff !important;
+    }
+    #app > section:nth-of-type(9) .glass {
+      background: rgba(255,255,255,.06) !important;
+      border-color: rgba(255,255,255,.16) !important;
+      box-shadow: none !important;
+    }
+    body > footer {
+      margin-top: 0 !important;
+      background: var(--lp-navy) !important;
+      border-top: 1px solid rgba(255,255,255,.12);
+    }
+    body > footer > div {
+      max-width: 1120px !important;
+    }
+
+    @media (max-width: 639px) {
+      .hero-gradient > div:first-child > div:first-child {
+        padding: 48px 16px 22px !important;
+      }
+      .hero-gradient .hero-title {
+        font-size: clamp(1.85rem, 9vw, 2.35rem) !important;
+      }
+      .hero-gradient > div:nth-child(2) {
+        padding: 10px 16px 24px !important;
+      }
+      #app > section:not(.hero-gradient) {
+        padding: 56px 0 !important;
+      }
+    }
+
+    /* 応募タイムライン・大学検索の微調整 */
+    .hero-gradient .home-hero-photo {
+      opacity: .50 !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      background: linear-gradient(rgba(1,24,39,.92), rgba(1,24,39,.97)) !important;
+    }
+    #app > section.campus-search-section {
+      padding: 24px 0 !important;
+      background: #fff !important;
+    }
+    #app > section.campus-search-section > div {
+      max-width: 1120px !important;
+    }
+    #app .campus-search-panel {
+      border-radius: 14px !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06);
+    }
+    #app .campus-search-panel .section-kicker {
+      justify-content: flex-start;
+      font-size: .68rem;
+      letter-spacing: .12em;
+    }
+    #app .campus-search-panel h2 {
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0;
+    }
+    #app #application-timeline {
+      padding: 56px 0 !important;
+      background: var(--lp-gray) !important;
+    }
+    #app #application-timeline h2,
+    #app #application-timeline p {
+      color: var(--lp-navy);
+    }
+    #app #application-timeline .section-kicker {
+      justify-content: flex-start;
+    }
+    #app .timeline-stat-card {
+      border-radius: 14px !important;
+      box-shadow: 0 8px 22px rgba(1,24,39,.05);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    #app .timeline-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(1,24,39,.10);
+    }
+    @media (max-width: 639px) {
+      #app > section.campus-search-section {
+        padding: 16px 0 !important;
+      }
+      #app #application-timeline {
+        padding: 44px 0 !important;
+      }
+    }
+
+
+    /* トップ検索に大学条件を統合／背景画像を見せる調整 */
+    .hero-gradient .home-hero-photo {
+      opacity: .82 !important;
+    }
+    .hero-gradient .home-hero-photo::after {
+      background: linear-gradient(rgba(1,24,39,.58), rgba(1,24,39,.72)) !important;
+    }
+    .hero-gradient .search-panel .search-field {
+      background: rgba(255,255,255,.98) !important;
+      color: #172b67 !important;
+    }
+    @media (max-width: 639px) {
+      .hero-gradient .home-hero-photo::after {
+        background: linear-gradient(rgba(1,24,39,.64), rgba(1,24,39,.78)) !important;
+      }
+    }
+
+
+    /* Context pages, FAQ contrast, and responsive narrow-layout QA */
+    #app #faq-section {
+      background: #ffffff !important;
+      color: var(--lp-text) !important;
+    }
+    #app #faq-section h2,
+    #app #faq-section p,
+    #app #faq-section .text-gray-700,
+    #app #faq-section .text-gray-800 {
+      color: var(--lp-text) !important;
+    }
+    #app #faq-section .glass {
+      background: #ffffff !important;
+      border-color: var(--lp-line) !important;
+      box-shadow: 0 5px 18px rgba(1,24,39,.05) !important;
+    }
+    #app #faq-section button {
+      color: var(--lp-navy) !important;
+    }
+    #app #faq-section button:hover {
+      background: #f7faff !important;
+    }
+    #app .feature-page-hero {
+      background:
+        linear-gradient(110deg, rgba(1,24,39,.96), rgba(0,78,203,.88)),
+        url('/images/hero-internship-team.webp') center / cover no-repeat !important;
+    }
+    #app .feature-page-hero h1,
+    #app .feature-page-hero nav,
+    #app .feature-page-hero p {
+      color: #fff;
+    }
+    #app .feature-page > section:nth-child(2) {
+      background: var(--lp-gray) !important;
+    }
+    #app .feature-page .search-panel {
+      background: #fff !important;
+      border: 1px solid var(--lp-line) !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06) !important;
+    }
+    .hero-gradient .search-panel > .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    @media (min-width: 1200px) {
+      .hero-gradient .search-panel > .grid {
+        grid-template-columns: 1.3fr 1fr 1fr 1fr auto !important;
+      }
+    }
+    @media (max-width: 639px) {
+      #app #faq-section {
+        padding: 52px 0 !important;
+      }
+      #app .feature-page-hero h1 {
+        font-size: 2rem !important;
+        line-height: 1.35 !important;
+      }
+      #app .feature-page-hero {
+        min-height: 0 !important;
+      }
+    }
+</style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
 
   <!-- ナビゲーション -->
-  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+  <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-[0_4px_20px_rgba(23,43,103,0.06)]">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center h-16">
+      <div class="flex justify-between items-center h-[72px]">
         <a href="/" class="flex items-center gap-2">
           <img class="js-site-logo-img hidden w-8 h-8 object-contain rounded-lg" src="" alt="ガクチカインターン">
-          <div class="js-site-logo-icon w-8 h-8 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
-            <i class="fas fa-rocket text-white text-sm"></i>
+          <div class="js-site-logo-icon w-9 h-9 bg-primary-600 rounded-xl flex items-center justify-center shadow-md shadow-primary-500/20">
+            <i class="fas fa-arrow-trend-up text-white text-sm"></i>
           </div>
           <span class="js-site-name text-xl font-bold gradient-text">ガクチカインターン</span>
         </a>
         <div class="hidden md:flex items-center gap-6">
           <a href="/jobs" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">求人を探す</a>
           <button onclick="openUniversityModal()" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium cursor-pointer bg-transparent border-none">大学別求人</button>
-          <a href="/consultation" class="text-gray-600 hover:text-primary-600 transition-colors text-sm font-medium">無料相談</a>
         </div>
         <div class="flex items-center gap-3">
           <a href="/login" class="hidden sm:inline-flex items-center gap-1.5 text-gray-600 hover:text-primary-600 text-sm px-2 py-2 rounded-lg transition-colors font-medium">
             <i class="fas fa-right-to-bracket text-base"></i>ログイン
           </a>
-          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-gradient-to-r from-primary-500 to-purple-500 hover:from-primary-600 hover:to-purple-600 text-white text-sm px-4 py-2 rounded-lg transition-all font-medium shadow-md shadow-primary-500/25">
-            <i class="fas fa-user-plus text-base"></i>事前登録
+          <a href="/register" class="hidden sm:inline-flex items-center gap-1.5 bg-primary-600 hover:bg-primary-700 text-white text-sm px-4 py-2.5 rounded-xl transition-all font-bold shadow-md shadow-primary-500/20">
+            <i class="fas fa-user-plus text-base"></i>無料登録
           </a>
           <button onclick="openLineModal()" class="hidden sm:inline-flex items-center gap-1.5 bg-green-500 hover:bg-green-600 text-white text-sm px-4 py-2 rounded-lg transition-colors font-medium cursor-pointer border-none">
             <i class="fab fa-line text-base"></i>LINE相談
@@ -439,17 +921,14 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         <button onclick="openUniversityModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm bg-transparent border-none cursor-pointer">
           <i class="fas fa-university text-primary-500 w-4"></i>大学別求人
         </button>
-        <a href="/consultation" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fas fa-comments text-primary-500 w-4"></i>無料相談
-        </a>
         <a href="/register" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
-          <i class="fas fa-user-plus text-primary-500 w-4"></i>事前登録する
+          <i class="fas fa-user-plus text-primary-500 w-4"></i>無料登録する
         </a>
         <a href="/login" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-700 hover:bg-gray-50 font-medium text-sm">
           <i class="fas fa-right-to-bracket text-primary-500 w-4"></i>ログイン
         </a>
         <button onclick="openLineModal(); toggleMobileMenu()" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-green-500 hover:bg-green-600 font-medium text-sm mt-1 border-none cursor-pointer">
-          <i class="fab fa-line text-white w-4"></i>LINEで無料相談
+          <i class="fab fa-line text-white w-4"></i>LINE相談
         </button>
       </div>
     </div>
@@ -461,8 +940,8 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full" onclick="event.stopPropagation()">
       <div class="p-6 border-b border-gray-100 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-black text-gray-900">どこで知りましたか？</h2>
-          <p class="text-sm text-gray-500 mt-1">あなたに合ったLINE公式アカウントへご案内します</p>
+          <h2 class="text-xl font-black text-gray-900">ご利用の窓口を選択</h2>
+          <p class="text-sm text-gray-500 mt-1">媒体専用LINEまたは相談フォームへご案内します</p>
         </div>
         <button onclick="closeLineModal()" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-gray-100 text-gray-500 transition-colors">
           <i class="fas fa-times"></i>
@@ -537,7 +1016,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         return;
       }
       grid.innerHTML = universities.map(uni => \`
-        <a href="/universities/\${uni.slug}" onclick="closeUniversityModal()"
+        <a href="/universities/\${encodeURIComponent(uni.slug)}" onclick="closeUniversityModal()"
            class="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all text-center cursor-pointer">
           <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-university text-primary-600 text-lg"></i>
@@ -572,7 +1051,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       { value: 'genki_intern', label: '元気インターン',       line_key: 'line_url_genki_intern', fallback_to_default: false },
       { value: 'sokei_intern_compass', label: '早慶インターンコンパス', line_key: 'line_url_sokei_intern_compass', fallback_to_default: false },
       { value: 'careersourcing', label: 'CareerSourcing',  line_key: 'line_url_careersourcing', fallback_to_default: false },
-      { value: 'other',      label: 'その他',             line_key: 'line_url_default' },
+      { value: 'web',        label: 'Webサイト・その他',   consultation_form: true },
     ];
 
     function isUsableLineUrl(url) {
@@ -603,6 +1082,21 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       const container = document.getElementById('line-modal-options');
 
       container.innerHTML = LINE_MEDIA_OPTIONS.map(opt => {
+        if (opt.consultation_form) {
+          return \`
+            <a href="/consultation?source=web" onclick="closeLineModal()"
+               class="group flex items-center gap-4 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all cursor-pointer">
+              <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center flex-shrink-0 transition-colors">
+                <i class="fas fa-envelope text-primary-600 text-lg"></i>
+              </div>
+              <div class="flex-1 min-w-0">
+                <p class="font-semibold text-gray-800 group-hover:text-primary-700 text-sm leading-snug">\${opt.label}</p>
+                <p class="text-xs text-gray-400 mt-0.5">無料相談フォームへ</p>
+              </div>
+              <i class="fas fa-chevron-right text-gray-300 group-hover:text-primary-400 text-xs flex-shrink-0"></i>
+            </a>
+          \`;
+        }
         const rawUrl = s[opt.line_key] ||
           (opt.fallback_to_default === false ? '' : s['line_url_default'] || s['line_url'] || '');
         const url = isUsableLineUrl(rawUrl) ? rawUrl : '';
@@ -649,48 +1143,47 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </script>
 
   <!-- メインコンテンツ -->
-  <main id="app" class="pt-16"></main>
+  <main id="app" class="pt-[72px]"></main>
 
   <!-- フッター -->
-  <footer class="border-t border-gray-200 mt-24 py-12 bg-gradient-to-b from-white to-gray-50">
+  <footer class="mt-24 py-14 bg-slate-950 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
         <div>
           <div class="flex items-center gap-2 mb-4">
             <img class="js-site-logo-img hidden w-7 h-7 object-contain rounded-lg" src="" alt="ガクチカインターン">
-            <div class="js-site-logo-icon w-7 h-7 bg-gradient-to-br from-primary-500 to-purple-500 rounded-lg flex items-center justify-center">
-              <i class="fas fa-rocket text-white text-xs"></i>
+            <div class="js-site-logo-icon w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
+              <i class="fas fa-arrow-trend-up text-white text-xs"></i>
             </div>
-            <span class="js-site-name font-bold gradient-text">ガクチカインターン</span>
+            <span class="js-site-name font-bold text-white">ガクチカインターン</span>
           </div>
-          <p id="footer-site-description" class="text-gray-500 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
+          <p id="footer-site-description" class="text-slate-400 text-xs leading-relaxed">厳選された長期インターン求人で、あなたのキャリアを加速させよう。</p>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">求人を探す</h4>
-          <ul class="space-y-2 text-gray-600 text-sm">
+          <h4 class="text-sm font-semibold mb-3 text-white">求人を探す</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
             <li><a href="/jobs" class="hover:text-primary-600 transition-colors">全ての求人</a></li>
             <li><a href="/jobs?work_style=remote" class="hover:text-primary-600 transition-colors">勤務形態</a></li>
             <li><a href="/jobs?industry=IT・SaaS" class="hover:text-primary-600 transition-colors">業界</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">サービス</h4>
-          <ul class="space-y-2 text-gray-600 text-sm">
+          <h4 class="text-sm font-semibold mb-3 text-white">サービス</h4>
+          <ul class="space-y-2 text-slate-400 text-sm">
             <li><a href="/register" class="hover:text-primary-600 transition-colors">新規登録</a></li>
-            <li><a href="/consultation" class="hover:text-primary-600 transition-colors">無料相談</a></li>
           </ul>
         </div>
         <div>
-          <h4 class="text-sm font-semibold mb-3 text-gray-800">公式LINE</h4>
-          <p class="text-gray-600 text-xs mb-3">応募後の連絡は公式LINEで行います。</p>
+          <h4 class="text-sm font-semibold mb-3 text-white">LINE相談</h4>
+          <p class="text-slate-400 text-xs mb-3">媒体に合った相談窓口をご案内します。</p>
           <button onclick="openLineModal()" class="inline-flex items-center gap-2 bg-green-500 hover:bg-green-600 text-white text-xs px-3 py-2 rounded-lg transition-colors border-none cursor-pointer">
-            <i class="fab fa-line"></i>LINEを追加
+            <i class="fab fa-line"></i>LINE相談
           </button>
         </div>
       </div>
-      <div class="border-t border-gray-200 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
-        <p id="footer-copyright" class="text-gray-500 text-xs">© 2026 ガクチカインターン. All rights reserved.</p>
-        <div class="flex gap-4 text-gray-500 text-xs">
+      <div class="border-t border-white/10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2">
+        <p id="footer-copyright" class="text-slate-500 text-xs">© 2026 ガクチカインターン. All rights reserved.</p>
+        <div class="flex gap-4 text-slate-500 text-xs">
           <a href="/company" class="hover:text-primary-600 transition-colors">運営者情報</a>
           <a id="footer-privacy-link" href="/privacy" class="hover:text-primary-600 transition-colors">プライバシーポリシー</a>
           <a id="footer-terms-link" href="/terms" class="hover:text-primary-600 transition-colors">利用規約</a>
@@ -700,13 +1193,17 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260804-gakuchika-timeline"></script>
+  <script src="/static/public.js?v=20261003-contextual-pages"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
     if (path === '/' || path === '') initHomePage();
     else if (path === '/jobs') initJobsPage();
     else if (path.startsWith('/jobs/')) initJobDetailPage();
+    else if (path.startsWith('/features/')) {
+      const slug = path.split('/')[2];
+      initFeaturePage(slug);
+    }
     else if (path === '/universities') initUniversitiesPage();
     else if (path.startsWith('/universities/')) {
       const slug = path.split('/')[2];
@@ -714,6 +1211,8 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
     }
     else if (path === '/register') initRegisterPage();
     else if (path === '/login') initLoginPage();
+    else if (path === '/forgot-password') initForgotPasswordPage();
+    else if (path === '/reset-password') initResetPasswordPage();
     else if (path === '/consultation') initConsultationPage();
     else if (path === '/mypage') initMyPage();
     else if (path === '/privacy') initPrivacyPage();
@@ -774,7 +1273,7 @@ function getAdminHTML(): string {
 <body class="bg-dark-900 text-white min-h-screen flex">
 
   <!-- サイドバー -->
-  <aside id="sidebar" class="w-64 min-h-screen bg-dark-800 border-r border-white/10 flex flex-col fixed left-0 top-0 z-40">
+  <aside id="sidebar" class="w-64 h-screen bg-dark-800 border-r border-white/10 flex flex-col fixed left-0 top-0 z-40">
     <div class="p-5 border-b border-white/10">
       <div class="flex items-center gap-2">
         <div class="w-7 h-7 bg-primary-500 rounded-lg flex items-center justify-center">
@@ -785,7 +1284,7 @@ function getAdminHTML(): string {
       </div>
     </div>
 
-    <nav class="flex-1 p-4 space-y-1">
+    <nav class="flex-1 min-h-0 overflow-y-auto p-4 space-y-1">
       <a href="#" onclick="navigate('dashboard')" data-page="dashboard" class="sidebar-item flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-400 text-sm cursor-pointer">
         <i class="fas fa-chart-pie w-4 text-center"></i>ダッシュボード
       </a>
@@ -876,7 +1375,7 @@ function getAdminHTML(): string {
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/admin.js?v=20260804-gakuchika-brand"></script>
+  <script src="/static/admin.js?v=20261003-internship-features"></script>
 </body>
 </html>`
 }

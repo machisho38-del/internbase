@@ -2,6 +2,14 @@ import { Hono } from 'hono'
 import { Bindings } from '../types'
 import { adminAuthMiddleware } from '../middleware/adminAuth'
 import { hashStudentPassword, verifyStudentPassword, createStudentSession, getStudentFromSession, clearStudentSession } from '../utils/studentAuth'
+import { getAuthenticatedStudentId } from '../utils/studentAccess'
+import {
+  generatePasswordResetToken,
+  hashPasswordResetToken,
+  isPasswordResetEmailConfigured,
+  passwordResetExpiresAt,
+  sendPasswordResetEmail
+} from '../utils/passwordReset'
 
 const students = new Hono<{ Bindings: Bindings; Variables: { admin: any } }>()
 
@@ -14,17 +22,33 @@ students.post('/register', async (c) => {
     invite_code, pr_text, source_media, password
   } = body
 
-  if (!last_name || !first_name || !email || !university || !grade) {
+  const normalizedLastName = String(last_name ?? '').trim()
+  const normalizedFirstName = String(first_name ?? '').trim()
+  const normalizedEmail = String(email ?? '').trim().toLowerCase()
+  const normalizedUniversity = String(university ?? '').trim()
+  const normalizedGrade = Number(grade)
+
+  if (!normalizedLastName || !normalizedFirstName || !normalizedEmail || !normalizedUniversity || !normalizedGrade) {
     return c.json({ success: false, error: '必須項目が不足しています' }, 400)
   }
 
-  if (!password || String(password).length < 8) {
-    return c.json({ success: false, error: 'パスワードは8文字以上で入力してください' }, 400)
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254) {
+    return c.json({ success: false, error: '有効なメールアドレスを入力してください' }, 400)
+  }
+
+  if (normalizedLastName.length > 100 || normalizedFirstName.length > 100 ||
+      normalizedUniversity.length > 200 || !Number.isInteger(normalizedGrade) ||
+      normalizedGrade < 1 || normalizedGrade > 4) {
+    return c.json({ success: false, error: '入力内容を確認してください' }, 400)
+  }
+
+  if (!password || String(password).length < 8 || String(password).length > 128) {
+    return c.json({ success: false, error: 'パスワードは8〜128文字で入力してください' }, 400)
   }
 
   const existing = await c.env.DB.prepare(
-    `SELECT id FROM students WHERE email = ?`
-  ).bind(email).first()
+    `SELECT id FROM students WHERE lower(email) = ?`
+  ).bind(normalizedEmail).first()
   if (existing) {
     return c.json({ success: false, error: 'このメールアドレスは既に登録されています' }, 409)
   }
@@ -64,7 +88,7 @@ students.post('/register', async (c) => {
     }
   }
 
-  const myCode = generateStudentCode(last_name, first_name)
+  const myCode = generateStudentCode(normalizedLastName, normalizedFirstName)
 
   const validSourceMedia = ['sunconnect','valueup','genki_intern','sokei_intern_compass','careersourcing','todai_ig','waseda_ig','keio_ig','march_ig','web','other_sns','other']
   const validatedSourceMedia = validSourceMedia.includes(source_media) ? source_media : 'other'
@@ -78,9 +102,9 @@ students.post('/register', async (c) => {
       my_invite_code, referred_by_student_id, source_media, password_hash
     ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)
   `).bind(
-    last_name, first_name, last_name_kana || null, first_name_kana || null,
-    email, phone || null, university, faculty || null, department || null,
-    grade, graduation_year || null,
+    normalizedLastName, normalizedFirstName, last_name_kana || null, first_name_kana || null,
+    normalizedEmail, phone || null, normalizedUniversity, faculty || null, department || null,
+    normalizedGrade, graduation_year || null,
     invite_code_id, invite_code ? invite_code.trim().toUpperCase() : null,
     pr_text || null,
     myCode, referred_by_student_id, validatedSourceMedia, passwordHash
@@ -94,8 +118,8 @@ students.post('/register', async (c) => {
     VALUES (?, ?, 50, ?, 'student', ?)
   `).bind(
     myCode,
-    `${last_name}${first_name}さんの紹介コード`,
-    email,
+    `${normalizedLastName}${normalizedFirstName}さんの紹介コード`,
+    normalizedEmail,
     studentId
   ).run()
 
@@ -126,12 +150,17 @@ students.post('/login', async (c) => {
     return c.json({ success: false, error: 'メールアドレスとパスワードを入力してください' }, 400)
   }
 
+  if (String(password).length > 128) {
+    return c.json({ success: false, error: 'メールアドレスまたはパスワードが正しくありません' }, 401)
+  }
+
+  const normalizedEmail = String(email).trim().toLowerCase()
   const student = await c.env.DB.prepare(`
     SELECT id, last_name, first_name, email, university, grade,
            my_invite_code, password_hash, status
     FROM students
-    WHERE email = ? AND status = 'active'
-  `).bind(email).first() as any
+    WHERE lower(email) = ? AND status = 'active'
+  `).bind(normalizedEmail).first() as any
 
   if (!student || !(await verifyStudentPassword(String(password), student.password_hash))) {
     return c.json({ success: false, error: 'メールアドレスまたはパスワードが正しくありません' }, 401)
@@ -149,9 +178,110 @@ students.post('/login', async (c) => {
   })
 })
 
+const PASSWORD_RESET_REQUEST_MESSAGE = '登録状況にかかわらず、入力されたメールアドレス宛に再設定方法をご案内します。'
+
+function getPasswordResetOrigin(c: any): string {
+  const configuredOrigin = c.env.PUBLIC_SITE_URL?.trim()
+  if (configuredOrigin) {
+    try {
+      const url = new URL(configuredOrigin)
+      if (url.protocol === 'https:' || url.protocol === 'http:') return url.origin
+    } catch {
+      // 設定値が無効な場合は、現在アクセス中のPreview/Production URLを使用する。
+    }
+  }
+  return new URL(c.req.url).origin
+}
+
+// パスワード再設定メール申請（公開）
+students.post('/password-reset/request', async (c) => {
+  const { email } = await c.req.json()
+  const normalizedEmail = String(email ?? '').trim().toLowerCase()
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail) || normalizedEmail.length > 254) {
+    return c.json({ success: false, error: '有効なメールアドレスを入力してください' }, 400)
+  }
+
+  c.header('Cache-Control', 'no-store')
+  const genericResponse = { success: true, message: PASSWORD_RESET_REQUEST_MESSAGE }
+  const student = await c.env.DB.prepare(`
+    SELECT id, email FROM students
+    WHERE lower(email) = ? AND status = 'active'
+  `).bind(normalizedEmail).first() as any
+
+  // アカウントの有無やメール設定状況をレスポンスから推測できないよう常に同じ内容を返す。
+  if (!student || !isPasswordResetEmailConfigured(c.env)) return c.json(genericResponse)
+
+  const recent = await c.env.DB.prepare(`
+    SELECT COUNT(*) AS count FROM student_password_resets
+    WHERE student_id = ? AND requested_at > datetime('now', '-1 hour')
+  `).bind(student.id).first() as any
+  if (Number(recent?.count || 0) >= 3) return c.json(genericResponse)
+
+  const token = generatePasswordResetToken()
+  const tokenHash = await hashPasswordResetToken(token)
+  const result = await c.env.DB.prepare(`
+    INSERT INTO student_password_resets (student_id, token_hash, expires_at)
+    VALUES (?, ?, ?)
+  `).bind(student.id, tokenHash, passwordResetExpiresAt()).run()
+
+  const resetUrl = `${getPasswordResetOrigin(c)}/reset-password?token=${encodeURIComponent(token)}`
+  const delivered = await sendPasswordResetEmail(c.env, String(student.email), resetUrl)
+  if (!delivered) {
+    await c.env.DB.prepare(`DELETE FROM student_password_resets WHERE id = ?`)
+      .bind(result.meta.last_row_id).run()
+  }
+
+  return c.json(genericResponse)
+})
+
+// パスワード再設定の確定（公開）
+students.post('/password-reset/confirm', async (c) => {
+  const { token, password } = await c.req.json()
+  const normalizedToken = String(token ?? '').trim().toLowerCase()
+  const normalizedPassword = String(password ?? '')
+
+  if (!/^[a-f0-9]{64}$/.test(normalizedToken)) {
+    return c.json({ success: false, error: '再設定リンクが無効か、期限切れです' }, 400)
+  }
+  if (normalizedPassword.length < 8 || normalizedPassword.length > 128) {
+    return c.json({ success: false, error: 'パスワードは8〜128文字で入力してください' }, 400)
+  }
+
+  c.header('Cache-Control', 'no-store')
+  const tokenHash = await hashPasswordResetToken(normalizedToken)
+  const reset = await c.env.DB.prepare(`
+    SELECT id, student_id FROM student_password_resets
+    WHERE token_hash = ? AND used_at IS NULL AND expires_at > datetime('now')
+  `).bind(tokenHash).first() as any
+  if (!reset) return c.json({ success: false, error: '再設定リンクが無効か、期限切れです' }, 400)
+
+  const claimed = await c.env.DB.prepare(`
+    UPDATE student_password_resets SET used_at = CURRENT_TIMESTAMP
+    WHERE id = ? AND used_at IS NULL AND expires_at > datetime('now')
+  `).bind(reset.id).run()
+  if (Number(claimed.meta.changes || 0) !== 1) {
+    return c.json({ success: false, error: '再設定リンクが無効か、期限切れです' }, 400)
+  }
+
+  const passwordHash = await hashStudentPassword(normalizedPassword)
+  await c.env.DB.batch([
+    c.env.DB.prepare(`UPDATE students SET password_hash = ?, updated_at = CURRENT_TIMESTAMP WHERE id = ?`)
+      .bind(passwordHash, reset.student_id),
+    c.env.DB.prepare(`DELETE FROM student_sessions WHERE student_id = ?`).bind(reset.student_id),
+    c.env.DB.prepare(`
+      UPDATE student_password_resets SET used_at = COALESCE(used_at, CURRENT_TIMESTAMP)
+      WHERE student_id = ? AND used_at IS NULL
+    `).bind(reset.student_id)
+  ])
+
+  return c.json({ success: true, message: 'パスワードを再設定しました。新しいパスワードでログインしてください。' })
+})
+
 students.get('/me', async (c) => {
   const student = await getStudentFromSession(c)
   if (!student) return c.json({ success: false, error: 'Unauthorized' }, 401)
+
+  c.header('Cache-Control', 'private, no-store')
 
   return c.json({
     success: true,
@@ -173,7 +303,11 @@ students.post('/logout', async (c) => {
 
 students.get('/mypage/:id', async (c) => {
   const sessionStudent = await getStudentFromSession(c)
-  const id = String(sessionStudent?.id || c.req.param('id'))
+  const studentId = getAuthenticatedStudentId(sessionStudent)
+  if (!studentId) return c.json({ success: false, error: 'Unauthorized' }, 401)
+
+  c.header('Cache-Control', 'private, no-store')
+  const id = String(studentId)
   const student = await c.env.DB.prepare(`
     SELECT id, last_name, first_name, email, university, grade,
            my_invite_code, my_invite_code_uses, referral_count,

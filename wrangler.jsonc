@@ -22,7 +22,10 @@
           "database_name": "internship-preview",
           "database_id": "5e253111-57f2-4f1d-bbaa-67c3b7f6e764"
         }
-      ]
+      ],
+      "vars": {
+        "PASSWORD_RESET_FROM_EMAIL": "ガクチカインターン <onboarding@resend.dev>"
+      }
     }
   }
 }

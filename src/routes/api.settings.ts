@@ -192,7 +192,7 @@ settings.post('/faqs/admin', adminAuthMiddleware, async (c) => {
   const result = await c.env.DB.prepare(`
     INSERT INTO faqs (question, answer, category, is_visible, display_order)
     VALUES (?, ?, ?, ?, ?)
-  `).bind(question, answer, category || 'general', is_visible ? 1 : 1, display_order || 0).run()
+  `).bind(question, answer, category || 'general', is_visible === false || is_visible === 0 ? 0 : 1, display_order || 0).run()
   return c.json({ success: true, data: { id: result.meta.last_row_id } }, 201)
 })
 
@@ -248,7 +248,7 @@ settings.post('/announcements/admin', adminAuthMiddleware, async (c) => {
   `).bind(
     title, body || null, type || 'info',
     link_url || null, link_text || null,
-    is_visible ? 1 : 1,
+    is_visible === false || is_visible === 0 ? 0 : 1,
     starts_at || null, ends_at || null,
     display_order || 0
   ).run()
