@@ -1,0 +1,4 @@
+-- 長期インターン特集と「始め方」セクションの初期コンテンツ
+INSERT OR IGNORE INTO lp_sections (section_key, section_name, content, is_visible, display_order) VALUES
+  ('internship_features', '長期インターン特集', '{"title":"長期インターン特集","subtitle":"学部・志向・挑戦したいテーマから、自分に合う特集を見つけよう。","cards":[{"title":"文系向けおすすめ特集","eyebrow":"経済・経営・法学・商学など","body":"考える力と伝える力を実務で磨ける長期インターンをまとめました。","image_url":"/images/hero-internship-team.webp","link":"/jobs"},{"title":"理系向けおすすめ特集","eyebrow":"理学・工学・情報・医療など","body":"専門性や分析力を活かして挑戦できる長期インターンをまとめました。","image_url":"/images/hero-internship-team.webp","link":"/jobs"}]}', 1, 2),
+  ('getting_started', '長期インターンの始め方', '{"title":"長期インターンの始め方","subtitle":"探すところから、選考・スタートまで学生目線で伴走します。","steps":[{"title":"インターンを探す","body":"職種・業界・勤務形態・大学別から、興味や希望に合う求人を探します。"},{"title":"インターンに応募する","body":"気になる求人を見つけたら応募。応募後の流れも分かりやすく案内します。"},{"title":"現役学生が徹底支援","body":"就活を終えた現役学生が、企業選び・応募書類・面接準備を学生目線でサポートします。"},{"title":"選考を経て、開始！","body":"企業との選考からインターン開始まで、必要な準備を一緒に進めます。"}]}', 1, 3);
