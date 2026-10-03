@@ -1788,6 +1788,21 @@ const LP_SETTING_GROUPS = [
   },
 ];
 
+let lpInternshipFeatureCards = [];
+
+function renderLpInternshipFeatureCards() {
+  const container = document.getElementById('lp-internship-feature-cards');
+  if (!container) return;
+  container.innerHTML = lpInternshipFeatureCards.length ? lpInternshipFeatureCards.map(function(item, i) {
+    return '<div class="bg-white/5 rounded-lg p-4 mb-3 border border-white/5">' + '<div class="flex items-center justify-between mb-3"><p class="text-xs font-bold text-gray-300">特集カード ' + (i + 1) + '</p><button onclick="removeLpInternshipFeatureCard(' + i + ')" class="text-xs text-red-400 hover:text-red-300"><i class="fas fa-trash mr-1"></i>削除</button></div>' + '<div class="grid grid-cols-1 md:grid-cols-2 gap-3">' + '<div><label class="block text-xs text-gray-400 mb-1">タイトル</label><input id="lp-internship-card-' + i + '-title" value="' + escapeAdminHtml(item.title || '') + '" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>' + '<div><label class="block text-xs text-gray-400 mb-1">対象ラベル</label><input id="lp-internship-card-' + i + '-eyebrow" value="' + escapeAdminHtml(item.eyebrow || '') + '" placeholder="例：経済・経営・法学・商学など" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>' + '<div><label class="block text-xs text-gray-400 mb-1">画像URL</label><input id="lp-internship-card-' + i + '-image_url" value="' + escapeAdminHtml(item.image_url || '/images/hero-internship-team.webp') + '" placeholder="/images/..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>' + '<div><label class="block text-xs text-gray-400 mb-1">リンク先</label><input id="lp-internship-card-' + i + '-link" value="' + escapeAdminHtml(item.link || '/jobs') + '" placeholder="/jobs または https://..." class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>' + '<div class="md:col-span-2"><label class="block text-xs text-gray-400 mb-1">説明文</label><textarea id="lp-internship-card-' + i + '-body" rows="2" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white resize-none outline-none">' + escapeAdminHtml(item.body || item.description || '') + '</textarea></div>' + '</div></div>';
+  }).join('') : '<p class="text-xs text-gray-500 py-4">特集カードがありません。「特集カードを追加」から作成してください。</p>';
+}
+function addLpInternshipFeatureCard() { lpInternshipFeatureCards.push({ title: '新しい長期インターン特集', eyebrow: '', body: '', image_url: '/images/hero-internship-team.webp', link: '/jobs' }); renderLpInternshipFeatureCards(); }
+function removeLpInternshipFeatureCard(index) { lpInternshipFeatureCards.splice(index, 1); renderLpInternshipFeatureCards(); }
+async function saveLpInternshipFeatures() {
+  const cards = lpInternshipFeatureCards.map(function(item, i) { return { title: document.getElementById('lp-internship-card-' + i + '-title')?.value || '', eyebrow: document.getElementById('lp-internship-card-' + i + '-eyebrow')?.value || '', body: document.getElementById('lp-internship-card-' + i + '-body')?.value || '', image_url: document.getElementById('lp-internship-card-' + i + '-image_url')?.value || '', link: document.getElementById('lp-internship-card-' + i + '-link')?.value || '/jobs' }; }).filter(card => card.title.trim());
+  try { await API.put('/settings/lp-sections/admin/internship_features', { content: { title: document.getElementById('lp-internship-features-title')?.value || '長期インターン特集', subtitle: document.getElementById('lp-internship-features-subtitle')?.value || '', cards }, is_visible: document.getElementById('lp-internship-features-visible')?.checked ?? true }); lpInternshipFeatureCards = cards; const msg = document.getElementById('lp-save-msg'); if (msg) { msg.classList.remove('hidden'); setTimeout(() => msg.classList.add('hidden'), 3000); } } catch(e) { alert('保存失敗: ' + e.message); }
+}
 async function loadLpEdit() {
   const content = document.getElementById('admin-content');
   content.innerHTML = `<div class="animate-pulse h-64 bg-white/5 rounded-xl"></div>`;
@@ -1803,10 +1818,17 @@ async function loadLpEdit() {
     const settingsMap = {};
     (settingsRes.data.data || []).forEach(s => { settingsMap[s.setting_key] = s.setting_value; });
 
-    // lp_sections の features を取得
+    // lp_sections の features / internship_features を取得
     const featuresSection = (lpRes.data.data || []).find(s => s.section_key === 'features');
+    const internshipFeaturesSection = (lpRes.data.data || []).find(s => s.section_key === 'internship_features');
     let featureItems = [];
+    let internshipFeatureContent = { title: '長期インターン特集', subtitle: '学部・志向・挑戦したいテーマから、自分に合う特集を見つけよう。', cards: [] };
     try { featureItems = JSON.parse(featuresSection?.content || '[]'); } catch(e) {}
+    try {
+      const parsed = JSON.parse(internshipFeaturesSection?.content || '{}');
+      if (parsed && typeof parsed === 'object') internshipFeatureContent = { ...internshipFeatureContent, ...parsed };
+    } catch(e) {}
+    const internshipFeatureItems = Array.isArray(internshipFeatureContent.cards) ? internshipFeatureContent.cards : [];
 
     content.innerHTML = `
       <div class="flex items-center justify-between mb-5">
@@ -1932,6 +1954,29 @@ async function loadLpEdit() {
           class="mt-2 bg-primary-500/20 hover:bg-primary-500/30 text-primary-400 text-xs px-4 py-2 rounded-lg transition-colors border border-primary-500/30">
           <i class="fas fa-save mr-1"></i>特徴カードを保存
         </button>
+      
+      <!-- 長期インターン特集（lp_sections internship_features） -->
+      <div class="glass rounded-xl p-5 mb-4">
+        <div class="flex items-center justify-between mb-1">
+          <h3 class="font-semibold text-sm text-primary-400"><i class="fas fa-book-open mr-2"></i>長期インターン特集</h3>
+          <label class="flex items-center gap-2 text-xs text-gray-400 cursor-pointer"><input type="checkbox" id="lp-internship-features-visible" class="rounded"> 表示する</label>
+        </div>
+        <p class="text-xs text-gray-500 mb-4">「注目の長期インターン」の下に表示する特集カードです。タイトル・画像URL・リンク先・説明文を管理できます。</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+          <div><label class="block text-xs text-gray-400 mb-1">セクションタイトル</label><input id="lp-internship-features-title" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>
+          <div><label class="block text-xs text-gray-400 mb-1">サブタイトル</label><input id="lp-internship-features-subtitle" class="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white outline-none"></div>
+        </div>
+        <div id="lp-internship-feature-cards"></div>
+        <div class="flex flex-wrap gap-2 mt-3">
+          <button onclick="addLpInternshipFeatureCard()" class="text-xs px-3 py-2 rounded-lg border border-dashed border-primary-500/50 text-primary-300 hover:bg-primary-500/10"><i class="fas fa-plus mr-1"></i>特集カードを追加</button>
+          <button onclick="saveLpInternshipFeatures()" class="text-xs px-4 py-2 rounded-lg bg-primary-500/20 border border-primary-500/30 text-primary-300 hover:bg-primary-500/30"><i class="fas fa-save mr-1"></i>特集を保存</button>
+        </div>
+      </div>
+    document.getElementById('lp-internship-features-title').value = internshipFeatureContent.title || '長期インターン特集';
+    document.getElementById('lp-internship-features-subtitle').value = internshipFeatureContent.subtitle || '';
+    document.getElementById('lp-internship-features-visible').checked = internshipFeaturesSection?.is_visible !== 0;
+    lpInternshipFeatureCards = internshipFeatureItems.map(item => ({ ...item }));
+    renderLpInternshipFeatureCards();
       </div>
     `;
   } catch(e) {
