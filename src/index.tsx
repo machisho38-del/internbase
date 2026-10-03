@@ -935,7 +935,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         return;
       }
       grid.innerHTML = universities.map(uni => \`
-        <a href="/universities/\${uni.slug}" onclick="closeUniversityModal()"
+        <a href="/jobs?university=\${encodeURIComponent(uni.slug)}" onclick="closeUniversityModal()"
            class="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all text-center cursor-pointer">
           <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-university text-primary-600 text-lg"></i>
