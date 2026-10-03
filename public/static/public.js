@@ -647,7 +647,7 @@ async function initHomePage() {
 
     <!-- FAQ セクション -->
     ${faqs.length > 0 ? `
-    <section class="py-20 border-t border-white/5">
+    <section id="faq-section" class="py-20 border-t border-white/5">
       <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12">
           <h2 class="text-3xl font-black mb-3 text-gray-900">よくある質問</h2>
