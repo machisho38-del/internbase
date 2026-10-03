@@ -284,13 +284,14 @@ async function initHomePage() {
   await restoreStudentSession();
 
   // サイト設定・お知らせ・FAQ・内定者タイムライン・ピックアップ求人・大学タグを並列取得
-  const [s, annRes, faqRes, storiesRes, featuredRes, uniTagsRes] = await Promise.all([
+  const [s, annRes, faqRes, storiesRes, featuredRes, uniTagsRes, lpSectionsRes] = await Promise.all([
     getSiteSettings(),
     API.get('/settings/announcements').catch(() => ({ data: { data: [] } })),
     API.get('/settings/faqs').catch(() => ({ data: { data: [] } })),
     API.get('/homepage/success-stories').catch(() => ({ data: { data: [] } })),
     API.get('/homepage/featured-jobs').catch(() => ({ data: { data: [] } })),
-    API.get('/homepage/university-tags').catch(() => ({ data: { data: [] } }))
+    API.get('/homepage/university-tags').catch(() => ({ data: { data: [] } })),
+    API.get('/settings/lp-sections').catch(() => ({ data: { data: [] } }))
   ]);
 
   const announcements = annRes.data.data;
@@ -298,6 +299,28 @@ async function initHomePage() {
   const successStories = storiesRes.data.data;
   const featuredJobs = featuredRes.data.data;
   const universityTags = uniTagsRes.data.data;
+  const lpSections = lpSectionsRes.data.data || [];
+  const internshipFeaturesSection = lpSections.find(section => section.section_key === 'internship_features');
+  const defaultInternshipFeatures = {
+    title: '長期インターン特集',
+    subtitle: '学部・志向・挑戦したいテーマから、自分に合う特集を見つけよう。',
+    cards: [
+      { title: '文系向けおすすめ特集', eyebrow: '経済・経営・法学・商学など', body: '考える力と伝える力を実務で磨ける長期インターンをまとめました。', image_url: '/images/hero-internship-team.webp', link: '/jobs' },
+      { title: '理系向けおすすめ特集', eyebrow: '理学・工学・情報・医療など', body: '専門性や分析力を活かして挑戦できる長期インターンをまとめました。', image_url: '/images/hero-internship-team.webp', link: '/jobs' }
+    ]
+  };
+  let internshipFeatures = defaultInternshipFeatures;
+  try {
+    const parsed = JSON.parse(internshipFeaturesSection?.content || '{}');
+    if (parsed && typeof parsed === 'object') {
+      internshipFeatures = { ...defaultInternshipFeatures, ...parsed, cards: Array.isArray(parsed.cards) && parsed.cards.length ? parsed.cards : defaultInternshipFeatures.cards };
+    }
+  } catch(e) {}
+  const internshipFeatureCards = (internshipFeatures.cards || []).filter(card => card && card.title).map(card => ({
+    ...card,
+    image_url: (/^(https?:\/\/|\/)/.test(card.image_url || '') ? card.image_url : '/images/hero-internship-team.webp'),
+    link: (/^(https?:\/\/|\/)/.test(card.link || '') ? card.link : '/jobs')
+  }));
   const successStoryCards = successStories.map(story => `
     <article class="timeline-card glass rounded-2xl p-5 flex-shrink-0 w-[min(82vw,22rem)]" role="listitem">
       <div class="flex items-center gap-3 mb-3">
@@ -437,6 +460,40 @@ async function initHomePage() {
       </div>
     </section>
 
+
+    <!-- 長期インターン特集（LP編集の特集カードと連動） -->
+    ${internshipFeaturesSection?.is_visible !== 0 && internshipFeatureCards.length > 0 ? `
+    <section id="internship-features" class="py-16 sm:py-20 bg-slate-950 text-white overflow-hidden">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-end justify-between gap-4 mb-8">
+          <div>
+            <p class="section-kicker mb-2">Internship catalogue</p>
+            <h2 class="text-2xl sm:text-3xl font-black">${escapePublicHtml(internshipFeatures.title || '長期インターン特集')}</h2>
+            <p class="text-slate-300 text-sm mt-2">${escapePublicHtml(internshipFeatures.subtitle || '')}</p>
+          </div>
+          <a href="/jobs" class="hidden sm:inline-flex items-center gap-2 text-orange-300 font-bold text-sm hover:text-orange-200">すべて見る <i class="fas fa-arrow-right"></i></a>
+        </div>
+        <div class="internship-features-track flex gap-4 overflow-x-auto pb-3 snap-x snap-mandatory md:grid md:grid-cols-2 md:overflow-visible">
+          ${internshipFeatureCards.map((card, index) => `
+            <a href="${escapePublicHtml(card.link)}" class="internship-feature-card group relative flex-shrink-0 w-[min(82vw,28rem)] md:w-auto snap-start overflow-hidden rounded-2xl border border-white/10 bg-white/10 hover:border-orange-300/70 transition-all">
+              <div class="h-44 sm:h-52 overflow-hidden">
+                <img src="${escapePublicHtml(card.image_url)}" alt="${escapePublicHtml(card.title)}" class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/35 to-transparent"></div>
+                <span class="absolute top-4 left-4 rounded-full bg-white/90 px-3 py-1 text-xs font-black text-slate-900">${index === 0 ? '文系' : '理系'}向け</span>
+              </div>
+              <div class="relative p-5">
+                <p class="text-xs font-bold text-orange-300 mb-2">${escapePublicHtml(card.eyebrow || '')}</p>
+                <h3 class="text-xl font-black mb-2">${escapePublicHtml(card.title)}</h3>
+                <p class="text-sm leading-relaxed text-slate-300">${escapePublicHtml(card.body || card.description || '')}</p>
+                <span class="mt-4 inline-flex items-center gap-2 text-sm font-bold text-white">特集を見る <i class="fas fa-arrow-right text-orange-300"></i></span>
+              </div>
+            </a>
+          `).join('')}
+        </div>
+        <a href="/jobs" class="sm:hidden mt-5 inline-flex items-center gap-2 text-orange-300 font-bold text-sm">すべて見る <i class="fas fa-arrow-right"></i></a>
+      </div>
+    </section>` : ''}
+
     <!-- 会員限定バナー（登録済みでない場合のみ） -->
     ${!localStorage.getItem('student_id') && s.members_banner_enabled !== false ? `
     <section class="py-6">
@@ -550,6 +607,35 @@ async function initHomePage() {
         </div>
         <div id="features-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="glass rounded-2xl p-7 text-center animate-pulse"><div class="h-12 bg-gray-100 rounded mb-4"></div></div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 長期インターンの始め方 -->
+    <section id="getting-started" class="getting-started-section py-16 sm:py-20 border-t border-slate-200 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-10 sm:mb-12">
+          <p class="section-kicker mb-2">How to start</p>
+          <h2 class="text-2xl sm:text-3xl font-black text-slate-950">長期インターンの始め方</h2>
+          <p class="text-slate-600 text-sm mt-2">探すところから、選考・スタートまで学生目線で伴走します。</p>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 sm:gap-5">
+          ${[
+            { no: '01', icon: 'search', title: 'インターンを探す', body: '職種・業界・勤務形態・大学別から、興味や希望に合う求人を探します。' },
+            { no: '02', icon: 'paper-plane', title: 'インターンに応募する', body: '気になる求人を見つけたら応募。応募後の流れも分かりやすく案内します。' },
+            { no: '03', icon: 'user-graduate', title: '現役学生が徹底支援', body: '就活を終えた現役学生が、企業選び・応募書類・面接準備を学生目線でサポートします。' },
+            { no: '04', icon: 'rocket', title: '選考を経て、開始！', body: '企業との選考からインターン開始まで、必要な準備を一緒に進めます。' }
+          ].map(step => `
+            <article class="getting-started-step rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <div class="getting-started-icon w-12 h-12 rounded-xl bg-orange-100 text-orange-500 flex items-center justify-center flex-shrink-0"><i class="fas fa-${step.icon} text-lg"></i></div>
+                <span class="text-2xl font-black text-orange-500">${step.no}</span>
+              </div>
+              <h3 class="font-black text-lg text-slate-950 mb-2">${step.title}</h3>
+              <p class="text-sm leading-relaxed text-slate-600">${step.body}</p>
+            </article>
+          `).join('')}
         </div>
       </div>
     </section>
@@ -757,6 +843,7 @@ async function searchJobs() {
   const occupation = document.getElementById('filter-occupation')?.value;
   const industry = document.getElementById('filter-industry')?.value;
   const work_style = document.getElementById('filter-style')?.value;
+  const university = new URLSearchParams(window.location.search).get('university');
   const studentId = localStorage.getItem('student_id');
 
   const urlParams = new URLSearchParams();
@@ -764,6 +851,7 @@ async function searchJobs() {
   if (occupation) urlParams.set('occupation', occupation);
   if (industry) urlParams.set('industry', industry);
   if (work_style) urlParams.set('work_style', work_style);
+  if (university) urlParams.set('university', university);
   // 会員限定タブの場合はmembersフィルタ
   if (_currentJobTab === 'members' && studentId) {
     urlParams.set('members', '1');
