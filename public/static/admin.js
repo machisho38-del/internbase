@@ -1865,7 +1865,7 @@ async function loadLpEdit() {
           <div class="border-t border-white/10 pt-3">
             <p class="text-xs font-bold text-gray-300 mb-2"><i class="fas fa-check-circle text-green-400 mr-1"></i>現在の公開画面と連動する項目</p>
             <p class="text-xs text-gray-400 leading-relaxed">
-              この画面では、TOPページで実際に使用している「ヒーロー」「特徴」「会員限定バナー」だけを編集できます。
+              この画面では、TOPページで実際に使用している「ヒーロー」「応募タイムライン」「特徴」「長期インターン特集」「会員限定バナー」を編集できます。
               LINE相談先は「サイト設定」、求人・内定者実績・大学タグはそれぞれの専用管理ページで変更してください。
             </p>
           </div>
