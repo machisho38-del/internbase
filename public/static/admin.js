@@ -1972,13 +1972,12 @@ async function loadLpEdit() {
           <button onclick="saveLpInternshipFeatures()" class="text-xs px-4 py-2 rounded-lg bg-primary-500/20 border border-primary-500/30 text-primary-300 hover:bg-primary-500/30"><i class="fas fa-save mr-1"></i>特集を保存</button>
         </div>
       </div>
+    `;
     document.getElementById('lp-internship-features-title').value = internshipFeatureContent.title || '長期インターン特集';
     document.getElementById('lp-internship-features-subtitle').value = internshipFeatureContent.subtitle || '';
     document.getElementById('lp-internship-features-visible').checked = internshipFeaturesSection?.is_visible !== 0;
     lpInternshipFeatureCards = internshipFeatureItems.map(item => ({ ...item }));
     renderLpInternshipFeatureCards();
-      </div>
-    `;
   } catch(e) {
     content.innerHTML = `<div class="text-red-400 p-4">取得失敗: ${e.message}</div>`;
   }
