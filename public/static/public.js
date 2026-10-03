@@ -316,11 +316,16 @@ async function initHomePage() {
       internshipFeatures = { ...defaultInternshipFeatures, ...parsed, cards: Array.isArray(parsed.cards) && parsed.cards.length ? parsed.cards : defaultInternshipFeatures.cards };
     }
   } catch(e) {}
-  const internshipFeatureCards = (internshipFeatures.cards || []).filter(card => card && card.title).map(card => ({
-    ...card,
-    image_url: (/^(https?:\/\/|\/)/.test(card.image_url || '') ? card.image_url : '/images/hero-internship-team.webp'),
-    link: (/^(https?:\/\/|\/)/.test(card.link || '') ? card.link : '/jobs')
-  }));
+  const internshipFeatureCards = (internshipFeatures.cards || []).filter(card => card && card.title).map((card, index) => {
+    const slug = getInternshipFeatureSlug(card, index);
+    const legacyLink = !card.link || card.link === '/jobs';
+    return {
+      ...card,
+      slug,
+      image_url: (/^(https?:\/\/|\/)/.test(card.image_url || '') ? card.image_url : '/images/hero-internship-team.webp'),
+      link: legacyLink ? `/features/${encodeURIComponent(slug)}` : (/^(https?:\/\/|\/)/.test(card.link) ? card.link : '/jobs')
+    };
+  });
   const successStoryCards = successStories.map(story => `
     <article class="timeline-card glass rounded-2xl p-5 flex-shrink-0 w-[min(82vw,22rem)]" role="listitem">
       <div class="flex items-center gap-3 mb-3">
@@ -729,7 +734,99 @@ function searchFromHome(event) {
   if (occupation) params.set('occupation', occupation);
   if (workStyle) params.set('work_style', workStyle);
   if (university) params.set('university', university);
-  window.location.href = `/jobs${params.toString() ? `?${params.toString()}` : ''}`;
+  const query = params.toString() ? `?${params.toString()}` : '';
+  window.location.href = university
+    ? `/universities/${encodeURIComponent(university)}${query}`
+    : `/jobs${query}`;
+}
+
+function getInternshipFeatureSlug(card, index = 0) {
+  if (card?.slug) return String(card.slug).trim();
+  const title = String(card?.title || '');
+  if (title.includes('文系')) return 'humanities';
+  if (title.includes('理系')) return 'science';
+  return `feature-${index + 1}`;
+}
+
+function getInternshipFeatureProfile(slug) {
+  const profiles = {
+    humanities: {
+      eyebrow: '文系学生向け',
+      title: '文系向けおすすめ特集',
+      intro: '経済・経営・法学・商学などの知識を、営業・マーケティング・事業開発の実務で活かせる求人を集めました。',
+      occupations: ['営業', 'マーケティング', 'コンサルティング', '事務', '人事', '事業開発']
+    },
+    science: {
+      eyebrow: '理系学生向け',
+      title: '理系向けおすすめ特集',
+      intro: '理学・工学・情報・医療などの専門性や分析力を、プロダクト開発・データ活用・事業推進で伸ばせる求人を集めました。',
+      occupations: ['エンジニア', '事業開発', 'コンサルティング', 'マーケティング']
+    }
+  };
+  return profiles[slug] || { eyebrow: '長期インターン特集', title: '長期インターン特集', intro: '今の興味や経験に合う長期インターンを探してみよう。', occupations: [] };
+}
+
+async function initFeaturePage(slug) {
+  const app = document.getElementById('app');
+  await restoreStudentSession();
+  app.innerHTML = `<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16"><div class="animate-pulse h-10 bg-slate-100 rounded-xl w-1/2 mb-4"></div><div class="animate-pulse h-5 bg-slate-100 rounded-xl w-2/3"></div></div>`;
+
+  const [sectionRes, jobsRes] = await Promise.all([
+    API.get('/settings/lp-sections').catch(() => ({ data: { data: [] } })),
+    API.get('/jobs').catch(() => ({ data: { data: [] } }))
+  ]);
+  const sections = sectionRes.data.data || [];
+  const section = sections.find(item => item.section_key === 'internship_features');
+  let content = {};
+  try { content = JSON.parse(section?.content || '{}'); } catch(e) {}
+  const cards = Array.isArray(content.cards) ? content.cards : [];
+  const card = cards.find((item, index) => getInternshipFeatureSlug(item, index) === slug);
+  const profile = getInternshipFeatureProfile(slug);
+  const title = card?.title || profile.title;
+  const intro = card?.body || card?.description || profile.intro;
+  const jobs = jobsRes.data.data || [];
+  const selectedOccupations = profile.occupations;
+  const filteredJobs = selectedOccupations.length ? jobs.filter(job => selectedOccupations.includes(job.occupation)) : jobs;
+
+  app.innerHTML = `
+    <main class="feature-page">
+      <section class="feature-page-hero bg-slate-950 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+          <nav class="text-sm text-slate-300 mb-6"><a href="/" class="hover:text-white">ホーム</a><span class="mx-2">/</span><a href="/#internship-features" class="hover:text-white">長期インターン特集</a><span class="mx-2">/</span><span>${escapePublicHtml(title)}</span></nav>
+          <p class="section-kicker !text-orange-300 mb-3">${escapePublicHtml(card?.eyebrow || profile.eyebrow)}</p>
+          <h1 class="text-3xl sm:text-5xl font-black mb-4">${escapePublicHtml(title)}</h1>
+          <p class="max-w-3xl text-slate-300 text-base leading-relaxed">${escapePublicHtml(intro)}</p>
+        </div>
+      </section>
+      <section class="py-10 sm:py-14 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-6">
+            <div><p class="section-kicker mb-2">Recommended jobs</p><h2 class="text-2xl sm:text-3xl font-black">この特集から探す</h2><p id="feature-jobs-count" class="text-slate-600 text-sm mt-2">${filteredJobs.length}件のおすすめ求人</p></div>
+            <a href="/jobs" class="inline-flex items-center gap-2 text-primary-600 font-bold text-sm">すべての求人を見る <i class="fas fa-arrow-right"></i></a>
+          </div>
+          <div class="search-panel rounded-2xl p-4 mb-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <select id="feature-filter-occupation" class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm"><option value="">この特集の職種</option>${selectedOccupations.map(item => `<option value="${escapePublicHtml(item)}">${escapePublicHtml(item)}</option>`).join('')}</select>
+            <select id="feature-filter-industry" class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm"><option value="">業種を追加</option><option>HR・人材</option><option>IT・SaaS</option><option>マーケティング</option><option>コンサルティング</option><option>EC・小売</option><option>メディア</option><option>その他</option></select>
+            <select id="feature-filter-style" class="bg-white border border-slate-200 rounded-xl px-4 py-3 text-sm"><option value="">勤務形態を追加</option><option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option></select>
+          </div>
+          <div id="feature-jobs-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+        </div>
+      </section>
+    </main>
+  `;
+
+  const renderFeatureJobs = () => {
+    const occupation = document.getElementById('feature-filter-occupation')?.value;
+    const industry = document.getElementById('feature-filter-industry')?.value;
+    const style = document.getElementById('feature-filter-style')?.value;
+    const result = filteredJobs.filter(job => (!occupation || job.occupation === occupation) && (!industry || job.company_industry === industry) && (!style || job.work_style === style));
+    document.getElementById('feature-jobs-count').textContent = `${result.length}件のおすすめ求人`;
+    document.getElementById('feature-jobs-list').innerHTML = result.length
+      ? result.map(job => renderJobCard(job)).join('')
+      : '<div class="col-span-3 rounded-2xl bg-white border border-slate-200 p-10 text-center text-slate-500">条件に合う求人がまだありません。</div>';
+  };
+  ['occupation', 'industry', 'style'].forEach(key => document.getElementById(`feature-filter-${key}`)?.addEventListener('change', renderFeatureJobs));
+  renderFeatureJobs();
 }
 
 function toggleFaq(i) {
@@ -746,12 +843,17 @@ async function initJobsPage() {
   const app = document.getElementById('app');
   await restoreStudentSession();
   const studentId = localStorage.getItem('student_id');
+  const pageParams = new URLSearchParams(window.location.search);
+  const selectedUniversitySlug = pageParams.get('university') || '';
+  const universityTagsRes = await API.get('/homepage/university-tags').catch(() => ({ data: { data: [] } }));
+  const universityTags = universityTagsRes.data.data || [];
+  const selectedUniversity = universityTags.find(tag => tag.slug === selectedUniversitySlug);
 
   app.innerHTML = `
     <div class="bg-gradient-to-br from-slate-950 via-primary-900 to-primary-700 text-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <p class="text-xs font-black tracking-[.18em] text-orange-400 uppercase mb-3">Find your internship</p>
-        <h1 class="text-3xl sm:text-5xl font-black mb-3">長期インターンを探す</h1>
+        <h1 id="jobs-page-title" class="text-3xl sm:text-5xl font-black mb-3">${selectedUniversity ? escapePublicHtml(selectedUniversity.name) + '向け長期インターン' : '長期インターンを探す'}</h1>
         <p class="text-primary-100 text-sm sm:text-base">仕事内容・働き方・報酬を比較して、次の挑戦を見つけよう。</p>
       </div>
     </div>
@@ -777,6 +879,10 @@ async function initJobsPage() {
         <select id="filter-style" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
           <option value="">全勤務形態</option>
           <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
+        </select>
+        <select id="filter-university" class="bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 focus:outline-none focus:border-primary-500">
+          <option value="">大学別</option>
+          ${universityTags.map(tag => `<option value="${escapePublicHtml(tag.slug)}" ${tag.slug === selectedUniversitySlug ? 'selected' : ''}>${escapePublicHtml(tag.name)}</option>`).join('')}
         </select>
         <button onclick="searchJobs()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm px-6 py-3 rounded-xl transition-colors">
           <i class="fas fa-search mr-1"></i>検索
@@ -811,6 +917,7 @@ async function initJobsPage() {
   if (params.get('occupation')) document.getElementById('filter-occupation').value = params.get('occupation');
   if (params.get('industry')) document.getElementById('filter-industry').value = params.get('industry');
   if (params.get('work_style')) document.getElementById('filter-style').value = params.get('work_style');
+  if (params.get('university')) document.getElementById('filter-university').value = params.get('university');
   if (params.get('q')) document.getElementById('search-q').value = params.get('q');
   document.getElementById('search-q').addEventListener('input', () => {
     clearTimeout(window.__jobSearchTimer);
@@ -820,6 +927,16 @@ async function initJobsPage() {
   document.getElementById('filter-occupation').addEventListener('change', searchJobs);
   document.getElementById('filter-industry').addEventListener('change', searchJobs);
   document.getElementById('filter-style').addEventListener('change', searchJobs);
+  document.getElementById('filter-university').addEventListener('change', () => {
+    const nextSlug = document.getElementById('filter-university').value;
+    const nextParams = new URLSearchParams(window.location.search);
+    if (nextSlug) nextParams.set('university', nextSlug); else nextParams.delete('university');
+    window.history.replaceState({}, '', `/jobs${nextParams.toString() ? '?' + nextParams.toString() : ''}`);
+    document.getElementById('jobs-page-title').textContent = nextSlug
+      ? (universityTags.find(tag => tag.slug === nextSlug)?.name || '大学') + '向け長期インターン'
+      : '長期インターンを探す';
+    searchJobs();
+  });
 
   await searchJobs();
 }
@@ -843,7 +960,7 @@ async function searchJobs() {
   const occupation = document.getElementById('filter-occupation')?.value;
   const industry = document.getElementById('filter-industry')?.value;
   const work_style = document.getElementById('filter-style')?.value;
-  const university = new URLSearchParams(window.location.search).get('university');
+  const university = document.getElementById('filter-university')?.value || new URLSearchParams(window.location.search).get('university');
   const studentId = localStorage.getItem('student_id');
 
   const urlParams = new URLSearchParams();
@@ -2417,6 +2534,9 @@ async function initUniversityJobsPage(slug) {
           <option value="">全勤務形態</option>
           <option value="onsite">出社</option><option value="remote">リモート</option><option value="hybrid">ハイブリッド</option>
         </select>
+        <select id="filter-university" class="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:border-primary-500">
+          <option value="${slug}" selected>大学別</option>
+        </select>
         <button onclick="searchUniversityJobs('${slug}')" class="bg-primary-500 hover:bg-primary-600 text-white text-sm px-5 py-2 rounded-lg transition-colors">
           <i class="fas fa-search mr-1"></i>検索
         </button>
@@ -2428,6 +2548,12 @@ async function initUniversityJobsPage(slug) {
     </div>
   `;
 
+  const pageParams = new URLSearchParams(window.location.search);
+  if (pageParams.get('q')) document.getElementById('search-q').value = pageParams.get('q');
+  if (pageParams.get('occupation')) document.getElementById('filter-occupation').value = pageParams.get('occupation');
+  if (pageParams.get('industry')) document.getElementById('filter-industry').value = pageParams.get('industry');
+  if (pageParams.get('work_style')) document.getElementById('filter-style').value = pageParams.get('work_style');
+
   const searchInput = document.getElementById('search-q');
   searchInput?.addEventListener('input', () => {
     clearTimeout(window.__universityJobSearchTimer);
@@ -2437,6 +2563,10 @@ async function initUniversityJobsPage(slug) {
   document.getElementById('filter-occupation')?.addEventListener('change', () => searchUniversityJobs(slug));
   document.getElementById('filter-industry')?.addEventListener('change', () => searchUniversityJobs(slug));
   document.getElementById('filter-style')?.addEventListener('change', () => searchUniversityJobs(slug));
+  document.getElementById('filter-university')?.addEventListener('change', (event) => {
+    const nextSlug = event.target.value;
+    if (nextSlug && nextSlug !== slug) window.location.href = `/universities/${encodeURIComponent(nextSlug)}`;
+  });
 
   try {
     // 大学情報取得
@@ -2455,6 +2585,9 @@ async function initUniversityJobsPage(slug) {
     }
     
     document.getElementById('uni-name').textContent = uni.name + ' のおすすめ求人';
+    document.getElementById('filter-university').innerHTML = universities.map(item =>
+      `<option value="${escapePublicHtml(item.slug)}" ${item.slug === slug ? 'selected' : ''}>${escapePublicHtml(item.name)}</option>`
+    ).join('');
     if (uni.description) {
       document.getElementById('uni-desc').textContent = uni.description;
     }
