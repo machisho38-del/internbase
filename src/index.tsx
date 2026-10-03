@@ -184,6 +184,26 @@ app.get('/universities/:slug', async (c) => {
 })
 
 // 公開画面 - 登録
+// 公開画面 - 特集詳細
+app.get('/features/:slug', async (c) => {
+  const slug = c.req.param('slug')
+  const section = await c.env.DB.prepare("SELECT content FROM lp_sections WHERE section_key = 'internship_features' AND is_visible = 1").first() as any
+  let card: any = null
+  try {
+    const content = JSON.parse(section?.content || '{}')
+    const cards = Array.isArray(content.cards) ? content.cards : []
+    card = cards.find((item: any) => item.slug === slug) || cards.find((item: any) => (String(item.title || '').includes('文系') ? 'humanities' : String(item.title || '').includes('理系') ? 'science' : '') === slug)
+  } catch(e) {}
+  const origin = getPublicOrigin(c)
+  const title = card?.title || (slug === 'humanities' ? '文系向けおすすめ特集' : slug === 'science' ? '理系向けおすすめ特集' : '長期インターン特集')
+  const description = truncateDescription(card?.body || card?.description || '長期インターン特集から、自分に合う求人を探そう。')
+  return c.html(getPublicHTML('feature-page', origin, {
+    path: '/features/' + encodeURIComponent(slug),
+    title: title + ' | ガクチカインターン',
+    description
+  }))
+})
+
 app.get('/register', (c) => {
   return c.html(getPublicHTML('register', getPublicOrigin(c), { path: '/register', title: '新規登録 | ガクチカインターン', description: '招待コードで登録してインターン求人に応募しよう。会員登録で非公開の限定求人も閲覧可能。', robots: 'noindex, nofollow' }))
 })
@@ -935,7 +955,7 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
         return;
       }
       grid.innerHTML = universities.map(uni => \`
-        <a href="/jobs?university=\${encodeURIComponent(uni.slug)}" onclick="closeUniversityModal()"
+        <a href="/universities/\${encodeURIComponent(uni.slug)}" onclick="closeUniversityModal()"
            class="group flex flex-col items-center gap-2 p-4 rounded-xl border border-gray-100 hover:border-primary-300 hover:bg-primary-50 transition-all text-center cursor-pointer">
           <div class="w-12 h-12 bg-primary-500/10 group-hover:bg-primary-500/20 rounded-full flex items-center justify-center transition-colors">
             <i class="fas fa-university text-primary-600 text-lg"></i>
@@ -1112,13 +1132,17 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
-  <script src="/static/public.js?v=20260903-application-followup-contrast"></script>
+  <script src="/static/public.js?v=20261003-contextual-pages"></script>
   <script>
     // 現在のページを判定してルーティング
     const path = window.location.pathname;
     if (path === '/' || path === '') initHomePage();
     else if (path === '/jobs') initJobsPage();
     else if (path.startsWith('/jobs/')) initJobDetailPage();
+    else if (path.startsWith('/features/')) {
+      const slug = path.split('/')[2];
+      initFeaturePage(slug);
+    }
     else if (path === '/universities') initUniversitiesPage();
     else if (path.startsWith('/universities/')) {
       const slug = path.split('/')[2];
