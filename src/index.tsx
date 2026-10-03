@@ -815,6 +815,67 @@ function getPublicHTML(page: string, origin: string, metadata: SeoMetadata): str
       }
     }
 
+
+    /* Context pages, FAQ contrast, and responsive narrow-layout QA */
+    #app #faq-section {
+      background: #ffffff !important;
+      color: var(--lp-text) !important;
+    }
+    #app #faq-section h2,
+    #app #faq-section p,
+    #app #faq-section .text-gray-700,
+    #app #faq-section .text-gray-800 {
+      color: var(--lp-text) !important;
+    }
+    #app #faq-section .glass {
+      background: #ffffff !important;
+      border-color: var(--lp-line) !important;
+      box-shadow: 0 5px 18px rgba(1,24,39,.05) !important;
+    }
+    #app #faq-section button {
+      color: var(--lp-navy) !important;
+    }
+    #app #faq-section button:hover {
+      background: #f7faff !important;
+    }
+    #app .feature-page-hero {
+      background:
+        linear-gradient(110deg, rgba(1,24,39,.96), rgba(0,78,203,.88)),
+        url('/images/hero-internship-team.webp') center / cover no-repeat !important;
+    }
+    #app .feature-page-hero h1,
+    #app .feature-page-hero nav,
+    #app .feature-page-hero p {
+      color: #fff;
+    }
+    #app .feature-page > section:nth-child(2) {
+      background: var(--lp-gray) !important;
+    }
+    #app .feature-page .search-panel {
+      background: #fff !important;
+      border: 1px solid var(--lp-line) !important;
+      box-shadow: 0 8px 24px rgba(1,24,39,.06) !important;
+    }
+    .hero-gradient .search-panel > .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+    @media (min-width: 1200px) {
+      .hero-gradient .search-panel > .grid {
+        grid-template-columns: 1.3fr 1fr 1fr 1fr auto !important;
+      }
+    }
+    @media (max-width: 639px) {
+      #app #faq-section {
+        padding: 52px 0 !important;
+      }
+      #app .feature-page-hero h1 {
+        font-size: 2rem !important;
+        line-height: 1.35 !important;
+      }
+      #app .feature-page-hero {
+        min-height: 0 !important;
+      }
+    }
 </style>
 </head>
 <body class="bg-white text-gray-900 min-h-screen">
